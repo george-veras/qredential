@@ -1,0 +1,33 @@
+name: publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Required for npm provenance: the job signs an attestation tying the published tarball to
+      # this exact commit, workflow and runner. Anyone can then verify the package on npm was built
+      # from the public source, which is a claim this library should be able to make about itself.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm publish --provenance --access public
+        env:
+          # Alternative: configure trusted publishing on npmjs.com for this repo and workflow, and
+          # the token can be dropped entirely.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
