@@ -23,7 +23,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: ossf/scorecard-action@v2.4.0
+      # v2.4.0 and earlier pull the action image from gcr.io, which currently answers with a
+      # billing error on OpenSSF's side. v2.4.4 moved to ghcr.io.
+      - uses: ossf/scorecard-action@v2.4.4
         with:
           results_file: results.sarif
           results_format: sarif
