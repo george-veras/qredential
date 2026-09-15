@@ -1,5 +1,9 @@
 # qredential
 
+[![ci](https://github.com/george-veras/qredential/actions/workflows/ci.yml/badge.svg)](https://github.com/george-veras/qredential/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/qredential)](https://www.npmjs.com/package/qredential)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/george-veras/qredential/badge)](https://scorecard.dev/viewer/?uri=github.com/george-veras/qredential)
+
 Verify a digital credential from a QR code with **no network connection**.
 
 ```ts
@@ -144,6 +148,20 @@ Four functions. That is the whole surface.
 - Not ISO 18013-5 mDL yet. That is CBOR and COSE rather than JWT, and it is on the roadmap, but
   claiming half of a compliance standard is worse than not claiming it.
 - Not audited. It is new. Read the code before you put it between a person and a right they hold.
+
+## Playground
+
+There is a browser playground in `docs/`, served at
+[george-veras.github.io/qredential](https://george-veras.github.io/qredential/). It generates an
+issuer key, signs a credential, and lets you choose what the holder reveals. The part worth your
+time is the attack bench: eight things an attacker would actually try, each printing the rejection
+code it expects, so you can check the library against its own claims rather than taking my word
+for it.
+
+## Security
+
+Report vulnerabilities privately through the Security tab. Scope, response times and an honest
+account of what this library has not had are in [SECURITY.md](SECURITY.md).
 
 ## Status
 

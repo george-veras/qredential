@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # The package ships zero runtime dependencies on purpose, so everything here is tooling and can
+    # be grouped into one pull request instead of a weekly drip.
+    groups:
+      dev-tooling:
+        patterns: ['*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

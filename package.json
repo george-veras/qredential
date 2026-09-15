@@ -11,23 +11,43 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:playground": "node scripts/build-playground.mjs",
+    "check:playground": "node scripts/build-playground.mjs && git diff --exit-code docs/index.html"
   },
   "keywords": [
-    "verifiable-credentials", "sd-jwt", "selective-disclosure", "qr", "offline",
-    "mdl", "age-verification", "identity", "base45", "status-list"
+    "verifiable-credentials",
+    "sd-jwt",
+    "selective-disclosure",
+    "qr",
+    "offline",
+    "mdl",
+    "age-verification",
+    "identity",
+    "base45",
+    "status-list"
   ],
   "author": "George Veras Valentim",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/george-veras/qredential.git" },
-  "engines": { "node": ">=20" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/george-veras/qredential.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "@types/node": "^22.10.0",
+    "esbuild": "^0.24.2",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
   }
