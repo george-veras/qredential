@@ -1,565 +1,520 @@
-<title>Qredential Playground</title>
+<title>Qredential</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
   :root {
-    --ground: #E8ECE8;
-    --panel: #F4F6F3;
-    --plate: #FDFDFB;
-    --ink: #111A1D;
-    --body: #24312F;
-    --slate: #5C6C6B;
-    --line: #C7D0CA;
-    --line-soft: #DBE2DC;
-    --viridian: #0E6B54;
-    --viridian-wash: #D9E7E0;
-    --oxblood: #8F2E26;
-    --oxblood-wash: #F0DEDA;
-    --guilloche: #2C6675;
-    --amber: #8A5A12;
-
+    --ground: #E8ECE8; --panel: #F4F6F3; --plate: #FDFDFB;
+    --ink: #111A1D; --body: #24312F; --slate: #5C6C6B;
+    --line: #C7D0CA; --line-soft: #DBE2DC;
+    --viridian: #0E6B54; --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26; --oxblood-wash: #F0DEDA;
+    --guilloche: #2C6675; --amber: #8A5A12;
     --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
     --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
     --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   }
-
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #0C1214;
-      --panel: #141D20;
-      --plate: #FDFDFB;
-      --ink: #E4EAE5;
-      --body: #C4CFCA;
-      --slate: #8A9A97;
-      --line: #263336;
-      --line-soft: #1C272A;
-      --viridian: #4FBB98;
-      --viridian-wash: #10322A;
-      --oxblood: #DF8074;
-      --oxblood-wash: #331916;
-      --guilloche: #63AABC;
-      --amber: #D6A45A;
+      --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+      --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
+      --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A;
+      --oxblood: #DF8074; --oxblood-wash: #331916;
+      --guilloche: #63AABC; --amber: #D6A45A;
     }
   }
-
   :root[data-theme="dark"] {
-    --ground: #0C1214;
-    --panel: #141D20;
-    --plate: #FDFDFB;
-    --ink: #E4EAE5;
-    --body: #C4CFCA;
-    --slate: #8A9A97;
-    --line: #263336;
-    --line-soft: #1C272A;
-    --viridian: #4FBB98;
-    --viridian-wash: #10322A;
-    --oxblood: #DF8074;
-    --oxblood-wash: #331916;
-    --guilloche: #63AABC;
-    --amber: #D6A45A;
+    --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+    --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
+    --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A;
+    --oxblood: #DF8074; --oxblood-wash: #331916;
+    --guilloche: #63AABC; --amber: #D6A45A;
   }
 
   * { box-sizing: border-box; }
-
   body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--body);
-    font-family: var(--text);
-    font-size: 15px;
-    line-height: 1.55;
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 16px; line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 72px; }
+  a { color: var(--guilloche); }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
 
   /* Masthead */
-  .masthead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 10px 18px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--ink);
+  .masthead { border-bottom: 1px solid var(--line); }
+  .masthead .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding-block: 15px;
   }
   .mark {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 27px;
-    letter-spacing: -0.02em;
-    color: var(--ink);
+    font-family: var(--display); font-weight: 700; font-size: 21px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
   }
   .mark span { color: var(--viridian); }
-  .tagline { color: var(--slate); font-size: 14px; max-width: 46ch; }
-  .masthead .spacer { flex: 1 1 auto; }
-  .chip {
-    font-family: var(--data);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--slate);
-    border: 1px solid var(--line);
-    padding: 3px 8px;
+  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14.5px; }
+  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 2px solid var(--ink); }
+  #guilloche {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.5; pointer-events: none;
+  }
+  .hero .wrap {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: 44px; align-items: center; padding-block: 62px 58px;
+  }
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 44px; }
   }
 
+  .eyebrow {
+    font-family: var(--data); font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 16px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6vw, 62px);
+    line-height: 0.98; letter-spacing: -0.035em; color: var(--ink);
+    margin: 0 0 20px; text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--viridian); }
+  .lede { font-size: 18.5px; line-height: 1.5; margin: 0 0 8px; max-width: 46ch; text-wrap: balance; }
+  .sub { color: var(--slate); font-size: 15.5px; max-width: 48ch; margin: 0; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 15px; padding: 11px 22px;
+    text-decoration: none; border: 1px solid var(--ink); background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  /* Hero demo card */
+  .demo { background: var(--panel); border: 1px solid var(--line); }
+  .demo-plate { background: var(--plate); padding: 16px 16px 10px; border-bottom: 1px solid var(--line); }
+  .demo-plate svg { width: 100%; height: auto; display: block; max-width: 210px; margin: 0 auto; }
+  .demo-plate .fallback {
+    font-family: var(--data); font-size: 12px; color: #6B7A78; text-align: center; padding: 48px 8px;
+  }
+  .demo-caption {
+    font-family: var(--data); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6B7A78; text-align: center; margin-top: 9px;
+  }
+  .demo-verdict { padding: 14px 16px; display: flex; align-items: center; gap: 13px; }
+  .demo-verdict.pass { background: var(--viridian-wash); }
+  .demo-verdict .word {
+    font-family: var(--display); font-weight: 700; font-size: 25px; line-height: 1;
+    letter-spacing: -0.02em; text-transform: uppercase; color: var(--viridian);
+  }
+  .demo-verdict .lines { font-size: 12.5px; line-height: 1.45; color: var(--body); min-width: 0; }
+  .demo-verdict .lines b { font-family: var(--data); font-weight: 500; color: var(--ink); }
+  .demo-meta {
+    border-top: 1px solid var(--line); padding: 10px 16px;
+    font-family: var(--data); font-size: 11px; color: var(--slate);
+    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  .demo-meta b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* Sections */
+  section.band { padding-block: 62px; border-bottom: 1px solid var(--line); }
+  section.band:last-of-type { border-bottom: 0; }
   h2 {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--slate);
-    margin: 0 0 4px;
+    font-family: var(--display); font-weight: 700; font-size: clamp(25px, 3.4vw, 33px);
+    letter-spacing: -0.025em; line-height: 1.12; color: var(--ink);
+    margin: 0 0 16px; text-wrap: balance;
   }
-  .note { font-size: 13px; color: var(--slate); margin: 0 0 14px; max-width: 62ch; }
-  .note code, .inline-code {
-    font-family: var(--data);
-    font-size: 0.92em;
-    color: var(--guilloche);
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15.5px;
+    color: var(--ink); margin: 0 0 6px;
   }
+  p { margin: 0 0 16px; }
+  .measure { max-width: 66ch; }
+  .wrap.measure { max-width: 1080px; }
+  .wrap.measure > * { max-width: 66ch; }
+  strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: var(--data); font-size: 0.87em; color: var(--guilloche);
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 15px 17px; overflow-x: auto; margin: 0;
+  }
+  pre code { color: var(--ink); font-size: 13.5px; line-height: 1.75; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
 
-  .bench {
-    display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-    gap: 26px;
-    margin-top: 26px;
-    align-items: start;
-  }
-  @media (max-width: 880px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+  /* Flow diagram */
+  .flow { margin: 26px 0 8px; overflow-x: auto; }
+  .flow svg { display: block; min-width: 580px; width: 100%; height: auto; }
 
-  /* Claim ledger */
-  .ledger { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .ledger thead th {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--slate);
-    text-align: left;
-    padding: 0 10px 8px 0;
-    border-bottom: 1px solid var(--line);
-    vertical-align: bottom;
+  /* Three up */
+  .trio { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; margin-top: 30px; }
+  .trio .step-n {
+    font-family: var(--data); font-size: 11px; letter-spacing: 0.1em; color: var(--viridian);
+    border-top: 2px solid var(--viridian); padding-top: 9px; display: block; margin-bottom: 9px;
   }
-  .ledger thead th.mid { text-align: center; width: 104px; }
-  .ledger td {
-    padding: 9px 10px 9px 0;
-    border-bottom: 1px solid var(--line-soft);
-    vertical-align: middle;
-  }
-  .ledger td.mid { text-align: center; }
-  .ledger .cname {
-    font-family: var(--data);
-    font-size: 12.5px;
-    color: var(--guilloche);
-    white-space: nowrap;
-  }
-  .ledger .cval {
-    font-family: var(--data);
-    font-size: 13px;
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .always {
-    font-family: var(--data);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--slate);
-  }
-  input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--viridian); cursor: pointer; }
-  input[type="checkbox"]:disabled { cursor: not-allowed; opacity: 0.35; }
-  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+  .trio p { font-size: 14.5px; color: var(--slate); margin: 0; }
 
-  /* Artifact column */
-  .plate {
-    background: var(--plate);
-    border: 1px solid var(--line);
-    padding: 14px;
+  /* Tables */
+  .tablewrap { overflow-x: auto; margin: 22px 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 16px 9px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
   }
-  .plate .qr { display: block; width: 100%; max-width: 260px; margin: 0 auto; }
-  .plate .qr svg { width: 100%; height: auto; display: block; }
-  .plate-note {
-    font-family: var(--data);
-    font-size: 10.5px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #6B7A78;
-    text-align: center;
-    margin-top: 10px;
-  }
-  .qr-fail {
-    font-family: var(--data);
-    font-size: 12px;
-    color: #8F2E26;
-    text-align: center;
-    padding: 30px 8px;
-  }
+  td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--line-soft); }
+  td:first-child { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+  .warnrow td { color: var(--amber); }
 
-  .readout { margin-top: 14px; display: flex; flex-direction: column; gap: 0; }
-  .readout .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-    padding: 7px 0;
-    border-bottom: 1px solid var(--line-soft);
-    font-size: 13px;
+  /* Attacks */
+  .attack-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 26px;
   }
-  .readout .row:last-child { border-bottom: 0; }
-  .readout .k { color: var(--slate); font-size: 12px; }
-  .readout .v {
-    font-family: var(--data);
-    font-weight: 500;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .readout .v.warn { color: var(--amber); }
-  .advice { font-size: 12.5px; color: var(--slate); margin-top: 10px; line-height: 1.5; }
+  .attack-list div { background: var(--ground); padding: 13px 15px; }
+  .attack-list .what { font-size: 14px; color: var(--ink); margin-bottom: 3px; }
+  .attack-list .code { font-family: var(--data); font-size: 11.5px; color: var(--oxblood); }
 
-  /* MRZ strip */
-  .strip-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-    margin-top: 30px;
+  .aside {
+    border-left: 3px solid var(--amber); padding: 3px 0 3px 16px;
+    color: var(--slate); font-size: 15px; max-width: 64ch;
   }
-  .strip {
-    margin-top: 8px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--guilloche);
-    padding: 12px 14px;
-    overflow-x: auto;
-    max-height: 164px;
-    overflow-y: auto;
-  }
-  .strip pre {
-    margin: 0;
-    font-family: var(--data);
-    font-size: 12px;
-    line-height: 20px;
-    color: var(--ink);
-    letter-spacing: 0.04em;
-    white-space: pre;
-  }
+  .aside strong { color: var(--ink); }
 
-  /* Terminal */
-  .terminal { margin-top: 34px; border-top: 2px solid var(--ink); padding-top: 18px; }
-  .verdict {
-    display: grid;
-    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-    gap: 0;
-    border: 1px solid var(--line);
-  }
-  @media (max-width: 720px) { .verdict { grid-template-columns: minmax(0, 1fr); } }
+  .install { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+  @media (max-width: 760px) { .install { grid-template-columns: minmax(0, 1fr); } }
+  .std { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
+  .std li { padding: 9px 0; border-bottom: 1px solid var(--line-soft); color: var(--slate); }
+  .std li b { font-family: var(--data); font-size: 13px; font-weight: 500; color: var(--ink); display: block; }
 
-  .stamp {
-    padding: 22px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    border-right: 1px solid var(--line);
-    transition: background-color 120ms steps(2, end);
+  footer { border-top: 2px solid var(--ink); }
+  footer .wrap {
+    padding-block: 24px 44px; font-size: 13.5px; color: var(--slate);
+    display: flex; flex-wrap: wrap; gap: 8px 28px;
   }
-  @media (max-width: 720px) { .stamp { border-right: 0; border-bottom: 1px solid var(--line); } }
-  @media (prefers-reduced-motion: reduce) { .stamp { transition: none; } }
-
-  .stamp.pass { background: var(--viridian-wash); }
-  .stamp.fail { background: var(--oxblood-wash); }
-  .stamp .word {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 0.95;
-    letter-spacing: -0.025em;
-    text-transform: uppercase;
-  }
-  .stamp.pass .word { color: var(--viridian); }
-  .stamp.fail .word { color: var(--oxblood); }
-  .stamp .code {
-    font-family: var(--data);
-    font-size: 12.5px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-  }
-  .stamp .why { font-size: 12.5px; color: var(--slate); line-height: 1.45; }
-
-  .detail { padding: 18px 20px; min-width: 0; }
-  .detail .scenario {
-    font-family: var(--data);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--slate);
-    margin-bottom: 12px;
-  }
-  .claims-out { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
-  .claim-pill {
-    font-family: var(--data);
-    font-size: 12px;
-    border: 1px solid var(--viridian);
-    color: var(--viridian);
-    padding: 3px 9px;
-  }
-  .claim-pill.hidden-count {
-    border-style: dashed;
-    border-color: var(--line);
-    color: var(--slate);
-  }
-  .facts { display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 12.5px; color: var(--slate); }
-  .facts b { font-family: var(--data); font-weight: 500; color: var(--ink); }
-
-  /* Attack bench */
-  .attacks { margin-top: 30px; }
-  .attack-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px;
-    margin-top: 14px;
-  }
-  button.attack, button.reset {
-    font-family: var(--text);
-    font-size: 13.5px;
-    text-align: left;
-    background: var(--panel);
-    color: var(--body);
-    border: 1px solid var(--line);
-    padding: 11px 13px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    transition: border-color 100ms ease, color 100ms ease;
-  }
-  button.attack:hover, button.reset:hover { border-color: var(--oxblood); color: var(--ink); }
-  button.reset:hover { border-color: var(--viridian); }
-  button.attack .label { font-weight: 500; color: var(--ink); }
-  button.attack .expect {
-    font-family: var(--data);
-    font-size: 11px;
-    color: var(--slate);
-  }
-  button.attack[aria-pressed="true"] { border-color: var(--oxblood); border-width: 1px; box-shadow: inset 2px 0 0 var(--oxblood); }
-  @media (prefers-reduced-motion: reduce) { button.attack, button.reset { transition: none; } }
-
-  .paste { margin-top: 30px; }
-  textarea {
-    width: 100%;
-    min-height: 92px;
-    font-family: var(--data);
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--ink);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    padding: 11px 13px;
-    resize: vertical;
-  }
-  .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 10px; align-items: center; }
-  button.primary {
-    font-family: var(--text);
-    font-weight: 500;
-    font-size: 14px;
-    background: var(--ink);
-    color: var(--ground);
-    border: 1px solid var(--ink);
-    padding: 9px 18px;
-    cursor: pointer;
-  }
-  button.primary:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
-
-  footer {
-    margin-top: 44px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    font-size: 12.5px;
-    color: var(--slate);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 22px;
-  }
-  footer a { color: var(--guilloche); }
-  .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>"use strict";var Q=(()=>{var z=Object.defineProperty;var Pt=Object.getOwnPropertyDescriptor;var Ut=Object.getOwnPropertyNames;var Ct=Object.prototype.hasOwnProperty;var jt=(t,e)=>{for(var r in e)z(t,r,{get:e[r],enumerable:!0})},It=(t,e,r,n)=>{if(e&&typeof e=="object"||typeof e=="function")for(let s of Ut(e))!Ct.call(t,s)&&s!==r&&z(t,s,{get:()=>e[s],enumerable:!(n=Pt(e,s))||n.enumerable});return t};var Bt=t=>It(z({},"__esModule",{value:!0}),t);var Lt={};jt(Lt,{createStatusList:()=>kt,decodeBase45:()=>O,encodeBase45:()=>M,fits:()=>Et,isEnvelope:()=>P,issue:()=>Mt,pack:()=>_,present:()=>Ot,unpack:()=>R,verify:()=>Kt});var S="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";function h(t){return new TextEncoder().encode(t)}function I(t){return new TextDecoder().decode(t)}function p(t){let e="";for(let r=0;r<t.length;r+=3){let n=t[r],s=t[r+1],i=t[r+2];if(e+=S[n>>2],e+=S[(n&3)<<4|(s??0)>>4],s===void 0||(e+=S[(s&15)<<2|(i??0)>>6],i===void 0))break;e+=S[i&63]}return e}function E(t){let e=t.replace(/[^A-Za-z0-9\-_]/g,""),r=new Uint8Array(Math.floor(e.length*3/4)),n=0,s=0,i=0;for(let a of e){let o=S.indexOf(a);if(o<0)throw new Error(`invalid base64url character: ${a}`);n=n<<6|o,s+=6,s>=8&&(s-=8,r[i++]=n>>s&255)}return r.subarray(0,i)}function y(t){return p(h(JSON.stringify(t)))}function w(t){return JSON.parse(I(E(t)))}function ct(t){let e=new Uint8Array(t);return crypto.getRandomValues(e),e}function B(...t){let e=t.reduce((s,i)=>s+i.length,0),r=new Uint8Array(e),n=0;for(let s of t)r.set(s,n),n+=s.length;return r}function lt(t,e){if(t.length!==e.length)return!1;let r=0;for(let n=0;n<t.length;n++)r|=t.charCodeAt(n)^e.charCodeAt(n);return r===0}function J(t){switch(t){case"ES256":return{import:{name:"ECDSA",namedCurve:"P-256"},sign:{name:"ECDSA",hash:"SHA-256"}};case"EdDSA":return{import:{name:"Ed25519"},sign:{name:"Ed25519"}};default:{let e=t;throw new Error(`unsupported algorithm: ${String(e)}`)}}}async function T(t,e){return crypto.subtle.importKey("jwk",t,J(e).import,!1,["sign"])}async function H(t,e){let r={...t};return delete r.d,r.key_ops=["verify"],crypto.subtle.importKey("jwk",r,J(e).import,!1,["verify"])}async function D(t,e,r){let n=await crypto.subtle.sign(J(r).sign,e,h(t));return new Uint8Array(n)}async function Q(t,e,r,n){try{return await crypto.subtle.verify(J(n).sign,r,E(e),h(t))}catch{return!1}}async function dt(t){let e=await crypto.subtle.digest("SHA-256",t);return new Uint8Array(e)}var Jt={s:1,m:60,h:3600,d:86400,w:604800,y:31557600};function A(t){if(typeof t=="number"){if(!Number.isFinite(t))throw new Error(`invalid duration: ${t}`);return Math.floor(t)}let e=/^(\d+(?:\.\d+)?)\s*(s|m|h|d|w|y)$/.exec(t.trim());if(!e)throw new Error(`invalid duration: ${JSON.stringify(t)}`);return Math.floor(Number(e[1])*Jt[e[2]])}function v(){return Math.floor(Date.now()/1e3)}var b="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:",ft={};for(let t=0;t<b.length;t++)ft[b[t]]=t;function M(t){let e="",r=0;for(;r+1<t.length;r+=2){let n=t[r]*256+t[r+1];e+=b[n%45],e+=b[Math.floor(n/45)%45],e+=b[Math.floor(n/2025)]}if(r<t.length){let n=t[r];e+=b[n%45],e+=b[Math.floor(n/45)]}return e}function O(t){let e=[];for(let i of t){let a=ft[i];if(a===void 0)throw new Error(`invalid base45 character: ${JSON.stringify(i)}`);e.push(a)}let r=e.length%3;if(r===1)throw new Error("invalid base45 length");let n=[],s=0;for(;s+2<e.length;s+=3){let i=e[s]+e[s+1]*45+e[s+2]*2025;if(i>65535)throw new Error("invalid base45 triplet: value exceeds two bytes");n.push(i>>8,i&255)}if(r===2){let i=e[s]+e[s+1]*45;if(i>255)throw new Error("invalid base45 pair: value exceeds one byte");n.push(i)}return new Uint8Array(n)}function G(){return typeof CompressionStream<"u"&&typeof DecompressionStream<"u"}async function gt(t){let e=[],r=t.getReader();for(;;){let{done:n,value:s}=await r.read();if(n)break;s&&e.push(s)}return B(...e)}async function L(t,e="deflate-raw"){let r=new CompressionStream(e),n=r.writable.getWriter();return n.write(t),n.close(),gt(r.readable)}async function K(t,e="deflate-raw"){let r=new DecompressionStream(e),n=r.writable.getWriter();return n.write(t),n.close(),gt(r.readable)}async function mt(t){try{return await K(t,"deflate")}catch{return await K(t,"deflate-raw")}}var $="QC1:",pt=0,ht=1;async function _(t){let e=h(t),r=pt,n=e;if(G()){let s=await L(e);s.length<e.length&&(r=ht,n=s)}return $+M(B(new Uint8Array([r]),n))}async function R(t){if(!t.startsWith($))throw new Error(`not a qredential envelope: expected the ${$} prefix`);let e=O(t.slice($.length));if(e.length<2)throw new Error("envelope is truncated");let r=e[0],n=e.subarray(1);if(r===pt)return I(n);if(r===ht){if(!G())throw new Error("this credential is deflate compressed and the runtime has no DecompressionStream");return I(await K(n))}throw new Error(`unknown envelope encoding flag: 0x${r.toString(16)}`)}function P(t){return t.startsWith($)}async function yt(t){let e=t.split(".");if(e.length!==3)throw new Error("status list token is not a JWT");let r=w(e[1]),n=r.status_list;if(!n||typeof n.lst!="string")throw new Error("status list token has no status_list.lst");let s=n.bits??1;if(![1,2,4,8].includes(s))throw new Error(`unsupported status list bit width: ${s}`);return{payload:r,list:{issuer:String(r.iss??""),uri:typeof r.sub=="string"?r.sub:void 0,issuedAt:typeof r.iat=="number"?r.iat:void 0,expiresAt:typeof r.exp=="number"?r.exp:void 0,bits:s,bytes:await mt(E(n.lst))}}}function wt(t,e){if(e<0||!Number.isInteger(e))throw new Error(`invalid status index: ${e}`);let r=8/t.bits,n=Math.floor(e/r),s=t.bytes[n];if(s===void 0)return"unknown";let i=e%r*t.bits,a=(1<<t.bits)-1,o=s>>i&a;return o===0?"valid":o===1?"invalid":o===2?"suspended":"unknown"}function bt(t,e,r=v()){return t.expiresAt!==void 0&&r>t.expiresAt?!0:e===void 0?!1:t.issuedAt===void 0?!0:r-t.issuedAt>A(e)}async function kt(t){let e=t.alg??"ES256",r=t.issuedAt??v(),n=new Uint8Array(Math.ceil(t.size/8)),s=(u,d)=>{for(let m of u??[]){if(m<0||m>=t.size||!Number.isInteger(m))throw new Error(`status index ${m} is outside a list of ${t.size}`);n[Math.floor(m/8)]|=d<<m%8}};s(t.revoked,1),s(t.suspended,2);let i={iss:t.issuer,sub:t.uri,iat:r,status_list:{bits:1,lst:p(await L(n,"deflate"))}};t.expiresIn!==void 0&&(i.exp=r+A(t.expiresIn));let a={alg:e,typ:"statuslist+jwt",kid:t.kid},o=`${y(a)}.${y(i)}`,c=await T(t.key,e);return`${o}.${p(await D(o,c,e))}`}var xt="~";function At(t,e){let r=p(ct(16));return{raw:y([r,t,e]),salt:r,name:t,value:e}}function F(t){let e=w(t);if(!Array.isArray(e)||e.length!==3)throw new Error("disclosure is not a three element array");let[r,n,s]=e;if(typeof r!="string"||typeof n!="string")throw new Error("disclosure salt and claim name must be strings");return{raw:t,salt:r,name:n,value:s}}async function Y(t){return p(await dt(h(t)))}function X(t){let e=t.split(xt),r=e[0]??"",n=e.slice(1),s;if(n.length>0){let i=n[n.length-1];i===""||(s=i),n.pop()}return{jwt:r,disclosures:n.filter(i=>i!==""),keyBinding:s}}function Z(t,e,r){return[t,...e,r??""].join(xt)}async function vt(t,e){let r=t._sd_alg??"sha-256";if(r!=="sha-256")throw new Error(`unsupported _sd_alg: ${r}`);let n=Array.isArray(t._sd)?t._sd:[],s={};for(let[o,c]of Object.entries(t))o==="_sd"||o==="_sd_alg"||(s[o]=c);let i=[],a=new Set;for(let o of e){let c=F(o),u=await Y(o);if(!n.some(d=>lt(d,u)))throw new Error(`disclosure for "${c.name}" does not match any digest signed by the issuer`);if(a.has(u))throw new Error(`disclosure for "${c.name}" was sent more than once`);a.add(u),s[c.name]=c.value,i.push(c.name)}return{claims:s,disclosed:i,withheld:n.length-i.length}}var Tt={L:[25,47,77,114,154,195,224,279,335,395,468,535,619,667,758,854,938,1046,1153,1249,1352,1460,1588,1704,1853,1990,2132,2223,2369,2520,2677,2840,3009,3183,3351,3537,3729,3927,4087,4296],M:[20,38,61,90,122,154,178,221,262,311,366,419,483,528,600,656,734,816,909,970,1035,1134,1248,1326,1451,1542,1637,1732,1839,1994,2113,2238,2369,2506,2632,2780,2894,3054,3220,3391],Q:[16,29,47,67,87,108,125,157,189,221,259,296,352,376,426,470,531,574,644,702,742,823,890,963,1041,1094,1172,1263,1322,1429,1499,1618,1700,1787,1867,1966,2071,2181,2298,2420],H:[10,20,35,50,64,84,93,122,143,174,200,227,259,283,321,365,408,452,493,557,587,640,672,744,779,864,910,958,1016,1080,1150,1226,1307,1394,1431,1530,1591,1658,1774,1852]},St=20;function Et(t,e="M"){let r=Tt[e],n=t.length,s=null,i=null;for(let o=0;o<r.length;o++)if(n<=r[o]){s=o+1,i=r[o];break}if(s===null)return{chars:n,version:null,capacity:null,comfortable:!1,errorCorrection:e,advice:`${n} characters does not fit in any QR code at level ${e}. Move claims out of the credential or make them selectively disclosable.`};let a=s<=St;return{chars:n,version:s,capacity:i,comfortable:a,errorCorrection:e,advice:a?`Fits QR version ${s} at level ${e}, with ${i-n} characters to spare.`:`Fits QR version ${s}, which is dense enough that scanning gets unreliable on worn cards and cheap cameras. Aim for version ${St} or below.`}}function l(t,e){return{ok:!1,reason:t,message:e}}function Dt(t){let e=[...t];for(let r=e.length-1;r>0;r--){let n=Math.floor(Math.random()*(r+1));[e[r],e[n]]=[e[n],e[r]]}return e}async function Mt(t){let e=t.alg??"ES256",r=v(),n=t.disclose??[],s=n.filter(g=>!(g in t.claims));if(s.length>0)throw new Error(`disclose lists claims that are not in the credential: ${s.join(", ")}`);let i=n.map(g=>At(g,t.claims[g])),a=Dt(await Promise.all(i.map(g=>Y(g.raw)))),o={iss:t.issuer,iat:r};for(let[g,N]of Object.entries(t.claims))n.includes(g)||(o[g]=N);t.subject!==void 0&&(o.sub=t.subject),t.vct!==void 0&&(o.vct=t.vct),t.expiresIn!==void 0&&(o.exp=r+A(t.expiresIn)),t.notBefore!==void 0&&(o.nbf=r+A(t.notBefore)),t.status!==void 0&&(o.status={status_list:{idx:t.status.idx,uri:t.status.uri}}),a.length>0&&(o._sd=a,o._sd_alg="sha-256");let c={alg:e,typ:"dc+sd-jwt",kid:t.kid},u=`${y(c)}.${y(o)}`,d=await T(t.key,e),m=`${u}.${p(await D(u,d,e))}`,k=Z(m,i.map(g=>g.raw)),x=await _(k);return{credential:k,qr:x,bytes:x.length,disclosable:n}}async function Ot(t,e){let r=P(t)?await R(t):t,{jwt:n,disclosures:s}=X(r),i=new Set(e.disclose),a=new Map;for(let u of s)a.set(F(u).name,u);let o=e.disclose.filter(u=>!a.has(u));if(o.length>0)throw new Error(`this credential cannot disclose: ${o.join(", ")}`);let c=s.filter(u=>i.has(F(u).name));return _(Z(n,c))}async function Kt(t,e){let r=e.now??v(),n=e.clockSkew??60,s;try{s=P(t)?await R(t):t}catch(f){return l("malformed",f.message)}let{jwt:i,disclosures:a,keyBinding:o}=X(s);if(o!==void 0)return l("unsupported_feature","key binding JWTs are not supported yet, and ignoring one would weaken the check it exists to provide");let c=i.split(".");if(c.length!==3)return l("malformed","credential JWT does not have three segments");let u,d;try{u=w(c[0]),d=w(c[1])}catch(f){return l("malformed",`could not parse the credential: ${f.message}`)}let m=typeof d.iss=="string"?d.iss:void 0;if(!m)return l("malformed","credential has no iss claim");let k=e.trust.issuers[m];if(!k)return l("unknown_issuer",`no trusted key for issuer ${m}`);let x=u.kid?k.keys.filter(f=>f.kid===u.kid):k.keys;if(x.length===0)return l("unknown_key",`issuer ${m} has no trusted key with kid ${String(u.kid)}`);let g=x.find(f=>f.alg===u.alg);if(!g)return l("unsupported_alg",`header asks for ${String(u.alg)} but the trusted key for that kid is ${x[0].alg}`);let N=`${c[0]}.${c[1]}`,$t=await H(g.jwk,g.alg);if(!await Q(N,c[2],$t,g.alg))return l("bad_signature","the issuer signature does not check out");let U=typeof d.exp=="number"?d.exp:void 0,W=typeof d.nbf=="number"?d.nbf:void 0;if(U!==void 0&&r>U+n)return l("expired",`credential expired at ${new Date(U*1e3).toISOString()}`);if(W!==void 0&&r+n<W)return l("not_yet_valid",`credential is not valid until ${new Date(W*1e3).toISOString()}`);let tt,et,rt;try{let f=await vt(d,a);tt=f.claims,et=f.disclosed,rt=f.withheld}catch(f){return l("digest_mismatch",f.message)}let nt=!1,V=d.status?.status_list;if(V){if(!e.status)return l("status_unavailable",`this credential points at the status list ${V.uri} and no cached copy was provided`);try{let{payload:f,list:st}=await yt(e.status),it=String(f.iss??""),ot=e.trust.issuers[it];if(!ot)return l("unknown_issuer",`the status list is signed by the untrusted issuer ${it}`);let C=e.status.split("."),q=w(C[0]),j=ot.keys.find(ut=>(!q.kid||ut.kid===q.kid)&&ut.alg===q.alg);if(!j)return l("unknown_key","no trusted key matches the status list signature");let _t=await H(j.jwk,j.alg),Rt=`${C[0]}.${C[1]}`;if(!await Q(Rt,C[2],_t,j.alg))return l("bad_signature","the status list signature does not check out");if(bt(st,e.maxStatusAge,r))return l("status_list_stale","the cached status list is older than maxStatusAge, so revocation cannot be ruled out");let at=wt(st,V.idx);if(at==="invalid")return l("revoked","the issuer has revoked this credential");if(at==="suspended")return l("revoked","the issuer has suspended this credential");nt=!0}catch(f){return l("status_unavailable",`could not read the status list: ${f.message}`)}}return{ok:!0,claims:tt,issuer:m,subject:typeof d.sub=="string"?d.sub:void 0,issuedAt:typeof d.iat=="number"?d.iat:void 0,expiresAt:U,disclosed:et,withheld:rt,revocationChecked:nt}}return Bt(Lt);})();
 </script>
 
-<div class="wrap">
-  <header class="masthead">
-    <div class="mark">q<span>redential</span></div>
-    <div class="tagline">Scan a credential and get an answer with no network connection. Everything on this page runs in your browser.</div>
-    <div class="spacer"></div>
-    <div class="chip" id="alg-chip">ES256 &middot; SD-JWT</div>
-  </header>
+<header class="masthead">
+  <div class="wrap">
+    <a class="mark" href="./">q<span>redential</span></a>
+    <nav>
+      <a href="./guide/">Docs</a>
+      <a href="./playground/">Playground</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+      <a href="https://www.npmjs.com/package/qredential">npm</a>
+    </nav>
+  </div>
+</header>
 
-  <div id="boot" class="boot">Generating an issuer key pair and signing a demo credential&hellip;</div>
-
-  <main id="app" hidden>
-    <div class="bench">
-      <section>
-        <h2>The credential</h2>
-        <p class="note">
-          A fictional driving licence from <span class="inline-code">id.arcadia.example</span>.
-          Two separate decisions shape what a verifier ends up seeing: the issuer decides which
-          claims <em>may</em> be withheld, and then the holder decides which of those to actually
-          show. Change either column and the QR code rebuilds.
-        </p>
-        <table class="ledger">
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Value</th>
-              <th class="mid">Issuer allows<br>withholding</th>
-              <th class="mid">Holder<br>reveals</th>
-            </tr>
-          </thead>
-          <tbody id="ledger-body"></tbody>
-        </table>
-
-        <div class="strip-head">
-          <h2 style="margin:0">What actually travels</h2>
-          <span class="chip" id="strip-len"></span>
-        </div>
-        <div class="strip"><pre id="strip"></pre></div>
-      </section>
-
-      <section>
-        <h2>Presented code</h2>
-        <div class="plate">
-          <div class="qr" id="qr"></div>
-          <div class="plate-note" id="plate-note">Error correction M</div>
-        </div>
-        <div class="readout" id="readout"></div>
-        <p class="advice" id="advice"></p>
-      </section>
+<div class="hero">
+  <canvas id="guilloche" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">SD-JWT &middot; Token Status List &middot; base45</p>
+      <h1>The answer is already <em>inside</em> the code</h1>
+      <p class="lede">
+        A credential that proves itself. Signature, expiry, revocation and claims, all checked
+        without one request leaving the device.
+      </p>
+      <p class="sub">
+        TypeScript, zero runtime dependencies, WebCrypto only. Node, browsers and React Native,
+        because the thing doing the verifying is usually a phone.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="./playground/">Try to break it</a>
+        <a class="cta ghost" href="./guide/">Read the docs</a>
+      </div>
     </div>
 
-    <section class="terminal">
-      <h2>Verifier</h2>
-      <p class="note">
-        The result below is produced by <span class="inline-code">verify()</span> running against a
-        pinned trust list and a cached status list. No request leaves the page.
-      </p>
-      <div class="verdict">
-        <div class="stamp" id="stamp">
-          <div class="word" id="stamp-word">Ready</div>
-          <div class="code" id="stamp-code"></div>
-          <div class="why" id="stamp-why"></div>
-        </div>
-        <div class="detail">
-          <div class="scenario" id="scenario">Honest presentation</div>
-          <div class="claims-out" id="claims-out"></div>
-          <div class="facts" id="facts"></div>
-        </div>
+    <div class="demo" id="demo">
+      <div class="demo-plate">
+        <div id="hero-qr"><div class="fallback">signing a demo credential&hellip;</div></div>
+        <div class="demo-caption" id="hero-caption">&nbsp;</div>
       </div>
-    </section>
-
-    <section class="attacks">
-      <h2>Try to break it</h2>
-      <p class="note">
-        Each button takes the credential above and does something an attacker would actually do, in
-        plain string operations. The expected rejection code is printed on the button, so you can
-        check the library against its own claims.
-      </p>
-      <div class="attack-grid" id="attack-grid"></div>
-    </section>
-
-    <section class="paste">
-      <h2>Verify any payload</h2>
-      <p class="note">
-        Paste a <span class="inline-code">QC1:</span> envelope, or the raw SD-JWT form. Only the
-        demo issuer is on this page's trust list, so a credential from anywhere else is rejected as
-        an unknown issuer, which is the correct answer.
-      </p>
-      <textarea id="paste-box" spellcheck="false" aria-label="Credential payload to verify"></textarea>
-      <div class="actions">
-        <button class="primary" id="verify-btn">Verify payload</button>
-        <button class="reset" id="reset-btn" style="flex-direction:row;align-items:center"><span class="label">Reset to the honest credential</span></button>
+      <div class="demo-verdict" id="hero-verdict">
+        <div class="word" id="hero-word">&nbsp;</div>
+        <div class="lines" id="hero-lines"></div>
       </div>
-    </section>
-
-    <footer>
-      <span>qredential &middot; MIT</span>
-      <span>SD-JWT selective disclosure, base45 envelope, Token Status List revocation</span>
-      <span>Zero runtime dependencies, WebCrypto only</span>
-    </footer>
-  </main>
+      <div class="demo-meta">
+        <span>network requests <b id="hero-net">·</b></span>
+        <span>verified in <b id="hero-ms">·</b></span>
+      </div>
+    </div>
+  </div>
 </div>
+
+<section class="band">
+  <div class="wrap measure">
+    <h2>Built for the moment there is no signal</h2>
+    <p>
+      I built the eCNH, Brazil's digital driving licence, used by more than 40 million people. The
+      part that taught me the most was not the app. It was the roadside: an officer scanning a
+      licence on a highway with one bar of signal, or none, needing a yes or no in under a second.
+    </p>
+    <p>
+      Everything you need for that answer fits in the code. The signature proves the issuer, the
+      claims are right there, and the only thing you need from outside is the issuer's public key,
+      which changes so rarely that you can ship it and refresh it weekly.
+    </p>
+    <p>
+      Libraries for this exist. They are enterprise SDKs: heavy, tied to one country's profile, and
+      written as though you already work in the identity industry. This is the version a product
+      engineer can add on a Tuesday.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Three parties, and none of them is a server</h2>
+    <div class="flow" role="img" aria-label="The issuer signs a credential and gives it to the holder. The holder presents a narrowed copy to the verifier. The verifier checks it against a pinned trust list held on the device. No party contacts a server at scan time.">
+      <svg viewBox="0 0 700 208" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--guilloche)"></path>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--slate)">
+          <rect x="6" y="46" width="168" height="66" fill="var(--panel)" stroke="var(--line)"></rect>
+          <text x="20" y="72" font-size="13" font-weight="500" fill="var(--ink)">Issuer</text>
+          <text x="20" y="92">signs once, then leaves</text>
+
+          <rect x="266" y="46" width="168" height="66" fill="var(--panel)" stroke="var(--line)"></rect>
+          <text x="280" y="72" font-size="13" font-weight="500" fill="var(--ink)">Holder</text>
+          <text x="280" y="92">picks what travels</text>
+
+          <rect x="526" y="46" width="168" height="66" fill="var(--viridian-wash)" stroke="var(--viridian)"></rect>
+          <text x="540" y="72" font-size="13" font-weight="500" fill="var(--ink)">Verifier</text>
+          <text x="540" y="92">decides, offline</text>
+
+          <line x1="178" y1="79" x2="258" y2="79" stroke="var(--guilloche)" stroke-width="1.5" marker-end="url(#ar)"></line>
+          <text x="186" y="70" font-size="10">credential</text>
+
+          <line x1="438" y1="79" x2="518" y2="79" stroke="var(--guilloche)" stroke-width="1.5" marker-end="url(#ar)"></line>
+          <text x="444" y="70" font-size="10">QR scan</text>
+
+          <rect x="526" y="140" width="168" height="48" fill="none" stroke="var(--line)" stroke-dasharray="3 3"></rect>
+          <text x="540" y="160" font-size="10.5" fill="var(--ink)">trust list, on the device</text>
+          <text x="540" y="176" font-size="10">shipped and refreshed weekly</text>
+          <line x1="610" y1="114" x2="610" y2="138" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 3"></line>
+
+          <text x="6" y="176" font-size="11" fill="var(--oxblood)">No network call at scan time.</text>
+          <text x="6" y="192" font-size="10.5">That is the whole design, not an optimisation.</text>
+        </g>
+      </svg>
+    </div>
+    <div class="trio">
+      <div>
+        <span class="step-n">01 &middot; ISSUE</span>
+        <h3>Sign every claim once</h3>
+        <p>The issuer decides which claims may later be withheld, and signs a digest for each of those.</p>
+      </div>
+      <div>
+        <span class="step-n">02 &middot; PRESENT</span>
+        <h3>Send only what is asked</h3>
+        <p>The wallet drops the claims it is keeping. The issuer's signature still checks out on what is left.</p>
+      </div>
+      <div>
+        <span class="step-n">03 &middot; VERIFY</span>
+        <h3>Answer without asking anyone</h3>
+        <p>Signature, expiry, revocation and every disclosure, checked against a pinned key on the device.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Prove you are over 18 without handing over your birthday</h2>
+    <div class="measure">
+      <p>
+        Age verification laws are arriving faster than the tooling. The usual implementation has the
+        customer upload a photo of their ID to a third party, which is a privacy disaster and a
+        breach waiting to happen.
+      </p>
+      <p>
+        Selective disclosure does it properly. The verifier cannot learn the birth date even if it
+        wants to, because that value never left the wallet. The property is cryptographic, not a
+        promise in a privacy policy.
+      </p>
+    </div>
+    <pre style="margin-top:22px"><code><span class="tok-c">// The credential holds name, address, birth date and document number.</span>
+<span class="tok-c">// The bar gets one boolean.</span>
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [<span class="tok-s">'over_18'</span>] })
+
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
+result.claims             <span class="tok-c">// { over_18: true }</span>
+result.claims.birth_date  <span class="tok-c">// undefined, and it was never transmitted</span>
+result.withheld           <span class="tok-c">// 4, and it cannot tell you which four</span></code></pre>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Real numbers, including the awkward one</h2>
+    <p class="measure">
+      A realistic driving licence, eight claims, five year expiry, status list pointer. Measured, not
+      estimated:
+    </p>
+    <div class="tablewrap" style="max-width:640px">
+      <table>
+        <thead><tr><th>Credential</th><th class="num">Characters</th><th>QR version</th></tr></thead>
+        <tbody>
+          <tr><td>everything visible</td><td class="num">690</td><td>17, scans fine</td></tr>
+          <tr class="warnrow"><td>all eight claims disclosable</td><td class="num">1465</td><td>26, too dense</td></tr>
+          <tr class="warnrow"><td>presenting only <code>over_18</code></td><td class="num">1048</td><td>22, still dense</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="aside">
+      <strong>Selective disclosure roughly doubles the credential.</strong> Every disclosable claim
+      costs a salt plus a signed digest, and the digests stay in the payload whether the holder
+      reveals the claim or not. That is deliberate, since a digest count that shrank with what you
+      revealed would leak what you withheld. It does mean the saving at presentation time is
+      twenty eight percent here, not the eighty that intuition promises. Make two or three claims
+      disclosable, not all of them, and let <code>fits()</code> tell you where you stand before you
+      print anything.
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Don't take my word for it</h2>
+    <p class="measure">
+      The playground runs the whole library in your browser and fires eight real attacks at it. Each
+      one prints the rejection code it expects, so you can check the library against its own claims
+      instead of trusting a README.
+    </p>
+    <div class="attack-list">
+      <div><div class="what">Flip a claim in the payload</div><div class="code">bad_signature</div></div>
+      <div><div class="what">Invent a claim never issued</div><div class="code">digest_mismatch</div></div>
+      <div><div class="what">Send a disclosure twice</div><div class="code">digest_mismatch</div></div>
+      <div><div class="what">Sign with the wrong key</div><div class="code">bad_signature</div></div>
+      <div><div class="what">Claim to be another authority</div><div class="code">unknown_issuer</div></div>
+      <div><div class="what">Use it ten years from now</div><div class="code">expired</div></div>
+      <div><div class="what">Use it after revocation</div><div class="code">revoked</div></div>
+      <div><div class="what">Hide behind a stale status list</div><div class="code">status_list_stale</div></div>
+    </div>
+    <div class="cta-row"><a class="cta" href="./playground/">Open the playground</a></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap install">
+    <div>
+      <h2>Install</h2>
+      <pre><code>npm i qredential</code></pre>
+      <p style="margin-top:16px;color:var(--slate);font-size:14.5px">
+        Node 20 or newer, every current browser, React Native. About 700 lines of source with no
+        runtime dependencies, specifically so that reading it before you trust it is realistic.
+      </p>
+      <div class="cta-row">
+        <a class="cta ghost" href="./guide/">Documentation</a>
+        <a class="cta ghost" href="https://github.com/george-veras/qredential">Source</a>
+      </div>
+    </div>
+    <div>
+      <h2 style="font-size:19px">Standards, not inventions</h2>
+      <ul class="std">
+        <li><b>SD-JWT</b>selective disclosure, the mechanism the European identity wallet uses</li>
+        <li><b>SD-JWT VC</b>the credential shape</li>
+        <li><b>Token Status List</b>revocation that works from a cached copy</li>
+        <li><b>base45, RFC 9285</b>the QR envelope, chosen for scanner compatibility</li>
+      </ul>
+      <p style="margin-top:18px;font-size:14px;color:var(--slate)">
+        Not ISO 18013-5 mDL yet, and no key binding yet. Both are on the roadmap. Claiming half of a
+        compliance standard is worse than not claiming it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>qredential &middot; MIT</span>
+    <span>No third party audit. <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">What that means</a></span>
+    <span><a href="https://github.com/george-veras/qredential">Source and issues</a></span>
+  </div>
+</footer>
 
 <script>
 (function () {
   'use strict';
   var Q = window.Q;
-
-  var ISSUER = 'https://id.arcadia.example';
-  var STATUS_URI = 'https://id.arcadia.example/status/3';
-  var STATUS_IDX = 48219;
-  var STATUS_SIZE = 262144;
-
-  var CLAIMS = {
-    family_name: 'GONCALVES',
-    given_name: 'ANA LUCIA',
-    birth_date: '1991-04-02',
-    over_18: true,
-    licence_number: 'AR-4471-2298',
-    categories: 'AB'
-  };
-  var ORDER = ['family_name', 'given_name', 'birth_date', 'over_18', 'licence_number', 'categories'];
-
-  var S = {
-    disclosable: { birth_date: true, over_18: true, licence_number: true, categories: true },
-    revealed: { over_18: true }
-  };
-
-  // Base64url helpers, deliberately hand written: this is exactly the toolkit an attacker has.
-  function b64uDecode(s) {
-    var pad = s.replace(/-/g, '+').replace(/_/g, '/');
-    while (pad.length % 4) pad += '=';
-    var bin = atob(pad);
-    var bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  }
-  function b64uEncode(str) {
-    var bytes = new TextEncoder().encode(str);
-    var bin = '';
-    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-  }
-
   var el = function (id) { return document.getElementById(id); };
 
-  function renderLedger() {
-    var rows = ORDER.map(function (name) {
-      var value = CLAIMS[name];
-      var canHide = !!S.disclosable[name];
-      var shown = canHide ? !!S.revealed[name] : true;
-      return '<tr>' +
-        '<td class="cname">' + name + '</td>' +
-        '<td class="cval">' + String(value) + '</td>' +
-        '<td class="mid"><input type="checkbox" data-kind="disclosable" data-claim="' + name + '"' +
-          (canHide ? ' checked' : '') + ' aria-label="Allow withholding ' + name + '"></td>' +
-        '<td class="mid">' + (canHide
-          ? '<input type="checkbox" data-kind="reveal" data-claim="' + name + '"' +
-            (shown ? ' checked' : '') + ' aria-label="Reveal ' + name + '">'
-          : '<span class="always">always</span>') + '</td>' +
-      '</tr>';
-    });
-    el('ledger-body').innerHTML = rows.join('');
-  }
+  // ---- guilloche: the rosette is drawn from the credential's own signature bytes ----
+  // Security printing uses these interlaced curves because they are hard to reproduce by hand.
+  // Here the curve parameters come from the signature, so the ornament is the data.
+  function drawGuilloche(seedBytes) {
+    var canvas = el('guilloche');
+    var host = canvas.parentElement;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = host.offsetWidth, h = host.offsetHeight;
+    if (!w || !h) return;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+
+    var accent = getComputedStyle(document.documentElement).getPropertyValue('--guilloche').trim() || '#2C6675';
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 0.6;
+    ctx.globalAlpha = 0.34;
+
+    var cx = w - Math.min(w * 0.22, 210);
+    var cy = h / 2;
+    var base = Math.min(h * 0.92, 420);
+
+    for (var ring = 0; ring < 5; ring++) {
+      var b0 = seedBytes[(ring * 7) % seedBytes.length];
+      var b1 = seedBytes[(ring * 11 + 3) % seedBytes.length];
+
+      // r dividing R exactly makes the petal count an integer, which is what closes the curve at
+      // one full turn. Without that the path never meets itself and the result reads as scribble.
+      var petals = 9 + (b0 % 14);
+      var R = base * (0.26 + ring * 0.155);
+      var r = R / petals;
+      var d = r * (0.55 + (b1 / 255) * 0.9);
+      var k = petals - 1;
+      var copies = 2 + (b1 % 2);
+
+      for (var c = 0; c < copies; c++) {
+        var phase = (Math.PI * 2 * c) / (petals * copies);
+        ctx.beginPath();
+        for (var t = 0; t <= Math.PI * 2 + 0.01; t += 0.008) {
+          var a = t + phase;
+          var x = cx + (R - r) * Math.cos(a) + d * Math.cos(k * a);
+          var y = cy + (R - r) * Math.sin(a) - d * Math.sin(k * a);
+          if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+  // ---- hero demo ----
+  var ISSUER = 'https://id.arcadia.example';
 
   function renderQR(text) {
-    var host = el('qr');
-    host.innerHTML = '';
+    var host = el('hero-qr');
     if (typeof qrcode === 'undefined') {
-      host.innerHTML = '<div class="qr-fail">QR renderer did not load. The payload below is still the real thing.</div>';
-      el('plate-note').textContent = '';
+      host.innerHTML = '<div class="fallback">QR renderer unavailable. The credential below is still real.</div>';
       return;
     }
     try {
@@ -568,295 +523,74 @@
       code.make();
       host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
       var modules = code.getModuleCount();
-      el('plate-note').textContent = 'Version ' + ((modules - 17) / 4) + ' · ' + modules +
-        ' × ' + modules + ' modules · error correction M';
+      el('hero-caption').textContent = 'QR version ' + ((modules - 17) / 4) + ' · ' + text.length + ' characters';
     } catch (e) {
-      host.innerHTML = '<div class="qr-fail">This payload is too large for any QR code. Make fewer claims disclosable.</div>';
-      el('plate-note').textContent = '';
+      host.innerHTML = '<div class="fallback">payload too large for a QR code</div>';
     }
   }
-
-  function renderStrip(text) {
-    var lines = [];
-    for (var i = 0; i < text.length; i += 44) lines.push(text.slice(i, i + 44));
-    el('strip').textContent = lines.join('\n');
-    el('strip-len').textContent = text.length + ' chars';
-  }
-
-  function renderReadout(text) {
-    var fit = Q.fits(text);
-    var rows = [
-      ['Characters in the code', text.length, false],
-      ['Smallest QR version', fit.version === null ? 'none fits' : 'v' + fit.version, fit.version === null],
-      ['Scans reliably', fit.comfortable ? 'yes' : 'too dense', !fit.comfortable],
-      ['Claims withheld', String(countWithheld()), false]
-    ];
-    el('readout').innerHTML = rows.map(function (r) {
-      return '<div class="row"><span class="k">' + r[0] + '</span><span class="v' +
-        (r[2] ? ' warn' : '') + '">' + r[1] + '</span></div>';
-    }).join('');
-    el('advice').textContent = fit.advice;
-  }
-
-  function countWithheld() {
-    var n = 0;
-    ORDER.forEach(function (name) {
-      if (S.disclosable[name] && !S.revealed[name]) n++;
-    });
-    return n;
-  }
-
-  function showVerdict(scenario, result) {
-    var stamp = el('stamp');
-    stamp.classList.remove('pass', 'fail');
-    stamp.classList.add(result.ok ? 'pass' : 'fail');
-    el('stamp-word').textContent = result.ok ? 'Pass' : 'Reject';
-    el('stamp-code').textContent = result.ok ? 'verified' : result.reason;
-    el('stamp-why').textContent = result.ok
-      ? 'Signature checks out against a pinned issuer key.'
-      : result.message;
-    el('scenario').textContent = scenario;
-
-    var pills = '';
-    if (result.ok) {
-      var names = Object.keys(result.claims).filter(function (k) {
-        return ORDER.indexOf(k) !== -1;
-      });
-      pills = names.map(function (k) {
-        return '<span class="claim-pill">' + k + ' = ' + String(result.claims[k]) + '</span>';
-      }).join('');
-      if (result.withheld > 0) {
-        pills += '<span class="claim-pill hidden-count">' + result.withheld +
-          ' withheld, unreadable</span>';
-      }
-      el('facts').innerHTML =
-        '<span>issuer <b>' + result.issuer + '</b></span>' +
-        '<span>expires <b>' + (result.expiresAt
-          ? new Date(result.expiresAt * 1000).toISOString().slice(0, 10) : 'never') + '</b></span>' +
-        '<span>revocation checked <b>' + (result.revocationChecked ? 'yes' : 'no') + '</b></span>';
-    } else {
-      el('facts').innerHTML = '<span>Nothing is trusted from a credential that fails, ' +
-        'including its claims.</span>';
-    }
-    el('claims-out').innerHTML = pills;
-  }
-
-  // ---- state that only exists after key generation ----
-  var keys, forger, trust, statusClean, statusRevoked, statusStale, credential, presentation;
-
-  async function makeKeys() {
-    var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
-    return {
-      priv: await crypto.subtle.exportKey('jwk', pair.privateKey),
-      pub: await crypto.subtle.exportKey('jwk', pair.publicKey)
-    };
-  }
-
-  async function rebuild() {
-    var disclose = ORDER.filter(function (n) { return S.disclosable[n]; });
-    var issued = await Q.issue({
-      issuer: ISSUER,
-      kid: 'arc-2026',
-      key: keys.priv,
-      claims: CLAIMS,
-      vct: 'https://id.arcadia.example/driving-licence',
-      expiresIn: '1825d',
-      disclose: disclose,
-      status: { idx: STATUS_IDX, uri: STATUS_URI }
-    });
-    credential = issued.credential;
-
-    var reveal = disclose.filter(function (n) { return S.revealed[n]; });
-    presentation = await Q.present(credential, { disclose: reveal });
-
-    renderQR(presentation);
-    renderStrip(presentation);
-    renderReadout(presentation);
-    el('paste-box').value = presentation;
-
-    var result = await Q.verify(presentation, { trust: trust, status: statusClean, maxStatusAge: '7d' });
-    showVerdict('Honest presentation', result);
-    clearPressed();
-  }
-
-  function clearPressed() {
-    Array.prototype.forEach.call(document.querySelectorAll('button.attack'), function (b) {
-      b.setAttribute('aria-pressed', 'false');
-    });
-  }
-
-  // ---- the attack bench ----
-  function splitCombined(s) {
-    var parts = s.split('~');
-    return { jwt: parts[0], disclosures: parts.slice(1).filter(function (d) { return d !== ''; }) };
-  }
-  function joinCombined(jwt, disclosures) {
-    return [jwt].concat(disclosures).concat(['']).join('~');
-  }
-
-  var ATTACKS = [
-    {
-      label: 'Flip a claim in the payload',
-      expect: 'bad_signature',
-      note: 'Rewrites over_18 to true and leaves the original signature in place.',
-      run: async function () {
-        var parts = splitCombined(credential);
-        var seg = parts.jwt.split('.');
-        var payload = JSON.parse(b64uDecode(seg[1]));
-        payload.over_18 = true;
-        payload.birth_date = '2012-01-01';
-        var forged = seg[0] + '.' + b64uEncode(JSON.stringify(payload)) + '.' + seg[2];
-        return { text: joinCombined(forged, parts.disclosures), opts: {} };
-      }
-    },
-    {
-      label: 'Invent a claim that was never issued',
-      expect: 'digest_mismatch',
-      note: 'Appends a well formed disclosure the issuer never signed a digest for.',
-      run: async function () {
-        var parts = splitCombined(credential);
-        var salt = b64uEncode(String(Math.random()).slice(2) + String(Date.now()));
-        var invented = b64uEncode(JSON.stringify([salt, 'security_clearance', 'TOP SECRET']));
-        return { text: joinCombined(parts.jwt, parts.disclosures.concat([invented])), opts: {} };
-      }
-    },
-    {
-      label: 'Send the same disclosure twice',
-      expect: 'digest_mismatch',
-      note: 'A replayed disclosure is a cheap way to probe a sloppy verifier.',
-      run: async function () {
-        var parts = splitCombined(credential);
-        if (!parts.disclosures.length) return null;
-        return { text: joinCombined(parts.jwt, parts.disclosures.concat([parts.disclosures[0]])), opts: {} };
-      }
-    },
-    {
-      label: 'Sign it with the wrong key',
-      expect: 'bad_signature',
-      note: 'Same issuer name, same claims, a key that is not the pinned one.',
-      run: async function () {
-        var fake = await Q.issue({
-          issuer: ISSUER, kid: 'arc-2026', key: forger.priv,
-          claims: CLAIMS, expiresIn: '1825d',
-          status: { idx: STATUS_IDX, uri: STATUS_URI }
-        });
-        return { text: fake.qr, opts: {} };
-      }
-    },
-    {
-      label: 'Claim to be another authority',
-      expect: 'unknown_issuer',
-      note: 'A perfectly valid credential from an issuer nobody pinned.',
-      run: async function () {
-        var other = await Q.issue({
-          issuer: 'https://id.elsewhere.example', kid: 'x1', key: forger.priv,
-          claims: CLAIMS, expiresIn: '365d'
-        });
-        return { text: other.qr, opts: {} };
-      }
-    },
-    {
-      label: 'Use it ten years from now',
-      expect: 'expired',
-      note: 'The same honest credential, checked against a clock past its expiry.',
-      run: async function () {
-        return {
-          text: presentation,
-          opts: { now: Math.floor(Date.now() / 1000) + 10 * 365 * 86400 }
-        };
-      }
-    },
-    {
-      label: 'Use it after it was revoked',
-      expect: 'revoked',
-      note: 'Signature still perfect. The issuer set this credential’s bit.',
-      run: async function () {
-        return { text: presentation, opts: { status: statusRevoked } };
-      }
-    },
-    {
-      label: 'Hide behind a stale status list',
-      expect: 'status_list_stale',
-      note: 'An attacker who blocks updates cannot turn a maybe into a yes.',
-      run: async function () {
-        return { text: presentation, opts: { status: statusStale, maxStatusAge: '7d' } };
-      }
-    }
-  ];
-
-  function renderAttacks() {
-    el('attack-grid').innerHTML = ATTACKS.map(function (a, i) {
-      return '<button class="attack" type="button" data-i="' + i + '" aria-pressed="false">' +
-        '<span class="label">' + a.label + '</span>' +
-        '<span class="expect">expects ' + a.expect + '</span>' +
-      '</button>';
-    }).join('');
-  }
-
-  async function runAttack(i) {
-    var a = ATTACKS[i];
-    var built = await a.run();
-    if (!built) return;
-    var opts = Object.assign({ trust: trust, status: statusClean, maxStatusAge: '7d' }, built.opts);
-    var result = await Q.verify(built.text, opts);
-    el('paste-box').value = built.text;
-    showVerdict(a.label + ': ' + a.note, result);
-    clearPressed();
-    var btn = document.querySelector('button.attack[data-i="' + i + '"]');
-    if (btn) btn.setAttribute('aria-pressed', 'true');
-  }
-
-  // ---- wiring ----
-  document.addEventListener('change', function (e) {
-    var t = e.target;
-    if (!t || t.type !== 'checkbox' || !t.dataset.claim) return;
-    var name = t.dataset.claim;
-    if (t.dataset.kind === 'disclosable') {
-      S.disclosable[name] = t.checked;
-      if (t.checked && S.revealed[name] === undefined) S.revealed[name] = false;
-    } else {
-      S.revealed[name] = t.checked;
-    }
-    renderLedger();
-    rebuild();
-  });
-
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest ? e.target.closest('button.attack') : null;
-    if (btn) { runAttack(Number(btn.dataset.i)); return; }
-    if (e.target.closest && e.target.closest('#reset-btn')) { rebuild(); return; }
-    if (e.target.closest && e.target.closest('#verify-btn')) {
-      var text = el('paste-box').value.trim();
-      if (!text) return;
-      Q.verify(text, { trust: trust, status: statusClean, maxStatusAge: '7d' }).then(function (r) {
-        showVerdict('Pasted payload', r);
-        clearPressed();
-      });
-    }
-  });
 
   (async function start() {
     try {
-      keys = await makeKeys();
-      forger = await makeKeys();
-      trust = { issuers: {} };
-      trust.issuers[ISSUER] = { name: 'Arcadia Motor Vehicle Authority', keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: keys.pub }] };
+      var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+      var priv = await crypto.subtle.exportKey('jwk', pair.privateKey);
+      var pub = await crypto.subtle.exportKey('jwk', pair.publicKey);
+      var trust = { issuers: {} };
+      trust.issuers[ISSUER] = { keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: pub }] };
 
-      var base = { issuer: ISSUER, kid: 'arc-2026', key: keys.priv, uri: STATUS_URI, size: STATUS_SIZE };
-      statusClean = await Q.createStatusList(Object.assign({}, base, { revoked: [12, 9001] }));
-      statusRevoked = await Q.createStatusList(Object.assign({}, base, { revoked: [STATUS_IDX] }));
-      statusStale = await Q.createStatusList(Object.assign({}, base, {
-        revoked: [], issuedAt: Math.floor(Date.now() / 1000) - 40 * 86400
-      }));
+      var issued = await Q.issue({
+        issuer: ISSUER, kid: 'arc-2026', key: priv,
+        vct: 'https://id.arcadia.example/driving-licence',
+        claims: {
+          family_name: 'GONCALVES', given_name: 'ANA LUCIA',
+          birth_date: '1991-04-02', over_18: true, licence_number: 'AR-4471-2298'
+        },
+        disclose: ['birth_date', 'over_18', 'licence_number'],
+        expiresIn: '1825d'
+      });
 
-      renderLedger();
-      renderAttacks();
-      await rebuild();
+      var presentation = await Q.present(issued.credential, { disclose: ['over_18'] });
+      renderQR(presentation);
 
-      el('boot').hidden = true;
-      el('app').hidden = false;
+      // Count network activity during the verification itself, rather than claiming a number.
+      var realFetch = window.fetch;
+      var realOpen = window.XMLHttpRequest && window.XMLHttpRequest.prototype.open;
+      var calls = 0;
+      window.fetch = function () { calls++; return realFetch.apply(this, arguments); };
+      if (realOpen) window.XMLHttpRequest.prototype.open = function () { calls++; return realOpen.apply(this, arguments); };
+
+      var t0 = performance.now();
+      var result = await Q.verify(presentation, { trust: trust });
+      var ms = performance.now() - t0;
+
+      window.fetch = realFetch;
+      if (realOpen) window.XMLHttpRequest.prototype.open = realOpen;
+
+      if (result.ok) {
+        el('hero-verdict').classList.add('pass');
+        el('hero-word').textContent = 'Pass';
+        el('hero-lines').innerHTML =
+          'claim shown: <b>over_18 = true</b><br>withheld and unreadable: <b>' + result.withheld + '</b>';
+      } else {
+        el('hero-word').textContent = 'Reject';
+        el('hero-lines').innerHTML = 'reason: <b>' + result.reason + '</b>';
+      }
+      el('hero-net').textContent = calls;
+      el('hero-ms').textContent = ms.toFixed(1) + ' ms';
+
+      // Seed the rosette from the real signature.
+      var sig = issued.credential.split('~')[0].split('.')[2];
+      var seed = [];
+      for (var i = 0; i < sig.length; i++) seed.push(sig.charCodeAt(i) & 255);
+      drawGuilloche(seed);
+
+      var resize;
+      window.addEventListener('resize', function () {
+        clearTimeout(resize);
+        resize = setTimeout(function () { drawGuilloche(seed); }, 180);
+      });
     } catch (err) {
-      el('boot').textContent = 'Could not start: ' + (err && err.message ? err.message : String(err));
+      el('hero-qr').innerHTML = '<div class="fallback">could not run the demo: ' +
+        (err && err.message ? err.message : String(err)) + '</div>';
     }
   })();
 })();
