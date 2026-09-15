@@ -22,7 +22,9 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "build:site": "node scripts/build-site.mjs",
-    "check:site": "node scripts/build-site.mjs && git diff --exit-code docs/"
+    "check:site": "node scripts/build-site.mjs && git diff --exit-code docs/",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm test"
   },
   "keywords": [
     "verifiable-credentials",
