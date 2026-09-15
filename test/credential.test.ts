@@ -379,3 +379,70 @@ describe('fits', () => {
     expect(fit.advice).toContain('does not fit')
   })
 })
+
+describe('createStatusList', () => {
+  it('produces a list the verifier agrees with, in both directions', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const { createStatusList } = await import('../src/index.js')
+    const { qr } = await issue({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      claims: CLAIMS,
+      status: { idx: 700, uri: 'https://detran.example/status/1' },
+    })
+
+    const clean = await createStatusList({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      uri: 'https://detran.example/status/1',
+      size: 1024,
+      revoked: [12, 999],
+    })
+    expect((await verify(qr, { trust: issuer.trust, status: clean })).ok).toBe(true)
+
+    const revoked = await createStatusList({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      uri: 'https://detran.example/status/1',
+      size: 1024,
+      revoked: [700],
+    })
+    const blocked = await verify(qr, { trust: issuer.trust, status: revoked })
+    expect(blocked.ok).toBe(false)
+    if (blocked.ok) return
+    expect(blocked.reason).toBe('revoked')
+  })
+
+  it('stays small for a list covering a million credentials', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const { createStatusList } = await import('../src/index.js')
+    const token = await createStatusList({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      uri: 'https://detran.example/status/1',
+      size: 1_000_000,
+      revoked: [1, 5000, 999_999],
+    })
+    // 125 KB of mostly zero bits, so deflate should leave a few KB at most.
+    expect(token.length).toBeLessThan(6000)
+  })
+
+  it('refuses an index outside the list rather than corrupting a neighbour', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const { createStatusList } = await import('../src/index.js')
+    await expect(
+      createStatusList({
+        issuer: issuer.iss,
+        kid: issuer.kid,
+        key: issuer.privateJwk,
+        uri: 'https://detran.example/status/1',
+        size: 100,
+        revoked: [500],
+      })
+    ).rejects.toThrow(/outside a list of 100/)
+  })
+})

@@ -24,6 +24,7 @@ export type * from './types.js'
 export { fits } from './qr.js'
 export type { ErrorCorrection, FitResult } from './qr.js'
 export { pack, unpack, isEnvelope } from './envelope.js'
+export { createStatusList } from './status.js'
 export { encodeBase45, decodeBase45 } from './base45.js'
 
 function reject(reason: RejectedCredential['reason'], message: string): RejectedCredential {
