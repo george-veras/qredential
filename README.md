@@ -149,14 +149,19 @@ Four functions. That is the whole surface.
   claiming half of a compliance standard is worse than not claiming it.
 - Not audited. It is new. Read the code before you put it between a person and a right they hold.
 
-## Playground
+## Website
 
-There is a browser playground in `docs/`, served at
-[george-veras.github.io/qredential](https://george-veras.github.io/qredential/). It generates an
-issuer key, signs a credential, and lets you choose what the holder reveals. The part worth your
-time is the attack bench: eight things an attacker would actually try, each printing the rejection
-code it expects, so you can check the library against its own claims rather than taking my word
-for it.
+[**george-veras.github.io/qredential**](https://george-veras.github.io/qredential/)
+
+- [Documentation](https://george-veras.github.io/qredential/guide/), including the full API and
+  every rejection reason
+- [Playground](https://george-veras.github.io/qredential/playground/), which runs the whole library
+  in your browser. The part worth your time is the attack bench: eight things an attacker would
+  actually try, each printing the rejection code it expects, so you can check the library against
+  its own claims rather than taking my word for it.
+
+The site is built from `docs/` by `npm run build:site` and deployed by GitHub Actions on every push
+to main.
 
 ## Security
 

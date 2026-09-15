@@ -48,4 +48,4 @@ jobs:
       # docs/index.html carries an inlined copy of the library. This fails when someone edits src
       # and forgets to rebuild it, which would otherwise ship a playground that disagrees with the
       # package people install.
-      - run: npm run check:playground
+      - run: npm run check:site

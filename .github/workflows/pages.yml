@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       # Rebuild rather than trusting the committed file, so the live playground always runs the
       # code on main.
-      - run: npm run build:playground
+      - run: npm run build:site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
