@@ -1,0 +1,863 @@
+<title>Qredential Playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --plate: #FDFDFB;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #5C6C6B;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --oxblood-wash: #F0DEDA;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214;
+      --panel: #141D20;
+      --plate: #FDFDFB;
+      --ink: #E4EAE5;
+      --body: #C4CFCA;
+      --slate: #8A9A97;
+      --line: #263336;
+      --line-soft: #1C272A;
+      --viridian: #4FBB98;
+      --viridian-wash: #10322A;
+      --oxblood: #DF8074;
+      --oxblood-wash: #331916;
+      --guilloche: #63AABC;
+      --amber: #D6A45A;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0C1214;
+    --panel: #141D20;
+    --plate: #FDFDFB;
+    --ink: #E4EAE5;
+    --body: #C4CFCA;
+    --slate: #8A9A97;
+    --line: #263336;
+    --line-soft: #1C272A;
+    --viridian: #4FBB98;
+    --viridian-wash: #10322A;
+    --oxblood: #DF8074;
+    --oxblood-wash: #331916;
+    --guilloche: #63AABC;
+    --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--body);
+    font-family: var(--text);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 72px; }
+
+  /* Masthead */
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 18px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .mark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 27px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .mark span { color: var(--viridian); }
+  .tagline { color: var(--slate); font-size: 14px; max-width: 46ch; }
+  .masthead .spacer { flex: 1 1 auto; }
+  .chip {
+    font-family: var(--data);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--slate);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin: 0 0 4px;
+  }
+  .note { font-size: 13px; color: var(--slate); margin: 0 0 14px; max-width: 62ch; }
+  .note code, .inline-code {
+    font-family: var(--data);
+    font-size: 0.92em;
+    color: var(--guilloche);
+  }
+
+  .bench {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 26px;
+    margin-top: 26px;
+    align-items: start;
+  }
+  @media (max-width: 880px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Claim ledger */
+  .ledger { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .ledger thead th {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-align: left;
+    padding: 0 10px 8px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: bottom;
+  }
+  .ledger thead th.mid { text-align: center; width: 104px; }
+  .ledger td {
+    padding: 9px 10px 9px 0;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle;
+  }
+  .ledger td.mid { text-align: center; }
+  .ledger .cname {
+    font-family: var(--data);
+    font-size: 12.5px;
+    color: var(--guilloche);
+    white-space: nowrap;
+  }
+  .ledger .cval {
+    font-family: var(--data);
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .always {
+    font-family: var(--data);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--slate);
+  }
+  input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--viridian); cursor: pointer; }
+  input[type="checkbox"]:disabled { cursor: not-allowed; opacity: 0.35; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  /* Artifact column */
+  .plate {
+    background: var(--plate);
+    border: 1px solid var(--line);
+    padding: 14px;
+  }
+  .plate .qr { display: block; width: 100%; max-width: 260px; margin: 0 auto; }
+  .plate .qr svg { width: 100%; height: auto; display: block; }
+  .plate-note {
+    font-family: var(--data);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #6B7A78;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .qr-fail {
+    font-family: var(--data);
+    font-size: 12px;
+    color: #8F2E26;
+    text-align: center;
+    padding: 30px 8px;
+  }
+
+  .readout { margin-top: 14px; display: flex; flex-direction: column; gap: 0; }
+  .readout .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 13px;
+  }
+  .readout .row:last-child { border-bottom: 0; }
+  .readout .k { color: var(--slate); font-size: 12px; }
+  .readout .v {
+    font-family: var(--data);
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .readout .v.warn { color: var(--amber); }
+  .advice { font-size: 12.5px; color: var(--slate); margin-top: 10px; line-height: 1.5; }
+
+  /* MRZ strip */
+  .strip-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .strip {
+    margin-top: 8px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--guilloche);
+    padding: 12px 14px;
+    overflow-x: auto;
+    max-height: 164px;
+    overflow-y: auto;
+  }
+  .strip pre {
+    margin: 0;
+    font-family: var(--data);
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    white-space: pre;
+  }
+
+  /* Terminal */
+  .terminal { margin-top: 34px; border-top: 2px solid var(--ink); padding-top: 18px; }
+  .verdict {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 720px) { .verdict { grid-template-columns: minmax(0, 1fr); } }
+
+  .stamp {
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    border-right: 1px solid var(--line);
+    transition: background-color 120ms steps(2, end);
+  }
+  @media (max-width: 720px) { .stamp { border-right: 0; border-bottom: 1px solid var(--line); } }
+  @media (prefers-reduced-motion: reduce) { .stamp { transition: none; } }
+
+  .stamp.pass { background: var(--viridian-wash); }
+  .stamp.fail { background: var(--oxblood-wash); }
+  .stamp .word {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+  }
+  .stamp.pass .word { color: var(--viridian); }
+  .stamp.fail .word { color: var(--oxblood); }
+  .stamp .code {
+    font-family: var(--data);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .stamp .why { font-size: 12.5px; color: var(--slate); line-height: 1.45; }
+
+  .detail { padding: 18px 20px; min-width: 0; }
+  .detail .scenario {
+    font-family: var(--data);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 12px;
+  }
+  .claims-out { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+  .claim-pill {
+    font-family: var(--data);
+    font-size: 12px;
+    border: 1px solid var(--viridian);
+    color: var(--viridian);
+    padding: 3px 9px;
+  }
+  .claim-pill.hidden-count {
+    border-style: dashed;
+    border-color: var(--line);
+    color: var(--slate);
+  }
+  .facts { display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 12.5px; color: var(--slate); }
+  .facts b { font-family: var(--data); font-weight: 500; color: var(--ink); }
+
+  /* Attack bench */
+  .attacks { margin-top: 30px; }
+  .attack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+  button.attack, button.reset {
+    font-family: var(--text);
+    font-size: 13.5px;
+    text-align: left;
+    background: var(--panel);
+    color: var(--body);
+    border: 1px solid var(--line);
+    padding: 11px 13px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: border-color 100ms ease, color 100ms ease;
+  }
+  button.attack:hover, button.reset:hover { border-color: var(--oxblood); color: var(--ink); }
+  button.reset:hover { border-color: var(--viridian); }
+  button.attack .label { font-weight: 500; color: var(--ink); }
+  button.attack .expect {
+    font-family: var(--data);
+    font-size: 11px;
+    color: var(--slate);
+  }
+  button.attack[aria-pressed="true"] { border-color: var(--oxblood); border-width: 1px; box-shadow: inset 2px 0 0 var(--oxblood); }
+  @media (prefers-reduced-motion: reduce) { button.attack, button.reset { transition: none; } }
+
+  .paste { margin-top: 30px; }
+  textarea {
+    width: 100%;
+    min-height: 92px;
+    font-family: var(--data);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 11px 13px;
+    resize: vertical;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 10px; align-items: center; }
+  button.primary {
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 14px;
+    background: var(--ink);
+    color: var(--ground);
+    border: 1px solid var(--ink);
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+  button.primary:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--slate);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+  }
+  footer a { color: var(--guilloche); }
+  .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>"use strict";var Q=(()=>{var z=Object.defineProperty;var Pt=Object.getOwnPropertyDescriptor;var Ut=Object.getOwnPropertyNames;var Ct=Object.prototype.hasOwnProperty;var jt=(t,e)=>{for(var r in e)z(t,r,{get:e[r],enumerable:!0})},It=(t,e,r,n)=>{if(e&&typeof e=="object"||typeof e=="function")for(let s of Ut(e))!Ct.call(t,s)&&s!==r&&z(t,s,{get:()=>e[s],enumerable:!(n=Pt(e,s))||n.enumerable});return t};var Bt=t=>It(z({},"__esModule",{value:!0}),t);var Lt={};jt(Lt,{createStatusList:()=>kt,decodeBase45:()=>O,encodeBase45:()=>M,fits:()=>Et,isEnvelope:()=>P,issue:()=>Mt,pack:()=>_,present:()=>Ot,unpack:()=>R,verify:()=>Kt});var S="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";function h(t){return new TextEncoder().encode(t)}function I(t){return new TextDecoder().decode(t)}function p(t){let e="";for(let r=0;r<t.length;r+=3){let n=t[r],s=t[r+1],i=t[r+2];if(e+=S[n>>2],e+=S[(n&3)<<4|(s??0)>>4],s===void 0||(e+=S[(s&15)<<2|(i??0)>>6],i===void 0))break;e+=S[i&63]}return e}function E(t){let e=t.replace(/[^A-Za-z0-9\-_]/g,""),r=new Uint8Array(Math.floor(e.length*3/4)),n=0,s=0,i=0;for(let a of e){let o=S.indexOf(a);if(o<0)throw new Error(`invalid base64url character: ${a}`);n=n<<6|o,s+=6,s>=8&&(s-=8,r[i++]=n>>s&255)}return r.subarray(0,i)}function y(t){return p(h(JSON.stringify(t)))}function w(t){return JSON.parse(I(E(t)))}function ct(t){let e=new Uint8Array(t);return crypto.getRandomValues(e),e}function B(...t){let e=t.reduce((s,i)=>s+i.length,0),r=new Uint8Array(e),n=0;for(let s of t)r.set(s,n),n+=s.length;return r}function lt(t,e){if(t.length!==e.length)return!1;let r=0;for(let n=0;n<t.length;n++)r|=t.charCodeAt(n)^e.charCodeAt(n);return r===0}function J(t){switch(t){case"ES256":return{import:{name:"ECDSA",namedCurve:"P-256"},sign:{name:"ECDSA",hash:"SHA-256"}};case"EdDSA":return{import:{name:"Ed25519"},sign:{name:"Ed25519"}};default:{let e=t;throw new Error(`unsupported algorithm: ${String(e)}`)}}}async function T(t,e){return crypto.subtle.importKey("jwk",t,J(e).import,!1,["sign"])}async function H(t,e){let r={...t};return delete r.d,r.key_ops=["verify"],crypto.subtle.importKey("jwk",r,J(e).import,!1,["verify"])}async function D(t,e,r){let n=await crypto.subtle.sign(J(r).sign,e,h(t));return new Uint8Array(n)}async function Q(t,e,r,n){try{return await crypto.subtle.verify(J(n).sign,r,E(e),h(t))}catch{return!1}}async function dt(t){let e=await crypto.subtle.digest("SHA-256",t);return new Uint8Array(e)}var Jt={s:1,m:60,h:3600,d:86400,w:604800,y:31557600};function A(t){if(typeof t=="number"){if(!Number.isFinite(t))throw new Error(`invalid duration: ${t}`);return Math.floor(t)}let e=/^(\d+(?:\.\d+)?)\s*(s|m|h|d|w|y)$/.exec(t.trim());if(!e)throw new Error(`invalid duration: ${JSON.stringify(t)}`);return Math.floor(Number(e[1])*Jt[e[2]])}function v(){return Math.floor(Date.now()/1e3)}var b="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:",ft={};for(let t=0;t<b.length;t++)ft[b[t]]=t;function M(t){let e="",r=0;for(;r+1<t.length;r+=2){let n=t[r]*256+t[r+1];e+=b[n%45],e+=b[Math.floor(n/45)%45],e+=b[Math.floor(n/2025)]}if(r<t.length){let n=t[r];e+=b[n%45],e+=b[Math.floor(n/45)]}return e}function O(t){let e=[];for(let i of t){let a=ft[i];if(a===void 0)throw new Error(`invalid base45 character: ${JSON.stringify(i)}`);e.push(a)}let r=e.length%3;if(r===1)throw new Error("invalid base45 length");let n=[],s=0;for(;s+2<e.length;s+=3){let i=e[s]+e[s+1]*45+e[s+2]*2025;if(i>65535)throw new Error("invalid base45 triplet: value exceeds two bytes");n.push(i>>8,i&255)}if(r===2){let i=e[s]+e[s+1]*45;if(i>255)throw new Error("invalid base45 pair: value exceeds one byte");n.push(i)}return new Uint8Array(n)}function G(){return typeof CompressionStream<"u"&&typeof DecompressionStream<"u"}async function gt(t){let e=[],r=t.getReader();for(;;){let{done:n,value:s}=await r.read();if(n)break;s&&e.push(s)}return B(...e)}async function L(t,e="deflate-raw"){let r=new CompressionStream(e),n=r.writable.getWriter();return n.write(t),n.close(),gt(r.readable)}async function K(t,e="deflate-raw"){let r=new DecompressionStream(e),n=r.writable.getWriter();return n.write(t),n.close(),gt(r.readable)}async function mt(t){try{return await K(t,"deflate")}catch{return await K(t,"deflate-raw")}}var $="QC1:",pt=0,ht=1;async function _(t){let e=h(t),r=pt,n=e;if(G()){let s=await L(e);s.length<e.length&&(r=ht,n=s)}return $+M(B(new Uint8Array([r]),n))}async function R(t){if(!t.startsWith($))throw new Error(`not a qredential envelope: expected the ${$} prefix`);let e=O(t.slice($.length));if(e.length<2)throw new Error("envelope is truncated");let r=e[0],n=e.subarray(1);if(r===pt)return I(n);if(r===ht){if(!G())throw new Error("this credential is deflate compressed and the runtime has no DecompressionStream");return I(await K(n))}throw new Error(`unknown envelope encoding flag: 0x${r.toString(16)}`)}function P(t){return t.startsWith($)}async function yt(t){let e=t.split(".");if(e.length!==3)throw new Error("status list token is not a JWT");let r=w(e[1]),n=r.status_list;if(!n||typeof n.lst!="string")throw new Error("status list token has no status_list.lst");let s=n.bits??1;if(![1,2,4,8].includes(s))throw new Error(`unsupported status list bit width: ${s}`);return{payload:r,list:{issuer:String(r.iss??""),uri:typeof r.sub=="string"?r.sub:void 0,issuedAt:typeof r.iat=="number"?r.iat:void 0,expiresAt:typeof r.exp=="number"?r.exp:void 0,bits:s,bytes:await mt(E(n.lst))}}}function wt(t,e){if(e<0||!Number.isInteger(e))throw new Error(`invalid status index: ${e}`);let r=8/t.bits,n=Math.floor(e/r),s=t.bytes[n];if(s===void 0)return"unknown";let i=e%r*t.bits,a=(1<<t.bits)-1,o=s>>i&a;return o===0?"valid":o===1?"invalid":o===2?"suspended":"unknown"}function bt(t,e,r=v()){return t.expiresAt!==void 0&&r>t.expiresAt?!0:e===void 0?!1:t.issuedAt===void 0?!0:r-t.issuedAt>A(e)}async function kt(t){let e=t.alg??"ES256",r=t.issuedAt??v(),n=new Uint8Array(Math.ceil(t.size/8)),s=(u,d)=>{for(let m of u??[]){if(m<0||m>=t.size||!Number.isInteger(m))throw new Error(`status index ${m} is outside a list of ${t.size}`);n[Math.floor(m/8)]|=d<<m%8}};s(t.revoked,1),s(t.suspended,2);let i={iss:t.issuer,sub:t.uri,iat:r,status_list:{bits:1,lst:p(await L(n,"deflate"))}};t.expiresIn!==void 0&&(i.exp=r+A(t.expiresIn));let a={alg:e,typ:"statuslist+jwt",kid:t.kid},o=`${y(a)}.${y(i)}`,c=await T(t.key,e);return`${o}.${p(await D(o,c,e))}`}var xt="~";function At(t,e){let r=p(ct(16));return{raw:y([r,t,e]),salt:r,name:t,value:e}}function F(t){let e=w(t);if(!Array.isArray(e)||e.length!==3)throw new Error("disclosure is not a three element array");let[r,n,s]=e;if(typeof r!="string"||typeof n!="string")throw new Error("disclosure salt and claim name must be strings");return{raw:t,salt:r,name:n,value:s}}async function Y(t){return p(await dt(h(t)))}function X(t){let e=t.split(xt),r=e[0]??"",n=e.slice(1),s;if(n.length>0){let i=n[n.length-1];i===""||(s=i),n.pop()}return{jwt:r,disclosures:n.filter(i=>i!==""),keyBinding:s}}function Z(t,e,r){return[t,...e,r??""].join(xt)}async function vt(t,e){let r=t._sd_alg??"sha-256";if(r!=="sha-256")throw new Error(`unsupported _sd_alg: ${r}`);let n=Array.isArray(t._sd)?t._sd:[],s={};for(let[o,c]of Object.entries(t))o==="_sd"||o==="_sd_alg"||(s[o]=c);let i=[],a=new Set;for(let o of e){let c=F(o),u=await Y(o);if(!n.some(d=>lt(d,u)))throw new Error(`disclosure for "${c.name}" does not match any digest signed by the issuer`);if(a.has(u))throw new Error(`disclosure for "${c.name}" was sent more than once`);a.add(u),s[c.name]=c.value,i.push(c.name)}return{claims:s,disclosed:i,withheld:n.length-i.length}}var Tt={L:[25,47,77,114,154,195,224,279,335,395,468,535,619,667,758,854,938,1046,1153,1249,1352,1460,1588,1704,1853,1990,2132,2223,2369,2520,2677,2840,3009,3183,3351,3537,3729,3927,4087,4296],M:[20,38,61,90,122,154,178,221,262,311,366,419,483,528,600,656,734,816,909,970,1035,1134,1248,1326,1451,1542,1637,1732,1839,1994,2113,2238,2369,2506,2632,2780,2894,3054,3220,3391],Q:[16,29,47,67,87,108,125,157,189,221,259,296,352,376,426,470,531,574,644,702,742,823,890,963,1041,1094,1172,1263,1322,1429,1499,1618,1700,1787,1867,1966,2071,2181,2298,2420],H:[10,20,35,50,64,84,93,122,143,174,200,227,259,283,321,365,408,452,493,557,587,640,672,744,779,864,910,958,1016,1080,1150,1226,1307,1394,1431,1530,1591,1658,1774,1852]},St=20;function Et(t,e="M"){let r=Tt[e],n=t.length,s=null,i=null;for(let o=0;o<r.length;o++)if(n<=r[o]){s=o+1,i=r[o];break}if(s===null)return{chars:n,version:null,capacity:null,comfortable:!1,errorCorrection:e,advice:`${n} characters does not fit in any QR code at level ${e}. Move claims out of the credential or make them selectively disclosable.`};let a=s<=St;return{chars:n,version:s,capacity:i,comfortable:a,errorCorrection:e,advice:a?`Fits QR version ${s} at level ${e}, with ${i-n} characters to spare.`:`Fits QR version ${s}, which is dense enough that scanning gets unreliable on worn cards and cheap cameras. Aim for version ${St} or below.`}}function l(t,e){return{ok:!1,reason:t,message:e}}function Dt(t){let e=[...t];for(let r=e.length-1;r>0;r--){let n=Math.floor(Math.random()*(r+1));[e[r],e[n]]=[e[n],e[r]]}return e}async function Mt(t){let e=t.alg??"ES256",r=v(),n=t.disclose??[],s=n.filter(g=>!(g in t.claims));if(s.length>0)throw new Error(`disclose lists claims that are not in the credential: ${s.join(", ")}`);let i=n.map(g=>At(g,t.claims[g])),a=Dt(await Promise.all(i.map(g=>Y(g.raw)))),o={iss:t.issuer,iat:r};for(let[g,N]of Object.entries(t.claims))n.includes(g)||(o[g]=N);t.subject!==void 0&&(o.sub=t.subject),t.vct!==void 0&&(o.vct=t.vct),t.expiresIn!==void 0&&(o.exp=r+A(t.expiresIn)),t.notBefore!==void 0&&(o.nbf=r+A(t.notBefore)),t.status!==void 0&&(o.status={status_list:{idx:t.status.idx,uri:t.status.uri}}),a.length>0&&(o._sd=a,o._sd_alg="sha-256");let c={alg:e,typ:"dc+sd-jwt",kid:t.kid},u=`${y(c)}.${y(o)}`,d=await T(t.key,e),m=`${u}.${p(await D(u,d,e))}`,k=Z(m,i.map(g=>g.raw)),x=await _(k);return{credential:k,qr:x,bytes:x.length,disclosable:n}}async function Ot(t,e){let r=P(t)?await R(t):t,{jwt:n,disclosures:s}=X(r),i=new Set(e.disclose),a=new Map;for(let u of s)a.set(F(u).name,u);let o=e.disclose.filter(u=>!a.has(u));if(o.length>0)throw new Error(`this credential cannot disclose: ${o.join(", ")}`);let c=s.filter(u=>i.has(F(u).name));return _(Z(n,c))}async function Kt(t,e){let r=e.now??v(),n=e.clockSkew??60,s;try{s=P(t)?await R(t):t}catch(f){return l("malformed",f.message)}let{jwt:i,disclosures:a,keyBinding:o}=X(s);if(o!==void 0)return l("unsupported_feature","key binding JWTs are not supported yet, and ignoring one would weaken the check it exists to provide");let c=i.split(".");if(c.length!==3)return l("malformed","credential JWT does not have three segments");let u,d;try{u=w(c[0]),d=w(c[1])}catch(f){return l("malformed",`could not parse the credential: ${f.message}`)}let m=typeof d.iss=="string"?d.iss:void 0;if(!m)return l("malformed","credential has no iss claim");let k=e.trust.issuers[m];if(!k)return l("unknown_issuer",`no trusted key for issuer ${m}`);let x=u.kid?k.keys.filter(f=>f.kid===u.kid):k.keys;if(x.length===0)return l("unknown_key",`issuer ${m} has no trusted key with kid ${String(u.kid)}`);let g=x.find(f=>f.alg===u.alg);if(!g)return l("unsupported_alg",`header asks for ${String(u.alg)} but the trusted key for that kid is ${x[0].alg}`);let N=`${c[0]}.${c[1]}`,$t=await H(g.jwk,g.alg);if(!await Q(N,c[2],$t,g.alg))return l("bad_signature","the issuer signature does not check out");let U=typeof d.exp=="number"?d.exp:void 0,W=typeof d.nbf=="number"?d.nbf:void 0;if(U!==void 0&&r>U+n)return l("expired",`credential expired at ${new Date(U*1e3).toISOString()}`);if(W!==void 0&&r+n<W)return l("not_yet_valid",`credential is not valid until ${new Date(W*1e3).toISOString()}`);let tt,et,rt;try{let f=await vt(d,a);tt=f.claims,et=f.disclosed,rt=f.withheld}catch(f){return l("digest_mismatch",f.message)}let nt=!1,V=d.status?.status_list;if(V){if(!e.status)return l("status_unavailable",`this credential points at the status list ${V.uri} and no cached copy was provided`);try{let{payload:f,list:st}=await yt(e.status),it=String(f.iss??""),ot=e.trust.issuers[it];if(!ot)return l("unknown_issuer",`the status list is signed by the untrusted issuer ${it}`);let C=e.status.split("."),q=w(C[0]),j=ot.keys.find(ut=>(!q.kid||ut.kid===q.kid)&&ut.alg===q.alg);if(!j)return l("unknown_key","no trusted key matches the status list signature");let _t=await H(j.jwk,j.alg),Rt=`${C[0]}.${C[1]}`;if(!await Q(Rt,C[2],_t,j.alg))return l("bad_signature","the status list signature does not check out");if(bt(st,e.maxStatusAge,r))return l("status_list_stale","the cached status list is older than maxStatusAge, so revocation cannot be ruled out");let at=wt(st,V.idx);if(at==="invalid")return l("revoked","the issuer has revoked this credential");if(at==="suspended")return l("revoked","the issuer has suspended this credential");nt=!0}catch(f){return l("status_unavailable",`could not read the status list: ${f.message}`)}}return{ok:!0,claims:tt,issuer:m,subject:typeof d.sub=="string"?d.sub:void 0,issuedAt:typeof d.iat=="number"?d.iat:void 0,expiresAt:U,disclosed:et,withheld:rt,revocationChecked:nt}}return Bt(Lt);})();
+</script>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mark">q<span>redential</span></div>
+    <div class="tagline">Scan a credential and get an answer with no network connection. Everything on this page runs in your browser.</div>
+    <div class="spacer"></div>
+    <div class="chip" id="alg-chip">ES256 &middot; SD-JWT</div>
+  </header>
+
+  <div id="boot" class="boot">Generating an issuer key pair and signing a demo credential&hellip;</div>
+
+  <main id="app" hidden>
+    <div class="bench">
+      <section>
+        <h2>The credential</h2>
+        <p class="note">
+          A fictional driving licence from <span class="inline-code">id.arcadia.example</span>.
+          Two separate decisions shape what a verifier ends up seeing: the issuer decides which
+          claims <em>may</em> be withheld, and then the holder decides which of those to actually
+          show. Change either column and the QR code rebuilds.
+        </p>
+        <table class="ledger">
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Value</th>
+              <th class="mid">Issuer allows<br>withholding</th>
+              <th class="mid">Holder<br>reveals</th>
+            </tr>
+          </thead>
+          <tbody id="ledger-body"></tbody>
+        </table>
+
+        <div class="strip-head">
+          <h2 style="margin:0">What actually travels</h2>
+          <span class="chip" id="strip-len"></span>
+        </div>
+        <div class="strip"><pre id="strip"></pre></div>
+      </section>
+
+      <section>
+        <h2>Presented code</h2>
+        <div class="plate">
+          <div class="qr" id="qr"></div>
+          <div class="plate-note" id="plate-note">Error correction M</div>
+        </div>
+        <div class="readout" id="readout"></div>
+        <p class="advice" id="advice"></p>
+      </section>
+    </div>
+
+    <section class="terminal">
+      <h2>Verifier</h2>
+      <p class="note">
+        The result below is produced by <span class="inline-code">verify()</span> running against a
+        pinned trust list and a cached status list. No request leaves the page.
+      </p>
+      <div class="verdict">
+        <div class="stamp" id="stamp">
+          <div class="word" id="stamp-word">Ready</div>
+          <div class="code" id="stamp-code"></div>
+          <div class="why" id="stamp-why"></div>
+        </div>
+        <div class="detail">
+          <div class="scenario" id="scenario">Honest presentation</div>
+          <div class="claims-out" id="claims-out"></div>
+          <div class="facts" id="facts"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="attacks">
+      <h2>Try to break it</h2>
+      <p class="note">
+        Each button takes the credential above and does something an attacker would actually do, in
+        plain string operations. The expected rejection code is printed on the button, so you can
+        check the library against its own claims.
+      </p>
+      <div class="attack-grid" id="attack-grid"></div>
+    </section>
+
+    <section class="paste">
+      <h2>Verify any payload</h2>
+      <p class="note">
+        Paste a <span class="inline-code">QC1:</span> envelope, or the raw SD-JWT form. Only the
+        demo issuer is on this page's trust list, so a credential from anywhere else is rejected as
+        an unknown issuer, which is the correct answer.
+      </p>
+      <textarea id="paste-box" spellcheck="false" aria-label="Credential payload to verify"></textarea>
+      <div class="actions">
+        <button class="primary" id="verify-btn">Verify payload</button>
+        <button class="reset" id="reset-btn" style="flex-direction:row;align-items:center"><span class="label">Reset to the honest credential</span></button>
+      </div>
+    </section>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT selective disclosure, base45 envelope, Token Status List revocation</span>
+      <span>Zero runtime dependencies, WebCrypto only</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var Q = window.Q;
+
+  var ISSUER = 'https://id.arcadia.example';
+  var STATUS_URI = 'https://id.arcadia.example/status/3';
+  var STATUS_IDX = 48219;
+  var STATUS_SIZE = 262144;
+
+  var CLAIMS = {
+    family_name: 'GONCALVES',
+    given_name: 'ANA LUCIA',
+    birth_date: '1991-04-02',
+    over_18: true,
+    licence_number: 'AR-4471-2298',
+    categories: 'AB'
+  };
+  var ORDER = ['family_name', 'given_name', 'birth_date', 'over_18', 'licence_number', 'categories'];
+
+  var S = {
+    disclosable: { birth_date: true, over_18: true, licence_number: true, categories: true },
+    revealed: { over_18: true }
+  };
+
+  // Base64url helpers, deliberately hand written: this is exactly the toolkit an attacker has.
+  function b64uDecode(s) {
+    var pad = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (pad.length % 4) pad += '=';
+    var bin = atob(pad);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function b64uEncode(str) {
+    var bytes = new TextEncoder().encode(str);
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  var el = function (id) { return document.getElementById(id); };
+
+  function renderLedger() {
+    var rows = ORDER.map(function (name) {
+      var value = CLAIMS[name];
+      var canHide = !!S.disclosable[name];
+      var shown = canHide ? !!S.revealed[name] : true;
+      return '<tr>' +
+        '<td class="cname">' + name + '</td>' +
+        '<td class="cval">' + String(value) + '</td>' +
+        '<td class="mid"><input type="checkbox" data-kind="disclosable" data-claim="' + name + '"' +
+          (canHide ? ' checked' : '') + ' aria-label="Allow withholding ' + name + '"></td>' +
+        '<td class="mid">' + (canHide
+          ? '<input type="checkbox" data-kind="reveal" data-claim="' + name + '"' +
+            (shown ? ' checked' : '') + ' aria-label="Reveal ' + name + '">'
+          : '<span class="always">always</span>') + '</td>' +
+      '</tr>';
+    });
+    el('ledger-body').innerHTML = rows.join('');
+  }
+
+  function renderQR(text) {
+    var host = el('qr');
+    host.innerHTML = '';
+    if (typeof qrcode === 'undefined') {
+      host.innerHTML = '<div class="qr-fail">QR renderer did not load. The payload below is still the real thing.</div>';
+      el('plate-note').textContent = '';
+      return;
+    }
+    try {
+      var code = qrcode(0, 'M');
+      code.addData(text, 'Alphanumeric');
+      code.make();
+      host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+      var modules = code.getModuleCount();
+      el('plate-note').textContent = 'Version ' + ((modules - 17) / 4) + ' · ' + modules +
+        ' × ' + modules + ' modules · error correction M';
+    } catch (e) {
+      host.innerHTML = '<div class="qr-fail">This payload is too large for any QR code. Make fewer claims disclosable.</div>';
+      el('plate-note').textContent = '';
+    }
+  }
+
+  function renderStrip(text) {
+    var lines = [];
+    for (var i = 0; i < text.length; i += 44) lines.push(text.slice(i, i + 44));
+    el('strip').textContent = lines.join('\n');
+    el('strip-len').textContent = text.length + ' chars';
+  }
+
+  function renderReadout(text) {
+    var fit = Q.fits(text);
+    var rows = [
+      ['Characters in the code', text.length, false],
+      ['Smallest QR version', fit.version === null ? 'none fits' : 'v' + fit.version, fit.version === null],
+      ['Scans reliably', fit.comfortable ? 'yes' : 'too dense', !fit.comfortable],
+      ['Claims withheld', String(countWithheld()), false]
+    ];
+    el('readout').innerHTML = rows.map(function (r) {
+      return '<div class="row"><span class="k">' + r[0] + '</span><span class="v' +
+        (r[2] ? ' warn' : '') + '">' + r[1] + '</span></div>';
+    }).join('');
+    el('advice').textContent = fit.advice;
+  }
+
+  function countWithheld() {
+    var n = 0;
+    ORDER.forEach(function (name) {
+      if (S.disclosable[name] && !S.revealed[name]) n++;
+    });
+    return n;
+  }
+
+  function showVerdict(scenario, result) {
+    var stamp = el('stamp');
+    stamp.classList.remove('pass', 'fail');
+    stamp.classList.add(result.ok ? 'pass' : 'fail');
+    el('stamp-word').textContent = result.ok ? 'Pass' : 'Reject';
+    el('stamp-code').textContent = result.ok ? 'verified' : result.reason;
+    el('stamp-why').textContent = result.ok
+      ? 'Signature checks out against a pinned issuer key.'
+      : result.message;
+    el('scenario').textContent = scenario;
+
+    var pills = '';
+    if (result.ok) {
+      var names = Object.keys(result.claims).filter(function (k) {
+        return ORDER.indexOf(k) !== -1;
+      });
+      pills = names.map(function (k) {
+        return '<span class="claim-pill">' + k + ' = ' + String(result.claims[k]) + '</span>';
+      }).join('');
+      if (result.withheld > 0) {
+        pills += '<span class="claim-pill hidden-count">' + result.withheld +
+          ' withheld, unreadable</span>';
+      }
+      el('facts').innerHTML =
+        '<span>issuer <b>' + result.issuer + '</b></span>' +
+        '<span>expires <b>' + (result.expiresAt
+          ? new Date(result.expiresAt * 1000).toISOString().slice(0, 10) : 'never') + '</b></span>' +
+        '<span>revocation checked <b>' + (result.revocationChecked ? 'yes' : 'no') + '</b></span>';
+    } else {
+      el('facts').innerHTML = '<span>Nothing is trusted from a credential that fails, ' +
+        'including its claims.</span>';
+    }
+    el('claims-out').innerHTML = pills;
+  }
+
+  // ---- state that only exists after key generation ----
+  var keys, forger, trust, statusClean, statusRevoked, statusStale, credential, presentation;
+
+  async function makeKeys() {
+    var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+    return {
+      priv: await crypto.subtle.exportKey('jwk', pair.privateKey),
+      pub: await crypto.subtle.exportKey('jwk', pair.publicKey)
+    };
+  }
+
+  async function rebuild() {
+    var disclose = ORDER.filter(function (n) { return S.disclosable[n]; });
+    var issued = await Q.issue({
+      issuer: ISSUER,
+      kid: 'arc-2026',
+      key: keys.priv,
+      claims: CLAIMS,
+      vct: 'https://id.arcadia.example/driving-licence',
+      expiresIn: '1825d',
+      disclose: disclose,
+      status: { idx: STATUS_IDX, uri: STATUS_URI }
+    });
+    credential = issued.credential;
+
+    var reveal = disclose.filter(function (n) { return S.revealed[n]; });
+    presentation = await Q.present(credential, { disclose: reveal });
+
+    renderQR(presentation);
+    renderStrip(presentation);
+    renderReadout(presentation);
+    el('paste-box').value = presentation;
+
+    var result = await Q.verify(presentation, { trust: trust, status: statusClean, maxStatusAge: '7d' });
+    showVerdict('Honest presentation', result);
+    clearPressed();
+  }
+
+  function clearPressed() {
+    Array.prototype.forEach.call(document.querySelectorAll('button.attack'), function (b) {
+      b.setAttribute('aria-pressed', 'false');
+    });
+  }
+
+  // ---- the attack bench ----
+  function splitCombined(s) {
+    var parts = s.split('~');
+    return { jwt: parts[0], disclosures: parts.slice(1).filter(function (d) { return d !== ''; }) };
+  }
+  function joinCombined(jwt, disclosures) {
+    return [jwt].concat(disclosures).concat(['']).join('~');
+  }
+
+  var ATTACKS = [
+    {
+      label: 'Flip a claim in the payload',
+      expect: 'bad_signature',
+      note: 'Rewrites over_18 to true and leaves the original signature in place.',
+      run: async function () {
+        var parts = splitCombined(credential);
+        var seg = parts.jwt.split('.');
+        var payload = JSON.parse(b64uDecode(seg[1]));
+        payload.over_18 = true;
+        payload.birth_date = '2012-01-01';
+        var forged = seg[0] + '.' + b64uEncode(JSON.stringify(payload)) + '.' + seg[2];
+        return { text: joinCombined(forged, parts.disclosures), opts: {} };
+      }
+    },
+    {
+      label: 'Invent a claim that was never issued',
+      expect: 'digest_mismatch',
+      note: 'Appends a well formed disclosure the issuer never signed a digest for.',
+      run: async function () {
+        var parts = splitCombined(credential);
+        var salt = b64uEncode(String(Math.random()).slice(2) + String(Date.now()));
+        var invented = b64uEncode(JSON.stringify([salt, 'security_clearance', 'TOP SECRET']));
+        return { text: joinCombined(parts.jwt, parts.disclosures.concat([invented])), opts: {} };
+      }
+    },
+    {
+      label: 'Send the same disclosure twice',
+      expect: 'digest_mismatch',
+      note: 'A replayed disclosure is a cheap way to probe a sloppy verifier.',
+      run: async function () {
+        var parts = splitCombined(credential);
+        if (!parts.disclosures.length) return null;
+        return { text: joinCombined(parts.jwt, parts.disclosures.concat([parts.disclosures[0]])), opts: {} };
+      }
+    },
+    {
+      label: 'Sign it with the wrong key',
+      expect: 'bad_signature',
+      note: 'Same issuer name, same claims, a key that is not the pinned one.',
+      run: async function () {
+        var fake = await Q.issue({
+          issuer: ISSUER, kid: 'arc-2026', key: forger.priv,
+          claims: CLAIMS, expiresIn: '1825d',
+          status: { idx: STATUS_IDX, uri: STATUS_URI }
+        });
+        return { text: fake.qr, opts: {} };
+      }
+    },
+    {
+      label: 'Claim to be another authority',
+      expect: 'unknown_issuer',
+      note: 'A perfectly valid credential from an issuer nobody pinned.',
+      run: async function () {
+        var other = await Q.issue({
+          issuer: 'https://id.elsewhere.example', kid: 'x1', key: forger.priv,
+          claims: CLAIMS, expiresIn: '365d'
+        });
+        return { text: other.qr, opts: {} };
+      }
+    },
+    {
+      label: 'Use it ten years from now',
+      expect: 'expired',
+      note: 'The same honest credential, checked against a clock past its expiry.',
+      run: async function () {
+        return {
+          text: presentation,
+          opts: { now: Math.floor(Date.now() / 1000) + 10 * 365 * 86400 }
+        };
+      }
+    },
+    {
+      label: 'Use it after it was revoked',
+      expect: 'revoked',
+      note: 'Signature still perfect. The issuer set this credential’s bit.',
+      run: async function () {
+        return { text: presentation, opts: { status: statusRevoked } };
+      }
+    },
+    {
+      label: 'Hide behind a stale status list',
+      expect: 'status_list_stale',
+      note: 'An attacker who blocks updates cannot turn a maybe into a yes.',
+      run: async function () {
+        return { text: presentation, opts: { status: statusStale, maxStatusAge: '7d' } };
+      }
+    }
+  ];
+
+  function renderAttacks() {
+    el('attack-grid').innerHTML = ATTACKS.map(function (a, i) {
+      return '<button class="attack" type="button" data-i="' + i + '" aria-pressed="false">' +
+        '<span class="label">' + a.label + '</span>' +
+        '<span class="expect">expects ' + a.expect + '</span>' +
+      '</button>';
+    }).join('');
+  }
+
+  async function runAttack(i) {
+    var a = ATTACKS[i];
+    var built = await a.run();
+    if (!built) return;
+    var opts = Object.assign({ trust: trust, status: statusClean, maxStatusAge: '7d' }, built.opts);
+    var result = await Q.verify(built.text, opts);
+    el('paste-box').value = built.text;
+    showVerdict(a.label + ': ' + a.note, result);
+    clearPressed();
+    var btn = document.querySelector('button.attack[data-i="' + i + '"]');
+    if (btn) btn.setAttribute('aria-pressed', 'true');
+  }
+
+  // ---- wiring ----
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (!t || t.type !== 'checkbox' || !t.dataset.claim) return;
+    var name = t.dataset.claim;
+    if (t.dataset.kind === 'disclosable') {
+      S.disclosable[name] = t.checked;
+      if (t.checked && S.revealed[name] === undefined) S.revealed[name] = false;
+    } else {
+      S.revealed[name] = t.checked;
+    }
+    renderLedger();
+    rebuild();
+  });
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button.attack') : null;
+    if (btn) { runAttack(Number(btn.dataset.i)); return; }
+    if (e.target.closest && e.target.closest('#reset-btn')) { rebuild(); return; }
+    if (e.target.closest && e.target.closest('#verify-btn')) {
+      var text = el('paste-box').value.trim();
+      if (!text) return;
+      Q.verify(text, { trust: trust, status: statusClean, maxStatusAge: '7d' }).then(function (r) {
+        showVerdict('Pasted payload', r);
+        clearPressed();
+      });
+    }
+  });
+
+  (async function start() {
+    try {
+      keys = await makeKeys();
+      forger = await makeKeys();
+      trust = { issuers: {} };
+      trust.issuers[ISSUER] = { name: 'Arcadia Motor Vehicle Authority', keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: keys.pub }] };
+
+      var base = { issuer: ISSUER, kid: 'arc-2026', key: keys.priv, uri: STATUS_URI, size: STATUS_SIZE };
+      statusClean = await Q.createStatusList(Object.assign({}, base, { revoked: [12, 9001] }));
+      statusRevoked = await Q.createStatusList(Object.assign({}, base, { revoked: [STATUS_IDX] }));
+      statusStale = await Q.createStatusList(Object.assign({}, base, {
+        revoked: [], issuedAt: Math.floor(Date.now() / 1000) - 40 * 86400
+      }));
+
+      renderLedger();
+      renderAttacks();
+      await rebuild();
+
+      el('boot').hidden = true;
+      el('app').hidden = false;
+    } catch (err) {
+      el('boot').textContent = 'Could not start: ' + (err && err.message ? err.message : String(err));
+    }
+  })();
+})();
+</script>

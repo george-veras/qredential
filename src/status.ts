@@ -1,6 +1,8 @@
-import { unb64url, unb64urlJson } from './bytes.js'
-import { inflateEither } from './compress.js'
+import { b64url, b64urlJson, unb64url, unb64urlJson } from './bytes.js'
+import { deflate, inflateEither } from './compress.js'
+import { importPrivateKey, sign } from './crypto.js'
 import { seconds, nowSeconds } from './duration.js'
+import type { Alg, Jwk } from './types.js'
 
 export type StatusValue = 'valid' | 'invalid' | 'suspended' | 'unknown'
 
@@ -68,4 +70,58 @@ export function isStale(list: StatusListToken, maxAge: number | string | undefin
   if (maxAge === undefined) return false
   if (list.issuedAt === undefined) return true
   return now - list.issuedAt > seconds(maxAge)
+}
+
+/**
+ * Publish a status list.
+ *
+ * The verifier side of revocation is useless without this, and leaving issuers to hand roll the
+ * bitstring is how you end up with lists that disagree about bit order.
+ *
+ * Size it generously and set it once: a list covering a million credentials is 125 KB before
+ * compression and a few KB after, because the bits are nearly all zero.
+ */
+export async function createStatusList(options: {
+  issuer: string
+  key: Jwk
+  kid: string
+  alg?: Alg
+  /** Where verifiers refresh this list. Becomes the `sub` claim. */
+  uri: string
+  /** How many credentials the list covers. */
+  size: number
+  revoked?: number[]
+  suspended?: number[]
+  /** Seconds, or a duration string. Verifiers compare this against maxStatusAge. */
+  expiresIn?: number | string
+  /** Override the issue time. Exists for tests and for republishing a historical list. */
+  issuedAt?: number
+}): Promise<string> {
+  const alg = options.alg ?? 'ES256'
+  const iat = options.issuedAt ?? nowSeconds()
+
+  const bytes = new Uint8Array(Math.ceil(options.size / 8))
+  const set = (indices: number[] | undefined, value: number) => {
+    for (const idx of indices ?? []) {
+      if (idx < 0 || idx >= options.size || !Number.isInteger(idx)) {
+        throw new Error(`status index ${idx} is outside a list of ${options.size}`)
+      }
+      bytes[Math.floor(idx / 8)]! |= value << idx % 8
+    }
+  }
+  set(options.revoked, 1)
+  set(options.suspended, 2)
+
+  const payload: Record<string, unknown> = {
+    iss: options.issuer,
+    sub: options.uri,
+    iat,
+    status_list: { bits: 1, lst: b64url(await deflate(bytes, 'deflate')) },
+  }
+  if (options.expiresIn !== undefined) payload['exp'] = iat + seconds(options.expiresIn)
+
+  const header = { alg, typ: 'statuslist+jwt', kid: options.kid }
+  const input = `${b64urlJson(header)}.${b64urlJson(payload)}`
+  const key = await importPrivateKey(options.key, alg)
+  return `${input}.${b64url(await sign(input, key, alg))}`
 }
