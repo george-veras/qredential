@@ -1,10 +1,11 @@
 import { b64url, b64urlJson, unb64urlJson } from './bytes.js'
-import { importPrivateKey, importPublicKey, sign, verifySignature } from './crypto.js'
+import { algForJwk, importPrivateKey, importPublicKey, sign, verifySignature } from './crypto.js'
 import { seconds, nowSeconds } from './duration.js'
 import { pack, unpack, isEnvelope } from './envelope.js'
 import { parseStatusList, readStatus, isStale } from './status.js'
 import {
   digest,
+  sdHash,
   makeDisclosure,
   splitCombined,
   joinCombined,
@@ -14,6 +15,8 @@ import {
 import { QredentialError } from './errors.js'
 import type {
   Alg,
+  Jwk,
+  KeyBindingRequest,
   IssueOptions,
   IssueResult,
   RejectedCredential,
@@ -109,6 +112,19 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
   if (options.status !== undefined) {
     payload['status'] = { status_list: { idx: options.status.idx, uri: options.status.uri } }
   }
+  if (options.holderKey !== undefined) {
+    const held: Jwk = { ...options.holderKey }
+    // A private component here would be an issuer publishing the holder's secret inside a signed,
+    // widely copied credential. Refuse rather than strip it silently.
+    if (held.d !== undefined) {
+      throw new QredentialError(
+        'invalid_option',
+        'holderKey must be the public key; this one carries a private component'
+      )
+    }
+    delete held.key_ops
+    payload['cnf'] = { jwk: held }
+  }
   if (digests.length > 0) {
     payload['_sd'] = digests
     payload['_sd_alg'] = 'sha-256'
@@ -133,7 +149,7 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
  */
 export async function present(
   credential: string,
-  options: { disclose: string[] }
+  options: { disclose: string[]; keyBinding?: KeyBindingRequest }
 ): Promise<string> {
   const source = isEnvelope(credential) ? await unpack(credential) : credential
   const { jwt, disclosures } = splitCombined(source)
@@ -148,7 +164,43 @@ export async function present(
   }
 
   const kept = disclosures.filter((raw) => wanted.has(parseDisclosure(raw).name))
-  return pack(joinCombined(jwt, kept))
+
+  if (options.keyBinding === undefined) return pack(joinCombined(jwt, kept))
+
+  const bound = readHolderKey(jwt)
+  if (bound === null) {
+    throw new QredentialError(
+      'invalid_option',
+      'this credential has no cnf claim, so the issuer never bound a holder key and a proof would mean nothing'
+    )
+  }
+
+  const alg = options.keyBinding.alg ?? algForJwk(options.keyBinding.key)
+  const kbPayload = {
+    iat: nowSeconds(),
+    aud: options.keyBinding.audience,
+    nonce: options.keyBinding.nonce,
+    // Commits to exactly this set of disclosures, so a relay cannot add or strip one afterwards.
+    sd_hash: await sdHash(jwt, kept),
+  }
+  const kbInput = `${b64urlJson({ alg, typ: 'kb+jwt' })}.${b64urlJson(kbPayload)}`
+  const holderKey = await importPrivateKey(options.keyBinding.key, alg)
+  const kbJwt = `${kbInput}.${b64url(await sign(kbInput, holderKey, alg))}`
+
+  return pack(joinCombined(jwt, kept, kbJwt))
+}
+
+/** Pull the bound holder key out of a credential's payload, without verifying anything. */
+function readHolderKey(jwt: string): Jwk | null {
+  const segments = jwt.split('.')
+  if (segments.length !== 3) return null
+  try {
+    const payload = unb64urlJson<Record<string, unknown>>(segments[1]!)
+    const cnf = payload['cnf'] as { jwk?: Jwk } | undefined
+    return cnf?.jwk ?? null
+  } catch {
+    return null
+  }
 }
 
 export async function verify(input: string, options: VerifyOptions): Promise<VerifyResult> {
@@ -172,10 +224,6 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     ;({ jwt, disclosures, keyBinding } = splitCombined(combined))
   } catch (error) {
     return reject('malformed', (error as Error).message)
-  }
-
-  if (keyBinding !== undefined) {
-    return reject('unsupported_feature', 'key binding JWTs are not supported yet, and ignoring one would weaken the check it exists to provide')
   }
 
   const segments = jwt.split('.')
@@ -221,6 +269,17 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
   if (nbf !== undefined && now + skew < nbf) {
     return reject('not_yet_valid', `credential is not valid until ${new Date(nbf * 1000).toISOString()}`)
   }
+
+  const holderProof = await checkHolderProof({
+    payload,
+    jwt,
+    disclosures,
+    keyBinding,
+    options,
+    now,
+    skew,
+  })
+  if (holderProof.rejected) return holderProof.rejected
 
   let claims: Record<string, unknown>
   let disclosed: string[]
@@ -308,5 +367,154 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     disclosed,
     withheld,
     revocationChecked,
+    holderVerified: holderProof.holderVerified,
   }
+}
+
+/**
+ * Decide whether the person presenting this credential proved it is theirs.
+ *
+ * Four states, and only one of them is a silent pass:
+ *
+ *   - bound key, valid proof              -> holderVerified true
+ *   - bound key, no proof                 -> refuse, unless the caller opted out
+ *   - no bound key (a static credential)  -> refuse, unless the caller opted out
+ *   - proof without a bound key           -> always refuse, it is signed by nobody in particular
+ */
+async function checkHolderProof(input: {
+  payload: Record<string, unknown>
+  jwt: string
+  disclosures: string[]
+  keyBinding: string | undefined
+  options: VerifyOptions
+  now: number
+  skew: number
+}): Promise<{ rejected?: RejectedCredential; holderVerified: boolean }> {
+  const { payload, jwt, disclosures, keyBinding, options, now, skew } = input
+  const cnf = payload['cnf'] as { jwk?: Jwk } | undefined
+  const boundKey = cnf?.jwk
+
+  if (keyBinding === undefined) {
+    if (options.acceptWithoutHolderProof === true) return { holderVerified: false }
+    return {
+      rejected: reject(
+        'holder_proof_missing',
+        boundKey
+          ? 'this credential is bound to a holder key but the presentation carries no proof. Pass nonce and audience to require one, or acceptWithoutHolderProof to accept a copyable presentation.'
+          : 'the issuer bound no holder key, so anyone with a copy of this code can present it. Pass acceptWithoutHolderProof if that is acceptable for this credential.'
+      ),
+      holderVerified: false,
+    }
+  }
+
+  if (!boundKey) {
+    return {
+      rejected: reject(
+        'holder_proof_invalid',
+        'the presentation carries a holder proof but the issuer bound no key to this credential, so the proof attests to nothing'
+      ),
+      holderVerified: false,
+    }
+  }
+
+  if (typeof options.nonce !== 'string' || typeof options.audience !== 'string') {
+    return {
+      rejected: reject(
+        'holder_proof_invalid',
+        'checking a holder proof needs the nonce and audience this verifier issued for this scan'
+      ),
+      holderVerified: false,
+    }
+  }
+
+  const segments = keyBinding.split('.')
+  if (segments.length !== 3) {
+    return { rejected: reject('holder_proof_invalid', 'the holder proof is not a JWT'), holderVerified: false }
+  }
+
+  let kbHeader: { alg?: string; typ?: string }
+  let kbPayload: Record<string, unknown>
+  try {
+    kbHeader = unb64urlJson(segments[0]!)
+    kbPayload = unb64urlJson(segments[1]!)
+  } catch (error) {
+    return {
+      rejected: reject('holder_proof_invalid', `could not read the holder proof: ${(error as Error).message}`),
+      holderVerified: false,
+    }
+  }
+
+  if (kbHeader.typ !== 'kb+jwt') {
+    return {
+      rejected: reject('holder_proof_invalid', `holder proof has typ ${String(kbHeader.typ)}, expected kb+jwt`),
+      holderVerified: false,
+    }
+  }
+
+  // The bound key decides the algorithm, never the header the presenter supplied.
+  let alg: Alg
+  try {
+    alg = algForJwk(boundKey)
+  } catch (error) {
+    return { rejected: reject('holder_proof_invalid', (error as Error).message), holderVerified: false }
+  }
+  if (kbHeader.alg !== alg) {
+    return {
+      rejected: reject('holder_proof_invalid', `holder proof claims ${String(kbHeader.alg)} but the bound key is ${alg}`),
+      holderVerified: false,
+    }
+  }
+
+  let holderPublic: CryptoKey
+  try {
+    holderPublic = await importPublicKey(boundKey, alg)
+  } catch (error) {
+    return { rejected: reject('holder_proof_invalid', (error as Error).message), holderVerified: false }
+  }
+
+  const kbInput = `${segments[0]}.${segments[1]}`
+  if (!(await verifySignature(kbInput, segments[2]!, holderPublic, alg))) {
+    return {
+      rejected: reject('holder_proof_invalid', 'the holder proof is not signed by the key the issuer bound'),
+      holderVerified: false,
+    }
+  }
+
+  if (kbPayload['aud'] !== options.audience) {
+    return {
+      rejected: reject('holder_proof_invalid', `the holder proof was made for ${String(kbPayload['aud'])}, not for ${options.audience}`),
+      holderVerified: false,
+    }
+  }
+  if (kbPayload['nonce'] !== options.nonce) {
+    return {
+      rejected: reject('holder_proof_invalid', 'the holder proof answers a different challenge, which is what a replayed presentation looks like'),
+      holderVerified: false,
+    }
+  }
+
+  const expected = await sdHash(jwt, disclosures)
+  if (kbPayload['sd_hash'] !== expected) {
+    return {
+      rejected: reject('holder_proof_invalid', 'the holder proof commits to a different set of disclosures than the one presented'),
+      holderVerified: false,
+    }
+  }
+
+  const iat = typeof kbPayload['iat'] === 'number' ? kbPayload['iat'] : undefined
+  if (iat === undefined) {
+    return { rejected: reject('holder_proof_invalid', 'the holder proof has no iat'), holderVerified: false }
+  }
+  const maxAge = seconds(options.maxKeyBindingAge ?? 300)
+  if (now - iat > maxAge) {
+    return {
+      rejected: reject('holder_proof_invalid', `the holder proof is ${now - iat} seconds old, past the ${maxAge} second limit`),
+      holderVerified: false,
+    }
+  }
+  if (iat - now > skew) {
+    return { rejected: reject('holder_proof_invalid', 'the holder proof is dated in the future'), holderVerified: false }
+  }
+
+  return { holderVerified: true }
 }

@@ -67,7 +67,7 @@ describe('rule 1: verify never throws', () => {
         fc.option(fc.string(), { nil: undefined }),
         fc.option(fc.integer(), { nil: undefined }),
         async (input, status, now) => {
-          const result = await verify(input, { trust, status, now, maxStatusAge: '7d' })
+          const result = await verify(input, { acceptWithoutHolderProof: true, trust, status, now, maxStatusAge: '7d' })
           expect(result.ok).toBe(false)
           if (result.ok) return
           expect(typeof result.reason).toBe('string')
@@ -80,7 +80,7 @@ describe('rule 1: verify never throws', () => {
   it('holds even when the trust list itself is nonsense', async () => {
     await fc.assert(
       fc.asyncProperty(fc.string(), async (input) => {
-        const result = await verify(input, { trust: { issuers: {} } })
+        const result = await verify(input, { acceptWithoutHolderProof: true, trust: { issuers: {} } })
         expect(result.ok).toBe(false)
       }),
       { numRuns: 120 }

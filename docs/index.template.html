@@ -406,6 +406,8 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       <div><div class="what">Use it ten years from now</div><div class="code">expired</div></div>
       <div><div class="what">Use it after revocation</div><div class="code">revoked</div></div>
       <div><div class="what">Hide behind a stale status list</div><div class="code">status_list_stale</div></div>
+      <div><div class="what">Replay a recorded presentation</div><div class="code">holder_proof_invalid</div></div>
+      <div><div class="what">Present a photo of someone's code</div><div class="code">holder_proof_missing</div></div>
     </div>
     <div class="cta-row"><a class="cta" href="./playground/">Open the playground</a></div>
   </div>
@@ -428,15 +430,15 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
     <div>
       <h2 style="font-size:19px">Standards, not inventions</h2>
       <ul class="std">
-        <li><b>SD-JWT</b>selective disclosure, the mechanism the European identity wallet uses</li>
+        <li><b>SD-JWT</b>selective disclosure and key binding, the mechanism the European identity wallet uses</li>
         <li><b>SD-JWT VC</b>the credential shape</li>
         <li><b>Token Status List</b>revocation that works from a cached copy</li>
         <li><b>base45, RFC 9285</b>the QR envelope, chosen for scanner compatibility</li>
       </ul>
       <p style="margin-top:18px;font-size:14px;color:var(--slate)">
-        Top level selective disclosure only, no key binding, and not ISO 18013-5 mDL. All three are
-        on the roadmap, and a credential using one of them is refused rather than half understood.
-        Claiming half of a compliance standard is worse than not claiming it.
+        Top level selective disclosure only, and not ISO 18013-5 mDL. Both are on the roadmap, and a
+        credential using one of them is refused rather than half understood. Claiming half of a
+        compliance standard is worse than not claiming it.
       </p>
     </div>
   </div>

@@ -50,6 +50,15 @@ export interface IssueOptions {
   expiresIn?: number | string
   notBefore?: number | string
   status?: StatusPointer
+  /**
+   * The holder's **public** key, written into the `cnf` claim.
+   *
+   * This is what makes key binding possible later. Without it a presentation proves the issuer
+   * signed the claims but not that the person presenting is the subject, so a photograph of
+   * someone else's code works. Omit it only for credentials that are inherently static, such as one
+   * printed on a card, where no device can sign at scan time.
+   */
+  holderKey?: Jwk
 }
 
 export interface IssueResult {
@@ -65,6 +74,10 @@ export interface IssueResult {
 
 export type FailReason =
   | 'malformed'
+  /** The presentation carries no holder proof and the caller did not opt into accepting that. */
+  | 'holder_proof_missing'
+  /** A holder proof is present but does not hold up: wrong key, nonce, audience, age or contents. */
+  | 'holder_proof_invalid'
   | 'unsupported_alg'
   | 'unknown_issuer'
   | 'unknown_key'
@@ -77,8 +90,35 @@ export type FailReason =
   | 'status_unavailable'
   | 'unsupported_feature'
 
+/** What the holder's wallet signs at presentation time to prove the credential is theirs. */
+export interface KeyBindingRequest {
+  /** The holder's **private** key. Must match the `cnf` key the issuer wrote in. */
+  key: Jwk
+  /** Who is asking. Echoed into `aud` and checked by that verifier. */
+  audience: string
+  /** The verifier's fresh challenge. This is what stops a recorded presentation being replayed. */
+  nonce: string
+  alg?: Alg
+}
+
 export interface VerifyOptions {
   trust: TrustList
+  /**
+   * The challenge this verifier issued for this scan. Required to accept a holder proof.
+   */
+  nonce?: string
+  /** This verifier's own identifier, checked against the proof's `aud`. */
+  audience?: string
+  /**
+   * Accept a presentation with no holder proof.
+   *
+   * Say yes only for credentials that are inherently static, such as one printed on a card, and
+   * know what it costs: anyone who photographs the code can present it. The result reports
+   * `holderVerified: false` either way, so the fact never disappears.
+   */
+  acceptWithoutHolderProof?: boolean
+  /** How old a holder proof may be. Seconds or a duration string. Defaults to 5 minutes. */
+  maxKeyBindingAge?: number | string
   /** A cached status list token. Without it, a credential that points at one cannot be cleared. */
   status?: string
   /** Refuse to answer from a status list older than this. Seconds or a duration string. */
@@ -104,6 +144,13 @@ export interface VerifiedCredential {
   withheld: number
   /** False when no status list was consulted, so the caller knows revocation was not checked. */
   revocationChecked: boolean
+  /**
+   * True when the holder proved possession of the key the issuer bound to this credential.
+   *
+   * False means the credential is authentic but anyone holding a copy could have presented it.
+   * That is a legitimate state for a static credential, and it is reported rather than hidden.
+   */
+  holderVerified: boolean
 }
 
 export interface RejectedCredential {

@@ -135,7 +135,7 @@ describe('every documented error code is reachable', () => {
     const other = await makeIssuer('https://b.example')
     const { qr } = await issue({ issuer: other.iss, kid: other.kid, key: other.privateJwk, claims: CLAIMS })
 
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
 
     try {
@@ -153,7 +153,7 @@ describe('the two contracts hold', () => {
   it('verify returns rather than throwing, for input that makes everything else throw', async () => {
     const issuer = await makeIssuer('https://a.example')
     for (const hostile of ['', 'hello', 'QC1:!!!!', 'a.b.c~~', '~~~', 'QC1:' + 'A'.repeat(500)]) {
-      const result = await verify(hostile, { trust: issuer.trust })
+      const result = await verify(hostile, { acceptWithoutHolderProof: true, trust: issuer.trust })
       expect(result.ok).toBe(false)
     }
   })
@@ -161,7 +161,7 @@ describe('the two contracts hold', () => {
   it('assertVerified passes a good credential straight through', async () => {
     const issuer = await makeIssuer('https://a.example')
     const { qr } = await issue({ issuer: issuer.iss, kid: issuer.kid, key: issuer.privateJwk, claims: CLAIMS })
-    const credential = assertVerified(await verify(qr, { trust: issuer.trust }))
+    const credential = assertVerified(await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust }))
     expect(credential.claims['given_name']).toBe('Ana')
   })
 

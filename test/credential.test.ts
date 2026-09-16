@@ -34,7 +34,7 @@ describe('issue and verify', () => {
       expiresIn: '365d',
     })
 
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(true)
     if (!result.ok) return
     expect(result.claims['given_name']).toBe('Ana')
@@ -50,8 +50,8 @@ describe('issue and verify', () => {
       key: issuer.privateJwk,
       claims: CLAIMS,
     })
-    expect((await verify(credential, { trust: issuer.trust })).ok).toBe(true)
-    expect((await verify(qr, { trust: issuer.trust })).ok).toBe(true)
+    expect((await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })).ok).toBe(true)
+    expect((await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })).ok).toBe(true)
   })
 
   it.skipIf(!HAS_ED25519)('works with Ed25519 as well as P-256', async () => {
@@ -63,7 +63,7 @@ describe('issue and verify', () => {
       key: issuer.privateJwk,
       claims: CLAIMS,
     })
-    expect((await verify(qr, { trust: issuer.trust })).ok).toBe(true)
+    expect((await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })).ok).toBe(true)
   })
 })
 
@@ -80,7 +80,7 @@ describe('selective disclosure', () => {
     expect(disclosable).toHaveLength(5)
 
     const presentation = await present(credential, { disclose: ['over_18'] })
-    const result = await verify(presentation, { trust: issuer.trust })
+    const result = await verify(presentation, { acceptWithoutHolderProof: true, trust: issuer.trust })
 
     expect(result.ok).toBe(true)
     if (!result.ok) return
@@ -154,7 +154,7 @@ describe('attacks', () => {
       disclosures
     )
 
-    const result = await verify(tampered, { trust: issuer.trust })
+    const result = await verify(tampered, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('bad_signature')
@@ -173,6 +173,7 @@ describe('attacks', () => {
     const injected = makeDisclosure('security_clearance', 'top-secret')
 
     const result = await verify(joinCombined(jwt, [...disclosures, injected.raw]), {
+      acceptWithoutHolderProof: true,
       trust: issuer.trust,
     })
     expect(result.ok).toBe(false)
@@ -190,7 +191,7 @@ describe('attacks', () => {
       key: impostor.privateJwk,
       claims: CLAIMS,
     })
-    const result = await verify(qr, { trust: real.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: real.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('bad_signature')
@@ -205,7 +206,7 @@ describe('attacks', () => {
       key: issuer.privateJwk,
       claims: CLAIMS,
     })
-    const result = await verify(qr, { trust: known.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: known.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('unknown_issuer')
@@ -227,7 +228,7 @@ describe('attacks', () => {
         `${b64urlJson(swapped)}.${payload}.${signature}`,
         disclosures
       ),
-      { trust: issuer.trust }
+      { acceptWithoutHolderProof: true, trust: issuer.trust }
     )
     expect(result.ok).toBe(false)
     if (result.ok) return
@@ -244,16 +245,16 @@ describe('attacks', () => {
       expiresIn: 10,
     })
     const future = Math.floor(Date.now() / 1000) + 3600
-    const late = await verify(qr, { trust: issuer.trust, now: future })
+    const late = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, now: future })
     expect(late.ok).toBe(false)
     if (!late.ok) expect(late.reason).toBe('expired')
 
     // Just past expiry but inside the skew allowance is still accepted.
-    const barely = await verify(qr, { trust: issuer.trust, now: Math.floor(Date.now() / 1000) + 40 })
+    const barely = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, now: Math.floor(Date.now() / 1000) + 40 })
     expect(barely.ok).toBe(true)
   })
 
-  it('refuses to silently ignore a key binding JWT it cannot check', async () => {
+  it('refuses a holder proof on a credential with no bound key, since it attests to nothing', async () => {
     const issuer = await makeIssuer('https://detran.example')
     const { credential } = await issue({
       issuer: issuer.iss,
@@ -263,10 +264,11 @@ describe('attacks', () => {
     })
     const { jwt, disclosures } = splitCombined(credential)
     const withKb = joinCombined(jwt, disclosures, 'aaa.bbb.ccc')
-    const result = await verify(withKb, { trust: issuer.trust })
+    const result = await verify(withKb, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
-    expect(result.reason).toBe('unsupported_feature')
+    expect(result.reason).toBe('holder_proof_invalid')
+    expect(result.message).toContain('attests to nothing')
   })
 
   it('rejects a replayed disclosure sent twice', async () => {
@@ -280,6 +282,7 @@ describe('attacks', () => {
     })
     const { jwt, disclosures } = splitCombined(credential)
     const result = await verify(joinCombined(jwt, [...disclosures, ...disclosures]), {
+      acceptWithoutHolderProof: true,
       trust: issuer.trust,
     })
     expect(result.ok).toBe(false)
@@ -288,7 +291,7 @@ describe('attacks', () => {
   })
 
   it('rejects a corrupted envelope instead of throwing', async () => {
-    const result = await verify('QC1:NOTVALID%%%', { trust: { issuers: {} } })
+    const result = await verify('QC1:NOTVALID%%%', { acceptWithoutHolderProof: true, trust: { issuers: {} } })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('malformed')
@@ -313,7 +316,7 @@ describe('offline revocation', () => {
     const { qr } = await issueWithStatus(issuer)
     const status = await makeStatusList(issuer, { size: 1024, revoked: [7, 99], uri: pointer.uri })
 
-    const result = await verify(qr, { trust: issuer.trust, status })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status })
     expect(result.ok).toBe(true)
     if (!result.ok) return
     expect(result.revocationChecked).toBe(true)
@@ -324,7 +327,7 @@ describe('offline revocation', () => {
     const { qr } = await issueWithStatus(issuer)
     const status = await makeStatusList(issuer, { size: 1024, revoked: [42], uri: pointer.uri })
 
-    const result = await verify(qr, { trust: issuer.trust, status })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('revoked')
@@ -333,7 +336,7 @@ describe('offline revocation', () => {
   it('refuses to answer when no cached list was provided', async () => {
     const issuer = await makeIssuer('https://detran.example')
     const { qr } = await issueWithStatus(issuer)
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_unavailable')
@@ -345,7 +348,7 @@ describe('offline revocation', () => {
     const old = Math.floor(Date.now() / 1000) - 30 * 86400
     const status = await makeStatusList(issuer, { size: 1024, revoked: [], iat: old, uri: pointer.uri })
 
-    const result = await verify(qr, { trust: issuer.trust, status, maxStatusAge: '7d' })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status, maxStatusAge: '7d' })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_list_stale')
@@ -357,7 +360,7 @@ describe('offline revocation', () => {
     const { qr } = await issueWithStatus(issuer)
     const status = await makeStatusList(forger, { size: 1024, revoked: [], uri: pointer.uri })
 
-    const result = await verify(qr, { trust: issuer.trust, status })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('bad_signature')
@@ -410,7 +413,7 @@ describe('createStatusList', () => {
       size: 1024,
       revoked: [12, 999],
     })
-    expect((await verify(qr, { trust: issuer.trust, status: clean })).ok).toBe(true)
+    expect((await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status: clean })).ok).toBe(true)
 
     const revoked = await createStatusList({
       issuer: issuer.iss,
@@ -420,7 +423,7 @@ describe('createStatusList', () => {
       size: 1024,
       revoked: [700],
     })
-    const blocked = await verify(qr, { trust: issuer.trust, status: revoked })
+    const blocked = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status: revoked })
     expect(blocked.ok).toBe(false)
     if (blocked.ok) return
     expect(blocked.reason).toBe('revoked')
@@ -470,7 +473,7 @@ describe('claims are the subject, not the token', () => {
       expiresIn: '365d',
     })
 
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(true)
     if (!result.ok) return
 

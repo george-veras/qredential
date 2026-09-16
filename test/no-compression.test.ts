@@ -38,7 +38,7 @@ describe('without CompressionStream, as on React Native', () => {
     })
 
     const presentation = await present(credential, { disclose: ['over_18'] })
-    const result = await verify(presentation, { trust: issuer.trust })
+    const result = await verify(presentation, { acceptWithoutHolderProof: true, trust: issuer.trust })
 
     expect(result.ok).toBe(true)
     if (!result.ok) return
@@ -101,7 +101,7 @@ describe('without CompressionStream, as on React Native', () => {
       claims: { over_18: true },
       status: pointer,
     })
-    const result = await verify(qr, { trust: issuer.trust, status: 'a.b.c' })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status: 'a.b.c' })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_unavailable')

@@ -47,6 +47,37 @@ a status list means inflating a bitstring, so polyfill `DecompressionStream` if 
 verifier that cannot inflate a cached list refuses rather than treating it as clean. A test runs the
 whole flow with both globals deleted, so this is checked rather than assumed.
 
+## Proving the holder, not just the credential
+
+Selective disclosure proves the issuer signed these claims. On its own it does not prove the person
+presenting them is the subject, and the gap is not theoretical: a photograph of someone else's code
+carries the same signature.
+
+Key binding closes it. The issuer binds the holder's public key; at scan time the wallet signs the
+verifier's fresh challenge with the matching private key. A picture cannot do that.
+
+```ts
+const { credential } = await issue({ ..., holderKey: holderPublicJwk })
+
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
+
+const result = await verify(scanned, { trust, nonce: challenge, audience: 'https://bar.example/door' })
+result.holderVerified   // true
+```
+
+The proof commits to the nonce (stops replay), the audience (stops reuse at another verifier), the
+bound key, and a hash of the exact disclosure set (stops a relay adding or stripping one). It
+expires after five minutes by default.
+
+**A printed card cannot do this**, and that is a real situation rather than a mistake. Pass
+`acceptWithoutHolderProof: true` to accept one, and the result still reports
+`holderVerified: false`, so the fact never disappears. Without the flag, a presentation with no
+proof is refused: the dangerous case is someone building a door scanner, never hearing of key
+binding, and shipping something a screenshot defeats.
+
 ## The 2026 problem it solves
 
 Age verification laws are arriving faster than the tooling. The usual implementation asks the user
@@ -73,7 +104,8 @@ promise in a privacy policy.
 
 Boring, published standards, not an invention of mine:
 
-- **SD-JWT** for selective disclosure, the same mechanism the European digital identity wallet uses
+- **SD-JWT** for selective disclosure and key binding, the same mechanism the European digital
+  identity wallet uses
 - **SD-JWT VC** for the credential shape
 - **Token Status List** for revocation that works from a cached copy
 - **base45 plus deflate** for the QR envelope, the same envelope trick the EU covid certificate
