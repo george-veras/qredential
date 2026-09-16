@@ -88,23 +88,29 @@ describe('the cached status list has to be the right one', () => {
 })
 
 describe('a disclosure describes the subject, never the token', () => {
-  it('rejects a disclosure that names a registered claim, even correctly signed', async () => {
+  it('will not even issue a credential whose disclosure names a registered claim', async () => {
     const issuer = await makeIssuer('https://detran.example')
-    // issue() will happily sign this: `iss` is in claims and listed as disclosable, so it ends up
-    // as a signed digest rather than in the payload. The verifier is what must refuse it.
-    const { qr } = await issue({
-      issuer: issuer.iss,
-      kid: issuer.kid,
-      key: issuer.privateJwk,
-      claims: { ...CLAIMS, iss: 'https://impostor.example' },
-      disclose: ['iss'],
-    })
+    await expect(
+      issue({
+        issuer: issuer.iss,
+        kid: issuer.kid,
+        key: issuer.privateJwk,
+        claims: { ...CLAIMS, iss: 'https://impostor.example' },
+        disclose: ['iss'],
+      })
+    ).rejects.toThrow(/describe the token, not the subject/)
+  })
 
-    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
-    expect(result.ok).toBe(false)
-    if (result.ok) return
-    expect(result.reason).toBe('digest_mismatch')
-    expect(result.message).toContain('registered claim')
+  it('still refuses one built elsewhere, because the verifier cannot rely on the issuer', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const evil = makeDisclosure('iss', 'https://impostor.example')
+    const payload = {
+      iss: issuer.iss,
+      given_name: 'Ana',
+      _sd: [await digest(evil.raw)],
+      _sd_alg: 'sha-256',
+    }
+    await expect(reconstructClaims(payload, [evil.raw])).rejects.toThrow(/registered claim/)
   })
 
   it('rejects a disclosure that collides with a claim already in the payload', async () => {

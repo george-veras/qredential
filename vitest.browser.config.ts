@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config'
+import { playwright } from '@vitest/browser-playwright'
 
 /**
  * The suite, run in a real browser.
@@ -14,10 +15,10 @@ export default defineConfig({
     include: ['test/**/*.test.ts'],
     browser: {
       enabled: true,
-      provider: 'playwright',
-      name: process.env['BROWSER'] ?? 'chromium',
+      provider: playwright(),
       headless: true,
       screenshotFailures: false,
+      instances: [{ browser: process.env['BROWSER'] ?? 'chromium' }],
     },
   },
 })
