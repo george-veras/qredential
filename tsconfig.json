@@ -9,6 +9,7 @@
     "noEmitOnError": true,
     "declaration": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "types": ["node"],
     "noEmit": true
   },

@@ -4,6 +4,7 @@ import { seconds, nowSeconds } from './duration.js'
 import { pack, unpack, isEnvelope } from './envelope.js'
 import { parseStatusList, readStatus, isStale } from './status.js'
 import {
+  REGISTERED_CLAIMS,
   digest,
   sdHash,
   makeDisclosure,
@@ -95,6 +96,17 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
     throw new QredentialError(
       'invalid_option',
       `disclose lists claims that are not in the credential: ${unknown.join(', ')}`
+    )
+  }
+
+  // RFC 9901 section 4.2.1: a disclosure's claim name must not be _sd, ..., or a claim that
+  // describes the token rather than the subject. Without this the library would happily issue a
+  // credential that its own verifier refuses, which is the worst kind of inconsistency to ship.
+  const reserved = disclosable.filter((name) => name === '...' || REGISTERED_CLAIMS.has(name))
+  if (reserved.length > 0) {
+    throw new QredentialError(
+      'invalid_option',
+      `these claim names describe the token, not the subject, and cannot be made disclosable: ${reserved.join(', ')}`
     )
   }
 

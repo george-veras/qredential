@@ -1,0 +1,42 @@
+[
+ {
+  "claim": "given_name",
+  "hash": "jsu9yVulwQQlhFlM_3JlzMaSFzglhQG0DpfayQwLUK4",
+  "disclosure": "WyIyR0xDNDJzS1F2ZUNmR2ZyeU5STjl3IiwgImdpdmVuX25hbWUiLCAiSm9obiJd"
+ },
+ {
+  "claim": "family_name",
+  "hash": "TGf4oLbgwd5JQaHyKVQZU9UdGE0w5rtDsrZzfUaomLo",
+  "disclosure": "WyJlbHVWNU9nM2dTTklJOEVZbnN4QV9BIiwgImZhbWlseV9uYW1lIiwgIkRvZSJd"
+ },
+ {
+  "claim": "email",
+  "hash": "JzYjH4svliH0R3PyEMfeZu6Jt69u5qehZo7F7EPYlSE",
+  "disclosure": "WyI2SWo3dE0tYTVpVlBHYm9TNXRtdlZBIiwgImVtYWlsIiwgImpvaG5kb2VAZXhhbXBsZS5jb20iXQ"
+ },
+ {
+  "claim": "phone_number",
+  "hash": "PorFbpKuVu6xymJagvkFsFXAbRoc2JGlAUA2BA4o7cI",
+  "disclosure": "WyJlSThaV205UW5LUHBOUGVOZW5IZGhRIiwgInBob25lX251bWJlciIsICIrMS0yMDItNTU1LTAxMDEiXQ"
+ },
+ {
+  "claim": "phone_number_verified",
+  "hash": "XQ_3kPKt1XyX7KANkqVR6yZ2Va5NrPIvPYbyMvRKBMM",
+  "disclosure": "WyJRZ19PNjR6cUF4ZTQxMmExMDhpcm9BIiwgInBob25lX251bWJlcl92ZXJpZmllZCIsIHRydWVd"
+ },
+ {
+  "claim": "address",
+  "hash": "XzFrzwscM6Gn6CJDc6vVK8BkMnfG8vOSKfpPIZdAfdE",
+  "disclosure": "WyJBSngtMDk1VlBycFR0TjRRTU9xUk9BIiwgImFkZHJlc3MiLCB7InN0cmVldF9hZGRyZXNzIjogIjEyMyBNYWluIFN0IiwgImxvY2FsaXR5IjogIkFueXRvd24iLCAicmVnaW9uIjogIkFueXN0YXRlIiwgImNvdW50cnkiOiAiVVMifV0"
+ },
+ {
+  "claim": "birthdate",
+  "hash": "gbOsI4Edq2x2Kw-w5wPEzakob9hV1cRD0ATN3oQL9JM",
+  "disclosure": "WyJQYzMzSk0yTGNoY1VfbEhnZ3ZfdWZRIiwgImJpcnRoZGF0ZSIsICIxOTQwLTAxLTAxIl0"
+ },
+ {
+  "claim": "updated_at",
+  "hash": "CrQe7S5kqBAHt-nMYXgc6bdt2SH5aTY1sU_M-PgkjPI",
+  "disclosure": "WyJHMDJOU3JRZmpGWFE3SW8wOXN5YWpBIiwgInVwZGF0ZWRfYXQiLCAxNTcwMDAwMDAwXQ"
+ }
+]
