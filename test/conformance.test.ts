@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { digest, parseDisclosure, sdHash } from '../src/sdjwt.js'
+import { digest, parseDisclosure, reconstructClaims, sdHash } from '../src/sdjwt.js'
 import vectors from './rfc9901-vectors.json'
 
 /**
@@ -61,6 +61,17 @@ describe('RFC 9901 Section 5 vectors', () => {
     const byHand = b64url(await sha256(utf8(`${jwt}~${chosen[0]}~${chosen[1]}~`)))
 
     expect(await sdHash(jwt, chosen)).toBe(byHand)
+  })
+
+  it.each(['sha-384', 'sha-512'] as const)('reconstructs claims with %s', async (alg) => {
+    const disclosure = vectors[0]!.disclosure
+    const payload = { _sd: [await digest(disclosure, alg)], _sd_alg: alg }
+    const result = await reconstructClaims(payload, [disclosure])
+    expect(result.claims[vectors[0]!.claim]).toBe(parseDisclosure(disclosure).value)
+  })
+
+  it('rejects algorithms outside the named information hash registry', async () => {
+    await expect(reconstructClaims({ _sd: [], _sd_alg: 'md5' }, [])).rejects.toThrow('unsupported')
   })
 
   it('has vectors at all, so a broken extraction cannot pass silently', () => {
