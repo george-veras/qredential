@@ -383,8 +383,6 @@
   .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-<script>__BUNDLE__</script>
 
 <div class="wrap">
   <header class="masthead">
@@ -481,6 +479,11 @@
 </div>
 
 <script>__STRINGS__</script>
+<!-- The QR library and the library under test, both after the content: they are what the
+     page does, not what it shows, and 42 KB of script in front of the headline is 42 KB
+     the reader waits for. -->
+__QRLIB__
+<script>__BUNDLE__</script>
 <script>
 (function () {
   'use strict';

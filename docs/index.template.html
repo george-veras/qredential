@@ -115,7 +115,10 @@
     font-family: var(--data); font-size: 11px; color: var(--slate);
     display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   }
-  .demo-meta b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+  /* The gap lives here rather than in the markup, because nine translations should not each
+     have to remember to end a label with a space. */
+  .demo-meta b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums;
+                 margin-left: .45em; }
 
   /* Sections */
   section.band { padding-block: 62px; border-bottom: 1px solid var(--line); }
@@ -204,8 +207,6 @@
   }
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-<script>__BUNDLE__</script>
 
 <header class="masthead">
   <div class="wrap">
@@ -432,6 +433,11 @@ result.withheld           <span class="tok-c">{{age.c5}}</span></code></pre>
 </footer>
 
 <script>__STRINGS__</script>
+<!-- The QR library and the library under test, both after the content: they are what the
+     page does, not what it shows, and 42 KB of script in front of the headline is 42 KB
+     the reader waits for. -->
+__QRLIB__
+<script>__BUNDLE__</script>
 <script>
 (function () {
   'use strict';
@@ -490,9 +496,19 @@ result.withheld           <span class="tok-c">{{age.c5}}</span></code></pre>
         ctx.stroke();
       }
     }
+  }
 
   // ---- hero demo ----
   var ISSUER = 'https://id.arcadia.example';
+  var VERIFIER = 'https://door.arcadia.example';
+
+  async function makePair() {
+    var p = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+    return {
+      priv: await crypto.subtle.exportKey('jwk', p.privateKey),
+      pub: await crypto.subtle.exportKey('jwk', p.publicKey)
+    };
+  }
 
   function renderQR(text) {
     var host = el('hero-qr');
@@ -516,14 +532,14 @@ result.withheld           <span class="tok-c">{{age.c5}}</span></code></pre>
 
   (async function start() {
     try {
-      var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
-      var priv = await crypto.subtle.exportKey('jwk', pair.privateKey);
-      var pub = await crypto.subtle.exportKey('jwk', pair.publicKey);
+      var issuer = await makePair();
+      // The wallet's own key. It is generated on the device and the private half never leaves it.
+      var holder = await makePair();
       var trust = { issuers: {} };
-      trust.issuers[ISSUER] = { keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: pub }] };
+      trust.issuers[ISSUER] = { keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: issuer.pub }] };
 
       var issued = await Q.issue({
-        issuer: ISSUER, kid: 'arc-2026', key: priv,
+        issuer: ISSUER, kid: 'arc-2026', key: issuer.priv, holderKey: holder.pub,
         vct: 'https://id.arcadia.example/driving-licence',
         claims: {
           family_name: 'GONCALVES', given_name: 'ANA LUCIA',
@@ -533,7 +549,13 @@ result.withheld           <span class="tok-c">{{age.c5}}</span></code></pre>
         expiresIn: '1825d'
       });
 
-      var presentation = await Q.present(issued.credential, { disclose: ['over_18'] });
+      // A verifier hands over a fresh challenge at scan time and the wallet signs it, which is
+      // what stops a screenshot of this QR code from working on somebody else's phone.
+      var nonce = crypto.randomUUID();
+      var presentation = await Q.present(issued.credential, {
+        disclose: ['over_18'],
+        keyBinding: { key: holder.priv, audience: VERIFIER, nonce: nonce }
+      });
       renderQR(presentation);
 
       // Count network activity during the verification itself, rather than claiming a number.
@@ -544,7 +566,7 @@ result.withheld           <span class="tok-c">{{age.c5}}</span></code></pre>
       if (realOpen) window.XMLHttpRequest.prototype.open = function () { calls++; return realOpen.apply(this, arguments); };
 
       var t0 = performance.now();
-      var result = await Q.verify(presentation, { trust: trust });
+      var result = await Q.verify(presentation, { trust: trust, nonce: nonce, audience: VERIFIER });
       var ms = performance.now() - t0;
 
       window.fetch = realFetch;

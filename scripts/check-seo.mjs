@@ -179,6 +179,53 @@ if (!(await readFile(join(docs, '404.html'), 'utf8')).includes('name="robots" co
 // The banner is the one piece of this that is behaviour rather than markup, so it is the one piece
 // worth opening a browser for.
 const browser = await chromium.launch()
+
+/** A context that can reach the file being tested and nothing else. The pages name the deployed
+ *  font and script URLs, which do not answer from a checkout, so the QR library is served from
+ *  disk and everything else is refused: a check that needs the internet to pass is a check that
+ *  fails for the wrong reason. */
+const offline = async (locale) => {
+  const context = await browser.newContext(locale ? { locale } : {})
+  await context.route('**', (route) => {
+    const url = route.request().url()
+    if (url.endsWith('/vendor/qrcode.min.js')) {
+      return route.fulfill({ path: join(docs, 'vendor/qrcode.min.js'), contentType: 'text/javascript' })
+    }
+    return url.startsWith('file://') ? route.continue() : route.abort()
+  })
+  return context
+}
+
+// The hero demo, in every language. It issues a real credential, narrows it, verifies it and puts
+// three numbers on screen: the verdict, the network calls it counted while verifying, and how long
+// it took. Those numbers are the site's central claim, and nothing tested them until now. The
+// scripts that produce them sit after the content for speed, which is exactly the kind of move
+// that breaks a page silently.
+for (const code of codes) {
+  const file = code === SOURCE ? 'docs/index.html' : `docs/${code}/index.html`
+  const context = await offline(null)
+  const page = await context.newPage()
+  await page.goto(`file://${join(root, file)}`, { waitUntil: 'domcontentloaded' })
+  try {
+    await page.waitForSelector('#hero-verdict.pass', { timeout: 15000 })
+  } catch {
+    const word = await page.locator('#hero-word').textContent().catch(() => '')
+    fail(file, `the hero demo did not verify its own credential (verdict reads "${word}")`)
+    await context.close()
+    continue
+  }
+  const net = (await page.locator('#hero-net').textContent()) ?? ''
+  if (net.trim() !== '0') fail(file, `the demo counted ${net} network calls while claiming zero`)
+  const qr = await page.locator('#hero-qr svg').count()
+  if (qr === 0) {
+    const why = await page.locator('#hero-qr .fallback').textContent().catch(() => '')
+    fail(file, `no QR was drawn${why ? `, the page says: ${why}` : ''}`)
+  }
+  const caption = (await page.locator('#hero-caption').textContent()) ?? ''
+  if (!/\d/.test(caption)) fail(file, 'the QR caption carries no version or character count')
+  await context.close()
+}
+
 const cases = [
   ['docs/index.html', 'ko-KR', locales.ko.ui.suggest, `${SITE}/ko/`],
   ['docs/ko/index.html', 'ko-KR', null, null],
@@ -186,13 +233,7 @@ const cases = [
   ['docs/pt/guide/index.html', 'fr-CA', locales.fr.ui.suggest, `${SITE}/fr/guide/`],
 ]
 for (const [file, locale, expected, href] of cases) {
-  const context = await browser.newContext({ locale })
-  // Nothing outside the file itself is allowed to load. The pages reference the deployed font URLs,
-  // which do not answer from a checkout, and a check that needs the internet to pass is a check
-  // that fails for the wrong reason.
-  await context.route('**', (route) =>
-    route.request().url().startsWith('file://') ? route.continue() : route.abort()
-  )
+  const context = await offline(locale)
   const page = await context.newPage()
   await page.goto(`file://${join(root, file)}`, { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(150)
@@ -214,7 +255,8 @@ await browser.close()
 
 console.log(
   failures === 0
-    ? `\n${meta.size} pages, ${locs.length} sitemap URLs, ${codes.length} share cards: all consistent`
+    ? `\n${meta.size} pages, ${locs.length} sitemap URLs, ${codes.length} share cards,` +
+      ` ${codes.length} hero demos that verify their own credential: all consistent`
     : `\n${failures} problem${failures === 1 ? '' : 's'}`
 )
 process.exitCode = failures === 0 ? 0 : 1

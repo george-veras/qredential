@@ -1,0 +1,10 @@
+qrcode-generator 1.4.4, by Kazuhiko Arase, MIT licensed.
+
+  https://github.com/kazuhikoarase/qrcode-generator
+
+Served from this site rather than from cdnjs for the same reason the fonts are: the landing and the
+playground are published standalone as well as from here, and a page that draws a QR code to
+demonstrate offline verification should not need somebody else's CDN to draw it.
+
+Unmodified. The pages still guard with `typeof qrcode === 'undefined'` and say so on screen if it
+does not load, because a demo that silently shows nothing is worse than one that admits it.

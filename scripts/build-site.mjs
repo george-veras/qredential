@@ -506,6 +506,8 @@ for (const template of await templates(docs)) {
         .replace(/\{\{([a-zA-Z.0-9]+)\}\}/g, (_, k) => strings[k])
         .replace('__STRINGS__', `window.__T=${JSON.stringify(strings)};`)
         .replace('__BUNDLE__', () => bundle)
+      .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
+        .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
 
       const path = code === SOURCE ? 'playground/' : `${code}/playground/`
       page =
@@ -573,6 +575,7 @@ for (const template of await templates(docs)) {
       .replace('__LANGS__', langRow)
       .replace('__STRINGS__', `window.__T=${JSON.stringify(runtime)};`)
       .replace('__BUNDLE__', () => bundle)
+      .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
 
     const seo = locales[code].seo
     page =
