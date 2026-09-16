@@ -301,7 +301,7 @@ describe('offline revocation', () => {
   it('clears a credential whose bit is not set', async () => {
     const issuer = await makeIssuer('https://detran.example')
     const { qr } = await issueWithStatus(issuer)
-    const status = await makeStatusList(issuer, { size: 1024, revoked: [7, 99] })
+    const status = await makeStatusList(issuer, { size: 1024, revoked: [7, 99], uri: pointer.uri })
 
     const result = await verify(qr, { trust: issuer.trust, status })
     expect(result.ok).toBe(true)
@@ -312,7 +312,7 @@ describe('offline revocation', () => {
   it('blocks a revoked credential', async () => {
     const issuer = await makeIssuer('https://detran.example')
     const { qr } = await issueWithStatus(issuer)
-    const status = await makeStatusList(issuer, { size: 1024, revoked: [42] })
+    const status = await makeStatusList(issuer, { size: 1024, revoked: [42], uri: pointer.uri })
 
     const result = await verify(qr, { trust: issuer.trust, status })
     expect(result.ok).toBe(false)
@@ -333,7 +333,7 @@ describe('offline revocation', () => {
     const issuer = await makeIssuer('https://detran.example')
     const { qr } = await issueWithStatus(issuer)
     const old = Math.floor(Date.now() / 1000) - 30 * 86400
-    const status = await makeStatusList(issuer, { size: 1024, revoked: [], iat: old })
+    const status = await makeStatusList(issuer, { size: 1024, revoked: [], iat: old, uri: pointer.uri })
 
     const result = await verify(qr, { trust: issuer.trust, status, maxStatusAge: '7d' })
     expect(result.ok).toBe(false)
@@ -345,7 +345,7 @@ describe('offline revocation', () => {
     const issuer = await makeIssuer('https://detran.example')
     const forger = await makeIssuer('https://detran.example')
     const { qr } = await issueWithStatus(issuer)
-    const status = await makeStatusList(forger, { size: 1024, revoked: [] })
+    const status = await makeStatusList(forger, { size: 1024, revoked: [], uri: pointer.uri })
 
     const result = await verify(qr, { trust: issuer.trust, status })
     expect(result.ok).toBe(false)

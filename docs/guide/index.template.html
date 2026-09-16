@@ -355,23 +355,38 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
   maxStatusAge: <span class="tok-s">'7d'</span>,
 })</code></pre>
       <p>
-        Three refusals are worth knowing about, because each one is a place where a quieter library
-        would hand back a false yes:
+        The refusals are worth reading, because each one is a place where a quieter library would
+        hand back a false yes:
       </p>
       <ul>
         <li>
-          The credential points at a status list and you passed none, so revocation was never
-          checked: <span class="reason">status_unavailable</span>
+          You passed no list, so revocation was never checked:
+          <span class="reason">status_unavailable</span>
         </li>
         <li>
           Your cached list is older than <code>maxStatusAge</code>, so revocation cannot be ruled
           out: <span class="reason">status_list_stale</span>
         </li>
         <li>
-          The status list is signed by a key that is not on your trust list, which is how an
-          attacker would clear a revoked credential: <span class="reason">bad_signature</span>
+          The list is signed by a key that is not on your trust list, which is how an attacker would
+          clear a revoked credential: <span class="reason">bad_signature</span>
+        </li>
+        <li>
+          The list was published by a different issuer than the credential, or for a different
+          <code>uri</code>. A given index means something different in every list, so an unbound
+          list is not an answer: <span class="reason">status_unavailable</span>
+        </li>
+        <li>
+          The credential's index falls outside the list you cached, so nothing was actually read:
+          <span class="reason">status_unavailable</span>
         </li>
       </ul>
+      <div class="aside">
+        <strong>A clean result is never silent about this.</strong> When revocation did get checked
+        the result says <code>revocationChecked: true</code>. If the library cannot reach a real
+        answer it refuses rather than passing the credential with that flag set, because a false
+        assurance is worse than no answer.
+      </div>
       <p>
         What to do when you cannot be sure is a policy question about your deployment, not a
         library question, so <code>qredential</code> refuses to decide it quietly on your behalf.
@@ -469,6 +484,13 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
         <code>withheld</code> counts the disclosable claims that did not travel. It is useful for
         policy, and by construction it cannot tell you which ones they were.
       </p>
+      <p>
+        <strong>Everything in <code>claims</code> describes the subject.</strong> Registered claims
+        that describe the token, such as <code>iss</code>, <code>iat</code>, <code>exp</code> and
+        <code>status</code>, are surfaced as typed fields instead, and a disclosure that tries to
+        set one, or to overwrite a claim the payload already settled, fails the whole credential. So
+        looping over <code>claims</code> is safe.
+      </p>
 
       <h3>fits(payload, errorCorrection)</h3>
       <div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div>
@@ -563,16 +585,16 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
         <table>
           <thead><tr><th>Reason</th><th>What happened</th></tr></thead>
           <tbody>
-            <tr><td><span class="reason">malformed</span></td><td>Not a credential at all, or the envelope is corrupt.</td></tr>
+            <tr><td><span class="reason">malformed</span></td><td>Not a credential at all, a corrupt envelope, or a combined form missing its trailing separator.</td></tr>
             <tr><td><span class="reason">unknown_issuer</span></td><td>The <code>iss</code> claim is not in your trust list.</td></tr>
             <tr><td><span class="reason">unknown_key</span></td><td>The issuer is trusted but has no key with that <code>kid</code>.</td></tr>
             <tr><td><span class="reason">unsupported_alg</span></td><td>The header asks for an algorithm the trusted key does not use.</td></tr>
             <tr><td><span class="reason">bad_signature</span></td><td>The signature does not check out. Also covers a forged status list.</td></tr>
             <tr><td><span class="reason">expired</span></td><td>Past <code>exp</code>, beyond the clock skew allowance.</td></tr>
             <tr><td><span class="reason">not_yet_valid</span></td><td>Before <code>nbf</code>.</td></tr>
-            <tr><td><span class="reason">digest_mismatch</span></td><td>A disclosure the issuer never signed, or one sent twice.</td></tr>
+            <tr><td><span class="reason">digest_mismatch</span></td><td>A disclosure the issuer never signed, one sent twice, one naming a registered claim, or one colliding with a claim already in the payload.</td></tr>
             <tr><td><span class="reason">revoked</span></td><td>The issuer set this credential's bit. Covers suspended too.</td></tr>
-            <tr><td><span class="reason">status_unavailable</span></td><td>It points at a status list and none was supplied or it could not be read.</td></tr>
+            <tr><td><span class="reason">status_unavailable</span></td><td>Revocation could not be determined: no list supplied, unreadable, bound to a different issuer or uri, or the index falls outside it.</td></tr>
             <tr><td><span class="reason">status_list_stale</span></td><td>Your cached list is older than <code>maxStatusAge</code>.</td></tr>
             <tr><td><span class="reason">unsupported_feature</span></td><td>A key binding JWT, which is not implemented yet and is not silently ignored.</td></tr>
           </tbody>

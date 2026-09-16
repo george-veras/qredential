@@ -57,6 +57,16 @@ export async function digest(raw: string): Promise<string> {
 
 export function splitCombined(combined: string): { jwt: string; disclosures: string[]; keyBinding?: string } {
   const parts = combined.split(SEPARATOR)
+
+  // A bare JWT is not a combined form. The separator is mandatory even with no disclosures, and
+  // accepting its absence is the same leniency the empty segment check below exists to stop.
+  if (parts.length < 2) {
+    throw new QredentialError(
+      'malformed_credential',
+      'credential is missing the ~ separator that ends every SD-JWT combined form'
+    )
+  }
+
   const jwt = parts[0] ?? ''
   const rest = parts.slice(1)
 
@@ -129,6 +139,23 @@ export async function reconstructClaims(
       )
     }
     seen.add(dig)
+
+    // A disclosure names its own claim, so these two are the ways it could say something the
+    // payload already settled. Both break the invariant the result type promises, that everything
+    // in `claims` describes the subject and nothing describes the token.
+    if (REGISTERED_CLAIMS.has(d.name)) {
+      throw new QredentialError(
+        'malformed_credential',
+        `disclosure tries to set the registered claim "${d.name}"`
+      )
+    }
+    if (Object.prototype.hasOwnProperty.call(claims, d.name)) {
+      throw new QredentialError(
+        'malformed_credential',
+        `disclosure for "${d.name}" collides with a claim already in the payload`
+      )
+    }
+
     claims[d.name] = d.value
     disclosed.push(d.name)
   }
