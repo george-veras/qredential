@@ -4,6 +4,8 @@
 [![npm](https://img.shields.io/npm/v/qredential)](https://www.npmjs.com/package/qredential)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/george-veras/qredential/badge)](https://scorecard.dev/viewer/?uri=github.com/george-veras/qredential)
 
+[English](https://george-veras.github.io/qredential/) · [Português](https://george-veras.github.io/qredential/pt/) · [Español](https://george-veras.github.io/qredential/es/) · [Français](https://george-veras.github.io/qredential/fr/) · [Deutsch](https://george-veras.github.io/qredential/de/) · [日本語](https://george-veras.github.io/qredential/ja/) · [한국어](https://george-veras.github.io/qredential/ko/) · [简体中文](https://george-veras.github.io/qredential/zh-Hans/) · [繁體中文](https://george-veras.github.io/qredential/zh-Hant/)
+
 Verify a digital credential from a QR code with **no network connection**.
 
 ```ts

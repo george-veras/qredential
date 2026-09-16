@@ -37,3 +37,8 @@ jobs:
           path: docs
       - id: deploy
         uses: actions/deploy-pages@v4
+      # Push the change to the engines that accept one: Bing, Naver, Yandex, Seznam and Yep.
+      # Never a reason to fail a deploy that already succeeded, so it only reports.
+      - name: tell IndexNow
+        continue-on-error: true
+        run: node scripts/indexnow.mjs

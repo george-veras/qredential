@@ -1,0 +1,26 @@
+Archivo, IBM Plex Sans and IBM Plex Mono, Latin subsets, served from this site rather than from
+Google Fonts.
+
+Three reasons, in order of weight:
+
+  1. fonts.googleapis.com is unreachable from mainland China. A render blocking stylesheet on an
+     unreachable host does not degrade, it hangs, and the page stays blank until the connection
+     times out. Two of this site's nine languages are Chinese.
+  2. A German court (LG Munchen I, 3 O 17493/20) held that embedding Google Fonts transmits the
+     visitor's IP address to a third party without consent, contrary to the GDPR. German is one of
+     the nine.
+  3. A library whose whole claim is that verification needs no network call should not call anyone
+     else's server to draw its own headline.
+
+Both families are licensed under the SIL Open Font License 1.1, which permits redistribution.
+The licence text is in OFL.txt beside this file.
+
+  Archivo         Omnibus Type            https://github.com/Omnibus-Type/Archivo
+  IBM Plex Sans   IBM Corp.               https://github.com/IBM/plex
+  IBM Plex Mono   IBM Corp.               https://github.com/IBM/plex
+
+The files here are unmodified Latin subsets as published by Google Fonts. The other subsets
+(Cyrillic, Greek, Vietnamese, Latin Extended) are not carried, because none of the nine languages
+on this site needs them: English, Portuguese, Spanish, French and German all fit inside Latin-1,
+and the Japanese, Korean and Chinese pages fall back to the reader's own system font, which is
+better than anything that could be shipped for them at a sane size.

@@ -89,6 +89,38 @@ things no other test could.
 If you are implementing something the specification defines, quote the section in the pull request.
 `test/conformance.test.ts` holds the RFC's own published vectors and is a good place for more.
 
+## If your change touches the site, or adds a language
+
+Nothing on the site is written by hand twice. The pages are generated from `content/`, so a fix to a
+sentence is one edit, and `npm run build:site` rewrites all twenty seven pages.
+
+To fix a translation, edit `content/guide/<locale>.md` for the guide, or the key in
+`content/landing/<locale>.json` or `content/playground/<locale>.json` for the other two. You do not
+need to speak the other eight languages, and you do not need to touch the English. Every page says
+at the top whether it has been reviewed by a native speaker, and most have not: telling us a
+sentence is wrong is a contribution, even without a suggested replacement.
+
+To add a language, copy an existing locale through all of it:
+
+| where | what to add |
+|---|---|
+| `content/locales.json` | the block: `native`, `name`, `dir`, `ui`, `provenance`, `seo` |
+| `content/locales.json` | `ogLocale`, which must be a `language_TERRITORY` pair such as `pt_BR`, because that is the only form the share card readers resolve |
+| `content/locales.json` | `htmlLang` and `alsoHreflang`, only if the language needs a regional tag, as Chinese does |
+| `content/guide/<locale>.md` | the guide, keeping the `translated-from` stamp on line one |
+| `content/landing/<locale>.json` | every key, or the build fails and names the missing ones |
+| `content/playground/<locale>.json` | the same |
+| `npm run build:og` | renders the share card for the new language from the headline you just wrote |
+
+Then `npm run build:site && npm run check:seo`. The second one is the one that matters: it checks
+that the new language has its own title and description rather than English ones, that it joined the
+hreflang group in both directions, that it reached the sitemap, that its share card exists, and that
+a browser set to that language is actually offered the new pages. A language that is half added
+looks completely fine in a browser, which is exactly why it is checked by a script.
+
+Code and comments stay in English, in every file, including files that only exist to hold
+translations.
+
 ## Opening a pull request
 
 Small and focused beats large and complete. A pull request that fixes one thing and explains it gets
