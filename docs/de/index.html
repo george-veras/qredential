@@ -1,0 +1,605 @@
+<html lang="de" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/">
+<link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/">
+<link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/">
+<link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/">
+<link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/">
+<link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/">
+<link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/">
+<title>Qredential</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #E8ECE8; --panel: #F4F6F3; --plate: #FDFDFB;
+    --ink: #111A1D; --body: #24312F; --slate: #5C6C6B;
+    --line: #C7D0CA; --line-soft: #DBE2DC;
+    --viridian: #0E6B54; --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26; --oxblood-wash: #F0DEDA;
+    --guilloche: #2C6675; --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+      --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
+      --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A;
+      --oxblood: #DF8074; --oxblood-wash: #331916;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+    --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
+    --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A;
+    --oxblood: #DF8074; --oxblood-wash: #331916;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* Masthead */
+  .masthead { border-bottom: 1px solid var(--line); }
+  .masthead .wrap {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding-block: 15px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 21px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14.5px; }
+  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; border-bottom: 2px solid var(--ink); }
+  #guilloche {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.5; pointer-events: none;
+  }
+  .hero .wrap {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: 44px; align-items: center; padding-block: 62px 58px;
+  }
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 44px; }
+  }
+
+  .eyebrow {
+    font-family: var(--data); font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 16px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 800; font-size: clamp(38px, 6vw, 62px);
+    line-height: 0.98; letter-spacing: -0.035em; color: var(--ink);
+    margin: 0 0 20px; text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--viridian); }
+  .lede { font-size: 18.5px; line-height: 1.5; margin: 0 0 8px; max-width: 46ch; text-wrap: balance; }
+  .sub { color: var(--slate); font-size: 15.5px; max-width: 48ch; margin: 0; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 15px; padding: 11px 22px;
+    text-decoration: none; border: 1px solid var(--ink); background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  /* Hero demo card */
+  .demo { background: var(--panel); border: 1px solid var(--line); }
+  .demo-plate { background: var(--plate); padding: 16px 16px 10px; border-bottom: 1px solid var(--line); }
+  .demo-plate svg { width: 100%; height: auto; display: block; max-width: 210px; margin: 0 auto; }
+  .demo-plate .fallback {
+    font-family: var(--data); font-size: 12px; color: #6B7A78; text-align: center; padding: 48px 8px;
+  }
+  .demo-caption {
+    font-family: var(--data); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6B7A78; text-align: center; margin-top: 9px;
+  }
+  .demo-verdict { padding: 14px 16px; display: flex; align-items: center; gap: 13px; }
+  .demo-verdict.pass { background: var(--viridian-wash); }
+  .demo-verdict .word {
+    font-family: var(--display); font-weight: 700; font-size: 25px; line-height: 1;
+    letter-spacing: -0.02em; text-transform: uppercase; color: var(--viridian);
+  }
+  .demo-verdict .lines { font-size: 12.5px; line-height: 1.45; color: var(--body); min-width: 0; }
+  .demo-verdict .lines b { font-family: var(--data); font-weight: 500; color: var(--ink); }
+  .demo-meta {
+    border-top: 1px solid var(--line); padding: 10px 16px;
+    font-family: var(--data); font-size: 11px; color: var(--slate);
+    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  .demo-meta b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* Sections */
+  section.band { padding-block: 62px; border-bottom: 1px solid var(--line); }
+  section.band:last-of-type { border-bottom: 0; }
+  h2 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(25px, 3.4vw, 33px);
+    letter-spacing: -0.025em; line-height: 1.12; color: var(--ink);
+    margin: 0 0 16px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15.5px;
+    color: var(--ink); margin: 0 0 6px;
+  }
+  p { margin: 0 0 16px; }
+  .measure { max-width: 66ch; }
+  .wrap.measure { max-width: 1080px; }
+  .wrap.measure > * { max-width: 66ch; }
+  strong { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: var(--data); font-size: 0.87em; color: var(--guilloche);
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 15px 17px; overflow-x: auto; margin: 0;
+  }
+  pre code { color: var(--ink); font-size: 13.5px; line-height: 1.75; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  /* Flow diagram */
+  .flow { margin: 26px 0 8px; overflow-x: auto; }
+  .flow svg { display: block; min-width: 580px; width: 100%; height: auto; }
+
+  /* Three up */
+  .trio { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; margin-top: 30px; }
+  .trio .step-n {
+    font-family: var(--data); font-size: 11px; letter-spacing: 0.1em; color: var(--viridian);
+    border-top: 2px solid var(--viridian); padding-top: 9px; display: block; margin-bottom: 9px;
+  }
+  .trio p { font-size: 14.5px; color: var(--slate); margin: 0; }
+
+  /* Tables */
+  .tablewrap { overflow-x: auto; margin: 22px 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 16px 9px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--line-soft); }
+  td:first-child { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+  .warnrow td { color: var(--amber); }
+
+  /* Attacks */
+  .attack-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 26px;
+  }
+  .attack-list div { background: var(--ground); padding: 13px 15px; }
+  .attack-list .what { font-size: 14px; color: var(--ink); margin-bottom: 3px; }
+  .attack-list .code { font-family: var(--data); font-size: 11.5px; color: var(--oxblood); }
+
+  .aside {
+    border-left: 3px solid var(--amber); padding: 3px 0 3px 16px;
+    color: var(--slate); font-size: 15px; max-width: 64ch;
+  }
+  .aside strong { color: var(--ink); }
+
+  .install { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+  @media (max-width: 760px) { .install { grid-template-columns: minmax(0, 1fr); } }
+  .std { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
+  .std li { padding: 9px 0; border-bottom: 1px solid var(--line-soft); color: var(--slate); }
+  .std li b { font-family: var(--data); font-size: 13px; font-weight: 500; color: var(--ink); display: block; }
+
+  footer { border-top: 2px solid var(--ink); }
+  .langs-row { padding-top: 22px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
+  .langs-row a { color: var(--slate); text-decoration: none; }
+  .langs-row a:hover { color: var(--ink); }
+  .langs-row a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+
+  footer .wrap {
+    padding-block: 24px 44px; font-size: 13.5px; color: var(--slate);
+    display: flex; flex-wrap: wrap; gap: 8px 28px;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>"use strict";var Q=(()=>{var ae=Object.defineProperty;var Je=Object.getOwnPropertyDescriptor;var Ie=Object.getOwnPropertyNames;var Oe=Object.prototype.hasOwnProperty;var De=(e,t)=>{for(var r in t)ae(e,r,{get:t[r],enumerable:!0})},Ke=(e,t,r,n)=>{if(t&&typeof t=="object"||typeof t=="function")for(let i of Ie(t))!Oe.call(e,i)&&i!==r&&ae(e,i,{get:()=>t[i],enumerable:!(n=Je(t,i))||n.enumerable});return e};var Te=e=>Ke(ae({},"__esModule",{value:!0}),e);var Ze={};De(Ze,{QredentialError:()=>o,assertVerified:()=>We,createStatusList:()=>Ee,decodeBase45:()=>ee,encodeBase45:()=>Z,fits:()=>Ue,isEnvelope:()=>Q,isQredentialError:()=>ye,issue:()=>ze,pack:()=>B,present:()=>qe,unpack:()=>T,verify:()=>Ye});var o=class extends Error{code;reason;constructor(t,r,n={}){super(r,n.cause!==void 0?{cause:n.cause}:void 0),this.name="QredentialError",this.code=t,n.reason!==void 0&&(this.reason=n.reason),Object.setPrototypeOf(this,new.target.prototype)}};function ye(e){return e instanceof Error&&e.name==="QredentialError"&&typeof e.code=="string"}function N(e,t){let r=t instanceof Error?`: ${t.message}`:"";return new o("crypto_failure",`${e}${r}`,{cause:t})}var J="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";function $(e){return new TextEncoder().encode(e)}function z(e){return new TextDecoder().decode(e)}function x(e){let t="";for(let r=0;r<e.length;r+=3){let n=e[r],i=e[r+1],a=e[r+2];if(t+=J[n>>2],t+=J[(n&3)<<4|(i??0)>>4],i===void 0||(t+=J[(i&15)<<2|(a??0)>>6],a===void 0))break;t+=J[a&63]}return t}function I(e){let t=new Uint8Array(Math.floor(e.length*3/4)),r=0,n=0,i=0;for(let a of e){let c=J.indexOf(a);if(c<0)throw new o("invalid_encoding",`invalid base64url character: ${a}`);r=r<<6|c,n+=6,n>=8&&(n-=8,t[i++]=r>>n&255)}return t.subarray(0,i)}function S(e){return x($(JSON.stringify(e)))}function A(e){let t=z(I(e));try{return JSON.parse(t)}catch(r){throw new o("invalid_encoding","segment is not valid JSON",{cause:r})}}function we(e){let t=new Uint8Array(e);return crypto.getRandomValues(t),t}function q(...e){let t=e.reduce((i,a)=>i+a.length,0),r=new Uint8Array(t),n=0;for(let i of e)r.set(i,n),n+=i.length;return r}function G(e){switch(e){case"ES256":return{import:{name:"ECDSA",namedCurve:"P-256"},sign:{name:"ECDSA",hash:"SHA-256"}};case"EdDSA":return{import:{name:"Ed25519"},sign:{name:"Ed25519"}};default:{let t=e;throw new o("unsupported_alg",`unsupported algorithm: ${String(t)}`)}}}async function O(e,t){try{return await crypto.subtle.importKey("jwk",e,G(t).import,!1,["sign"])}catch(r){throw N(`could not import the ${t} private key`,r)}}async function Y(e,t){let r={...e};delete r.d,r.key_ops=["verify"];try{return await crypto.subtle.importKey("jwk",r,G(t).import,!1,["verify"])}catch(n){throw N(`could not import the ${t} public key`,n)}}async function D(e,t,r){try{let n=await crypto.subtle.sign(G(r).sign,t,$(e));return new Uint8Array(n)}catch(n){throw N(`could not sign with ${r}`,n)}}async function X(e,t,r,n){try{return await crypto.subtle.verify(G(n).sign,r,I(t),$(e))}catch{return!1}}function de(e){if(e.alg==="ES256"||e.alg==="EdDSA")return e.alg;if(e.crv==="P-256")return"ES256";if(e.crv==="Ed25519")return"EdDSA";throw new o("unsupported_alg",`cannot tell which algorithm this key is for: kty ${String(e.kty)}, crv ${String(e.crv)}`)}async function le(e){let t=await crypto.subtle.digest("SHA-256",e);return new Uint8Array(t)}var Qe={s:1,m:60,h:3600,d:86400,w:604800,y:31557600};function R(e){if(typeof e=="number"){if(!Number.isFinite(e))throw new o("invalid_option",`invalid duration: ${e}`);return Math.floor(e)}let t=/^(\d+(?:\.\d+)?)\s*(s|m|h|d|w|y)$/.exec(e.trim());if(!t)throw new o("invalid_option",`invalid duration: ${JSON.stringify(e)}`);return Math.floor(Number(t[1])*Qe[t[2]])}function P(){return Math.floor(Date.now()/1e3)}var C="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:",be={};for(let e=0;e<C.length;e++)be[C[e]]=e;function Z(e){let t="",r=0;for(;r+1<e.length;r+=2){let n=e[r]*256+e[r+1];t+=C[n%45],t+=C[Math.floor(n/45)%45],t+=C[Math.floor(n/2025)]}if(r<e.length){let n=e[r];t+=C[n%45],t+=C[Math.floor(n/45)]}return t}function ee(e){let t=[];for(let a of e){let c=be[a];if(c===void 0)throw new o("invalid_encoding",`invalid base45 character: ${JSON.stringify(a)}`);t.push(c)}let r=t.length%3;if(r===1)throw new o("invalid_encoding","invalid base45 length");let n=[],i=0;for(;i+2<t.length;i+=3){let a=t[i]+t[i+1]*45+t[i+2]*2025;if(a>65535)throw new o("invalid_encoding","invalid base45 triplet: value exceeds two bytes");n.push(a>>8,a&255)}if(r===2){let a=t[i]+t[i+1]*45;if(a>255)throw new o("invalid_encoding","invalid base45 pair: value exceeds one byte");n.push(a)}return new Uint8Array(n)}function ue(){return typeof CompressionStream<"u"&&typeof DecompressionStream<"u"}async function Fe(e){let t=[],r=e.getReader();for(;;){let{done:n,value:i}=await r.read();if(n)break;i&&t.push(i)}return q(...t)}async function ke(e,t){let r=e.writable.getWriter(),n=r.write(t).then(()=>r.close()).catch(()=>{});try{return await Fe(e.readable)}finally{await n}}async function re(e,t="deflate-raw"){return ke(new CompressionStream(t),e)}async function te(e,t="deflate-raw"){return ke(new DecompressionStream(t),e)}async function _e(e){try{return await te(e,"deflate")}catch{return await te(e,"deflate-raw")}}var K="QC1:",ve=0,xe=1;async function B(e){let t=$(e),r=ve,n=t;if(ue()){let i=await re(t);i.length<t.length&&(r=xe,n=i)}return K+Z(q(new Uint8Array([r]),n))}async function T(e){if(!e.startsWith(K))throw new o("malformed_envelope",`not a qredential envelope: expected the ${K} prefix`);let t;try{t=ee(e.slice(K.length))}catch(i){throw new o("malformed_envelope","envelope is not valid base45",{cause:i})}if(t.length<1)throw new o("malformed_envelope","envelope is truncated");let r=t[0],n=t.subarray(1);if(r===ve)return z(n);if(r===xe){if(!ue())throw new o("unsupported_runtime","this credential is deflate compressed and the runtime has no DecompressionStream");return z(await te(n))}throw new o("malformed_envelope",`unknown envelope encoding flag: 0x${r.toString(16)}`)}function Q(e){return e.startsWith(K)}async function Ae(e){let t=e.split(".");if(t.length!==3)throw new o("malformed_status_list","status list token is not a JWT");let r;try{r=A(t[1])}catch(a){throw new o("malformed_status_list","status list payload is not readable",{cause:a})}let n=r.status_list;if(!n||typeof n.lst!="string")throw new o("malformed_status_list","status list token has no status_list.lst");let i=n.bits??1;if(![1,2,4,8].includes(i))throw new o("malformed_status_list",`unsupported status list bit width: ${i}`);return{payload:r,list:{issuer:String(r.iss??""),uri:typeof r.sub=="string"?r.sub:void 0,issuedAt:typeof r.iat=="number"?r.iat:void 0,expiresAt:typeof r.exp=="number"?r.exp:void 0,bits:i,bytes:await _e(I(n.lst))}}}function Se(e,t){if(t<0||!Number.isInteger(t))throw new o("invalid_option",`invalid status index: ${t}`);let r=8/e.bits,n=Math.floor(t/r),i=e.bytes[n];if(i===void 0)return"unknown";let a=t%r*e.bits,c=(1<<e.bits)-1,h=i>>a&c;return h===0?"valid":h===1?"invalid":h===2?"suspended":"unknown"}function $e(e,t,r=P()){return e.expiresAt!==void 0&&r>e.expiresAt?!0:t===void 0?!1:e.issuedAt===void 0?!0:r-e.issuedAt>R(t)}async function Ee(e){let t=e.alg??"ES256",r=e.issuedAt??P();if(!Number.isSafeInteger(e.size)||e.size<1)throw new o("invalid_option",`status list size must be a positive integer, received ${e.size}`);let n;try{n=new Uint8Array(Math.ceil(e.size/8))}catch(g){throw new o("invalid_option",`status list of ${e.size} entries cannot be allocated`,{cause:g})}let i=(g,l)=>{for(let f of g??[]){if(f<0||f>=e.size||!Number.isInteger(f))throw new o("invalid_option",`status index ${f} is outside a list of ${e.size}`);n[Math.floor(f/8)]|=l<<f%8}};i(e.revoked,1),i(e.suspended,2);let a={iss:e.issuer,sub:e.uri,iat:r,status_list:{bits:1,lst:x(await re(n,"deflate"))}};e.expiresIn!==void 0&&(a.exp=r+R(e.expiresIn));let c={alg:t,typ:"statuslist+jwt",kid:e.kid},h=`${S(c)}.${S(a)}`,p=await O(e.key,t);return`${h}.${x(await D(h,p,t))}`}var je="~",ne=new Set(["iss","iat","exp","nbf","sub","vct","status","cnf","_sd","_sd_alg"]);function Re(e,t){let r=x(we(16));return{raw:S([r,e,t]),salt:r,name:e,value:t,kind:"property"}}function ie(e){let t;try{t=A(e)}catch(i){throw new o("malformed_credential","disclosure is not readable",{cause:i})}if(!Array.isArray(t)||t.length!==2&&t.length!==3)throw new o("malformed_credential","disclosure must be an array of two elements (array member) or three (object property)");let r=t[0];if(typeof r!="string")throw new o("malformed_credential","disclosure salt must be a string");if(t.length===2)return{raw:e,salt:r,value:t[1],kind:"element"};let n=t[1];if(typeof n!="string")throw new o("malformed_credential","disclosure claim name must be a string");return{raw:e,salt:r,name:n,value:t[2],kind:"property"}}async function ce(e,t){return x(await le($(F(e,t))))}async function fe(e){return x(await le($(e)))}function me(e){let t=e.split(je);if(t.length<2)throw new o("malformed_credential","credential is missing the ~ separator that ends every SD-JWT combined form");let r=t[0]??"",n=t.slice(1),i;if(n.length>0){let a=n[n.length-1];a===""||(i=a),n.pop()}if(n.some(a=>a===""))throw new o("malformed_credential","credential contains an empty disclosure segment");return{jwt:r,disclosures:n,keyBinding:i}}function F(e,t,r){return[e,...t,r??""].join(je)}async function Pe(e,t){let r=e._sd_alg??"sha-256";if(r!=="sha-256")throw new o("unsupported_alg",`unsupported _sd_alg: ${r}`);let n=new Map;for(let s of t){let m=await fe(s);if(n.has(m))throw new o("malformed_credential","the same disclosure was sent more than once");n.set(m,ie(s))}let i=new Set,a=new Set,c=[],h=0,p=s=>{if(a.has(s))throw new o("malformed_credential","the same digest appears more than once in this credential");a.add(s)},g=(s,m)=>{let y=s._sd;if(delete s._sd,y!==void 0){if(!Array.isArray(y)||y.some(b=>typeof b!="string"))throw new o("malformed_credential","_sd must be an array of strings");for(let b of y){p(b);let u=n.get(b);if(!u){h++;continue}if(u.kind!=="property"||u.name===void 0)throw new o("malformed_credential","a digest under _sd resolved to an array element disclosure");if(u.name==="_sd"||u.name==="...")throw new o("malformed_credential",`disclosure uses the reserved claim name "${u.name}"`);if(ne.has(u.name))throw new o("malformed_credential",`disclosure tries to set the registered claim "${u.name}"`);if(Object.prototype.hasOwnProperty.call(s,u.name))throw new o("malformed_credential",`disclosure for "${u.name}" collides with a claim already in the payload`);i.add(b),s[u.name]=u.value,c.push([...m,u.name].join(".")),f(u.value,[...m,u.name])}}for(let[b,u]of Object.entries(s))f(u,[...m,b])},l=(s,m)=>{let y=[];for(let b=0;b<s.length;b++){let u=s[b],E=Me(u);if(E===null){f(u,[...m,`[${b}]`]),y.push(u);continue}p(E);let j=n.get(E);if(!j){h++;continue}if(j.kind!=="element")throw new o("malformed_credential","an array element digest resolved to an object property disclosure");i.add(E);let M=`${m.join(".")}[${y.length}]`;c.push(M),f(j.value,[...m,`[${y.length}]`]),y.push(j.value)}s.length=0,s.push(...y)},f=(s,m)=>{if(Array.isArray(s))return l(s,m);if(s!==null&&typeof s=="object")return g(s,m)},w={};for(let[s,m]of Object.entries(e))ne.has(s)||(w[s]=structuredClone(m));let _={...w};e._sd!==void 0&&(_._sd=structuredClone(e._sd)),g(_,[]);let v=[...n.entries()].find(([s])=>!i.has(s));if(v){let[,s]=v,m=s.name!==void 0?`"${s.name}"`:"an array element";throw new o("malformed_credential",`disclosure for ${m} does not match any digest signed by the issuer`)}return{claims:_,disclosed:c,withheld:h}}function Me(e){if(e===null||typeof e!="object"||Array.isArray(e))return null;let t=Object.keys(e);if(t.length!==1||t[0]!=="...")return null;let r=e["..."];return typeof r=="string"?r:null}var Le={L:[25,47,77,114,154,195,224,279,335,395,468,535,619,667,758,854,938,1046,1153,1249,1352,1460,1588,1704,1853,1990,2132,2223,2369,2520,2677,2840,3009,3183,3351,3537,3729,3927,4087,4296],M:[20,38,61,90,122,154,178,221,262,311,366,419,483,528,600,656,734,816,909,970,1035,1134,1248,1326,1451,1542,1637,1732,1839,1994,2113,2238,2369,2506,2632,2780,2894,3054,3220,3391],Q:[16,29,47,67,87,108,125,157,189,221,259,296,352,376,426,470,531,574,644,702,742,823,890,963,1041,1094,1172,1263,1322,1429,1499,1618,1700,1787,1867,1966,2071,2181,2298,2420],H:[10,20,35,50,64,84,93,122,143,174,200,227,259,283,321,365,408,452,493,557,587,640,672,744,779,864,910,958,1016,1080,1150,1226,1307,1394,1431,1530,1591,1658,1774,1852]},Ce=20;function Ue(e,t="M"){let r=Le[t],n=e.length,i=null,a=null;for(let h=0;h<r.length;h++)if(n<=r[h]){i=h+1,a=r[h];break}if(i===null)return{chars:n,version:null,capacity:null,comfortable:!1,errorCorrection:t,advice:`${n} characters does not fit in any QR code at level ${t}. Move claims out of the credential or make them selectively disclosable.`};let c=i<=Ce;return{chars:n,version:i,capacity:a,comfortable:c,errorCorrection:t,advice:c?`Fits QR version ${i} at level ${t}, with ${a-n} characters to spare.`:`Fits QR version ${i}, which is dense enough that scanning gets unreliable on worn cards and cheap cameras. Aim for version ${Ce} or below.`}}function We(e){if(e.ok)return e;throw new o("verification_failed",e.message,{reason:e.reason})}function d(e,t){return{ok:!1,reason:e,message:t}}function He(e){let t=[...e];for(let r=t.length-1;r>0;r--){let n=Ne(r+1);[t[r],t[n]]=[t[n],t[r]]}return t}function Ne(e){if(e<=1)return 0;let t=Math.floor(4294967295/e)*e,r=new Uint32Array(1);for(;;)if(crypto.getRandomValues(r),r[0]<t)return r[0]%e}async function ze(e){let t=e.alg??"ES256",r=P(),n=e.disclose??[],i=n.filter(s=>!(s in e.claims));if(i.length>0)throw new o("invalid_option",`disclose lists claims that are not in the credential: ${i.join(", ")}`);let a=n.filter(s=>s==="..."||ne.has(s));if(a.length>0)throw new o("invalid_option",`these claim names describe the token, not the subject, and cannot be made disclosable: ${a.join(", ")}`);let c=n.map(s=>Re(s,e.claims[s])),h=He(await Promise.all(c.map(s=>fe(s.raw)))),p={iss:e.issuer,iat:r};for(let[s,m]of Object.entries(e.claims))n.includes(s)||(p[s]=m);if(e.subject!==void 0&&(p.sub=e.subject),e.vct!==void 0&&(p.vct=e.vct),e.expiresIn!==void 0&&(p.exp=r+R(e.expiresIn)),e.notBefore!==void 0&&(p.nbf=r+R(e.notBefore)),e.status!==void 0&&(p.status={status_list:{idx:e.status.idx,uri:e.status.uri}}),e.holderKey!==void 0){let s={...e.holderKey};if(s.d!==void 0)throw new o("invalid_option","holderKey must be the public key; this one carries a private component");delete s.key_ops,p.cnf={jwk:s}}h.length>0&&(p._sd=h,p._sd_alg="sha-256");let g={alg:t,typ:"dc+sd-jwt",kid:e.kid},l=`${S(g)}.${S(p)}`,f=await O(e.key,t),w=`${l}.${x(await D(l,f,t))}`,_=F(w,c.map(s=>s.raw)),v=await B(_);return{credential:_,qr:v,bytes:v.length,disclosable:n}}async function qe(e,t){let r=Q(e)?await T(e):e,{jwt:n,disclosures:i}=me(r),a=new Set(t.disclose),c=new Map;for(let s of i){let m=ie(s);m.name!==void 0&&c.set(m.name,s)}let h=t.disclose.filter(s=>!c.has(s));if(h.length>0)throw new o("not_disclosable",`this credential cannot disclose: ${h.join(", ")}`);let p=i.filter(s=>{let m=ie(s).name;return m!==void 0&&a.has(m)});if(t.keyBinding===void 0)return B(F(n,p));if(Ge(n)===null)throw new o("invalid_option","this credential has no cnf claim, so the issuer never bound a holder key and a proof would mean nothing");let l=t.keyBinding.alg??de(t.keyBinding.key),f={iat:P(),aud:t.keyBinding.audience,nonce:t.keyBinding.nonce,sd_hash:await ce(n,p)},w=`${S({alg:l,typ:"kb+jwt"})}.${S(f)}`,_=await O(t.keyBinding.key,l),v=`${w}.${x(await D(w,_,l))}`;return B(F(n,p,v))}function Ge(e){let t=e.split(".");if(t.length!==3)return null;try{return A(t[1]).cnf?.jwk??null}catch{return null}}async function Ye(e,t){let r=t.now??P(),n=t.clockSkew??60,i;try{i=Q(e)?await T(e):e}catch(k){return d("malformed",k.message)}let a,c,h;try{({jwt:a,disclosures:c,keyBinding:h}=me(i))}catch(k){return d("malformed",k.message)}let p=a.split(".");if(p.length!==3)return d("malformed","credential JWT does not have three segments");let g,l;try{g=A(p[0]),l=A(p[1])}catch(k){return d("malformed",`could not parse the credential: ${k.message}`)}let f=typeof l.iss=="string"?l.iss:void 0;if(!f)return d("malformed","credential has no iss claim");let w=t.trust.issuers[f];if(!w)return d("unknown_issuer",`no trusted key for issuer ${f}`);let _=g.kid?w.keys.filter(k=>k.kid===g.kid):w.keys;if(_.length===0)return d("unknown_key",`issuer ${f} has no trusted key with kid ${String(g.kid)}`);let v=_.find(k=>k.alg===g.alg);if(!v)return d("unsupported_alg",`header asks for ${String(g.alg)} but the trusted key for that kid is ${_[0].alg}`);let s=`${p[0]}.${p[1]}`,m=await Y(v.jwk,v.alg);if(!await X(s,p[2],m,v.alg))return d("bad_signature","the issuer signature does not check out");let y=typeof l.exp=="number"?l.exp:void 0,b=typeof l.nbf=="number"?l.nbf:void 0;if(y!==void 0&&r>y+n)return d("expired",`credential expired at ${new Date(y*1e3).toISOString()}`);if(b!==void 0&&r+n<b)return d("not_yet_valid",`credential is not valid until ${new Date(b*1e3).toISOString()}`);let u=await Xe({payload:l,jwt:a,disclosures:c,keyBinding:h,options:t,now:r,skew:n});if(u.rejected)return u.rejected;let E,j,M;try{let k=await Pe(l,c);E=k.claims,j=k.disclosed,M=k.withheld}catch(k){return d("digest_mismatch",k.message)}let he=!1,U=l.status?.status_list;if(U){if(!t.status)return d("status_unavailable",`this credential points at the status list ${U.uri} and no cached copy was provided`);try{let{payload:k,list:V}=await Ae(t.status),L=String(k.iss??""),pe=t.trust.issuers[L];if(!pe)return d("unknown_issuer",`the status list is signed by the untrusted issuer ${L}`);if(L!==f)return d("status_unavailable",`the status list is issued by ${L} but the credential is issued by ${f}`);if(V.uri!==void 0&&V.uri!==U.uri)return d("status_unavailable",`the credential points at ${U.uri} but the cached list is ${V.uri}`);let W=t.status.split("."),se=A(W[0]),H=pe.keys.find(ge=>(!se.kid||ge.kid===se.kid)&&ge.alg===se.alg);if(!H)return d("unknown_key","no trusted key matches the status list signature");let Be=await Y(H.jwk,H.alg),Ve=`${W[0]}.${W[1]}`;if(!await X(Ve,W[2],Be,H.alg))return d("bad_signature","the status list signature does not check out");if($e(V,t.maxStatusAge,r))return d("status_list_stale","the cached status list is older than maxStatusAge, so revocation cannot be ruled out");let oe=Se(V,U.idx);if(oe==="invalid")return d("revoked","the issuer has revoked this credential");if(oe==="suspended")return d("revoked","the issuer has suspended this credential");if(oe==="unknown")return d("status_unavailable",`index ${U.idx} is outside the cached status list, so revocation was not checked`);he=!0}catch(k){return d("status_unavailable",`could not read the status list: ${k.message}`)}}return{ok:!0,claims:E,issuer:f,subject:typeof l.sub=="string"?l.sub:void 0,vct:typeof l.vct=="string"?l.vct:void 0,issuedAt:typeof l.iat=="number"?l.iat:void 0,expiresAt:y,disclosed:j,withheld:M,revocationChecked:he,holderVerified:u.holderVerified}}async function Xe(e){let{payload:t,jwt:r,disclosures:n,keyBinding:i,options:a,now:c,skew:h}=e,g=t.cnf?.jwk;if(i===void 0)return a.acceptWithoutHolderProof===!0?{holderVerified:!1}:{rejected:d("holder_proof_missing",g?"this credential is bound to a holder key but the presentation carries no proof. Pass nonce and audience to require one, or acceptWithoutHolderProof to accept a copyable presentation.":"the issuer bound no holder key, so anyone with a copy of this code can present it. Pass acceptWithoutHolderProof if that is acceptable for this credential."),holderVerified:!1};if(!g)return{rejected:d("holder_proof_invalid","the presentation carries a holder proof but the issuer bound no key to this credential, so the proof attests to nothing"),holderVerified:!1};if(typeof a.nonce!="string"||typeof a.audience!="string")return{rejected:d("holder_proof_invalid","checking a holder proof needs the nonce and audience this verifier issued for this scan"),holderVerified:!1};let l=i.split(".");if(l.length!==3)return{rejected:d("holder_proof_invalid","the holder proof is not a JWT"),holderVerified:!1};let f,w;try{f=A(l[0]),w=A(l[1])}catch(u){return{rejected:d("holder_proof_invalid",`could not read the holder proof: ${u.message}`),holderVerified:!1}}if(f.typ!=="kb+jwt")return{rejected:d("holder_proof_invalid",`holder proof has typ ${String(f.typ)}, expected kb+jwt`),holderVerified:!1};let _;try{_=de(g)}catch(u){return{rejected:d("holder_proof_invalid",u.message),holderVerified:!1}}if(f.alg!==_)return{rejected:d("holder_proof_invalid",`holder proof claims ${String(f.alg)} but the bound key is ${_}`),holderVerified:!1};let v;try{v=await Y(g,_)}catch(u){return{rejected:d("holder_proof_invalid",u.message),holderVerified:!1}}let s=`${l[0]}.${l[1]}`;if(!await X(s,l[2],v,_))return{rejected:d("holder_proof_invalid","the holder proof is not signed by the key the issuer bound"),holderVerified:!1};if(w.aud!==a.audience)return{rejected:d("holder_proof_invalid",`the holder proof was made for ${String(w.aud)}, not for ${a.audience}`),holderVerified:!1};if(w.nonce!==a.nonce)return{rejected:d("holder_proof_invalid","the holder proof answers a different challenge, which is what a replayed presentation looks like"),holderVerified:!1};let m=await ce(r,n);if(w.sd_hash!==m)return{rejected:d("holder_proof_invalid","the holder proof commits to a different set of disclosures than the one presented"),holderVerified:!1};let y=typeof w.iat=="number"?w.iat:void 0;if(y===void 0)return{rejected:d("holder_proof_invalid","the holder proof has no iat"),holderVerified:!1};let b=R(a.maxKeyBindingAge??300);return c-y>b?{rejected:d("holder_proof_invalid",`the holder proof is ${c-y} seconds old, past the ${b} second limit`),holderVerified:!1}:y-c>h?{rejected:d("holder_proof_invalid","the holder proof is dated in the future"),holderVerified:!1}:{holderVerified:!0}}return Te(Ze);})();
+</script>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="mark" href="../">q<span>redential</span></a>
+    <nav>
+      <a href="./guide/">Dokumentation</a>
+      <a href="../playground/">Playground</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+      <a href="https://www.npmjs.com/package/qredential">npm</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <canvas id="guilloche" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">SD-JWT &middot; Token Status List &middot; base45</p>
+      <h1>Die Antwort steckt schon <em>im</em> Code</h1>
+      <p class="lede">
+        Ein Nachweis, der sich selbst belegt. Signatur, Ablauf, Sperrstatus und Claims, alles geprüft, ohne dass eine einzige Anfrage das Gerät verlässt.
+      </p>
+      <p class="sub">
+        TypeScript, null Laufzeitabhängigkeiten, nur WebCrypto. Node, Browser und React Native, denn das prüfende Gerät ist meistens ein Telefon.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="../playground/">Versuchen Sie es zu brechen</a>
+        <a class="cta ghost" href="./guide/">Dokumentation lesen</a>
+      </div>
+    </div>
+
+    <div class="demo" id="demo">
+      <div class="demo-plate">
+        <div id="hero-qr"><div class="fallback">ein Demonstrationsnachweis wird signiert&hellip;</div></div>
+        <div class="demo-caption" id="hero-caption">&nbsp;</div>
+      </div>
+      <div class="demo-verdict" id="hero-verdict">
+        <div class="word" id="hero-word">&nbsp;</div>
+        <div class="lines" id="hero-lines"></div>
+      </div>
+      <div class="demo-meta">
+        <span>Netzwerkanfragen<b id="hero-net">·</b></span>
+        <span>geprüft in<b id="hero-ms">·</b></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap measure">
+    <h2>Gebaut für den Moment ohne Empfang</h2>
+    <p>
+      Ich habe den eCNH gebaut, Brasiliens digitalen Führerschein, den über 40 Millionen Menschen nutzen. Am meisten gelehrt hat mich nicht die App. Es war der Straßenrand: eine Beamtin, die auf der Landstraße einen Führerschein scannt, mit einem Balken Empfang oder gar keinem, und die in unter einer Sekunde ein Ja oder Nein braucht.
+    </p>
+    <p>
+      Alles, was man für diese Antwort braucht, passt in den Code. Die Signatur belegt den Aussteller, die Claims stehen direkt da, und das Einzige von außen ist der öffentliche Schlüssel des Ausstellers, der sich so selten ändert, dass man ihn mitliefern und wöchentlich auffrischen kann.
+    </p>
+    <p>
+      Bibliotheken dafür gibt es. Es sind Unternehmens-SDKs: schwer, an das Profil eines einzigen Landes gebunden und so geschrieben, als arbeiteten Sie bereits in der Identitätsbranche. Dies ist die Fassung, die ein Produktentwickler an einem Dienstag einbaut.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Drei Beteiligte, und keiner davon ist ein Server</h2>
+    <div class="flow" role="img" aria-label="Der Aussteller signiert einen Nachweis und gibt ihn dem Inhaber. Der Inhaber legt dem Prüfer eine verengte Fassung vor. Der Prüfer kontrolliert sie gegen eine auf dem Gerät hinterlegte Vertrauensliste. Keine Partei kontaktiert beim Scannen einen Server.">
+      <svg viewBox="0 0 700 208" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--guilloche)"></path>
+          </marker>
+        </defs>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--slate)">
+          <rect x="6" y="46" width="168" height="66" fill="var(--panel)" stroke="var(--line)"></rect>
+          <text x="20" y="72" font-size="13" font-weight="500" fill="var(--ink)">Aussteller</text>
+          <text x="20" y="92">signiert einmal, dann geht er</text>
+
+          <rect x="266" y="46" width="168" height="66" fill="var(--panel)" stroke="var(--line)"></rect>
+          <text x="280" y="72" font-size="13" font-weight="500" fill="var(--ink)">Inhaber</text>
+          <text x="280" y="92">wählt, was mitreist</text>
+
+          <rect x="526" y="46" width="168" height="66" fill="var(--viridian-wash)" stroke="var(--viridian)"></rect>
+          <text x="540" y="72" font-size="13" font-weight="500" fill="var(--ink)">Prüfer</text>
+          <text x="540" y="92">entscheidet, offline</text>
+
+          <line x1="178" y1="79" x2="258" y2="79" stroke="var(--guilloche)" stroke-width="1.5" marker-end="url(#ar)"></line>
+          <text x="186" y="70" font-size="10">Nachweis</text>
+
+          <line x1="438" y1="79" x2="518" y2="79" stroke="var(--guilloche)" stroke-width="1.5" marker-end="url(#ar)"></line>
+          <text x="444" y="70" font-size="10">QR-Scan</text>
+
+          <rect x="526" y="140" width="168" height="48" fill="none" stroke="var(--line)" stroke-dasharray="3 3"></rect>
+          <text x="540" y="160" font-size="10.5" fill="var(--ink)">Vertrauensliste, auf dem Gerät</text>
+          <text x="540" y="176" font-size="10">mitgeliefert, wöchentlich aufgefrischt</text>
+          <line x1="610" y1="114" x2="610" y2="138" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 3"></line>
+
+          <text x="6" y="176" font-size="11" fill="var(--oxblood)">Kein Netzwerkaufruf beim Scannen.</text>
+          <text x="6" y="192" font-size="10.5">Das ist der ganze Entwurf, keine Optimierung.</text>
+        </g>
+      </svg>
+    </div>
+    <div class="trio">
+      <div>
+        <span class="step-n">01 &middot; AUSSTELLEN</span>
+        <h3>Jeden Claim einmal signieren</h3>
+        <p>Der Aussteller entscheidet, welche Claims später zurückgehalten werden dürfen, und signiert für jeden davon einen Digest.</p>
+      </div>
+      <div>
+        <span class="step-n">02 &middot; VORZEIGEN</span>
+        <h3>Nur senden, was gefragt ist</h3>
+        <p>Die Wallet lässt die Claims weg, die sie behält. Die Signatur des Ausstellers gilt weiterhin für das, was übrig bleibt.</p>
+      </div>
+      <div>
+        <span class="step-n">03 &middot; PRÜFEN</span>
+        <h3>Antworten, ohne jemanden zu fragen</h3>
+        <p>Signatur, Ablauf, Sperrstatus und jede Offenlegung, geprüft gegen einen auf dem Gerät hinterlegten Schlüssel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Beweisen Sie, dass Sie über 18 sind, ohne Ihren Geburtstag herzugeben</h2>
+    <div class="measure">
+      <p>
+        Gesetze zur Altersprüfung kommen schneller als die Werkzeuge. Die übliche Umsetzung lässt Kundschaft ein Foto des Ausweises bei Dritten hochladen, was ein Datenschutzdesaster ist und ein Leck, das nur auf seinen Tag wartet.
+      </p>
+      <p>
+        Selektive Offenlegung macht es richtig. Der Prüfer kann das Geburtsdatum nicht erfahren, selbst wenn er wollte, weil dieser Wert die Wallet nie verlassen hat. Die Eigenschaft ist kryptografisch, kein Versprechen in einer Datenschutzerklärung.
+      </p>
+    </div>
+    <pre style="margin-top:22px"><code><span class="tok-c">// Der Nachweis enthält Name, Adresse, Geburtsdatum und Dokumentnummer.</span>
+<span class="tok-c">// Die Bar bekommt einen Wahrheitswert.</span>
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [<span class="tok-s">'over_18'</span>] })
+
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
+result.claims             <span class="tok-c">// { over_18: true }</span>
+result.claims.birth_date  <span class="tok-c">// undefined, und wurde nie übertragen</span>
+result.withheld           <span class="tok-c">// 4, und es kann nicht sagen, welche vier</span></code></pre>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Echte Zahlen, auch die unangenehme</h2>
+    <p class="measure">
+      Ein realistischer Führerschein, acht Claims, fünf Jahre Gültigkeit, Zeiger auf eine Statusliste. Gemessen, nicht geschätzt:
+    </p>
+    <div class="tablewrap" style="max-width:640px">
+      <table>
+        <thead><tr><th>Nachweis</th><th class="num">Zeichen</th><th>QR-Version</th></tr></thead>
+        <tbody>
+          <tr><td>alles sichtbar</td><td class="num">~740</td><td>18, scannt gut</td></tr>
+          <tr class="warnrow"><td>alle acht Claims offenlegbar</td><td class="num">~1590</td><td>27, zu dicht</td></tr>
+          <tr class="warnrow"><td>presenting only <code>over_18</code></td><td class="num">~1115</td><td>22, immer noch dicht</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="aside">
+      <strong>Selektive Offenlegung verdoppelt den Nachweis beinahe.</strong> Jeder offenlegbare Claim kostet ein Salt plus einen signierten Digest, und die Digests bleiben in der Nutzlast, ob der Inhaber den Claim zeigt oder nicht. Das ist Absicht, denn eine Digest-Anzahl, die mit dem Gezeigten schrumpft, würde verraten, was Sie zurückgehalten haben. Die Ersparnis beim Vorzeigen liegt damit hier bei dreißig Prozent, nicht bei den achtzig, die die Intuition verspricht. Machen Sie zwei oder drei Claims offenlegbar, nicht alle, und lassen Sie sich von <code>fits()</code> sagen, wo Sie stehen, bevor Sie irgendetwas drucken.
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Glauben Sie mir nicht aufs Wort</h2>
+    <p class="measure">
+      Der Playground führt die ganze Bibliothek in Ihrem Browser aus und schickt ihr acht echte Angriffe. Jeder druckt den Ablehnungscode, den er erwartet, sodass Sie die Bibliothek gegen ihre eigenen Behauptungen prüfen können, statt einer README zu vertrauen.
+    </p>
+    <div class="attack-list">
+      <div><div class="what">Einen Claim in der Nutzlast ändern</div><div class="code">bad_signature</div></div>
+      <div><div class="what">Einen nie ausgestellten Claim erfinden</div><div class="code">digest_mismatch</div></div>
+      <div><div class="what">Eine Offenlegung zweimal senden</div><div class="code">digest_mismatch</div></div>
+      <div><div class="what">Mit dem falschen Schlüssel signieren</div><div class="code">bad_signature</div></div>
+      <div><div class="what">Sich als andere Behörde ausgeben</div><div class="code">unknown_issuer</div></div>
+      <div><div class="what">Ihn in zehn Jahren verwenden</div><div class="code">expired</div></div>
+      <div><div class="what">Ihn nach der Sperrung verwenden</div><div class="code">revoked</div></div>
+      <div><div class="what">Sich hinter einer veralteten Liste verstecken</div><div class="code">status_list_stale</div></div>
+      <div><div class="what">Eine aufgezeichnete Vorlage erneut abspielen</div><div class="code">holder_proof_invalid</div></div>
+      <div><div class="what">Ein Foto von fremdem Code vorzeigen</div><div class="code">holder_proof_missing</div></div>
+    </div>
+    <div class="cta-row"><a class="cta" href="../playground/">Playground öffnen</a></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap install">
+    <div>
+      <h2>Installieren</h2>
+      <pre><code>npm i qredential</code></pre>
+      <p style="margin-top:16px;color:var(--slate);font-size:14.5px">
+        Node 20 oder neuer, jeder aktuelle Browser, React Native. Rund 700 Zeilen Quellcode ohne Laufzeitabhängigkeiten, genau damit es realistisch ist, ihn zu lesen, bevor Sie ihm vertrauen.
+      </p>
+      <div class="cta-row">
+        <a class="cta ghost" href="./guide/">Dokumentation</a>
+        <a class="cta ghost" href="https://github.com/george-veras/qredential">Quellcode</a>
+      </div>
+    </div>
+    <div>
+      <h2 style="font-size:19px">Standards, keine Erfindungen</h2>
+      <ul class="std">
+        <li><b>SD-JWT, RFC 9901</b>selektive Offenlegung und Key Binding, verschachtelt und rekursiv, der Mechanismus, den die europäische Identitäts-Wallet nutzt</li>
+        <li><b>SD-JWT VC</b>die Gestalt des Nachweises</li>
+        <li><b>Token Status List</b>Sperrprüfung, die aus einer zwischengespeicherten Kopie funktioniert</li>
+        <li><b>base45, RFC 9285</b>der QR-Umschlag, gewählt wegen der Lesegerätkompatibilität</li>
+      </ul>
+      <p style="margin-top:18px;font-size:14px;color:var(--slate)">
+        Kein ISO 18013-5 mDL, das CBOR und COSE statt JWT ist, und noch kein Auswähler über Pfade, um einzelne Array-Elemente vorzuzeigen. Beides steht auf der Liste, und ein Nachweis, der etwas Nichtunterstütztes verwendet, wird abgelehnt statt halb verstanden. Die Hälfte eines Konformitätsstandards zu behaupten ist schlimmer, als ihn gar nicht zu behaupten.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap langs-row"><a href="../" hreflang="en" lang="en">English</a>
+    <a href="../pt/" hreflang="pt" lang="pt">Português</a>
+    <a href="../es/" hreflang="es" lang="es">Español</a>
+    <a href="../fr/" hreflang="fr" lang="fr">Français</a>
+    <a href="../de/" hreflang="de" lang="de" aria-current="page">Deutsch</a>
+    <a href="../ja/" hreflang="ja" lang="ja">日本語</a>
+    <a href="../ko/" hreflang="ko" lang="ko">한국어</a>
+    <a href="../zh-Hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a>
+    <a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></div>
+  <div class="wrap">
+    <span>qredential &middot; MIT</span>
+    <span>Kein externes Audit.<a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">Was das heißt</a></span>
+    <span><a href="https://github.com/george-veras/qredential">Quellcode und Issues</a></span>
+  </div>
+</footer>
+
+<script>window.__T={"demo.signing":"ein Demonstrationsnachweis wird signiert&hellip;","demo.networkRequests":"Netzwerkanfragen","demo.verifiedIn":"geprüft in","demo.qrFail":"Der QR-Generator wurde nicht geladen. Der Nachweis darunter ist trotzdem echt.","demo.tooLarge":"Nutzlast zu groß für einen QR-Code","demo.caption":"QR-Version {version} · {chars} Zeichen","demo.pass":"Bestanden","demo.reject":"Abgelehnt","demo.claimShown":"gezeigter Claim: <b>over_18 = true</b>","demo.withheldLine":"zurückgehalten und unlesbar: <b>{n}</b>","demo.reasonLine":"Grund: <b>{reason}</b>","demo.bootFail":"Die Demonstration konnte nicht laufen: "};</script>
+<script>
+(function () {
+  'use strict';
+  var Q = window.Q;
+  var T = window.__T;
+  var el = function (id) { return document.getElementById(id); };
+
+  // ---- guilloche: the rosette is drawn from the credential's own signature bytes ----
+  // Security printing uses these interlaced curves because they are hard to reproduce by hand.
+  // Here the curve parameters come from the signature, so the ornament is the data.
+  function drawGuilloche(seedBytes) {
+    var canvas = el('guilloche');
+    var host = canvas.parentElement;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = host.offsetWidth, h = host.offsetHeight;
+    if (!w || !h) return;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+
+    var accent = getComputedStyle(document.documentElement).getPropertyValue('--guilloche').trim() || '#2C6675';
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 0.6;
+    ctx.globalAlpha = 0.34;
+
+    var cx = w - Math.min(w * 0.22, 210);
+    var cy = h / 2;
+    var base = Math.min(h * 0.92, 420);
+
+    for (var ring = 0; ring < 5; ring++) {
+      var b0 = seedBytes[(ring * 7) % seedBytes.length];
+      var b1 = seedBytes[(ring * 11 + 3) % seedBytes.length];
+
+      // r dividing R exactly makes the petal count an integer, which is what closes the curve at
+      // one full turn. Without that the path never meets itself and the result reads as scribble.
+      var petals = 9 + (b0 % 14);
+      var R = base * (0.26 + ring * 0.155);
+      var r = R / petals;
+      var d = r * (0.55 + (b1 / 255) * 0.9);
+      var k = petals - 1;
+      var copies = 2 + (b1 % 2);
+
+      for (var c = 0; c < copies; c++) {
+        var phase = (Math.PI * 2 * c) / (petals * copies);
+        ctx.beginPath();
+        for (var t = 0; t <= Math.PI * 2 + 0.01; t += 0.008) {
+          var a = t + phase;
+          var x = cx + (R - r) * Math.cos(a) + d * Math.cos(k * a);
+          var y = cy + (R - r) * Math.sin(a) - d * Math.sin(k * a);
+          if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+  // ---- hero demo ----
+  var ISSUER = 'https://id.arcadia.example';
+
+  function renderQR(text) {
+    var host = el('hero-qr');
+    if (typeof qrcode === 'undefined') {
+      host.innerHTML = '<div class="fallback">' + T['demo.qrFail'] + '</div>';
+      return;
+    }
+    try {
+      var code = qrcode(0, 'M');
+      code.addData(text, 'Alphanumeric');
+      code.make();
+      host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+      var modules = code.getModuleCount();
+      el('hero-caption').textContent = T['demo.caption']
+        .replace('{version}', String((modules - 17) / 4))
+        .replace('{chars}', String(text.length));
+    } catch (e) {
+      host.innerHTML = '<div class="fallback">' + T['demo.tooLarge'] + '</div>';
+    }
+  }
+
+  (async function start() {
+    try {
+      var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
+      var priv = await crypto.subtle.exportKey('jwk', pair.privateKey);
+      var pub = await crypto.subtle.exportKey('jwk', pair.publicKey);
+      var trust = { issuers: {} };
+      trust.issuers[ISSUER] = { keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: pub }] };
+
+      var issued = await Q.issue({
+        issuer: ISSUER, kid: 'arc-2026', key: priv,
+        vct: 'https://id.arcadia.example/driving-licence',
+        claims: {
+          family_name: 'GONCALVES', given_name: 'ANA LUCIA',
+          birth_date: '1991-04-02', over_18: true, licence_number: 'AR-4471-2298'
+        },
+        disclose: ['birth_date', 'over_18', 'licence_number'],
+        expiresIn: '1825d'
+      });
+
+      var presentation = await Q.present(issued.credential, { disclose: ['over_18'] });
+      renderQR(presentation);
+
+      // Count network activity during the verification itself, rather than claiming a number.
+      var realFetch = window.fetch;
+      var realOpen = window.XMLHttpRequest && window.XMLHttpRequest.prototype.open;
+      var calls = 0;
+      window.fetch = function () { calls++; return realFetch.apply(this, arguments); };
+      if (realOpen) window.XMLHttpRequest.prototype.open = function () { calls++; return realOpen.apply(this, arguments); };
+
+      var t0 = performance.now();
+      var result = await Q.verify(presentation, { trust: trust });
+      var ms = performance.now() - t0;
+
+      window.fetch = realFetch;
+      if (realOpen) window.XMLHttpRequest.prototype.open = realOpen;
+
+      if (result.ok) {
+        el('hero-verdict').classList.add('pass');
+        el('hero-word').textContent = T['demo.pass'];
+        el('hero-lines').innerHTML =
+          T['demo.claimShown'] + '<br>' + T['demo.withheldLine'].replace('{n}', String(result.withheld));
+      } else {
+        el('hero-word').textContent = T['demo.reject'];
+        el('hero-lines').innerHTML = T['demo.reasonLine'].replace('{reason}', result.reason);
+      }
+      el('hero-net').textContent = calls;
+      el('hero-ms').textContent = ms.toFixed(1) + ' ms';
+
+      // Seed the rosette from the real signature.
+      var sig = issued.credential.split('~')[0].split('.')[2];
+      var seed = [];
+      for (var i = 0; i < sig.length; i++) seed.push(sig.charCodeAt(i) & 255);
+      drawGuilloche(seed);
+
+      var resize;
+      window.addEventListener('resize', function () {
+        clearTimeout(resize);
+        resize = setTimeout(function () { drawGuilloche(seed); }, 180);
+      });
+    } catch (err) {
+      el('hero-qr').innerHTML = '<div class="fallback">' + T['demo.bootFail'] +
+        (err && err.message ? err.message : String(err)) + '</div>';
+    }
+  })();
+})();
+</script>
