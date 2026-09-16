@@ -89,7 +89,10 @@ for (const code of codes) {
     })
     .join('\n      ')
 
+  // The locale landing sits one level up from its guide, in every language. The playground is
+  // still English only, so it is reached from the site root instead.
   const page = shell
+    .replace(/__HOME__/g, '../')
     .replace(/__ROOT__/g, rootFrom(code))
     .replace('__NAV_HOME__', ui.navHome)
     .replace('__NAV_DOCS__', ui.navDocs)
