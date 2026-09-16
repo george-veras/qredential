@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 Reduce una credencial a los claims listados y devuelve un sobre escaneable. El JWT firmado no se toca nunca, así que la firma del emisor sigue siendo válida sobre lo que queda. Acepta tanto la forma combinada como un sobre. Pedir un claim que el emisor no hizo divulgable lanza una excepción.
 
+`disclose` recibe rutas, las mismas que `verify()` devuelve en `disclosed`:
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+Un nombre suelto es una ruta de un segmento, así que `'over_18'` significa lo que siempre significó. **Los índices de array son posiciones en la credencial tal como se emitió**, no en la presentación, de modo que un selector sigue significando lo que decía, oculte el titular lo que oculte. Y una disclosure anidada no puede viajar legalmente sin la que la contiene, así que pedir `address.locality` envía también `address`, resuelto por ti y no dejado a quien llama.
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **No es una cartera.** Sin interfaz, sin almacenamiento.
 - **No es gestión de claves.** Tú traes tus claves y tu propia distribución de lista de confianza.
-- **Presentar elementos sueltos de un array.** La verificación los resuelve; `present()` selecciona por nombre de claim, y un elemento de array no tiene ninguno, así que esta versión los oculta. La credencial sigue verificándose, con esos elementos eliminados. Un selector por ruta es el arreglo y todavía no existe.
 - **Todavía no es mDL ISO 18013-5.** Eso es CBOR y COSE, no JWT. Está en la hoja de ruta, y afirmar la mitad de un estándar de conformidad es peor que no afirmar nada.
 - **No está auditado.** Implementa estándares publicados y se prueba contra los ataques del playground, pero las pruebas demuestran la presencia de defensas, nunca que sean completas.
 

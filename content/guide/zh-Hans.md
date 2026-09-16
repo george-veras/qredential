@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 把凭证收窄到列出的那些 claim，返回一个可扫描的信封。签名过的 JWT 一个字都不动，所以签发方的签名对剩下的内容依然成立。组合形式和信封都接受。要一个签发方没有设为可披露的 claim 会抛异常。
 
+`disclose` 接受路径，和 `verify()` 在 `disclosed` 里返回的是同一种：
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+只写一个名字就是单段路径，所以 `'over_18'` 还是原来的意思。**数组下标是签发时凭证里的位置**，不是出示时的位置，所以无论持有人还隐藏了什么，选择器都保持它原本的含义。另外，嵌套的披露离开包着它的那一条就无法合法传递，所以要 `address.locality` 时也会一并送出 `address`，由这个库替你算好，而不是丢给调用方。
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **不是钱包。** 没有界面，没有存储。
 - **不是密钥管理。** 密钥和信任列表的分发都得你自己带来。
-- **逐个出示数组元素。** 验证端能解开它们；但 `present()` 是按 claim 名挑选的，而数组元素没有名字，所以这个版本把它们隐藏起来。凭证依然验得过，只是少了那些元素。按路径的选择器才是解法，目前还没有。
 - **还不是 ISO 18013-5 mDL。** 那边是 CBOR 和 COSE，不是 JWT。它在计划里，而声称做了半个合规标准，比什么都不声称更糟。
 - **没有做过审计。** 这个库实现的是已发布的标准，并针对演练场里的那些攻击做了测试，但测试能证明的是防御存在，永远不是防御完备。
 

@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 把憑證收窄到列出的那些 claim，並回傳一個可掃描的信封。簽好章的 JWT 一個字都不會動，所以簽發方的簽章對剩下的內容依然成立。組合形式與信封都接受。要一個簽發方沒有設為可揭露的 claim 會擲出例外。
 
+`disclose` 接受路徑，和 `verify()` 在 `disclosed` 裡回傳的是同一種：
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+只寫一個名稱就是單段路徑，所以 `'over_18'` 還是原本的意思。**陣列索引是簽發時憑證裡的位置**，不是出示時的位置，所以不論持有人還隱藏了什麼，選擇器都保持它原本的含義。另外，巢狀的揭露離開包著它的那一筆就無法合法傳遞，所以要 `address.locality` 時也會一併送出 `address`，由這個函式庫替你算好，而不是丟給呼叫端。
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **不是錢包。** 沒有介面，沒有儲存。
 - **不是金鑰管理。** 金鑰與信任清單的散布都得你自己帶來。
-- **逐一出示陣列元素。** 驗證端解得開它們；但 `present()` 是依 claim 名稱挑選的，而陣列元素沒有名稱，所以這個版本把它們保留不揭。少了那些元素，憑證依然驗得過。依路徑的選擇器才是解法，目前還沒有。
 - **還不是 ISO 18013-5 mDL。** 那邊是 CBOR 與 COSE，不是 JWT。它在規劃中，而宣稱做了半套合規標準，比什麼都不宣稱更糟。
 - **沒有做過稽核。** 這個函式庫實作的是已發布的標準，並針對試用場裡的那些攻擊做過測試，但測試能證明的是防禦存在，永遠不是防禦完備。
 

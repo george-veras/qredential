@@ -78,7 +78,7 @@
   "standards.s2": "die Gestalt des Nachweises",
   "standards.s3": "Sperrprüfung, die aus einer zwischengespeicherten Kopie funktioniert",
   "standards.s4": "der QR-Umschlag, gewählt wegen der Lesegerätkompatibilität",
-  "standards.note": "Kein ISO 18013-5 mDL, das CBOR und COSE statt JWT ist, und noch kein Auswähler über Pfade, um einzelne Array-Elemente vorzuzeigen. Beides steht auf der Liste, und ein Nachweis, der etwas Nichtunterstütztes verwendet, wird abgelehnt statt halb verstanden. Die Hälfte eines Konformitätsstandards zu behaupten ist schlimmer, als ihn gar nicht zu behaupten.",
+  "standards.note": "Kein ISO 18013-5 mDL, das CBOR und COSE statt JWT ist. Es steht auf der Liste, und ein Nachweis, der etwas Nichtunterstütztes verwendet, wird abgelehnt statt halb verstanden. Die Hälfte eines Konformitätsstandards zu behaupten ist schlimmer, als ihn gar nicht zu behaupten.",
   "footer.audit": "Kein externes Audit.",
   "footer.auditLink": "Was das heißt",
   "footer.source": "Quellcode und Issues",

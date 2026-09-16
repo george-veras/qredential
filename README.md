@@ -185,9 +185,6 @@ Four functions. That is the whole surface.
 
 - Not a wallet. It has no UI and no storage.
 - Not a key management system. You bring your own keys and your own trust list distribution.
-- Presenting individual array elements. Verification resolves them at any depth; `present()`
-  selects by claim name and an array element has none, so this version withholds them. The
-  credential still verifies, with those elements removed.
 - Not ISO 18013-5 mDL yet. That is CBOR and COSE rather than JWT, and it is on the roadmap, but
   claiming half of a compliance standard is worse than not claiming it.
 - Not audited. It is new. Read the code before you put it between a person and a right they hold.

@@ -322,3 +322,77 @@ function elementDigest(item: unknown): string | null {
   const value = (item as Record<string, unknown>)['...']
   return typeof value === 'string' ? value : null
 }
+
+export interface DisclosureLocation {
+  /** Where this disclosure's value lands, as a path: `address.locality`, `nationalities[0]`. */
+  path: string
+  /** Disclosures that must travel with it, because its digest only appears once they are resolved. */
+  requires: string[]
+}
+
+/**
+ * Work out where each disclosure sits in the credential.
+ *
+ * A nested disclosure's path does not exist until its parent is resolved: the digest for
+ * `address.locality` lives inside the value of the `address` disclosure, so the walk has to resolve
+ * as it goes, exactly the way a verifier does. That is also why each location carries its ancestors.
+ * RFC 9901 section 4.2.6 is explicit that sending a nested disclosure without the one containing it
+ * is illegal, so a holder who asks for `address.locality` has to send `address` too, and this is
+ * what lets present() work that out rather than making the caller do it.
+ *
+ * Array indices are positions in the credential as issued. They stay stable whatever the holder
+ * decides to withhold, which is the only way a selector written against the credential can keep
+ * meaning what it said.
+ */
+export async function disclosureLocations(
+  payload: Record<string, unknown>,
+  disclosures: string[]
+): Promise<Map<string, DisclosureLocation>> {
+  const byDigest = new Map<string, { raw: string; parsed: Disclosure }>()
+  for (const raw of disclosures) {
+    byDigest.set(await digest(raw), { raw, parsed: parseDisclosure(raw) })
+  }
+
+  const found = new Map<string, DisclosureLocation>()
+
+  const walk = (node: unknown, path: string, ancestors: string[]): void => {
+    if (Array.isArray(node)) {
+      for (let i = 0; i < node.length; i++) {
+        const at = `${path}[${i}]`
+        const dig = elementDigest(node[i])
+        if (dig === null) {
+          walk(node[i], at, ancestors)
+          continue
+        }
+        const hit = byDigest.get(dig)
+        if (!hit) continue
+        found.set(hit.raw, { path: at, requires: [...ancestors] })
+        walk(hit.parsed.value, at, [...ancestors, hit.raw])
+      }
+      return
+    }
+
+    if (node === null || typeof node !== 'object') return
+
+    const object = node as Record<string, unknown>
+    const sd = object['_sd']
+    if (Array.isArray(sd)) {
+      for (const dig of sd) {
+        if (typeof dig !== 'string') continue
+        const hit = byDigest.get(dig)
+        if (!hit || hit.parsed.name === undefined) continue
+        const at = path ? `${path}.${hit.parsed.name}` : hit.parsed.name
+        found.set(hit.raw, { path: at, requires: [...ancestors] })
+        walk(hit.parsed.value, at, [...ancestors, hit.raw])
+      }
+    }
+
+    for (const [key, value] of Object.entries(object)) {
+      if (key === '_sd' || key === '_sd_alg') continue
+      walk(value, path ? `${path}.${key}` : key, ancestors)
+    }
+  }
+
+  walk(payload, '', [])
+  return found
+}

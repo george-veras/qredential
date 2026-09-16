@@ -78,7 +78,7 @@
   "standards.s2": "la forme du justificatif",
   "standards.s3": "une révocation qui fonctionne depuis une copie en cache",
   "standards.s4": "l'enveloppe du QR, choisie pour la compatibilité des lecteurs",
-  "standards.note": "Pas de mDL ISO 18013-5, qui est du CBOR et du COSE plutôt que du JWT, et pas encore de sélecteur par chemin pour présenter des éléments isolés d'un tableau. Les deux sont à la feuille de route, et un justificatif qui utilise quelque chose de non pris en charge est refusé plutôt que compris à moitié. Revendiquer la moitié d'une norme de conformité est pire que ne rien revendiquer.",
+  "standards.note": "Pas de mDL ISO 18013-5, qui est du CBOR et du COSE plutôt que du JWT. C'est à la feuille de route, et un justificatif qui utilise quelque chose de non pris en charge est refusé plutôt que compris à moitié. Revendiquer la moitié d'une norme de conformité est pire que ne rien revendiquer.",
   "footer.audit": "Aucun audit externe.",
   "footer.auditLink": "Ce que cela veut dire",
   "footer.source": "Code source et issues",
