@@ -221,6 +221,7 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     claims,
     issuer,
     subject: typeof payload['sub'] === 'string' ? payload['sub'] : undefined,
+    vct: typeof payload['vct'] === 'string' ? payload['vct'] : undefined,
     issuedAt: typeof payload['iat'] === 'number' ? payload['iat'] : undefined,
     expiresAt: exp,
     disclosed,

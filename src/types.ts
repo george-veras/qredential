@@ -94,6 +94,8 @@ export interface VerifiedCredential {
   claims: Record<string, unknown>
   issuer: string
   subject?: string
+  /** Credential type from the `vct` claim, when the issuer set one. */
+  vct?: string
   issuedAt?: number
   expiresAt?: number
   /** Names of the selectively disclosable claims the holder chose to reveal. */

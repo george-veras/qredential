@@ -446,3 +446,35 @@ describe('createStatusList', () => {
     ).rejects.toThrow(/outside a list of 100/)
   })
 })
+
+describe('claims are the subject, not the token', () => {
+  it('keeps registered claims out of claims and surfaces them as fields', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const { qr } = await issue({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      claims: CLAIMS,
+      vct: 'https://detran.example/licence',
+      subject: 'did:example:ana',
+      expiresIn: '365d',
+    })
+
+    const result = await verify(qr, { trust: issuer.trust })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+
+    // Everything in claims belongs to the person, so looping over it is safe.
+    expect(Object.keys(result.claims).sort()).toEqual(Object.keys(CLAIMS).sort())
+    for (const registered of ['iss', 'iat', 'exp', 'vct', 'sub', 'status', '_sd', '_sd_alg']) {
+      expect(result.claims[registered]).toBeUndefined()
+    }
+
+    // And none of it is lost: each one has a typed home.
+    expect(result.issuer).toBe('https://detran.example')
+    expect(result.vct).toBe('https://detran.example/licence')
+    expect(result.subject).toBe('did:example:ana')
+    expect(typeof result.issuedAt).toBe('number')
+    expect(typeof result.expiresAt).toBe('number')
+  })
+})

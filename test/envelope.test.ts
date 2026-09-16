@@ -27,7 +27,7 @@ describe('envelope', () => {
   })
 
   it('survives non ascii claims', async () => {
-    const payload = 'nome=Ana Lúcia Gonçalves ~ 東京 ~ 🇧🇷'
+    const payload = 'name=Ana Lúcia Gonçalves ~ 東京 ~ 🇧🇷'
     expect(await unpack(await pack(payload))).toBe(payload)
   })
 

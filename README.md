@@ -84,7 +84,7 @@ unreadable on a cracked phone screen in the sun. The real budget is a QR version
 
 ```ts
 const { qr, bytes } = await issue({ ... })
-bytes // 690
+bytes // 738
 ```
 
 Here is what a realistic driving licence actually costs. Eight claims, a five year expiry, a status
@@ -92,23 +92,23 @@ list pointer, measured by `examples/sizes.mjs`:
 
 | credential | characters | QR version |
 |---|---|---|
-| everything visible, nothing withheld | 690 | 17, scans fine |
-| all eight claims made disclosable | 1465 | 26, too dense |
-| presenting only `over_18` from that credential | 1048 | 22, still dense |
+| everything visible, nothing withheld | ~740 | 18, scans fine |
+| all eight claims made disclosable | ~1590 | 27, too dense |
+| presenting only `over_18` from that credential | ~1115 | 22, still dense |
 
 The uncomfortable row is the middle one, and I would rather you learn it here than after printing
 cards. Selective disclosure roughly doubles the credential, because every disclosable claim costs a
 128 bit salt plus a digest the issuer has to sign, and the digests stay in the payload whether the
 holder reveals the claim or not. That last part is the whole point, since a digest count that
 changed with what you reveal would leak what you withheld, but it does mean the savings at
-presentation time are smaller than people expect: 28% here, not 80%.
+presentation time are smaller than people expect: 30% here, not 80%.
 
 The practical advice, which is why `fits()` exists: make disclosable only the claims that a verifier
 might genuinely need to see alone. Two or three, not all of them.
 
 ```ts
 fits(qr).advice
-// 'Fits QR version 17 at level M, with 126 characters to spare.'
+// 'Fits QR version 18 at level M, with 78 characters to spare.'
 ```
 
 ## Offline revocation

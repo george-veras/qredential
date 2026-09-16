@@ -371,9 +371,9 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       <table>
         <thead><tr><th>Credential</th><th class="num">Characters</th><th>QR version</th></tr></thead>
         <tbody>
-          <tr><td>everything visible</td><td class="num">690</td><td>17, scans fine</td></tr>
-          <tr class="warnrow"><td>all eight claims disclosable</td><td class="num">1465</td><td>26, too dense</td></tr>
-          <tr class="warnrow"><td>presenting only <code>over_18</code></td><td class="num">1048</td><td>22, still dense</td></tr>
+          <tr><td>everything visible</td><td class="num">~740</td><td>18, scans fine</td></tr>
+          <tr class="warnrow"><td>all eight claims disclosable</td><td class="num">~1590</td><td>27, too dense</td></tr>
+          <tr class="warnrow"><td>presenting only <code>over_18</code></td><td class="num">~1115</td><td>22, still dense</td></tr>
         </tbody>
       </table>
     </div>
@@ -382,7 +382,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       costs a salt plus a signed digest, and the digests stay in the payload whether the holder
       reveals the claim or not. That is deliberate, since a digest count that shrank with what you
       revealed would leak what you withheld. It does mean the saving at presentation time is
-      twenty eight percent here, not the eighty that intuition promises. Make two or three claims
+      thirty percent here, not the eighty that intuition promises. Make two or three claims
       disclosable, not all of them, and let <code>fits()</code> tell you where you stand before you
       print anything.
     </div>
