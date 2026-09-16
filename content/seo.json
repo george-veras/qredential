@@ -1,0 +1,25 @@
+{
+  "_readme": [
+    "The only values in this repository that come from outside it. Each console hands out a token,",
+    "you paste it here, and the build puts it in the <head> of every page. An empty string emits",
+    "nothing, so an unregistered console costs a meta tag rather than a wrong one.",
+    "",
+    "google-site-verification  search.google.com/search-console      finds the site on its own, this only unlocks the reports",
+    "msvalidate.01            bing.com/webmasters                    Bing, and through it DuckDuckGo, Ecosia and Yahoo",
+    "naver-site-verification  searchadvisor.naver.com                REQUIRED: Yeti does not crawl an unregistered domain, so Korea sees nothing without it",
+    "baidu-site-verification  ziyuan.baidu.com                       needs a Baidu account, which needs a Chinese mobile number",
+    "yandex-verification      webmaster.yandex.com                   not a target market, but free and it costs one line",
+    "",
+    "The IndexNow key is not a token from anybody. The protocol says the key is whatever you",
+    "generate, and hosting it at keyLocation is itself the proof of ownership, so this one works",
+    "today with no account anywhere."
+  ],
+  "verification": {
+    "google-site-verification": "",
+    "msvalidate.01": "",
+    "naver-site-verification": "",
+    "baidu-site-verification": "",
+    "yandex-verification": ""
+  },
+  "indexnow": "69efd40e06aa9e052be05fafefe989de"
+}

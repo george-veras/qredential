@@ -1,15 +1,29 @@
-<html><head><meta charset="utf-8">
+<html lang="__LANG__"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400&display=swap">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { width:1200px; height:630px; background:#E8ECE8; font-family:'IBM Plex Sans',sans-serif;
+  body { width:1200px; height:630px; background:#E8ECE8;
+         font-family:'IBM Plex Sans','Hiragino Kaku Gothic ProN','Apple SD Gothic Neo',
+                     'PingFang SC','PingFang TC',sans-serif;
          position:relative; overflow:hidden; }
   canvas { position:absolute; inset:0; opacity:.5; }
   .inner { position:relative; padding:74px 80px; height:100%; display:flex; flex-direction:column; }
   .mark { font-family:Archivo,sans-serif; font-weight:800; font-size:38px; letter-spacing:-.02em; color:#111A1D; }
   .mark span { color:#0E6B54; }
-  h1 { font-family:Archivo,sans-serif; font-weight:800; font-size:86px; line-height:.97;
+  h1 { font-family:Archivo,'Hiragino Kaku Gothic ProN','Hiragino Sans','Apple SD Gothic Neo',
+       'PingFang SC','PingFang TC','Noto Sans CJK SC',sans-serif;
+       font-weight:800; font-size:86px; line-height:.97;
        letter-spacing:-.035em; color:#111A1D; margin-top:52px; max-width:15ch; }
+  /* Measured in em, not ch: ch is the width of a zero, about half an em in these faces, while a
+     CJK glyph is a full em. The same number of ch holds half as many characters. */
+  html[lang^="ja"] h1, html[lang^="ko"] h1, html[lang^="zh"] h1 {
+       font-size:76px; max-width:9em; letter-spacing:-.01em; line-height:1.14; }
+  html[lang^="ja"] p, html[lang^="ko"] p, html[lang^="zh"] p { max-width:20em; }
+  /* Japanese and Chinese wrap between any two characters. Korean does not: it has spaces, and
+     breaking inside a word is a typographic error there, not a tight fit. */
+  html[lang^="ko"] h1, html[lang^="ko"] p { word-break:keep-all; }
+  html[lang^="ko"] h1 { font-size:68px; max-width:8.5em; }
+  html[lang^="ko"] p { max-width:22em; }
   h1 em { font-style:normal; color:#0E6B54; }
   p { font-size:27px; line-height:1.4; color:#24312F; margin-top:26px; max-width:30ch; }
   .strip { position:absolute; left:80px; right:80px; bottom:66px; display:flex; gap:34px;
@@ -18,7 +32,8 @@
   .strip b { color:#0E6B54; font-weight:500; }
   .stamp { position:absolute; right:80px; top:150px; background:#D9E7E0; border:1px solid #0E6B54;
            padding:26px 34px; }
-  .stamp .w { font-family:Archivo,sans-serif; font-weight:800; font-size:56px; line-height:1;
+  .stamp .w { font-family:Archivo,'Hiragino Kaku Gothic ProN','Apple SD Gothic Neo',
+              'PingFang SC','PingFang TC',sans-serif; font-weight:800; font-size:52px; line-height:1;
               color:#0E6B54; letter-spacing:-.02em; }
   .stamp .c { font-family:'IBM Plex Mono',monospace; font-size:15px; color:#111A1D; margin-top:8px; }
 </style></head>
@@ -26,16 +41,11 @@
 <canvas id="g" width="1200" height="630"></canvas>
 <div class="inner">
   <div class="mark">q<span>redential</span></div>
-  <h1>The answer is already <em>inside</em> the code</h1>
-  <p>Verify a credential from a QR code with the network off.</p>
+  <h1>__TITLE__</h1>
+  <p>__LEDE__</p>
 </div>
-<div class="stamp"><div class="w">PASS</div><div class="c">0 network requests</div></div>
-<div class="strip">
-  <span>SD-JWT &middot; RFC 9901</span>
-  <span>key binding</span>
-  <span>offline revocation</span>
-  <span><b>zero dependencies</b></span>
-</div>
+<div class="stamp"><div class="w">__PASS__</div><div class="c">__NETWORK__</div></div>
+<div class="strip">__STRIP__</div>
 <script>
   // Same guilloche as the live site, seeded from a fixed string so the card is reproducible.
   var seed = [];

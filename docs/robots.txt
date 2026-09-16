@@ -1,4 +1,47 @@
 User-agent: *
 Allow: /
 
+# Search engines that do not share an index with Google, one market each.
+# Yeti is Naver, and Korea is the market that most depends on being let in by name.
+User-agent: Yeti
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Answer engines. A library is found through a question as often as through a query now, and
+# an answer that cites the documentation sends a reader who already knows what this does.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://george-veras.github.io/qredential/sitemap.xml

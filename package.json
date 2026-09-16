@@ -2,6 +2,10 @@
   "name": "qredential",
   "version": "0.2.0",
   "description": "Verify a digital credential from a QR code with no network connection. SD-JWT selective disclosure, offline revocation, zero dependencies.",
+  "homepage": "https://george-veras.github.io/qredential/",
+  "bugs": {
+    "url": "https://github.com/george-veras/qredential/issues"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +32,8 @@
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "check:translations": "CHECK_TRANSLATIONS=1 node scripts/build-site.mjs",
     "build:og": "node scripts/build-og.mjs",
-    "check:playground": "node scripts/check-playground.mjs"
+    "check:playground": "node scripts/check-playground.mjs",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "keywords": [
     "verifiable-credentials",
@@ -40,7 +45,13 @@
     "age-verification",
     "identity",
     "base45",
-    "status-list"
+    "status-list",
+    "rfc9901",
+    "key-binding",
+    "token-status-list",
+    "eudi-wallet",
+    "kb-jwt",
+    "jwt"
   ],
   "author": "George Veras Valentim",
   "license": "MIT",

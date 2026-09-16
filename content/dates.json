@@ -1,0 +1,158 @@
+{
+  "_readme": "When each page last changed, keyed by a hash of its source. Seeded once from git history and maintained by the build: a file whose hash moved gets today, a file whose hash did not keeps its date. Git cannot do this job directly, because a date read from git history changes the moment the file is committed, so a sitemap built before the commit would never match the one rebuilt after it.",
+  "files": {
+    "content/guide/de.md": {
+      "sha": "3d400d9564a4a863",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/en.md": {
+      "sha": "d6f6153e6fb350ac",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/es.md": {
+      "sha": "d4e354bc3c799211",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/fr.md": {
+      "sha": "b3165106174fb1f1",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/ja.md": {
+      "sha": "eeb4f0ea3027baea",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/ko.md": {
+      "sha": "76c5168f08bfbd18",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/pt.md": {
+      "sha": "994359b293ae85f4",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/zh-Hans.md": {
+      "sha": "87d1fb1f301b1e57",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/guide/zh-Hant.md": {
+      "sha": "270388db1404c416",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "content/landing/de.json": {
+      "sha": "6a9a108f4c0603c7",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/en.json": {
+      "sha": "beb4bad0add88066",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/es.json": {
+      "sha": "8d405f83353ca88e",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/fr.json": {
+      "sha": "c9e91eb70711dfbd",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/ja.json": {
+      "sha": "f544e7dc8777f676",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/ko.json": {
+      "sha": "cebfd27f0b9bc190",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/pt.json": {
+      "sha": "02d62fab1d274b3f",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/zh-Hans.json": {
+      "sha": "a5b8013154488ee8",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/landing/zh-Hant.json": {
+      "sha": "39a7eae96a7042a4",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/de.json": {
+      "sha": "d96c185ab580be6e",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/en.json": {
+      "sha": "a5b909f786a61a7d",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/es.json": {
+      "sha": "e76fbf774e3affb0",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/fr.json": {
+      "sha": "416b6f3f5cee6d13",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/ja.json": {
+      "sha": "0a94943f7088a16f",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/ko.json": {
+      "sha": "2539a4ef95c76fb2",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/pt.json": {
+      "sha": "801b9cd55d809b29",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/zh-Hans.json": {
+      "sha": "270a2092fb3e9dfd",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "content/playground/zh-Hant.json": {
+      "sha": "a4812a40193105e1",
+      "created": "2026-09-16",
+      "modified": "2026-09-16"
+    },
+    "docs/guide/_shell.html": {
+      "sha": "4f62c81bdace3088",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "docs/index.template.html": {
+      "sha": "bd0afc8a0780721b",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    },
+    "docs/playground/index.template.html": {
+      "sha": "f54a428feaaf9221",
+      "created": "2026-09-15",
+      "modified": "2026-09-16"
+    }
+  },
+  "releases": {
+    "0.2.0": "2026-09-15"
+  }
+}

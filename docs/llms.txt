@@ -1,0 +1,26 @@
+# qredential
+
+> Offline verification of digital credentials carried in a QR code. SD-JWT with selective
+> disclosure and key binding (RFC 9901), Token Status List revocation from a cached copy and
+> base45 QR framing, in TypeScript with no runtime dependencies, on WebCrypto alone. Built for
+> the roadside case: a verifier with no signal that must answer yes or no in under a second.
+
+MIT licensed. No third party security audit; the README says so in the same words.
+
+## Documentation
+
+- [English guide](https://george-veras.github.io/qredential/guide/): issue, present and verify, the error model and the QR size budget, in English.
+- [Portuguese guide](https://george-veras.github.io/qredential/pt/guide/): issue, present and verify, the error model and the QR size budget, in Portuguese.
+- [Spanish guide](https://george-veras.github.io/qredential/es/guide/): issue, present and verify, the error model and the QR size budget, in Spanish.
+- [French guide](https://george-veras.github.io/qredential/fr/guide/): issue, present and verify, the error model and the QR size budget, in French.
+- [German guide](https://george-veras.github.io/qredential/de/guide/): issue, present and verify, the error model and the QR size budget, in German.
+- [Japanese guide](https://george-veras.github.io/qredential/ja/guide/): issue, present and verify, the error model and the QR size budget, in Japanese.
+- [Korean guide](https://george-veras.github.io/qredential/ko/guide/): issue, present and verify, the error model and the QR size budget, in Korean.
+- [Chinese (Simplified) guide](https://george-veras.github.io/qredential/zh-Hans/guide/): issue, present and verify, the error model and the QR size budget, in Chinese (Simplified).
+- [Chinese (Traditional) guide](https://george-veras.github.io/qredential/zh-Hant/guide/): issue, present and verify, the error model and the QR size budget, in Chinese (Traditional).
+
+## Also
+
+- [Playground](https://george-veras.github.io/qredential/playground/): runs the library in the browser and fires ten real attacks at the verifier.
+- [Source](https://github.com/george-veras/qredential): implementation, tests and issues.
+- [Changelog](https://github.com/george-veras/qredential/blob/main/CHANGELOG.md): error codes and rejection reasons are API and are versioned as such.
