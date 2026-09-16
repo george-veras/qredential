@@ -231,6 +231,9 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     disclosed = rebuilt.disclosed
     withheld = rebuilt.withheld
   } catch (error) {
+    if (error instanceof QredentialError && error.code === 'unsupported_feature') {
+      return reject('unsupported_feature', error.message)
+    }
     return reject('digest_mismatch', (error as Error).message)
   }
 

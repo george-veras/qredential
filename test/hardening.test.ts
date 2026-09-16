@@ -192,3 +192,80 @@ describe('the digest order is shuffled with a cryptographic source', () => {
     expect(orders.size).toBeGreaterThan(6)
   })
 })
+
+describe('selective disclosure this version cannot resolve is refused, not ignored', () => {
+  /** Build a credential by hand, the way another implementation would shape one. */
+  async function handBuilt(payloadExtra: Record<string, unknown>, disclosures: string[]) {
+    const issuer = await makeIssuer('https://eu.example')
+    const header = { alg: 'ES256', typ: 'dc+sd-jwt', kid: issuer.kid }
+    const payload = {
+      iss: issuer.iss,
+      iat: Math.floor(Date.now() / 1000),
+      given_name: 'Ana',
+      _sd_alg: 'sha-256',
+      ...payloadExtra,
+    }
+    const { importPrivateKey, sign } = await import('../src/crypto.js')
+    const { b64url } = await import('../src/bytes.js')
+    const input = `${b64urlJson(header)}.${b64urlJson(payload)}`
+    const key = await importPrivateKey(issuer.privateJwk, 'ES256')
+    const jwt = `${input}.${b64url(await sign(input, key, 'ES256'))}`
+    return { issuer, credential: joinCombined(jwt, disclosures) }
+  }
+
+  it('refuses nested _sd rather than handing back a digest blob to display', async () => {
+    const street = makeDisclosure('street_address', 'Rua das Flores 10')
+    const top = makeDisclosure('over_18', true)
+    const { issuer, credential } = await handBuilt(
+      {
+        address: { country: 'BR', _sd: [await digest(street.raw)] },
+        _sd: [await digest(top.raw)],
+      },
+      [top.raw]
+    )
+
+    const result = await verify(credential, { trust: issuer.trust })
+    expect(result.ok).toBe(false)
+    if (result.ok) return
+    expect(result.reason).toBe('unsupported_feature')
+    expect(result.message).toContain('address._sd')
+  })
+
+  it('refuses array element disclosure for the same reason', async () => {
+    const tag = makeDisclosure('nationality', 'BR')
+    const top = makeDisclosure('over_18', true)
+    const { issuer, credential } = await handBuilt(
+      {
+        nationalities: [{ '...': await digest(tag.raw) }],
+        _sd: [await digest(top.raw)],
+      },
+      [top.raw]
+    )
+
+    const result = await verify(credential, { trust: issuer.trust })
+    expect(result.ok).toBe(false)
+    if (result.ok) return
+    expect(result.reason).toBe('unsupported_feature')
+    expect(result.message).toContain('nationalities')
+  })
+
+  it('leaves ordinary nested objects and arrays alone', async () => {
+    const issuer = await makeIssuer('https://detran.example')
+    const { qr } = await issue({
+      issuer: issuer.iss,
+      kid: issuer.kid,
+      key: issuer.privateJwk,
+      claims: {
+        given_name: 'Ana',
+        address: { country: 'BR', city: 'Sao Paulo' },
+        categories: ['A', 'B'],
+      },
+    })
+
+    const result = await verify(qr, { trust: issuer.trust })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({ country: 'BR', city: 'Sao Paulo' })
+    expect(result.claims['categories']).toEqual(['A', 'B'])
+  })
+})

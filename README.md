@@ -145,6 +145,9 @@ Four functions. That is the whole surface.
 
 - Not a wallet. It has no UI and no storage.
 - Not a key management system. You bring your own keys and your own trust list distribution.
+- Only top level selective disclosure. SD-JWT also allows `_sd` inside a nested object and
+  `{"...": digest}` as an array element. This version resolves neither and refuses such a credential
+  rather than ignoring the part it does not understand.
 - Not ISO 18013-5 mDL yet. That is CBOR and COSE rather than JWT, and it is on the roadmap, but
   claiming half of a compliance standard is worse than not claiming it.
 - Not audited. It is new. Read the code before you put it between a person and a right they hold.
