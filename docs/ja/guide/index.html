@@ -1,0 +1,477 @@
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/">
+<link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/">
+<link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/">
+<link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/">
+<link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/">
+<link rel="canonical" href="https://george-veras.github.io/qredential/ja/guide/">
+<title>Qredential Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #5C6C6B;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+      --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+    --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 15.5px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--ground);
+  }
+  .masthead-inner {
+    max-width: 1140px; margin: 0 auto; padding: 14px 22px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
+  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
+
+  .shell {
+    max-width: 1140px; margin: 0 auto; padding: 36px 22px 90px;
+    display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 46px; align-items: start;
+  }
+  @media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+  .toc { position: sticky; top: 74px; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .toc { position: static; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  }
+  .toc h2 {
+    font-family: var(--display); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate);
+    margin: 0 0 10px;
+  }
+  .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .toc a { color: var(--slate); text-decoration: none; display: block; }
+  .toc a:hover { color: var(--ink); }
+
+  article { min-width: 0; max-width: 72ch; }
+  article > section { margin-bottom: 52px; scroll-margin-top: 78px; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.08;
+    letter-spacing: -0.028em; color: var(--ink); margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--body); margin: 0 0 8px; text-wrap: balance; }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: 22px;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 12px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; color: var(--ink); margin: 26px 0 8px;
+  }
+  .eyebrow {
+    font-family: var(--data); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); }
+
+  code {
+    font-family: var(--data); font-size: 0.88em; color: var(--guilloche);
+    word-break: break-word;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 16px;
+  }
+  pre code { color: var(--ink); font-size: 13px; line-height: 1.7; word-break: normal; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 14px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .signature {
+    font-family: var(--data); font-size: 13.5px; color: var(--ink);
+    background: var(--viridian-wash); border-left: 3px solid var(--viridian);
+    padding: 11px 14px; margin: 0 0 14px; overflow-x: auto; white-space: pre;
+  }
+  .aside {
+    border-left: 3px solid var(--amber); padding: 2px 0 2px 15px;
+    margin: 0 0 18px; color: var(--slate); font-size: 14.5px;
+  }
+  .aside strong { color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 14.5px;
+    padding: 10px 20px; text-decoration: none; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  .reason { font-family: var(--data); font-size: 12.5px; color: var(--oxblood); white-space: nowrap; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
+    font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="../../">q<span>redential</span></a>
+    <nav>
+      <a href="../../">ホーム</a>
+      <a href="./" aria-current="page">ドキュメント</a>
+      <a href="../../playground/">プレイグラウンド</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc">
+    <h2>このページの内容</h2>
+    <ol><li><a href="#start">はじめる</a></li>
+      <li><a href="#disclosure">選択的開示</a></li>
+      <li><a href="#holder">保持者を証明する</a></li>
+      <li><a href="#size">サイズの予算</a></li>
+      <li><a href="#revocation">オフラインでの失効確認</a></li>
+      <li><a href="#trust">信頼リスト</a></li>
+      <li><a href="#api">API リファレンス</a></li>
+      <li><a href="#errors">エラーの扱い</a></li>
+      <li><a href="#limits">これでないもの</a></li></ol>
+    <h2 style="margin-top:22px">言語</h2>
+    <ol class="langs"><li><a href="../../guide/" hreflang="en" lang="en">English</a></li>
+      <li><a href="../../pt/guide/" hreflang="pt" lang="pt">Português</a></li>
+      <li><a href="../../es/guide/" hreflang="es" lang="es">Español</a></li>
+      <li><a href="../../fr/guide/" hreflang="fr" lang="fr">Français</a></li>
+      <li><a href="../../de/guide/" hreflang="de" lang="de">Deutsch</a></li>
+      <li><a href="../../ja/guide/" hreflang="ja" lang="ja" aria-current="page">日本語</a></li></ol>
+  </aside>
+
+  <article>
+<section id="top">
+<p class="eyebrow">ドキュメント</p>
+<h1>ネットワークを切ったまま検証できる資格情報</h1>
+<p class="lede">QR コードが証明そのものを持ち歩きます。<code>qredential</code> は署名、有効期限、失効状態、クレームを、端末から一度もリクエストを出さずに確認します。</p>
+<!-- cta --> [プレイグラウンドを開く](../../playground/)
+
+<!-- cta --> [ソースを読む](https://github.com/george-veras/qredential)
+
+</section>
+<section id="start">
+<h2>はじめる</h2>
+<pre><code>npm i qredential</code></pre><p>Node 20 以降、現行のあらゆるブラウザ、そして React Native。WebCrypto だけを使い、Node 固有のものは使いません。検証する側の端末はたいてい携帯電話だからです。実行時の依存関係はありません。</p>
+<p>テストスイート全体が、コミットのたびに Linux、macOS、Windows 上の Node 20、22、24 で、そして Chromium、Firefox、WebKit で実行されます。Ed25519 は四つすべてで動かしています。</p>
+<div class="aside"><strong>React Native に関する一点の但し書き。</strong> <code>CompressionStream</code> がありません。発行、提示、検証はそれなしでも動きます。エンベロープが圧縮されないままになるだけで、代償はサイズだけです。<em>オフラインでの失効確認は動きません</em>。ステータスリストを読むにはビット列を展開する必要があるからです。キャッシュ済みリストを展開できない検証側は、読めないリストを「問題なし」と扱わずに <code>status_unavailable</code> で拒否します。React Native で失効確認が必要なら <code>DecompressionStream</code> のポリフィルを入れてください。両方のグローバルを削除した状態で全体の流れを実行するテストがあるので、この説明は推測ではなく検証済みです。</div><h3>何かを検証する</h3>
+<pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span>  <span class="tok-s">2</span> 
+
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scannedText, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  console.log(result.claims.given_name)    <span class="tok-s">0</span> 
+} <span class="tok-k">else</span> {
+  console.log(result.reason)               <span class="tok-s">1</span> 
+}</code></pre><h3>一巡の流れ</h3>
+<p>三者、三つの呼び出し。発行者が一度署名し、保持者が渡るものを絞り、検証者が判断します。</p>
+<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">6</span> 
+
+ <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential, qr } = <span class="tok-k">await</span> issue({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">7</span> ,
+  key: issuerPrivateJwk,
+  claims: {
+    given_name:  <span class="tok-s">8</span> ,
+    family_name:  <span class="tok-s">9</span> ,
+    birth_date:  <span class="tok-s">10</span> ,
+    over_18: <span class="tok-k">true</span>,
+  },
+  disclose: [ <span class="tok-s">11</span> ,  <span class="tok-s">12</span> ],
+  expiresIn:  <span class="tok-s">13</span> ,
+})
+
+ <span class="tok-s">2</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [ <span class="tok-s">14</span> ] })
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
+result.claims        <span class="tok-s">4</span> 
+result.claims.birth_date   <span class="tok-s">5</span> </code></pre>
+</section>
+<section id="disclosure">
+<h2>選択的開示</h2>
+<p>別々の二者が別々の二つの判断を下します。これを混同するのが典型的な設計ミスです。<strong>発行者</strong>は署名時に <code>disclose</code> で、どのクレームを伏せて<em>よい</em>かを決めます。<strong>保持者</strong>はその中からどれを実際に見せるかを、読み取り時に、同じく <code>disclose</code> で決めます。発行者が指定しなかったクレームは、誰にも伏せられません。</p>
+<p>仕組みはごく普通のハッシュです。開示可能な各クレームは 128 ビットのランダムなソルトとともに直列化され、その文字列のダイジェストだけが資格情報に署名されます。クレームを見せるとは、元の文字列を送って検証者にハッシュさせ、ダイジェストを突き合わせてもらうことです。伏せるとは、検証者の手元に決して開けないダイジェストが残るということです。</p>
+<h3>入れ子、配列、再帰的な開示</h3>
+<p>RFC 9901 は三つすべてを許し、欧州のウォレット圏は三つすべてを使います。ここでの検証は、7.1 節の処理モデルに従って、どの深さでもそれらを解決します。</p>
+<ul>
+<li>入れ子オブジェクト内の <code>_sd</code> 配列は、そのオブジェクトのプロパティを隠します。</li>
+<li><code>{&quot;...&quot;: digest}</code> の形をした配列要素は、その要素自体を隠します。伏せられた要素はプレースホルダとして残らず配列から<em>取り除かれる</em>ので、受け取るのはそのまま表示できるきれいな値です。</li>
+<li>開示された値がさらにどちらの形も含みうるため、一つ解くとさらに現れます。</li>
+</ul>
+<p>そのどれも <code>claims</code> には漏れません。<code>_sd</code> キーも <code>&quot;...&quot;</code> 要素も呼び出し側には届きません。開示された名前は <code>address.locality</code> のようなパスで返り、全体が同じ RFC の独立実装と双方向で突き合わせられています。</p>
+<div class="aside"><strong>年齢確認でこれが効く理由。</strong> ありがちな実装は、客に身分証の写真を第三者へアップロードさせます。これは起きるのを待っているだけの情報漏えいです。ここでは店は真偽値を一つ知るだけで、望んでも生年月日は知りえません。この性質は暗号的なものであって、プライバシーポリシー上の約束ではありません。</div><p>発行者が開示可能にしなかったクレームを要求すると、黙って要求より少なく返すのではなく、例外を投げます。</p>
+
+</section>
+<section id="holder">
+<h2>保持者を証明する</h2>
+<p>選択的開示が証明するのは、発行者がそれらのクレームに署名したことです。それだけでは、提示している人物が本人であることは証明されません。しかもこの隙間は理屈の上の話ではありません。他人のコードを撮った写真は同じ署名を持ち、まったく同じように検証を通ります。</p>
+<p>鍵バインディングがこれを塞ぎます。発行者が保持者の公開鍵を資格情報に書き込み、読み取りの場で保持者のウォレットが対応する秘密鍵で新しいチャレンジに署名します。写真にはそれができません。</p>
+<h3>三つの手順</h3>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential } = <span class="tok-k">await</span> issue({
+  ...,
+  holderKey: holderPublicJwk,
+})
+
+ <span class="tok-s">1</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, {
+  disclose: [ <span class="tok-s">6</span> ],
+  keyBinding: {
+    key: holderPrivateJwk,
+    audience: 'https: <span class="tok-s">2</span> 
+    nonce: challengeFromTheVerifier,
+  },
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  nonce: challengeIIssued,
+  audience: 'https: <span class="tok-s">4</span> 
+})
+result.holderVerified    <span class="tok-s">5</span> </code></pre><p>証明は四つのものに結び付き、それぞれが特定の攻撃を塞ぎます。<strong>nonce</strong> は記録された提示の再生を防ぎ、<strong>audience</strong> はある検証者向けの証明を別の検証者で使うことを防ぎ、<strong>署名</strong>は発行者が結び付けた鍵に紐づけ、<code>sd_hash</code> は提示された開示の集合そのものを覆うので、保持者の署名後に中継者が開示を足したり削ったりできません。証明には有効期限もあり、既定で五分、<code>maxKeyBindingAge</code> で調整できます。</p>
+<h3>静的な資格情報と、その選択を声に出して行うべき理由</h3>
+<p>カードに印刷されたコードには、以上のどれもできません。読み取りの場で署名する装置が存在しないので、静的な資格情報は本質的に複製可能です。これは誤りではなく、現実によくある状況です。ただし検証者が、それと知った上で下すべき判断です。</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust, acceptWithoutHolderProof: <span class="tok-k">true</span> })
+result.holderVerified    <span class="tok-s">0</span> </code></pre><p>この指定がなければ、証明のない提示は <code>holder_proof_missing</code> で拒否されます。既定を厳しい側にしてあるのは意図的です。危ないのは、入口の読み取り機を作る人が鍵バインディングの存在を知らないまま、スクリーンショットで破られるものを出荷する場合です。問題を名指しして大きな音を立てて失敗するほうが、それを覆い隠す静かな既定値よりも価値があります。</p>
+<div class="aside"><strong>受け入れを選んでも、壊れた証明を素通しさせることはありません。</strong> <code>acceptWithoutHolderProof</code> が覆うのは、証明がそもそも提示されなかった場合です。証明が存在して失敗したなら、この指定にかかわらず資格情報は拒否されます。</div><h3>何を代償にするか</h3>
+<p>バインディングは QR の観点では無料ではありません。保持者の公開鍵は資格情報の中に居座り、証明は提示に付いて回ります。</p>
+<div class="tablewrap"><table><thead><tr><th>提示</th><th>文字数</th><th>QR バージョン</th></tr></thead><tbody><tr><td>静的、すべて可視</td><td>~740</td><td>18、問題なく読める</td></tr><tr><td>年齢のみ、結び付けあり証明なし</td><td>~1320</td><td>24、密</td></tr><tr><td>年齢のみ、保持者の証明あり</td><td>~1605</td><td>27、密すぎる</td></tr></tbody></table></div><p>証明そのものは約 285 文字です。見た目ほど問題にはなりません。鍵バインディングができる資格情報は、定義からして画面に表示されているのであり、そこではコードを大きく明るくできるからです。密度の限界が問題になるのは擦り切れた印刷カードであり、印刷カードはそもそも鍵バインディングをするはずがありません。</p>
+
+</section>
+<section id="size">
+<h2>サイズの予算</h2>
+<p>QR コードは最大でも英数字およそ 4300 文字しか収まりませんが、その大きさのコードは傷んだカードやひび割れた画面では読めません。実用上の上限はバージョン 20 前後です。</p>
+<p>現実的な運転免許証が費やす量は次のとおりです。クレーム八つ、有効期間五年、ステータスリストへのポインタ付き。リポジトリの <code>examples/sizes.mjs</code> で測定しています。</p>
+<div class="tablewrap"><table><thead><tr><th>資格情報</th><th>文字数</th><th>QR バージョン</th></tr></thead><tbody><tr><td>すべて可視</td><td>~740</td><td>18、問題なく読める</td></tr><tr><td>八つすべて開示可能</td><td>~1590</td><td>27、密すぎる</td></tr><tr><td><code>over_18</code> だけを提示</td><td>~1115</td><td>22、まだ密</td></tr></tbody></table></div><p>居心地が悪いのは真ん中の行で、カードを刷った後より、ここで知るほうがましです。選択的開示は資格情報をほぼ倍にします。開示可能なクレームごとにソルトと署名済みダイジェストがかかり、しかも<strong>ダイジェストは、保持者がそのクレームを見せるかどうかに関わらずペイロードに残る</strong>からです。これは意図的です。見せた内容に応じてダイジェストの個数が減れば、何を伏せたかが漏れてしまいます。実際の帰結として、提示時の節約は直感が約束するより小さくなります。ここでは三割であって、八割ではありません。</p>
+<p>ですから、検証者が単独で見る必要が本当にありうるクレームだけを開示可能にしてください。全部ではなく、二つか三つ。<code>fits()</code> が、決める前に現在地を教えてくれます。</p>
+<div class="aside"><strong>base45 について。</strong> 通説では小ささのために選ばれたと言われます。違います。QR の英数字モードでの base45 は元の 1 バイトあたり約 8.25 ビット、バイトモードの base64 が 10.67、生のバイナリがちょうど 8 です。base64 には明確に勝ち、生バイトにはわずかに負けます。生バイトを意図的に手放しているのは、バイトモードが文字集合の曖昧さを抱えており、多くの読み取り機が壊れた文字列を返すからです。コピーされ、貼り付けられ、ログに残っても生き延びる資格情報は、三パーセントの代償に見合います。</div>
+</section>
+<section id="revocation">
+<h2>オフラインでの失効確認</h2>
+<p>失効確認は実装が飛ばしがちな部分で、飛ばすと盗まれた資格情報が永遠に通ってしまいます。</p>
+<p>ステータスリストは、資格情報一件につき一ビットの圧縮ビット列です。百万件を覆うリストはほとんどがゼロの 125 KB で、圧縮すれば数キロバイトになります。電波があるときに取得し、ないときに照合してください。</p>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> statusList = <span class="tok-k">await</span> createStatusList({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">4</span> ,
+  key: issuerPrivateJwk,
+  uri: 'https: <span class="tok-s">2</span> 
+  size: <span class="tok-s">1_000_000</span>,
+  revoked: [<span class="tok-s">48219</span>],
+  expiresIn:  <span class="tok-s">5</span> ,
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  status: cachedStatusList,
+  maxStatusAge:  <span class="tok-s">6</span> ,
+})</code></pre><p>拒否の理由は読む価値があります。どれもが、もっと無口なライブラリなら偽の「はい」を返していたはずの場所だからです。</p>
+<ul>
+<li>リストを渡していないので、失効は一度も確認されていない: <code>status_unavailable</code></li>
+<li>キャッシュしたリストが <code>maxStatusAge</code> より古いので、失効を否定できない: <code>status_list_stale</code></li>
+<li>リストが信頼リストにない鍵で署名されている。攻撃者が失効済み資格情報を洗浄するならまさにこの手口: <code>bad_signature</code></li>
+<li>リストの発行者が資格情報の発行者と異なる、あるいは <code>uri</code> が異なる。同じ添字でもリストごとに指すものが違うので、結び付いていないリストは答えにならない: <code>status_unavailable</code></li>
+<li>資格情報の添字が、キャッシュしたリストの外側にある。つまり実際には何も読めていない: <code>status_unavailable</code></li>
+</ul>
+<div class="aside"><strong>きれいな結果がこの点で黙ることはありません。</strong> 失効が実際に確認できたときは、結果に <code>revocationChecked: true</code> が入ります。本当の答えに到達できない場合、ライブラリはそのフラグを立てたまま資格情報を通すのではなく拒否します。偽りの保証は、答えがないことより悪いからです。</div><p>確信が持てないときにどうするかは、あなたの運用の方針の問題であってライブラリの問題ではないので、<code>qredential</code> はそれを黙って代わりに決めることを拒みます。失効が確認できたときは、成功した結果が <code>revocationChecked: true</code> でそう告げます。</p>
+
+</section>
+<section id="trust">
+<h2>信頼リスト</h2>
+<p>経路外で端末に届ける必要がある唯一のものが、あなたが信じてよいと考える発行者公開鍵の集合です。これはめったに変わらないので、アプリに同梱して週に一度更新する、というのはまったく妥当な配布方法です。</p>
+<pre><code><span class="tok-k">const</span> trust = {
+  issuers: {
+    'https: <span class="tok-s">0</span> 
+      name:  <span class="tok-s">1</span> ,
+      keys: [{ kid:  <span class="tok-s">2</span> , alg:  <span class="tok-s">3</span> , jwk: publicJwk }],
+    },
+  },
+}</code></pre><p>どのアルゴリズムを使うかを決めるのは信頼された鍵であって、資格情報自身のヘッダに書かれたアルゴリズムでは決してありません。これがアルゴリズム置換に対する防御のすべてであり、<code>alg</code> が推測されるのではなく信頼リストの鍵側に置かれている理由です。</p>
+<p>リストが端末にどう届くか、鍵をどう更新するか、秘密鍵をどこに置くかは対象外です。ライブラリはそれらを入力として受け取ります。</p>
+
+</section>
+<section id="api">
+<h2>API リファレンス</h2>
+<p>四つの関数が資格情報の一生を覆い、加えて失効を公開する発行者向けに一つあります。</p>
+<h3>issue(options)</h3>
+<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>オプション</th><th>型</th><th>意味</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>検証者の信頼リスト内の鍵と一致しなければならない識別子。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>秘密鍵。この呼び出しから外へ出ません。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>鍵の識別子。ヘッダに書かれ、鍵更新の際に検証者が正しい鍵を選べるようにします。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>既定は <code>ES256</code>。あらゆるプラットフォームが対応します。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>資格情報が主張する内容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>保持者が伏せてよいクレーム名。それ以外は常に可視です。存在しない名前を書くと例外を投げます。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>資格情報の型、SD-JWT VC の <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>任意の主体識別子。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒数、または <code>&#39;1825d&#39;</code> のような期間。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同じ書き方。後から有効になる資格情報向け。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>ステータスリスト内のこの資格情報の位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>保持者の<strong>公開</strong>鍵。<code>cnf</code> に書き込まれます。静的な資格情報のときだけ省いてください。秘密成分を含む鍵は拒否されます。</td></tr></tbody></table></div><p>返り値は <code>credential</code>（SD-JWT の結合形式。ウォレットに保存するのはこれです）、<code>qr</code>（読み取り可能なエンベロープ）、<code>bytes</code>（<code>qr</code> の文字数）、<code>disclosable</code>（保持者が伏せられるクレーム名）です。</p>
+<h3>present(credential, options)</h3>
+<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>資格情報を列挙されたクレームに絞り、読み取り可能なエンベロープを返します。署名済み JWT には一切手を触れないので、残った内容に対して発行者の署名は依然として有効です。結合形式でもエンベロープでも受け付けます。発行者が開示可能にしなかったクレームを求めると例外を投げます。</p>
+<h3>verify(input, options)</h3>
+<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>オプション</th><th>型</th><th>意味</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必須。信じてよいと考える発行者と鍵。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>キャッシュ済みのステータスリストトークン。これがないと、リストを指す資格情報は通せません。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>これより古いリストからは答えることを拒む。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>発行者と検証者の時計のずれに対する許容秒数。既定は 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>この読み取りのためにこの検証者が発行したチャレンジ。保持者の証明を受け入れるには必須。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>この検証者の識別子。証明の <code>aud</code> と照合されます。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>証明のない提示を受け入れる。静的な資格情報には必要で、存在して壊れている証明を素通しさせることは決してありません。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>保持者の証明が許される古さ。既定は 5 分。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>現在時刻を上書きする。テストと再生解析のため。</td></tr></tbody></table></div><p>敵対的な入力に対して例外を投げることはありません。判別可能な合併型を返します。成功時は <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>、失敗時は <code>{ ok: false, reason, message }</code> で、<code>reason</code> は下の表から取られます。</p>
+<p><code>withheld</code> は、渡らなかった開示可能クレームの個数です。方針判断には役立ちますが、構造上それがどれだったかを教えることはできません。</p>
+<p><strong><code>claims</code> にあるものはすべて主体を記述します。</strong> <code>iss</code>、<code>iat</code>、<code>exp</code>、<code>status</code> のようにトークン自体を記述する登録済みクレームは、代わりに型付きのフィールドとして現れます。そしてそれらを設定しようとする開示や、ペイロードが既に決めたクレームを上書きしようとする開示は、資格情報全体を失敗させます。したがって <code>claims</code> を素直に走査しても安全です。</p>
+<h3>fits(payload, errorCorrection)</h3>
+<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同期関数。<code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code> を返します。誤り訂正の既定が <code>M</code> なのは、<code>L</code> が紙の上では気前よく見えて、擦り切れた印刷カードでは失敗するからです。<code>version</code> はどのバージョンにも収まらないとき <code>null</code> になり、<code>advice</code> はビルドログにそのまま出せる一文です。</p>
+<h3>createStatusList(options)</h3>
+<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>発行者向け。<code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code>、<code>issuedAt</code> を受け取り、署名済みのステータスリストトークンを返します。リストの外側の添字は、隣の資格情報のビットを壊すのではなく例外を投げます。</p>
+<h3>そのほかのエクスポート</h3>
+<p>QR エンベロープ用の <code>pack</code>、<code>unpack</code>、<code>isEnvelope</code>、およびコーデック単体の <code>encodeBase45</code> と <code>decodeBase45</code>。ツール作りには便利ですが、通常の利用には不要です。</p>
+
+</section>
+<section id="errors">
+<h2>エラーの扱い</h2>
+<p>約束はちょうど二つあり、その分け方は偶然ではなく意図的です。この二文を覚えれば、catch ブロックを一つ書いて、そこに何が来うるかを把握できます。</p>
+<div class="signature">1. verify() は決して例外を投げない。どんな入力でも。
+2. それ以外はすべて QredentialError だけを投げる。</div><p>分かれている理由は、<code>verify()</code> が敵対的な入力に向けられるために存在するからです。例外を投げる検証器は、誰かが <code>try/catch</code> で包んで人を素通しさせる検証器です。だから、あなたが必ず見る結果を返します。それ以外は、呼び出し側がコードで直せる条件で失敗するので、そこでは投げるのが正しい形です。</p>
+<p>どちらの規則も、ランダムな文字列、壊れた鍵、破損したエンベロープ、敵対的なオプションを生成して、それ以外は何も外へ出ないことを主張する性質ベースのテストで支えられています。JSON パースからの <code>SyntaxError</code> も、WebCrypto からの <code>DOMException</code> も、確保時の <code>RangeError</code> も出ません。</p>
+<h3>検証結果を扱う</h3>
+<p>結果は判別可能な合併型なので、TypeScript が型を絞ってくれます。</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  result.claims           <span class="tok-s">0</span> 
+  result.withheld         <span class="tok-s">1</span> 
+} <span class="tok-k">else</span> {
+  <span class="tok-k">switch</span> (result.reason) {
+    <span class="tok-k">case</span>  <span class="tok-s">2</span> :            <span class="tok-k">return</span> askForARenewal()
+    <span class="tok-k">case</span>  <span class="tok-s">3</span> :            <span class="tok-k">return</span> refuseAndLog()
+    <span class="tok-k">case</span>  <span class="tok-s">4</span> :  <span class="tok-k">return</span> retryWhenOnline()
+    <span class="tok-k">default</span>:                   <span class="tok-k">return</span> refuse(result.reason)
+  }
+}</code></pre><p>コードベースが <code>try/catch</code> を中心に組まれているなら、同じ結果を <code>assertVerified()</code> に通してください。失われるものはありません。投げられるエラーが元の理由を持ち回ります。</p>
+<pre><code><span class="tok-k">import</span> { verify, assertVerified, isQredentialError } <span class="tok-k">from</span>  <span class="tok-s">1</span> 
+
+<span class="tok-k">try</span> {
+  <span class="tok-k">const</span> credential = assertVerified(<span class="tok-k">await</span> verify(scanned, { trust }))
+  admit(credential.claims)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error) &amp;&amp; error.code ===  <span class="tok-s">2</span> ) {
+    refuse(error.reason)    <span class="tok-s">0</span> 
+  } <span class="tok-k">else</span> {
+    <span class="tok-k">throw</span> error
+  }
+}</code></pre><h3>拒否理由</h3>
+<p><code>verify()</code> が <code>result.reason</code> として返します。プレイグラウンドはこれらを一つずつ検証器に投げつけるので、届くところを見られます。</p>
+<div class="tablewrap"><table><thead><tr><th>理由</th><th>何が起きたか</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>そもそも資格情報でない、エンベロープが壊れている、あるいは結合形式に末尾の区切りがない。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> クレームが信頼リストにない。</td></tr><tr><td><code>unknown_key</code></td><td>発行者は信頼されているが、その <code>kid</code> を持つ鍵がない。</td></tr><tr><td><code>unsupported_alg</code></td><td>ヘッダが、信頼された鍵の使わないアルゴリズムを要求している。</td></tr><tr><td><code>bad_signature</code></td><td>署名が合わない。偽造されたステータスリストも含む。</td></tr><tr><td><code>expired</code></td><td>時計の許容を超えて <code>exp</code> を過ぎている。</td></tr><tr><td><code>not_yet_valid</code></td><td><code>nbf</code> より前。</td></tr><tr><td><code>digest_mismatch</code></td><td>発行者が署名していない開示、二度送られた開示、登録済みクレーム名を名乗る開示、あるいは既にペイロードにあるクレームと衝突する開示。</td></tr><tr><td><code>revoked</code></td><td>発行者がこの資格情報のビットを立てた。停止も含む。</td></tr><tr><td><code>status_unavailable</code></td><td>失効を判定できなかった。リスト未提供、読めない、別の発行者や別の uri に紐づく、または添字が範囲外。</td></tr><tr><td><code>status_list_stale</code></td><td>キャッシュしたリストが <code>maxStatusAge</code> より古い。</td></tr><tr><td><code>holder_proof_missing</code></td><td>保持者の証明が提示されず、呼び出し側が <code>acceptWithoutHolderProof</code> を渡していない。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>証明が提示されて失敗した。鍵違い、nonce 違い、audience 違い、開示集合の不一致、期限切れ、または鍵の結び付いていない資格情報に付いている。</td></tr></tbody></table></div><h3>投げられるエラー</h3>
+<p><code>verify()</code> 以外はすべて <code>QredentialError</code> を投げ、そこには <code>code</code> が入っています。<code>instanceof</code> ではなく <code>isQredentialError()</code> を使ってください。形を見るので、同じ依存ツリーにパッケージの写しが二つ入り込んでも動き続けます。それが <code>instanceof</code> が静かに一致しなくなる典型的な原因です。</p>
+<div class="tablewrap"><table><thead><tr><th>コード</th><th>投げる場所</th><th>何が起きたか</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API が使えない引数。未知のクレーム名、不正な期間、リスト外のステータス添字。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>発行者が開示可能にしなかったクレームを見せようとした。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT の結合形式が壊れている。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>QR エンベロープが壊れている。下層のコーデックのエラーは <code>cause</code> にあります。</td></tr><tr><td><code>malformed_status_list</code></td><td>ステータスリストの読み取り</td><td>トークンが読めるステータスリストでない。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>base45 か base64url であるはずの文字列がそうでない、または断片が JSON でない。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>この版が実装していないアルゴリズム。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>古い React Native の <code>DecompressionStream</code> のように、必要なものがプラットフォームに欠けている。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto が鍵または操作を拒否した。元の <code>DOMException</code> は <code>cause</code> にあります。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>この補助関数からのみ。元の <code>reason</code> を持ち回ります。</td></tr></tbody></table></div><h3>下にあるものを読む</h3>
+<p>このライブラリが他所の失敗を包むところでは、元のものを標準の <code>cause</code> プロパティに保ちます。具体的なコードを得るために詳細を失うことはありません。</p>
+<pre><code><span class="tok-k">try</span> {
+  <span class="tok-k">await</span> unpack(scanned)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error)) {
+    error.code            <span class="tok-s">0</span> 
+    error.cause           <span class="tok-s">1</span> 
+  }
+}</code></pre><div class="aside"><strong>コードは API、メッセージはそうではありません。</strong> <code>code</code> と <code>reason</code> のすべての値はセマンティックバージョニングの対象です。値が別の意味に転用されることはなく、新しい値はマイナーバージョンでのみ増えます。メッセージ文はパッチで変わりうるので、コードで分岐し、メッセージは表示するにとどめてください。リポジトリのテストがコードの全集合を固定しているので、追加や削除は副作用ではなく意図的な行為でなければなりません。</div>
+</section>
+<section id="limits">
+<h2>これでないもの</h2>
+<ul>
+<li><strong>ウォレットではありません。</strong> 画面も保存機能もありません。</li>
+<li><strong>鍵管理ではありません。</strong> 鍵も、信頼リストの配布も、あなたが用意します。</li>
+<li><strong>配列要素を個別に提示すること。</strong> 検証側は解決しますが、<code>present()</code> はクレーム名で選ぶ仕組みで、配列要素には名前がないため、この版では伏せられます。それらの要素が落ちた状態で、資格情報は依然として検証を通ります。パスによる選択子が解決策ですが、まだありません。</li>
+<li><strong>まだ ISO 18013-5 mDL ではありません。</strong> あちらは JWT ではなく CBOR と COSE です。予定には入っていますが、適合規格を半分だけ満たしたと称するのは、何も称さないより悪いことです。</li>
+<li><strong>監査は受けていません。</strong> 公開された規格を実装し、プレイグラウンドの攻撃に対して試験していますが、テストが示せるのは防御の存在であって、その網羅性ではありません。</li>
+</ul>
+<p>ソースは実行時依存ゼロでおよそ 700 行です。信頼する前に読むことが現実的であるように、あえてそうしてあります。脆弱性は GitHub の Security タブを通してください。範囲と応答期限は <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">SECURITY.md</a> にあります。</p>
+
+</section>
+    <div class="provenance">
+      この翻訳は日本語を母語とする人によるレビューをまだ受けていません。英語の原文をもとに AI の支援で作成したもので、正典は英語版です。訳が間違っている、不自然である、あるいは誰も使わない用語を使っている場合、それは不具合です。報告を歓迎します。
+      <a class="fix" href="https://github.com/george-veras/qredential/blob/main/content/guide/ja.md">このページを修正する</a>
+    </div>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
+      <span><a href="https://github.com/george-veras/qredential">ソースと課題</a></span>
+    </footer>
+  </article>
+</div>
