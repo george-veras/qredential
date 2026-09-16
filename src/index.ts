@@ -52,14 +52,34 @@ function reject(reason: RejectedCredential['reason'], message: string): Rejected
   return { ok: false, reason, message }
 }
 
-/** Fisher-Yates. The digest order must not leak which claims the issuer considered sensitive. */
+/**
+ * Fisher-Yates over a cryptographic source.
+ *
+ * The digest order is what hides which claims the issuer considered sensitive, so the permutation
+ * is a privacy property, not a cosmetic one. Math.random cannot carry it: V8 seeds xorshift128+
+ * from a recoverable state, and an observer with enough credentials from one issuer could predict
+ * the permutation and map digest positions back to claim order.
+ *
+ * Rejection sampling keeps the distribution uniform; taking a modulo of a random word would bias
+ * the low indices.
+ */
 function shuffle<T>(items: T[]): T[] {
   const out = [...items]
   for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
+    const j = randomBelow(i + 1)
     ;[out[i], out[j]] = [out[j]!, out[i]!]
   }
   return out
+}
+
+function randomBelow(bound: number): number {
+  if (bound <= 1) return 0
+  const limit = Math.floor(0xffffffff / bound) * bound
+  const word = new Uint32Array(1)
+  for (;;) {
+    crypto.getRandomValues(word)
+    if (word[0]! < limit) return word[0]! % bound
+  }
 }
 
 export async function issue(options: IssueOptions): Promise<IssueResult> {
@@ -227,6 +247,21 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
       const listEntry = options.trust.issuers[listIssuer]
       if (!listEntry) return reject('unknown_issuer', `the status list is signed by the untrusted issuer ${listIssuer}`)
 
+      // Bind the list to this credential. Without both checks any list from any trusted issuer
+      // would clear any credential, and an index means something different in every list.
+      if (listIssuer !== issuer) {
+        return reject(
+          'status_unavailable',
+          `the status list is issued by ${listIssuer} but the credential is issued by ${issuer}`
+        )
+      }
+      if (list.uri !== undefined && list.uri !== pointer.uri) {
+        return reject(
+          'status_unavailable',
+          `the credential points at ${pointer.uri} but the cached list is ${list.uri}`
+        )
+      }
+
       const listSegments = options.status.split('.')
       const listHeader = unb64urlJson<{ alg?: string; kid?: string }>(listSegments[0]!)
       const listKey = listEntry.keys.find((k) => (!listHeader.kid || k.kid === listHeader.kid) && k.alg === listHeader.alg)
@@ -245,6 +280,14 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
       const state = readStatus(list, pointer.idx)
       if (state === 'invalid') return reject('revoked', 'the issuer has revoked this credential')
       if (state === 'suspended') return reject('revoked', 'the issuer has suspended this credential')
+      if (state === 'unknown') {
+        // The index falls outside the list, so nothing was actually checked. Reporting this as a
+        // clean result would be the worst outcome available: a false assurance.
+        return reject(
+          'status_unavailable',
+          `index ${pointer.idx} is outside the cached status list, so revocation was not checked`
+        )
+      }
       revocationChecked = true
     } catch (error) {
       return reject('status_unavailable', `could not read the status list: ${(error as Error).message}`)

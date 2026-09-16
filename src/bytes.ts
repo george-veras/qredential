@@ -29,12 +29,11 @@ export function b64url(bytes: Uint8Array): string {
 }
 
 export function unb64url(s: string): Uint8Array {
-  const clean = s.replace(/[^A-Za-z0-9\-_]/g, '')
-  const out = new Uint8Array(Math.floor((clean.length * 3) / 4))
+  const out = new Uint8Array(Math.floor((s.length * 3) / 4))
   let acc = 0
   let bits = 0
   let n = 0
-  for (const ch of clean) {
+  for (const ch of s) {
     const v = B64URL.indexOf(ch)
     if (v < 0) throw new QredentialError('invalid_encoding', `invalid base64url character: ${ch}`)
     acc = (acc << 6) | v
@@ -79,7 +78,13 @@ export function concat(...parts: Uint8Array[]): Uint8Array {
   return out
 }
 
-/** Constant time comparison, so digest checks do not leak position through timing. */
+/**
+ * Length-independent comparison for the digest checks.
+ *
+ * Being honest about what this buys: the caller scans a list with `.some`, which short-circuits, so
+ * the search as a whole is not constant time. Digests are public values and there is no secret to
+ * leak here, but comparing them without an early return costs nothing and keeps the habit.
+ */
 export function timingSafeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false
   let diff = 0
