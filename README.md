@@ -244,8 +244,10 @@ account of what this library has not had are in [SECURITY.md](SECURITY.md).
 
 ## Translations
 
-The guide is in nine languages. Most of them have **not been read by a native speaker**, and each
-page says so at the top rather than pretending otherwise.
+The whole site is in nine languages: the landing page, the guide and the playground, including the
+live demo, which answers in the language of the page it is on. Most translations have **not been
+read by a native speaker**, and each guide page says so at the top rather than pretending
+otherwise.
 
 | Language | Code | Status |
 |---|---|---|
@@ -269,9 +271,12 @@ do not need to propose the fix.
 Anyone who reviews a language is credited on the page and in the release notes, and that language
 stops being marked unreviewed.
 
-Translations live in `content/guide/<code>.md`. Each records the hash of the English it was made
-from, so when the English moves and a translation does not, the build says so, the page shows a
-warning, and CI reports it. Nothing rots quietly.
+Translations live in `content/`: the guide as Markdown in `guide/<code>.md`, the landing and the
+playground as key catalogues in `landing/<code>.json` and `playground/<code>.json`. Each guide
+translation records the hash of the English it was made from, so when the English moves and a
+translation does not, the build says so, the page shows a warning, and CI reports it. A catalogue
+missing a key fails the build outright, because a page half in one language is worse than one that
+is simply not translated. Nothing rots quietly.
 
 ## Contributing
 

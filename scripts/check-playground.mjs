@@ -7,12 +7,22 @@
 //
 // Run with: npm run check:playground
 import { chromium } from 'playwright'
+import { readFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+
 const pages = process.argv.slice(2)
-const targets = pages.length > 0 ? pages : ['docs/playground/index.html']
+const locales = JSON.parse(await readFile(join(root, 'content/locales.json'), 'utf8'))
+const targets =
+  pages.length > 0
+    ? pages
+    : Object.keys(locales)
+        .filter((c) => c !== '_comment')
+        .map((c) => (locales[c].source ? 'docs/playground/index.html' : `docs/${c}/playground/index.html`))
+        .filter((f) => existsSync(join(root, f)))
 
 const browser = await chromium.launch()
 let failures = 0
@@ -25,9 +35,13 @@ for (const target of targets) {
   await page.goto(`file://${join(root, target)}`, { waitUntil: 'networkidle', timeout: 40000 })
   await page.waitForFunction(() => !document.getElementById('app')?.hidden, { timeout: 30000 })
 
-  const honest = await page.evaluate(() => document.getElementById('stamp-code')?.textContent.trim())
-  if (honest !== 'verified') {
-    console.error(`${target}: the honest presentation did not verify, it said "${honest}"`)
+  // The verdict word is translated, so assert on the state rather than the text. The rejection
+  // codes below are machine identifiers and stay English in every language, which is the point of
+  // having them.
+  const passed = await page.evaluate(() => document.getElementById('stamp')?.classList.contains('pass'))
+  if (!passed) {
+    const said = await page.evaluate(() => document.getElementById('stamp-code')?.textContent.trim())
+    console.error(`${target}: the honest presentation did not verify, it said "${said}"`)
     failures++
   }
 

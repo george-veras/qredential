@@ -104,11 +104,10 @@ for (const code of codes) {
     })
     .join('\n      ')
 
-  // The locale landing sits one level up from its guide, in every language. The playground is
-  // still English only, so it is reached from the site root instead.
+  // Both the locale landing and the locale playground sit beside the guide, one level up.
   const page = shell
     .replace(/__HOME__/g, '../')
-    .replace(/__ROOT__/g, rootFrom(code))
+    .replace(/__ROOT__/g, '../')
     .replace('__NAV_HOME__', ui.navHome)
     .replace('__NAV_DOCS__', ui.navDocs)
     .replace('__NAV_PLAYGROUND__', ui.navPlayground)
@@ -348,7 +347,7 @@ for (const template of await templates(docs)) {
 
     const home = code === SOURCE ? './' : '../'
     const guide = code === SOURCE ? './guide/' : './guide/'
-    const play = code === SOURCE ? './playground/' : '../playground/'
+    const play = './playground/'
 
     const langRow = codes
       .filter((c) => landing[c])
