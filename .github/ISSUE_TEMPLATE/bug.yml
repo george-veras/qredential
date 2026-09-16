@@ -1,0 +1,45 @@
+name: Bug
+description: Something behaves differently than documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If a credential from another implementation is being rejected, use the interop template
+        instead: it asks different questions and gets you a faster answer.
+
+        If this is a vulnerability, please do not file it here. See
+        [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) for the
+        private channel.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: If the documentation says otherwise, a link to the line helps
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Smallest code that shows it
+      description: No real personal data, please. Invented claim values reproduce almost everything.
+      render: javascript
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version, runtime and platform
+      placeholder: "qredential 0.2.0, Node 22, macOS. Or: Chrome 141, or React Native 0.76"
+    validations:
+      required: true

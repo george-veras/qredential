@@ -1,0 +1,90 @@
+name: A credential from elsewhere does not verify
+description: You have an SD-JWT from another library, issuer or wallet, and verify() rejects it
+title: "[interop] "
+labels: ["interop", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most valuable report this project can receive.
+
+        Every test in this repository verifies something this library itself produced, so none of
+        them can find a place where it is self-consistent and still wrong. Your credential can.
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Before you paste anything
+
+        **A credential usually contains somebody's personal data**, and an issue is public and
+        permanent. Please do not paste a real one.
+
+        A safe reproduction, in order of preference:
+
+        1. Re-issue the same *shape* with invented values: same claim names, same nesting, same
+           structure, a name nobody has.
+        2. If the problem is in the signature or envelope rather than the claims, a credential
+           signed by a throwaway key you generate for the report.
+        3. If neither is possible, describe the structure and leave the credential out. A precise
+           description is often enough.
+
+        If you have already pasted a real credential somewhere public, treat it as disclosed:
+        revoke it if you can.
+
+  - type: input
+    id: producer
+    attributes:
+      label: What produced the credential
+      description: Library and version, wallet, or issuer implementation
+      placeholder: "@sd-jwt/core 0.19.0, or a EUDI wallet, or an in-house issuer"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reason
+    attributes:
+      label: What qredential said
+      options:
+        - "malformed"
+        - "unknown_issuer"
+        - "unknown_key"
+        - "unsupported_alg"
+        - "bad_signature"
+        - "expired"
+        - "not_yet_valid"
+        - "digest_mismatch"
+        - "revoked"
+        - "status_unavailable"
+        - "status_list_stale"
+        - "holder_proof_missing"
+        - "holder_proof_invalid"
+        - "it threw instead of returning a result"
+        - "it accepted something it should have rejected"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead, and why
+      description: A pointer to the RFC section that settles it is the strongest possible argument
+      placeholder: |
+        RFC 9901 section 7.1 step d says an array element whose digest has no disclosure is removed,
+        but this rejects the whole credential.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: A reproduction with no real personal data in it
+      description: Code, or a credential built from invented values. It gets formatted as code.
+      render: text
+
+  - type: input
+    id: version
+    attributes:
+      label: qredential version
+      placeholder: "0.2.0"
+    validations:
+      required: true

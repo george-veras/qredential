@@ -1,0 +1,24 @@
+name: Documentation is wrong or missing
+description: The docs said something untrue, or did not say something they should have
+labels: ["documentation", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Documentation that is wrong is a bug, and finding it is a real contribution. If you got
+        confused, the next person will too.
+
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      placeholder: "The guide's error handling section, or the README install step, or a code comment"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What it says, and what is actually true
+    validations:
+      required: true

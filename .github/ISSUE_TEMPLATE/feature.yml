@@ -1,0 +1,54 @@
+name: Feature or change
+description: Something the library should do and does not
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Worth reading first: CONTRIBUTING.md has a section called **What this project will say no
+        to**. It is there so a no arrives before you build something, rather than after.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: >
+        The situation, not the solution. Knowing the problem often produces a better answer than the
+        one either of us started with, and sometimes the library already does it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you have in mind
+      description: Rough is fine. An API sketch helps if you have one.
+
+  - type: dropdown
+    id: spec
+    attributes:
+      label: Is this defined in a specification
+      options:
+        - "Yes, and I can point to the section"
+        - "Yes, but I am not sure where"
+        - "No, it is specific to this library"
+        - "I do not know"
+    validations:
+      required: true
+
+  - type: textarea
+    id: security
+    attributes:
+      label: Does it change what gets accepted
+      description: >
+        Would this make the library accept a credential it rejects today, or skip a check? That is
+        not a no, it just needs more care. If the answer is no, say so; it speeds things up.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Would you like to build it
+      options:
+        - label: I would be up for opening a pull request, with some guidance if needed

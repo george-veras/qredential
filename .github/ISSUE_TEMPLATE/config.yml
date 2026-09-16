@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/george-veras/qredential/discussions
+    about: Questions are welcome and belong in Discussions. An unanswerable one usually means the documentation is wrong, which is worth knowing.
+  - name: Report a vulnerability, privately
+    url: https://github.com/george-veras/qredential/security/advisories/new
+    about: Anything that lets someone forge, alter or replay a credential. Please do not open a public issue for it.

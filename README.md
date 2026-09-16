@@ -242,6 +242,22 @@ message. The full tables are in the
 Report vulnerabilities privately through the Security tab. Scope, response times and an honest
 account of what this library has not had are in [SECURITY.md](SECURITY.md).
 
+## Contributing
+
+The most useful thing you can do is point this library at a credential from somewhere else and tell
+me what happened. Every test here verifies something this library itself produced, so none of them
+can find a place where it is self-consistent and still wrong. Your credential can, and there is an
+[issue template](https://github.com/george-veras/qredential/issues/new/choose) for exactly that.
+
+Setup is `npm install && npm test`, with no services, no environment variables and no runtime
+dependencies. [CONTRIBUTING.md](CONTRIBUTING.md) has the architecture map, the two invariants the
+design rests on, what changes to the verification path need, and a section called **what this
+project will say no to**, which is there so a no reaches you before you build something rather than
+after.
+
+Questions go in [Discussions](https://github.com/george-veras/qredential/discussions) and are not a
+bother. A question the documentation cannot answer is a documentation bug.
+
 ## Status
 
 Early. The API above is implemented and tested, the shape may still move before 1.0, and I would
