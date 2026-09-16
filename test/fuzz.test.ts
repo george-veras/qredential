@@ -199,3 +199,30 @@ describe('fits never lies about capacity', () => {
     )
   })
 })
+
+describe('malformed compression never escapes as an unhandled rejection', () => {
+  it('rejects a corrupt deflate body through the returned promise, not the process', async () => {
+    // Flag byte 0x01 says deflate, then bytes that are not a deflate stream. Before this was
+    // fixed the writable side rejected with nobody listening, which modern Node treats as fatal.
+    await fc.assert(
+      fc.asyncProperty(fc.uint8Array({ minLength: 1, maxLength: 200 }), async (garbage) => {
+        const body = new Uint8Array(garbage.length + 1)
+        body[0] = 0x01
+        body.set(garbage, 1)
+        const envelope = 'QC1:' + encodeBase45(body)
+
+        // A short random run is occasionally a valid deflate stream, so either outcome is fine.
+        // What must never happen is the failure escaping the promise.
+        try {
+          await unpack(envelope)
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error)
+        }
+
+        const result = await verify(envelope, { trust })
+        expect(result.ok).toBe(false)
+      }),
+      { numRuns: 150 }
+    )
+  })
+})
