@@ -1,0 +1,64 @@
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400&display=swap">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1200px; height:630px; background:#E8ECE8; font-family:'IBM Plex Sans',sans-serif;
+         position:relative; overflow:hidden; }
+  canvas { position:absolute; inset:0; opacity:.5; }
+  .inner { position:relative; padding:74px 80px; height:100%; display:flex; flex-direction:column; }
+  .mark { font-family:Archivo,sans-serif; font-weight:800; font-size:38px; letter-spacing:-.02em; color:#111A1D; }
+  .mark span { color:#0E6B54; }
+  h1 { font-family:Archivo,sans-serif; font-weight:800; font-size:86px; line-height:.97;
+       letter-spacing:-.035em; color:#111A1D; margin-top:52px; max-width:15ch; }
+  h1 em { font-style:normal; color:#0E6B54; }
+  p { font-size:27px; line-height:1.4; color:#24312F; margin-top:26px; max-width:30ch; }
+  .strip { position:absolute; left:80px; right:80px; bottom:66px; display:flex; gap:34px;
+           font-family:'IBM Plex Mono',monospace; font-size:17px; color:#5C6C6B;
+           border-top:2px solid #111A1D; padding-top:20px; }
+  .strip b { color:#0E6B54; font-weight:500; }
+  .stamp { position:absolute; right:80px; top:150px; background:#D9E7E0; border:1px solid #0E6B54;
+           padding:26px 34px; }
+  .stamp .w { font-family:Archivo,sans-serif; font-weight:800; font-size:56px; line-height:1;
+              color:#0E6B54; letter-spacing:-.02em; }
+  .stamp .c { font-family:'IBM Plex Mono',monospace; font-size:15px; color:#111A1D; margin-top:8px; }
+</style></head>
+<body>
+<canvas id="g" width="1200" height="630"></canvas>
+<div class="inner">
+  <div class="mark">q<span>redential</span></div>
+  <h1>The answer is already <em>inside</em> the code</h1>
+  <p>Verify a credential from a QR code with the network off.</p>
+</div>
+<div class="stamp"><div class="w">PASS</div><div class="c">0 network requests</div></div>
+<div class="strip">
+  <span>SD-JWT &middot; RFC 9901</span>
+  <span>key binding</span>
+  <span>offline revocation</span>
+  <span><b>zero dependencies</b></span>
+</div>
+<script>
+  // Same guilloche as the live site, seeded from a fixed string so the card is reproducible.
+  var seed = [];
+  var s = 'qredential-og-card-2026';
+  for (var i = 0; i < s.length; i++) seed.push(s.charCodeAt(i) & 255);
+  var ctx = document.getElementById('g').getContext('2d');
+  ctx.strokeStyle = '#2C6675'; ctx.lineWidth = 0.55; ctx.globalAlpha = 0.55;
+  var cx = 968, cy = 318, base = 372;
+  for (var ring = 0; ring < 5; ring++) {
+    var b0 = seed[(ring*7)%seed.length], b1 = seed[(ring*11+3)%seed.length];
+    var petals = 17 + (b0 % 16), R = base*(0.30+ring*0.175), r = R/petals;
+    var d = r*(0.55+(b1/255)*0.9), k = petals-1, copies = 2+(b1%2);
+    for (var c = 0; c < copies; c++) {
+      var phase = (Math.PI*2*c)/(petals*copies);
+      ctx.beginPath();
+      for (var t = 0; t <= Math.PI*2+0.01; t += 0.008) {
+        var a = t+phase;
+        var x = cx+(R-r)*Math.cos(a)+d*Math.cos(k*a);
+        var y = cy+(R-r)*Math.sin(a)-d*Math.sin(k*a);
+        if (t === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath(); ctx.stroke();
+    }
+  }
+</script>
+</body></html>
