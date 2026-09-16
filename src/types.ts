@@ -1,5 +1,11 @@
 export type Alg = 'ES256' | 'EdDSA'
 
+/**
+ * Hashing algorithms supported for SD-JWT selective disclosure (RFC 9901 section 4.1.1).
+ * From the IANA Named Information Hash Algorithm Registry.
+ */
+export type SdAlg = 'sha-256' | 'sha-384' | 'sha-512'
+
 export interface Jwk {
   kty: string
   crv?: string
@@ -40,6 +46,11 @@ export interface IssueOptions {
   key: Jwk
   kid: string
   alg?: Alg
+  /**
+   * Hashing algorithm for selective disclosure and key binding sd_hash.
+   * Defaults to 'sha-256' (RFC 9901).
+   */
+  sdAlg?: SdAlg
   claims: Record<string, unknown>
   /** Claim names the holder may withhold at presentation time. Everything else is always visible. */
   disclose?: string[]
