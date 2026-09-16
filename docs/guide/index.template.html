@@ -298,9 +298,9 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
             <tr><th>Credential</th><th class="num">Characters</th><th>QR version</th></tr>
           </thead>
           <tbody>
-            <tr><td>everything visible</td><td class="num">690</td><td>17, scans fine</td></tr>
-            <tr><td>all eight claims disclosable</td><td class="num">1465</td><td>26, too dense</td></tr>
-            <tr><td>presenting only <code>over_18</code></td><td class="num">1048</td><td>22, still dense</td></tr>
+            <tr><td>everything visible</td><td class="num">~740</td><td>18, scans fine</td></tr>
+            <tr><td>all eight claims disclosable</td><td class="num">~1590</td><td>27, too dense</td></tr>
+            <tr><td>presenting only <code>over_18</code></td><td class="num">~1115</td><td>22, still dense</td></tr>
           </tbody>
         </table>
       </div>
@@ -310,8 +310,8 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
         costs a salt plus a signed digest, and <strong>the digests stay in the payload whether the
         holder reveals the claim or not</strong>. That is deliberate: a digest count that shrank
         with what you revealed would leak what you withheld. The practical consequence is that
-        savings at presentation time are smaller than intuition promises. Twenty eight percent here,
-        not eighty.
+        savings at presentation time are smaller than intuition promises. Thirty percent here, not
+        eighty.
       </p>
       <p>
         So make disclosable only the claims a verifier might genuinely need to see alone. Two or

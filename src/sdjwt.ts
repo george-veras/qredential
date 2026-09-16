@@ -3,6 +3,17 @@ import { sha256 } from './crypto.js'
 
 export const SEPARATOR = '~'
 
+/**
+ * Registered claims that describe the token rather than the subject.
+ *
+ * They are kept out of `claims` because every one of them is already surfaced as a typed field on
+ * the result. Leaving them mixed in means `Object.keys(result.claims)` hands a caller `iat` and
+ * `status` alongside `over_18`, which makes the obvious loop over a person's attributes wrong.
+ */
+export const REGISTERED_CLAIMS = new Set([
+  'iss', 'iat', 'exp', 'nbf', 'sub', 'vct', 'status', 'cnf', '_sd', '_sd_alg',
+])
+
 export interface Disclosure {
   /** The transmitted string. The digest is taken over exactly these characters. */
   raw: string
@@ -76,7 +87,7 @@ export async function reconstructClaims(
   const signedDigests = Array.isArray(payload['_sd']) ? (payload['_sd'] as string[]) : []
   const claims: Record<string, unknown> = {}
   for (const [key, value] of Object.entries(payload)) {
-    if (key === '_sd' || key === '_sd_alg') continue
+    if (REGISTERED_CLAIMS.has(key)) continue
     claims[key] = value
   }
 
