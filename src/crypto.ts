@@ -1,6 +1,6 @@
 import { unb64url, utf8 } from './bytes.js'
 import { QredentialError, asCryptoFailure } from './errors.js'
-import type { Alg, Jwk } from './types.js'
+import type { Alg, Jwk, SdAlg } from './types.js'
 
 function params(alg: Alg): { import: EcKeyImportParams | Algorithm; sign: EcdsaParams | Algorithm } {
   switch (alg) {
@@ -80,7 +80,30 @@ export function algForJwk(jwk: Jwk): Alg {
   )
 }
 
-export async function sha256(data: Uint8Array): Promise<Uint8Array> {
-  const buf = await crypto.subtle.digest('SHA-256', data as BufferSource)
+const SD_ALG_MAP: Record<SdAlg, AlgorithmIdentifier> = {
+  'sha-256': 'SHA-256',
+  'sha-384': 'SHA-384',
+  'sha-512': 'SHA-512',
+}
+
+export function isSupportedSdAlg(alg: string): alg is SdAlg {
+  return alg === 'sha-256' || alg === 'sha-384' || alg === 'sha-512'
+}
+
+/** Map an IANA Named Information Hash Algorithm name to its WebCrypto digest algorithm name. */
+export function webCryptoDigestAlg(sdAlg: string): AlgorithmIdentifier {
+  if (isSupportedSdAlg(sdAlg)) {
+    return SD_ALG_MAP[sdAlg]
+  }
+  throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
+}
+
+export async function digestHash(data: Uint8Array, sdAlg: string = 'sha-256'): Promise<Uint8Array> {
+  const algName = webCryptoDigestAlg(sdAlg)
+  const buf = await crypto.subtle.digest(algName, data as BufferSource)
   return new Uint8Array(buf)
+}
+
+export async function sha256(data: Uint8Array): Promise<Uint8Array> {
+  return digestHash(data, 'sha-256')
 }
