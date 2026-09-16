@@ -38,7 +38,14 @@ npm i qredential
 ```
 
 Runs on Node 20+, browsers, and React Native. It uses WebCrypto and nothing Node specific, because
-the verifier is usually a phone.
+the verifier is usually a phone. The suite runs on Node 20, 22 and 24 across Linux, macOS and
+Windows, and in Chromium, Firefox and WebKit, on every commit.
+
+**One caveat on React Native:** it has no `CompressionStream`. Issuing, presenting and verifying all
+work without it, the envelope just stays uncompressed. Offline revocation does not, because reading
+a status list means inflating a bitstring, so polyfill `DecompressionStream` if you need it. A
+verifier that cannot inflate a cached list refuses rather than treating it as clean. A test runs the
+whole flow with both globals deleted, so this is checked rather than assumed.
 
 ## The 2026 problem it solves
 

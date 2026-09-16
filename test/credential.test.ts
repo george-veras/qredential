@@ -2,7 +2,17 @@ import { describe, it, expect } from 'vitest'
 import { issue, present, verify, fits } from '../src/index.js'
 import { unpack, pack } from '../src/envelope.js'
 import { splitCombined, joinCombined, makeDisclosure } from '../src/sdjwt.js'
+import { b64urlJson, unb64urlJson } from '../src/bytes.js'
 import { makeIssuer, makeStatusList } from './helpers.js'
+
+/**
+ * WebCrypto Ed25519 arrived at different times in each engine, so detect rather than assume.
+ * it.skipIf needs the answer at collection time, which is what the top level await is for.
+ */
+const HAS_ED25519 = await crypto.subtle
+  .generateKey({ name: 'Ed25519' }, true, ['sign', 'verify'])
+  .then(() => true)
+  .catch(() => false)
 
 const CLAIMS = {
   given_name: 'Ana',
@@ -44,7 +54,7 @@ describe('issue and verify', () => {
     expect((await verify(qr, { trust: issuer.trust })).ok).toBe(true)
   })
 
-  it('works with Ed25519 as well as P-256', async () => {
+  it.skipIf(!HAS_ED25519)('works with Ed25519 as well as P-256', async () => {
     const issuer = await makeIssuer('https://detran.example', 'ed1', 'EdDSA')
     const { qr } = await issue({
       issuer: issuer.iss,
@@ -137,10 +147,10 @@ describe('attacks', () => {
     })
     const { jwt, disclosures } = splitCombined(credential)
     const [header, payload, signature] = jwt.split('.')
-    const forged = JSON.parse(Buffer.from(payload!, 'base64url').toString())
-    forged.over_18 = true
+    const forged = unb64urlJson<Record<string, unknown>>(payload!)
+    forged['over_18'] = true
     const tampered = joinCombined(
-      `${header}.${Buffer.from(JSON.stringify(forged)).toString('base64url')}.${signature}`,
+      `${header}.${b64urlJson(forged)}.${signature}`,
       disclosures
     )
 
@@ -211,10 +221,10 @@ describe('attacks', () => {
     })
     const { jwt, disclosures } = splitCombined(credential)
     const [header, payload, signature] = jwt.split('.')
-    const swapped = { ...JSON.parse(Buffer.from(header!, 'base64url').toString()), alg: 'EdDSA' }
+    const swapped = { ...unb64urlJson<Record<string, unknown>>(header!), alg: 'EdDSA' }
     const result = await verify(
       joinCombined(
-        `${Buffer.from(JSON.stringify(swapped)).toString('base64url')}.${payload}.${signature}`,
+        `${b64urlJson(swapped)}.${payload}.${signature}`,
         disclosures
       ),
       { trust: issuer.trust }

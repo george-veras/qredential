@@ -35,6 +35,28 @@ jobs:
       - run: npm test
       - run: npm run build
 
+  browsers:
+    name: ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install ${{ matrix.browser }} --with-deps
+      # The same test files as the Node job. The library has no Node specific code, so there is
+      # nothing to fork, and until this existed "runs in browsers" was a claim with three versions
+      # of Node behind it.
+      - run: npm run test:browser
+        env:
+          BROWSER: ${{ matrix.browser }}
+
   playground:
     name: playground matches src
     runs-on: ubuntu-latest

@@ -98,10 +98,14 @@ describe('rule 2: nothing but QredentialError escapes', () => {
     )
   })
 
-  it('decodeBase45, for any string', async () => {
-    await fc.assert(
+  it('decodeBase45, for any string', () => {
+    fc.assert(
       fc.property(fc.string({ maxLength: 400 }), (s) => {
-        expect(escaped(() => decodeBase45(s))).resolves.toBeNull()
+        try {
+          decodeBase45(s)
+        } catch (error) {
+          expect(isQredentialError(error)).toBe(true)
+        }
       }),
       { numRuns: 300 }
     )
