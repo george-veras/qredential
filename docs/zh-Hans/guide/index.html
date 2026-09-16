@@ -1,0 +1,484 @@
+<html lang="zh-Hans" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/">
+<link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/">
+<link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/">
+<link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/">
+<link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/">
+<link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/">
+<link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/">
+<link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/">
+<link rel="canonical" href="https://george-veras.github.io/qredential/zh-Hans/guide/">
+<title>Qredential Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #5C6C6B;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+      --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+    --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 15.5px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--ground);
+  }
+  .masthead-inner {
+    max-width: 1140px; margin: 0 auto; padding: 14px 22px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
+  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
+
+  .shell {
+    max-width: 1140px; margin: 0 auto; padding: 36px 22px 90px;
+    display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 46px; align-items: start;
+  }
+  @media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+  .toc { position: sticky; top: 74px; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .toc { position: static; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  }
+  .toc h2 {
+    font-family: var(--display); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate);
+    margin: 0 0 10px;
+  }
+  .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .toc a { color: var(--slate); text-decoration: none; display: block; }
+  .toc a:hover { color: var(--ink); }
+
+  article { min-width: 0; max-width: 72ch; }
+  article > section { margin-bottom: 52px; scroll-margin-top: 78px; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.08;
+    letter-spacing: -0.028em; color: var(--ink); margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--body); margin: 0 0 8px; text-wrap: balance; }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: 22px;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 12px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; color: var(--ink); margin: 26px 0 8px;
+  }
+  .eyebrow {
+    font-family: var(--data); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); }
+
+  code {
+    font-family: var(--data); font-size: 0.88em; color: var(--guilloche);
+    word-break: break-word;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 16px;
+  }
+  pre code { color: var(--ink); font-size: 13px; line-height: 1.7; word-break: normal; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 14px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .signature {
+    font-family: var(--data); font-size: 13.5px; color: var(--ink);
+    background: var(--viridian-wash); border-left: 3px solid var(--viridian);
+    padding: 11px 14px; margin: 0 0 14px; overflow-x: auto; white-space: pre;
+  }
+  .aside {
+    border-left: 3px solid var(--amber); padding: 2px 0 2px 15px;
+    margin: 0 0 18px; color: var(--slate); font-size: 14.5px;
+  }
+  .aside strong { color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 14.5px;
+    padding: 10px 20px; text-decoration: none; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  .reason { font-family: var(--data); font-size: 12.5px; color: var(--oxblood); white-space: nowrap; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
+    font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="../../">q<span>redential</span></a>
+    <nav>
+      <a href="../../">首页</a>
+      <a href="./" aria-current="page">文档</a>
+      <a href="../../playground/">演练场</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc">
+    <h2>本页内容</h2>
+    <ol><li><a href="#start">快速开始</a></li>
+      <li><a href="#disclosure">选择性披露</a></li>
+      <li><a href="#holder">证明持有人</a></li>
+      <li><a href="#size">体积预算</a></li>
+      <li><a href="#revocation">离线吊销检查</a></li>
+      <li><a href="#trust">信任列表</a></li>
+      <li><a href="#api">API 参考</a></li>
+      <li><a href="#errors">错误处理</a></li>
+      <li><a href="#limits">这个库不是什么</a></li></ol>
+    <h2 style="margin-top:22px">语言</h2>
+    <ol class="langs"><li><a href="../../guide/" hreflang="en" lang="en">English</a></li>
+      <li><a href="../../pt/guide/" hreflang="pt" lang="pt">Português</a></li>
+      <li><a href="../../es/guide/" hreflang="es" lang="es">Español</a></li>
+      <li><a href="../../fr/guide/" hreflang="fr" lang="fr">Français</a></li>
+      <li><a href="../../de/guide/" hreflang="de" lang="de">Deutsch</a></li>
+      <li><a href="../../ja/guide/" hreflang="ja" lang="ja">日本語</a></li>
+      <li><a href="../../ko/guide/" hreflang="ko" lang="ko">한국어</a></li>
+      <li><a href="../../zh-Hans/guide/" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">简体中文</a></li>
+      <li><a href="../../zh-Hant/guide/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li></ol>
+  </aside>
+
+  <article>
+<section id="top">
+<p class="eyebrow">文档</p>
+<h1>断网也能验证的凭证</h1>
+<p class="lede">二维码自带证明。<code>qredential</code> 检查签名、有效期、吊销状态和 claim，全程不向外发出一个请求。</p>
+<!-- cta --> [打开演练场](../../playground/)
+
+<!-- cta --> [阅读源码](https://github.com/george-veras/qredential)
+
+</section>
+<section id="start">
+<h2>快速开始</h2>
+<pre><code>npm i qredential</code></pre><p>Node 20 及以上、所有现代浏览器，以及 React Native。只用 WebCrypto，不用任何 Node 专有的东西，因为做验证的设备通常是手机。没有任何运行时依赖。</p>
+<p>完整测试套件在每次提交时都会在 Linux、macOS 和 Windows 上的 Node 20、22、24 运行，也在 Chromium、Firefox 和 WebKit 中运行。Ed25519 在这四者中都实际跑过。</p>
+<div class="aside"><strong>关于 React Native 的一点说明。</strong> 它没有 <code>CompressionStream</code>，而签发、出示和验证在没有它的情况下都能正常工作：信封只是保持未压缩，代价仅仅是体积。<em>离线吊销检查无法工作</em>，因为读取状态列表需要解压一段位串。无法解压缓存列表的验证方会以 <code>status_unavailable</code> 拒绝，而不是把读不懂的列表当作干净的列表。如果你在 React Native 上需要吊销检查，请为 <code>DecompressionStream</code> 打补丁。有一个测试在删掉这两个全局对象的情况下跑完整个流程，所以这段描述是验证过的，不是猜的。</div><h3>验证点什么</h3>
+<pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span>  <span class="tok-s">2</span> 
+
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scannedText, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  console.log(result.claims.given_name)    <span class="tok-s">0</span> 
+} <span class="tok-k">else</span> {
+  console.log(result.reason)               <span class="tok-s">1</span> 
+}</code></pre><h3>完整的一圈</h3>
+<p>三方，三次调用。签发方签一次，持有方收窄要传出去的内容，验证方做判断。</p>
+<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">6</span> 
+
+ <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential, qr } = <span class="tok-k">await</span> issue({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">7</span> ,
+  key: issuerPrivateJwk,
+  claims: {
+    given_name:  <span class="tok-s">8</span> ,
+    family_name:  <span class="tok-s">9</span> ,
+    birth_date:  <span class="tok-s">10</span> ,
+    over_18: <span class="tok-k">true</span>,
+  },
+  disclose: [ <span class="tok-s">11</span> ,  <span class="tok-s">12</span> ],
+  expiresIn:  <span class="tok-s">13</span> ,
+})
+
+ <span class="tok-s">2</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [ <span class="tok-s">14</span> ] })
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
+result.claims        <span class="tok-s">4</span> 
+result.claims.birth_date   <span class="tok-s">5</span> </code></pre>
+</section>
+<section id="disclosure">
+<h2>选择性披露</h2>
+<p>两个不同的角色做两个不同的决定，把它们混在一起是常见的设计错误。<strong>签发方</strong>在签名时用 <code>disclose</code> 决定哪些 claim <em>可以</em>被隐藏。<strong>持有方</strong>随后在扫码时，同样用 <code>disclose</code>，决定其中哪些真正展示。签发方没有标记过的 claim，谁也隐藏不了。</p>
+<p>机制就是普通的哈希。每个可披露的 claim 都会连同一个 128 位随机盐一起序列化，只有这串字符的摘要被签进凭证里。展示一个 claim，就是把原始字符串发过去，让验证方哈希后对上摘要。隐藏它，就是让验证方手里剩下一个永远打不开的摘要。</p>
+<h3>嵌套、数组和递归披露</h3>
+<p>RFC 9901 这三种都允许，欧洲钱包生态这三种都在用。这里的验证按照 7.1 节的处理模型，在任意深度把它们解开：</p>
+<ul>
+<li>嵌套对象里的 <code>_sd</code> 数组隐藏该对象的属性。</li>
+<li>形如 <code>{&quot;...&quot;: digest}</code> 的数组元素隐藏元素本身。被隐藏的元素会从数组中<em>移除</em>，而不是留下一个占位符，所以你拿到的是可以直接渲染的干净值。</li>
+<li>被披露的值本身还可以包含这两种形式中的任意一种，所以解开一个会露出更多。</li>
+</ul>
+<p>这些都不会漏进 <code>claims</code>：没有任何 <code>_sd</code> 键、没有任何 <code>&quot;...&quot;</code> 元素会到达调用方。披露的名字以路径形式返回，例如 <code>address.locality</code>，整套机制还与同一 RFC 的独立实现做了双向核对。</p>
+<div class="aside"><strong>为什么这对年龄核验很重要。</strong> 常见做法是让顾客把证件照片上传给第三方，那等于制造一起只等着发生的数据泄露。在这里酒吧只知道一个布尔值，就算它想知道出生日期也做不到。这个性质是密码学上的，不是隐私政策里的一句承诺。</div><p>要求一个签发方没有设为可披露的 claim，会抛出异常，而不是悄悄返回比你要的更少的东西。</p>
+
+</section>
+<section id="holder">
+<h2>证明持有人</h2>
+<p>选择性披露证明的是签发方签过这些 claim。它本身并不能证明出示的人就是本人，而且这个缺口不是理论上的：别人凭证的照片带着同一个签名，验证起来一样顺利。</p>
+<p>密钥绑定把它堵上。签发方把持有人的公钥写进凭证，扫码现场持有人的钱包用对应的私钥为一个新鲜的挑战值签名。照片做不到这一点。</p>
+<h3>三个步骤</h3>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential } = <span class="tok-k">await</span> issue({
+  ...,
+  holderKey: holderPublicJwk,
+})
+
+ <span class="tok-s">1</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, {
+  disclose: [ <span class="tok-s">6</span> ],
+  keyBinding: {
+    key: holderPrivateJwk,
+    audience: 'https: <span class="tok-s">2</span> 
+    nonce: challengeFromTheVerifier,
+  },
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  nonce: challengeIIssued,
+  audience: 'https: <span class="tok-s">4</span> 
+})
+result.holderVerified    <span class="tok-s">5</span> </code></pre><p>这份证明把自己绑在四样东西上，每一样堵住一个具体的攻击：<strong>nonce</strong> 让录下来的出示无法重放，<strong>audience</strong> 让为某个验证方做的证明不能拿到另一处用，<strong>签名</strong>把它系在签发方绑定的那把密钥上，而 <code>sd_hash</code> 覆盖了本次出示的那一组披露，使得中间环节无法在持有人签名之后增删任何一条。它还会过期，默认五分钟，可用 <code>maxKeyBindingAge</code> 调整。</p>
+<h3>静态凭证，以及为什么这个选择要由你大声做出</h3>
+<p>印在卡片上的码做不到上面任何一件事。扫码现场没有能签名的设备，所以静态凭证天生可复制。这是真实且常见的情况，不是错误，但这是验证方应当在知情的前提下做出的决定：</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust, acceptWithoutHolderProof: <span class="tok-k">true</span> })
+result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这个选项，没有证明的出示会以 <code>holder_proof_missing</code> 被拒。默认选严格的那一侧是有意为之：危险的情形是有人做门禁扫码，从没听说过密钥绑定，然后交付了一个截图就能攻破的东西。一次点名问题的大声失败，比一个把问题藏起来的安静默认值更有价值。</p>
+<div class="aside"><strong>选择接受，永远不会放过一份坏掉的证明。</strong> <code>acceptWithoutHolderProof</code> 覆盖的是根本没有提供证明的情形。如果证明存在却验不过，无论这个选项如何，凭证都会被拒。</div><h3>代价</h3>
+<p>绑定在二维码这个尺度上不是免费的。持有人的公钥住在凭证里，证明则随着出示一起走：</p>
+<div class="tablewrap"><table><thead><tr><th>出示</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>静态，全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>仅年龄，已绑定但无证明</td><td>~1320</td><td>24，偏密</td></tr><tr><td>仅年龄，带持有人证明</td><td>~1605</td><td>27，太密</td></tr></tbody></table></div><p>证明本身约 285 个字符。这比看上去要不打紧，因为能做密钥绑定的凭证，按定义就是显示在屏幕上的，那里的码可以又大又亮。密度的上限困扰的是磨损的印刷卡片，而印刷卡片本来也做不了密钥绑定。</p>
+
+</section>
+<section id="size">
+<h2>体积预算</h2>
+<p>二维码在最大版本下大约能装 4300 个字母数字字符，但那么大的码在划花的卡片或碎屏上根本读不出来。实用上限在版本 20 附近。</p>
+<p>一份现实的驾照要花多少，看下面。八个 claim、五年有效期、一个状态列表指针，用仓库里的 <code>examples/sizes.mjs</code> 测得：</p>
+<div class="tablewrap"><table><thead><tr><th>凭证</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>八个 claim 全部可披露</td><td>~1590</td><td>27，太密</td></tr><tr><td>只出示 <code>over_18</code></td><td>~1115</td><td>22，仍然偏密</td></tr></tbody></table></div><p>中间那行才是难受的，而在这里知道总比印完卡片再知道好。选择性披露几乎让凭证翻倍，因为每个可披露的 claim 都要花一个盐加一个被签名的摘要，而且<strong>无论持有人是否展示该 claim，摘要都留在载荷里</strong>。这是有意的：如果摘要数量随着你展示的内容缩水，就会泄露你隐藏了什么。实际后果是，出示时省下的比直觉承诺的要少。这里是三成，不是八成。</p>
+<p>所以只把验证方真有可能单独需要看到的 claim 设为可披露。两三个，不是全部。<code>fits()</code> 会在你定下来之前告诉你处境。</p>
+<div class="aside"><strong>关于 base45。</strong> 民间说法是它因为紧凑才被选中。不是。二维码字母数字模式下的 base45，每个原始字节约花 8.25 比特，字节模式下的 base64 是 10.67，裸二进制正好 8。它明显赢过 base64，略输给裸字节。放弃裸字节是有意的，因为字节模式带着字符集的歧义，不少读码器会返回一串乱掉的文本。一份经得起复制、粘贴和写进日志的凭证，值这三个百分点。</div>
+</section>
+<section id="revocation">
+<h2>离线吊销检查</h2>
+<p>吊销检查是各家实现最爱跳过的部分，一跳过，被偷的凭证就永远有效。</p>
+<p>状态列表是一段压缩过的位串，每个凭证一位。覆盖一百万份凭证的列表是 125 KB 几乎全是零，压完只剩几 KB。有信号时取回来，没信号时拿它核对。</p>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> statusList = <span class="tok-k">await</span> createStatusList({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">4</span> ,
+  key: issuerPrivateJwk,
+  uri: 'https: <span class="tok-s">2</span> 
+  size: <span class="tok-s">1_000_000</span>,
+  revoked: [<span class="tok-s">48219</span>],
+  expiresIn:  <span class="tok-s">5</span> ,
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  status: cachedStatusList,
+  maxStatusAge:  <span class="tok-s">6</span> ,
+})</code></pre><p>这些拒绝理由值得读一遍，因为每一条都是一个更沉默的库会给出假「通过」的地方：</p>
+<ul>
+<li>你没传列表，所以吊销从来没被检查过：<code>status_unavailable</code></li>
+<li>你缓存的列表比 <code>maxStatusAge</code> 还旧，所以排除不了吊销：<code>status_list_stale</code></li>
+<li>列表由一把不在你信任列表里的密钥签名，攻击者要给被吊销的凭证洗白，走的正是这条路：<code>bad_signature</code></li>
+<li>列表的签发方与凭证的签发方不同，或者对应的 <code>uri</code> 不同。同一个下标在每份列表里指的东西都不一样，所以没绑定关系的列表不构成答案：<code>status_unavailable</code></li>
+<li>凭证的下标落在你缓存的列表之外，也就是说其实什么都没读到：<code>status_unavailable</code></li>
+</ul>
+<div class="aside"><strong>干净的结果在这件事上从不沉默。</strong> 当吊销确实检查过时，结果里会有 <code>revocationChecked: true</code>。如果这个库够不到一个真正的答案，它会拒绝，而不是带着这个标记把凭证放过去，因为虚假的保证比没有答案更糟。</div><p>在无法确定时该怎么办，是你部署环境的策略问题，不是库的问题，所以 <code>qredential</code> 拒绝悄悄替你决定。当吊销确实检查过时，成功的结果会用 <code>revocationChecked: true</code> 这么告诉你。</p>
+
+</section>
+<section id="trust">
+<h2>信任列表</h2>
+<p>唯一必须走带外渠道送到设备上的，是你愿意相信的那组签发方公钥。它极少变动，所以随应用一起发布、每周刷新一次，是完全合理的分发策略。</p>
+<pre><code><span class="tok-k">const</span> trust = {
+  issuers: {
+    'https: <span class="tok-s">0</span> 
+      name:  <span class="tok-s">1</span> ,
+      keys: [{ kid:  <span class="tok-s">2</span> , alg:  <span class="tok-s">3</span> , jwk: publicJwk }],
+    },
+  },
+}</code></pre><p>决定用哪个算法的是受信任的那把密钥，绝不是凭证自己头部里写的算法。这就是对抗算法替换的全部防线，也是为什么 <code>alg</code> 长在你信任列表的密钥上，而不是被推断出来。</p>
+<p>列表怎么到设备上、密钥怎么轮换、私钥放在哪里，都不在范围内。这个库把它们当作输入。</p>
+
+</section>
+<section id="api">
+<h2>API 参考</h2>
+<p>四个函数覆盖凭证的一生，外加一个给发布吊销信息的签发方用。</p>
+<h3>issue(options)</h3>
+<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>必须与验证方信任列表中某把密钥对应的标识。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>私钥。不会离开这次调用。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>密钥标识，写进头部，好让验证方在轮换期间选对密钥。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>默认 <code>ES256</code>，所有平台都支持。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>凭证所主张的内容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>持有人可以隐藏的 claim 名。其余的一直可见。写一个不存在的名字会抛异常。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>凭证类型，即 SD-JWT VC 的 <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>可选的主体标识。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒数，或者像 <code>&#39;1825d&#39;</code> 这样的时长。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同样的写法，用于稍后才生效的凭证。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>这份凭证在状态列表中的位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>持有人的<strong>公钥</strong>，写进 <code>cnf</code>。只有静态凭证才省略它。带私钥成分的密钥会被拒绝。</td></tr></tbody></table></div><p>返回 <code>credential</code>（SD-JWT 的组合形式，存进钱包的就是它）、<code>qr</code>（可扫描的信封）、<code>bytes</code>（<code>qr</code> 的字符数），以及 <code>disclosable</code>（持有人可以隐藏的 claim 名）。</p>
+<h3>present(credential, options)</h3>
+<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>把凭证收窄到列出的那些 claim，返回一个可扫描的信封。签名过的 JWT 一个字都不动，所以签发方的签名对剩下的内容依然成立。组合形式和信封都接受。要一个签发方没有设为可披露的 claim 会抛异常。</p>
+<h3>verify(input, options)</h3>
+<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必填。你愿意相信的签发方和密钥。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>缓存的状态列表令牌。没有它，指向列表的凭证无法被放行。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>比这更旧的列表，拒绝据此作答。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>签发方与验证方之间时钟漂移的容忍秒数。默认 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>本次扫码中这个验证方发出的挑战值。要接受持有人证明就必须有。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>这个验证方自己的标识，用来核对证明里的 <code>aud</code>。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>接受不带任何证明的出示。静态凭证需要它，而且它绝不会放过一份存在却坏掉的证明。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>持有人证明最多可以多旧。默认 5 分钟。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>覆盖当前时间。用于测试和重放分析。</td></tr></tbody></table></div><p>面对敌意输入从不抛异常。它返回一个可辨识联合：成功时是 <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>，失败时是 <code>{ ok: false, reason, message }</code>，其中 <code>reason</code> 取自下面的表。</p>
+<p><code>withheld</code> 统计的是没有随行的可披露 claim 数量。它对做策略有用，而且从构造上它无法告诉你那些是哪几个。</p>
+<p><strong><code>claims</code> 里的一切都在描述主体。</strong> 那些描述令牌本身的注册 claim，比如 <code>iss</code>、<code>iat</code>、<code>exp</code> 和 <code>status</code>，改以带类型的字段出现；而试图设置其中之一、或覆盖载荷已经定下的 claim 的披露，会让整份凭证失败。所以遍历 <code>claims</code> 是安全的。</p>
+<h3>fits(payload, errorCorrection)</h3>
+<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同步函数。返回 <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>。纠错等级默认 <code>M</code>，因为 <code>L</code> 在纸面上看着慷慨，到了磨损的印刷卡片上就不行了。当没有任何版本装得下载荷时 <code>version</code> 是 <code>null</code>，而 <code>advice</code> 是一句可以直接打进构建日志的话。</p>
+<h3>createStatusList(options)</h3>
+<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>给签发方用。接受 <code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code> 和 <code>issuedAt</code>，返回一个签名过的状态列表令牌。超出列表范围的下标会抛异常，而不是去破坏邻近凭证的那一位。</p>
+<h3>另外导出的</h3>
+<p>给二维码信封用的 <code>pack</code>、<code>unpack</code> 和 <code>isEnvelope</code>，以及单独的编解码 <code>encodeBase45</code> 和 <code>decodeBase45</code>。做工具时有用，日常使用不需要。</p>
+
+</section>
+<section id="errors">
+<h2>错误处理</h2>
+<p>恰好两条约定，这个划分是有意的，不是碰巧。记住这两句话，你就能只写一个 catch 块，并且知道里面会落下什么。</p>
+<div class="signature">1. verify() 从不抛异常。对任何输入都是。
+2. 其余一切只抛 QredentialError。</div><p>两者不同的原因：<code>verify()</code> 的存在就是为了面对敌意输入，而一个会抛异常的验证器，会被人用 <code>try/catch</code> 一裹，然后把人放过去。所以它返回一个你必须去看的结果。其余部分失败在调用方能在代码里修好的条件上，那里抛异常才是对的形状。</p>
+<p>这两条规则都由基于性质的测试撑着：它们生成随机字符串、畸形密钥、损坏的信封和敌意选项，并断言没有别的东西逃出去。没有来自 JSON 解析的 <code>SyntaxError</code>，没有来自 WebCrypto 的 <code>DOMException</code>，也没有来自分配的 <code>RangeError</code>。</p>
+<h3>处理验证结果</h3>
+<p>结果是一个可辨识联合，所以 TypeScript 会替你收窄类型：</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  result.claims           <span class="tok-s">0</span> 
+  result.withheld         <span class="tok-s">1</span> 
+} <span class="tok-k">else</span> {
+  <span class="tok-k">switch</span> (result.reason) {
+    <span class="tok-k">case</span>  <span class="tok-s">2</span> :            <span class="tok-k">return</span> askForARenewal()
+    <span class="tok-k">case</span>  <span class="tok-s">3</span> :            <span class="tok-k">return</span> refuseAndLog()
+    <span class="tok-k">case</span>  <span class="tok-s">4</span> :  <span class="tok-k">return</span> retryWhenOnline()
+    <span class="tok-k">default</span>:                   <span class="tok-k">return</span> refuse(result.reason)
+  }
+}</code></pre><p>如果你的代码是围绕 <code>try/catch</code> 搭的，就把同一个结果交给 <code>assertVerified()</code>。什么都不会丢：抛出的错误带着原本的理由。</p>
+<pre><code><span class="tok-k">import</span> { verify, assertVerified, isQredentialError } <span class="tok-k">from</span>  <span class="tok-s">1</span> 
+
+<span class="tok-k">try</span> {
+  <span class="tok-k">const</span> credential = assertVerified(<span class="tok-k">await</span> verify(scanned, { trust }))
+  admit(credential.claims)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error) &amp;&amp; error.code ===  <span class="tok-s">2</span> ) {
+    refuse(error.reason)    <span class="tok-s">0</span> 
+  } <span class="tok-k">else</span> {
+    <span class="tok-k">throw</span> error
+  }
+}</code></pre><h3>拒绝理由</h3>
+<p>由 <code>verify()</code> 通过 <code>result.reason</code> 返回。演练场会把每一条都朝验证器打过去，好让你看着它们落地。</p>
+<div class="tablewrap"><table><thead><tr><th>理由</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>根本不是凭证，或者信封损坏，或者组合形式少了结尾的分隔符。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> claim 不在你的信任列表里。</td></tr><tr><td><code>unknown_key</code></td><td>签发方受信任，但没有带那个 <code>kid</code> 的密钥。</td></tr><tr><td><code>unsupported_alg</code></td><td>头部要求的算法不是受信任密钥所用的那个。</td></tr><tr><td><code>bad_signature</code></td><td>签名对不上。也包括伪造的状态列表。</td></tr><tr><td><code>expired</code></td><td>超过 <code>exp</code>，并且超出了时钟容差。</td></tr><tr><td><code>not_yet_valid</code></td><td>在 <code>nbf</code> 之前。</td></tr><tr><td><code>digest_mismatch</code></td><td>一条签发方从未签过的披露、一条发了两次的披露、一条用了注册 claim 名的披露，或者一条与载荷中已有 claim 撞名的披露。</td></tr><tr><td><code>revoked</code></td><td>签发方置上了这份凭证的那一位。也包括暂停。</td></tr><tr><td><code>status_unavailable</code></td><td>无法判定吊销状态：没提供列表、读不了、绑在别的签发方或别的 uri 上，或者下标在范围之外。</td></tr><tr><td><code>status_list_stale</code></td><td>你缓存的列表比 <code>maxStatusAge</code> 更旧。</td></tr><tr><td><code>holder_proof_missing</code></td><td>没有提供持有人证明，调用方也没有传 <code>acceptWithoutHolderProof</code>。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>提供了证明但没通过：密钥不对、nonce 不对、audience 不对、披露集合不同、已过期，或者挂在一份没有绑定密钥的凭证上。</td></tr></tbody></table></div><h3>抛出的错误</h3>
+<p>除 <code>verify()</code> 之外的一切都抛 <code>QredentialError</code>，它带着一个 <code>code</code>。请用 <code>isQredentialError()</code> 而不是 <code>instanceof</code>：它看的是形状，所以当同一棵依赖树里混进两份这个包的副本时依然管用，而那正是 <code>instanceof</code> 悄悄不再匹配的常见原因。</p>
+<div class="tablewrap"><table><thead><tr><th>代码</th><th>抛出方</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API 无法使用的参数：未知的 claim 名、非法的时长、超出列表范围的状态下标。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>你要展示一个签发方从未设为可披露的 claim。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT 的组合形式格式不对。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>二维码信封格式不对。底下那层编解码的错误请看 <code>cause</code>。</td></tr><tr><td><code>malformed_status_list</code></td><td>读取状态列表时</td><td>该令牌不是一份可读的状态列表。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>本该是 base45 或 base64url 的文本不是，或者某个片段不是 JSON。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>这个版本没有实现的算法。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>平台缺少必需的东西，比如旧版 React Native 上的 <code>DecompressionStream</code>。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto 拒绝了一把密钥或一次操作。原始的 <code>DOMException</code> 在 <code>cause</code> 里。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>只来自这个辅助函数。带着原本的 <code>reason</code>。</td></tr></tbody></table></div><h3>读取底下的东西</h3>
+<p>在这个库包住别人的失败的地方，它把原始错误保留在标准的 <code>cause</code> 属性上，所以拿到一个具体的代码，不会让你失去细节：</p>
+<pre><code><span class="tok-k">try</span> {
+  <span class="tok-k">await</span> unpack(scanned)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error)) {
+    error.code            <span class="tok-s">0</span> 
+    error.cause           <span class="tok-s">1</span> 
+  }
+}</code></pre><div class="aside"><strong>代码是 API，消息不是。</strong> 每一个 <code>code</code> 和 <code>reason</code> 的取值都受语义化版本约束：一个取值绝不会被挪作他用，新的取值只在小版本里出现。消息文本可以在补丁版本里改，所以请按代码分支，把消息打出来就好。仓库里有一个测试固定了代码的完整集合，所以增删一个必须是有意为之，而不是某个副作用。</div>
+</section>
+<section id="limits">
+<h2>这个库不是什么</h2>
+<ul>
+<li><strong>不是钱包。</strong> 没有界面，没有存储。</li>
+<li><strong>不是密钥管理。</strong> 密钥和信任列表的分发都得你自己带来。</li>
+<li><strong>逐个出示数组元素。</strong> 验证端能解开它们；但 <code>present()</code> 是按 claim 名挑选的，而数组元素没有名字，所以这个版本把它们隐藏起来。凭证依然验得过，只是少了那些元素。按路径的选择器才是解法，目前还没有。</li>
+<li><strong>还不是 ISO 18013-5 mDL。</strong> 那边是 CBOR 和 COSE，不是 JWT。它在计划里，而声称做了半个合规标准，比什么都不声称更糟。</li>
+<li><strong>没有做过审计。</strong> 这个库实现的是已发布的标准，并针对演练场里的那些攻击做了测试，但测试能证明的是防御存在，永远不是防御完备。</li>
+</ul>
+<p>源码大约 700 行，没有任何运行时依赖，正是为了让「在信任它之前先读一遍」这件事切实可行。漏洞请走 GitHub 的 Security 标签页，范围和响应时限写在 <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">SECURITY.md</a> 里。</p>
+
+</section>
+    <div class="provenance">
+      这份译文尚未经过母语为中文的人校对。它是在人工智能协助下，根据英文原文翻译的，英文版为准。如果某处翻译有误、读起来别扭，或者用了没人会用的术语，那就是一个缺陷，欢迎反馈。
+      <a class="fix" href="https://github.com/george-veras/qredential/blob/main/content/guide/zh-Hans.md">修正本页</a>
+    </div>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
+      <span><a href="https://github.com/george-veras/qredential">源码与问题反馈</a></span>
+    </footer>
+  </article>
+</div>

@@ -102,10 +102,9 @@ for (const code of codes) {
     .replace('__CONTENT__', html)
     .replace('__PROVENANCE__', provenance(code, { stale, unstamped }))
 
-  const withHead = page.replace(
-    '<title>',
-    alternates(code) + '\n<title>'
-  )
+  const withHead =
+    `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
+    page.replace('<title>', alternates(code) + '\n<title>')
 
   const out = join(docs, guidePath(code), 'index.html')
   await mkdir(dirname(out), { recursive: true })

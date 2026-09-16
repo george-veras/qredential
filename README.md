@@ -242,6 +242,37 @@ message. The full tables are in the
 Report vulnerabilities privately through the Security tab. Scope, response times and an honest
 account of what this library has not had are in [SECURITY.md](SECURITY.md).
 
+## Translations
+
+The guide is in nine languages. Most of them have **not been read by a native speaker**, and each
+page says so at the top rather than pretending otherwise.
+
+| Language | Code | Status |
+|---|---|---|
+| [English](https://george-veras.github.io/qredential/guide/) | `en` | source |
+| [Português](https://george-veras.github.io/qredential/pt/guide/) | `pt` | **needs a reviewer** |
+| [Español](https://george-veras.github.io/qredential/es/guide/) | `es` | **needs a reviewer** |
+| [Français](https://george-veras.github.io/qredential/fr/guide/) | `fr` | **needs a reviewer** |
+| [Deutsch](https://george-veras.github.io/qredential/de/guide/) | `de` | **needs a reviewer** |
+| [日本語](https://george-veras.github.io/qredential/ja/guide/) | `ja` | **needs a reviewer** |
+| [한국어](https://george-veras.github.io/qredential/ko/guide/) | `ko` | **needs a reviewer** |
+| [简体中文](https://george-veras.github.io/qredential/zh-Hans/guide/) | `zh-Hans` | **needs a reviewer** |
+| [繁體中文](https://george-veras.github.io/qredential/zh-Hant/guide/) | `zh-Hant` | **needs a reviewer** |
+
+If you speak one of the languages marked as needing a reviewer, you know something I cannot. Reading
+one page and saying whether it is sound is the most useful thing a speaker of that language can do
+here, and there is an
+[issue template](https://github.com/george-veras/qredential/issues/new/choose) for reporting a
+sentence that is wrong, awkward, or uses a term nobody actually uses. Rough reports are welcome; you
+do not need to propose the fix.
+
+Anyone who reviews a language is credited on the page and in the release notes, and that language
+stops being marked unreviewed.
+
+Translations live in `content/guide/<code>.md`. Each records the hash of the English it was made
+from, so when the English moves and a translation does not, the build says so, the page shows a
+warning, and CI reports it. Nothing rots quietly.
+
 ## Contributing
 
 The most useful thing you can do is point this library at a credential from somewhere else and tell
