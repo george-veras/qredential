@@ -62,7 +62,15 @@ export function splitCombined(combined: string): { jwt: string; disclosures: str
       rest.pop()
     }
   }
-  return { jwt, disclosures: rest.filter((d) => d !== ''), keyBinding }
+
+  // Everything still in `rest` is a disclosure, and an empty one is not a disclosure. Accepting it
+  // quietly would mean this parser and a stricter one disagree about whether the same bytes are a
+  // valid credential, which is exactly how parser differentials start.
+  if (rest.some((d) => d === '')) {
+    throw new Error('credential contains an empty disclosure segment')
+  }
+
+  return { jwt, disclosures: rest, keyBinding }
 }
 
 export function joinCombined(jwt: string, disclosures: string[], keyBinding?: string): string {

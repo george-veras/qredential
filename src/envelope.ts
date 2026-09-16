@@ -36,7 +36,8 @@ export async function unpack(envelope: string): Promise<string> {
     throw new Error(`not a qredential envelope: expected the ${PREFIX} prefix`)
   }
   const bytes = decodeBase45(envelope.slice(PREFIX.length))
-  if (bytes.length < 2) throw new Error('envelope is truncated')
+  // One byte is a complete envelope: the flag, with an empty payload after it.
+  if (bytes.length < 1) throw new Error('envelope is truncated')
 
   const flag = bytes[0]!
   const body = bytes.subarray(1)
