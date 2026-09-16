@@ -78,7 +78,7 @@
   "standards.s2": "la forma de la credencial",
   "standards.s3": "revocación que funciona desde una copia en caché",
   "standards.s4": "el sobre del QR, elegido por compatibilidad de lectores",
-  "standards.note": "No es mDL ISO 18013-5, que es CBOR y COSE en lugar de JWT, y todavía no hay selector por ruta para presentar elementos sueltos de un array. Ambos están en la hoja de ruta, y una credencial que use algo no soportado se rechaza en lugar de entenderse a medias. Afirmar la mitad de un estándar de conformidad es peor que no afirmar nada.",
+  "standards.note": "No es mDL ISO 18013-5, que es CBOR y COSE en lugar de JWT. Está en la hoja de ruta, y una credencial que use algo no soportado se rechaza en lugar de entenderse a medias. Afirmar la mitad de un estándar de conformidad es peor que no afirmar nada.",
   "footer.audit": "Sin auditoría externa.",
   "footer.auditLink": "Qué significa eso",
   "footer.source": "Código e issues",

@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 Verengt einen Nachweis auf die aufgeführten Claims und liefert einen scanbaren Umschlag. Das signierte JWT wird nie angefasst, die Signatur des Ausstellers gilt also weiterhin für das, was übrig bleibt. Nimmt sowohl die kombinierte Form als auch einen Umschlag entgegen. Nach einem Claim zu fragen, den der Aussteller nicht offenlegbar gemacht hat, wirft.
 
+`disclose` nimmt Pfade entgegen, dieselben, die `verify()` in `disclosed` zurückgibt:
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+Ein bloßer Name ist ein Pfad aus einem Segment, `'over_18'` bedeutet also, was es immer bedeutet hat. **Array-Indizes sind Positionen im Nachweis, wie er ausgestellt wurde**, nicht in der Vorlage, sodass ein Auswähler weiterhin sagt, was er gesagt hat, was der Inhaber sonst auch zurückhält. Und eine verschachtelte Offenlegung darf nicht ohne die sie enthaltende reisen, `address.locality` schickt also auch `address` mit, für Sie aufgelöst statt dem Aufrufer überlassen.
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **Keine Wallet.** Keine Oberfläche, kein Speicher.
 - **Keine Schlüsselverwaltung.** Sie bringen Ihre Schlüssel und Ihre eigene Verteilung der Vertrauensliste mit.
-- **Einzelne Array-Elemente vorzeigen.** Die Prüfung löst sie auf; `present()` wählt über den Claim-Namen aus, und ein Array-Element hat keinen, also hält diese Fassung sie zurück. Der Nachweis prüft sich weiterhin, ohne diese Elemente. Ein Auswähler über Pfade ist die Lösung und existiert noch nicht.
 - **Noch kein ISO 18013-5 mDL.** Das ist CBOR und COSE statt JWT. Es steht auf der Liste, und die Hälfte eines Konformitätsstandards zu behaupten ist schlimmer, als ihn gar nicht zu behaupten.
 - **Nicht auditiert.** Die Bibliothek setzt veröffentlichte Standards um und wird gegen die Angriffe im Playground getestet, aber Tests belegen das Vorhandensein von Abwehr, nie deren Vollständigkeit.
 

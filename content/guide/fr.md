@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 Restreint un justificatif aux claims listés et renvoie une enveloppe scannable. Le JWT signé n'est jamais touché, donc la signature de l'émetteur reste valide sur ce qui reste. Accepte aussi bien la forme combinée qu'une enveloppe. Demander un claim que l'émetteur n'a pas rendu divulgable lève une exception.
 
+`disclose` prend des chemins, les mêmes que ceux que `verify()` renvoie dans `disclosed` :
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+Un nom seul est un chemin d'un segment, donc `'over_18'` veut dire ce qu'il a toujours voulu dire. **Les indices de tableau sont des positions dans le justificatif tel qu'émis**, pas dans la présentation, si bien qu'un sélecteur continue de dire ce qu'il disait quoi que le porteur retienne par ailleurs. Et une divulgation imbriquée ne peut légalement circuler sans celle qui la contient, donc demander `address.locality` envoie aussi `address`, résolu pour vous plutôt que laissé à l'appelant.
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **Pas un portefeuille.** Pas d'interface, pas de stockage.
 - **Pas de gestion de clés.** Vous apportez vos clés et votre propre distribution de liste de confiance.
-- **Présenter des éléments isolés d'un tableau.** La vérification les résout ; `present()` sélectionne par nom de claim, et un élément de tableau n'en a pas, donc cette version les retient. Le justificatif se vérifie toujours, ces éléments en moins. Un sélecteur par chemin est la solution et n'existe pas encore.
 - **Pas encore mDL ISO 18013-5.** C'est du CBOR et du COSE, pas du JWT. C'est à la feuille de route, et revendiquer la moitié d'une norme de conformité est pire que ne rien revendiquer.
 - **Pas audité.** La bibliothèque implémente des normes publiées et est testée contre les attaques du playground, mais les tests prouvent la présence de défenses, jamais qu'elles sont complètes.
 

@@ -280,3 +280,52 @@ describe('nested and array selective disclosure, across implementations', () => 
     })
   })
 })
+
+describe('path selection works on their credentials too', () => {
+  it('reveals one element of an array they issued, and they verify the result', async () => {
+    const credential = await theirs.issue(
+      {
+        iss: ISSUER,
+        iat: Math.floor(Date.now() / 1000),
+        given_name: 'Ana',
+        nationalities: ['BR', 'PT', 'JP'],
+      },
+      { nationalities: { _sd: [0, 1, 2] } }
+    )
+
+    const presentation = await present(credential, { disclose: ['nationalities[1]'] })
+    const raw = await import('../src/envelope.js').then((m) => m.unpack(presentation))
+
+    // Ours narrowed it. Theirs reads it back.
+    const decoded = (await theirs.verify(raw)) as { payload: Record<string, unknown> }
+    expect(decoded.payload['nationalities']).toEqual(['PT'])
+
+    const mine = await verify(presentation, { trust, acceptWithoutHolderProof: true })
+    expect(mine.ok).toBe(true)
+    if (!mine.ok) return
+    expect(mine.claims['nationalities']).toEqual(['PT'])
+  })
+
+  it('reveals a claim nested in an object they issued, parent included automatically', async () => {
+    const credential = await theirs.issue(
+      {
+        iss: ISSUER,
+        iat: Math.floor(Date.now() / 1000),
+        given_name: 'Ana',
+        address: { street_address: 'Rua das Flores 10', locality: 'Sao Paulo', country: 'BR' },
+      },
+      { _sd: ['address'], address: { _sd: ['street_address', 'locality'] } }
+    )
+
+    const presentation = await present(credential, { disclose: ['address.locality'] })
+    const raw = await import('../src/envelope.js').then((m) => m.unpack(presentation))
+
+    const decoded = (await theirs.verify(raw)) as { payload: Record<string, unknown> }
+    expect(decoded.payload['address']).toEqual({ locality: 'Sao Paulo', country: 'BR' })
+
+    const mine = await verify(presentation, { trust, acceptWithoutHolderProof: true })
+    expect(mine.ok).toBe(true)
+    if (!mine.ok) return
+    expect(mine.claims['address']).toEqual({ locality: 'Sao Paulo', country: 'BR' })
+  })
+})

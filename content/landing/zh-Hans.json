@@ -78,7 +78,7 @@
   "standards.s2": "凭证的结构",
   "standards.s3": "靠一份缓存副本就能工作的吊销检查",
   "standards.s4": "二维码信封，为读码器兼容性而选",
-  "standards.note": "不是 ISO 18013-5 mDL，那边是 CBOR 和 COSE 而非 JWT；也还没有按路径的选择器来逐个出示数组元素。两者都在计划里，而用到未支持特性的凭证会被拒绝，而不是被理解一半。声称做了半个合规标准，比什么都不声称更糟。",
+  "standards.note": "不是 ISO 18013-5 mDL，那边是 CBOR 和 COSE 而非 JWT。它在计划里，而用到未支持特性的凭证会被拒绝，而不是被理解一半。声称做了半个合规标准，比什么都不声称更糟。",
   "footer.audit": "没有第三方审计。",
   "footer.auditLink": "这意味着什么",
   "footer.source": "源码与问题反馈",

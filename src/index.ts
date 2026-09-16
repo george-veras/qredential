@@ -10,7 +10,7 @@ import {
   makeDisclosure,
   splitCombined,
   joinCombined,
-  parseDisclosure,
+  disclosureLocations,
   reconstructClaims,
 } from './sdjwt.js'
 import { QredentialError } from './errors.js'
@@ -166,25 +166,42 @@ export async function present(
   const source = isEnvelope(credential) ? await unpack(credential) : credential
   const { jwt, disclosures } = splitCombined(source)
 
-  const wanted = new Set(options.disclose)
-  const available = new Map<string, string>()
-  for (const raw of disclosures) {
-    const parsed = parseDisclosure(raw)
-    // Array element disclosures carry no claim name, so this name based API cannot address them.
-    // They are withheld, which is always a valid presentation, and the verifier drops the element.
-    // Choosing individual array members needs a path based selector, which is not built yet.
-    if (parsed.name !== undefined) available.set(parsed.name, raw)
+  // Selectors are paths: a bare `over_18` for a top level claim, `address.locality` for one nested
+  // in an object, `nationalities[0]` for an array element. Indices are positions in the credential
+  // as issued, so a selector keeps meaning what it said whatever else the holder withholds.
+  let payload: Record<string, unknown>
+  try {
+    payload = unb64urlJson(jwt.split('.')[1] ?? '')
+  } catch (error) {
+    throw new QredentialError('malformed_credential', 'credential payload is not readable', {
+      cause: error,
+    })
   }
 
-  const missing = options.disclose.filter((name) => !available.has(name))
+  const locations = await disclosureLocations(payload, disclosures)
+  const byPath = new Map<string, string>()
+  for (const [raw, where] of locations) byPath.set(where.path, raw)
+
+  const missing = options.disclose.filter((path) => !byPath.has(path))
   if (missing.length > 0) {
-    throw new QredentialError('not_disclosable', `this credential cannot disclose: ${missing.join(', ')}`)
+    throw new QredentialError(
+      'not_disclosable',
+      `this credential cannot disclose: ${missing.join(', ')}`
+    )
   }
 
-  const kept = disclosures.filter((raw) => {
-    const name = parseDisclosure(raw).name
-    return name !== undefined && wanted.has(name)
-  })
+  // RFC 9901 section 4.2.6: a nested disclosure is illegal without the one that contains it, since
+  // its digest only appears once the parent is resolved. Asking for address.locality therefore
+  // means sending address, and working that out is this library's job rather than the caller's.
+  const keep = new Set<string>()
+  for (const path of options.disclose) {
+    const raw = byPath.get(path)!
+    keep.add(raw)
+    for (const parent of locations.get(raw)?.requires ?? []) keep.add(parent)
+  }
+
+  // Order is preserved as issued, which keeps the presentation stable across calls.
+  const kept = disclosures.filter((raw) => keep.has(raw))
 
   if (options.keyBinding === undefined) return pack(joinCombined(jwt, kept))
 

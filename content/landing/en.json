@@ -78,7 +78,7 @@
   "standards.s2": "the credential shape",
   "standards.s3": "revocation that works from a cached copy",
   "standards.s4": "the QR envelope, chosen for scanner compatibility",
-  "standards.note": "Not ISO 18013-5 mDL, which is CBOR and COSE rather than JWT, and no path selector yet for presenting individual array elements. Both are on the roadmap, and a credential using something unsupported is refused rather than half understood. Claiming half of a compliance standard is worse than not claiming it.",
+  "standards.note": "Not ISO 18013-5 mDL, which is CBOR and COSE rather than JWT. It is on the roadmap, and a credential using something unsupported is refused rather than half understood. Claiming half of a compliance standard is worse than not claiming it.",
   "footer.audit": "No third party audit.",
   "footer.auditLink": "What that means",
   "footer.source": "Source and issues",

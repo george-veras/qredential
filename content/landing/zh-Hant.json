@@ -78,7 +78,7 @@
   "standards.s2": "憑證的結構",
   "standards.s3": "靠一份快取副本就能運作的撤銷檢查",
   "standards.s4": "QR Code 信封，為讀碼機相容性而選",
-  "standards.note": "不是 ISO 18013-5 mDL，那邊是 CBOR 與 COSE 而非 JWT；也還沒有依路徑的選擇器可以逐一出示陣列元素。兩者都在規劃中，而用到未支援功能的憑證會被拒絕，而不是被理解一半。宣稱做了半套合規標準，比什麼都不宣稱更糟。",
+  "standards.note": "不是 ISO 18013-5 mDL，那邊是 CBOR 與 COSE 而非 JWT。它在規劃中，而用到未支援功能的憑證會被拒絕，而不是被理解一半。宣稱做了半套合規標準，比什麼都不宣稱更糟。",
   "footer.audit": "沒有第三方稽核。",
   "footer.auditLink": "這代表什麼",
   "footer.source": "原始碼與問題回報",

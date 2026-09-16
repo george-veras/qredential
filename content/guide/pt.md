@@ -1,4 +1,4 @@
-<!-- translated-from: d202bc3a6200f01e -->
+<!-- translated-from: d6f6153e6fb350ac -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -275,6 +275,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 Estreita uma credencial para os claims listados e devolve um envelope escaneável. O JWT assinado nunca é tocado, então a assinatura do emissor continua válida sobre o que restou. Aceita tanto a forma combinada quanto um envelope. Pedir um claim que o emissor não tornou divulgável lança exceção.
 
+`disclose` recebe caminhos, os mesmos que o `verify()` devolve em `disclosed`:
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+Um nome solto é caminho de um segmento, então `'over_18'` significa o que sempre significou. **Índices de array são posições na credencial como emitida**, não na apresentação, de modo que um seletor continua significando o que dizia, independentemente do que mais o portador omita. E uma disclosure aninhada não pode viajar legalmente sem a que a contém, então pedir `address.locality` envia `address` junto, resolvido para você em vez de sobrar para quem chama.
+
 ### verify(input, options)
 
 ```sig
@@ -431,7 +441,6 @@ try {
 
 - **Não é carteira.** Sem interface, sem armazenamento.
 - **Não é gerência de chaves.** Você traz suas chaves e sua própria distribuição de lista de confiança.
-- **Apresentar elementos individuais de array.** A verificação resolve; o `present()` seleciona por nome de claim, e elemento de array não tem nome, então esta versão os omite. A credencial continua válida, com aqueles elementos removidos. Um seletor por caminho é o conserto e ainda não existe.
 - **Ainda não é mDL ISO 18013-5.** Aquilo é CBOR e COSE, não JWT. Está no roteiro, e afirmar metade de um padrão de conformidade é pior que não afirmar nada.
 - **Não foi auditado.** Implementa padrões publicados e é testado contra os ataques do playground, mas teste prova a presença de defesas, nunca que elas são completas.
 

@@ -274,6 +274,16 @@ present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindi
 
 Narrows a credential to the listed claims and returns a scannable envelope. The signed JWT is never touched, so the issuer's signature still verifies on what is left. Accepts either the combined form or an envelope. Asking for a claim the issuer did not make disclosable throws.
 
+`disclose` takes paths, the same ones `verify()` reports back in `disclosed`:
+
+```ts
+await present(credential, {
+  disclose: ['over_18', 'address.locality', 'nationalities[1]'],
+})
+```
+
+A bare name is a one segment path, so `'over_18'` means what it always meant. **Array indices are positions in the credential as issued**, not in the presentation, so a selector keeps meaning what it said whatever else the holder withholds. And a nested disclosure cannot legally travel without the one containing it, so asking for `address.locality` sends `address` too, worked out for you rather than left to the caller.
+
 ### verify(input, options)
 
 ```sig
@@ -430,7 +440,6 @@ try {
 
 - **Not a wallet.** No UI, no storage.
 - **Not key management.** You bring your own keys and your own trust list distribution.
-- **Presenting individual array elements.** Verification resolves them; `present()` selects by claim name, and an array element has none, so this version withholds them. The credential still verifies, with those elements removed. A path based selector is the fix and is not built yet.
 - **Not ISO 18013-5 mDL yet.** That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.
 - **Not audited.** It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.
 
