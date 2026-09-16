@@ -20,7 +20,7 @@ jobs:
       security-events: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       # v2.4.0 and earlier pull the action image from gcr.io, which currently answers with a
