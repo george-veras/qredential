@@ -15,20 +15,38 @@ async function drain(stream: ReadableStream<Uint8Array>): Promise<Uint8Array> {
   return concat(...chunks)
 }
 
+/**
+ * Feed a transform stream and collect what comes out.
+ *
+ * The subtlety is the writable side. When the stream errors on malformed input, the write and close
+ * promises reject too. Leaving them floating turns hostile input into an unhandled rejection, which
+ * modern Node treats as fatal: a verifier that takes the process down with it is worse than one
+ * that returns false. They are settled here, while the real error still surfaces through the
+ * readable side, where the caller is waiting for it.
+ */
+async function run(
+  transform: { writable: WritableStream<BufferSource>; readable: ReadableStream<Uint8Array> },
+  bytes: Uint8Array
+): Promise<Uint8Array> {
+  const writer = transform.writable.getWriter()
+  const pumped = writer
+    .write(bytes as BufferSource)
+    .then(() => writer.close())
+    .catch(() => undefined)
+
+  try {
+    return await drain(transform.readable)
+  } finally {
+    await pumped
+  }
+}
+
 export async function deflate(bytes: Uint8Array, format: CompressionFormat = 'deflate-raw'): Promise<Uint8Array> {
-  const cs = new CompressionStream(format)
-  const writer = cs.writable.getWriter()
-  void writer.write(bytes as BufferSource)
-  void writer.close()
-  return drain(cs.readable)
+  return run(new CompressionStream(format), bytes)
 }
 
 export async function inflate(bytes: Uint8Array, format: CompressionFormat = 'deflate-raw'): Promise<Uint8Array> {
-  const ds = new DecompressionStream(format)
-  const writer = ds.writable.getWriter()
-  void writer.write(bytes as BufferSource)
-  void writer.close()
-  return drain(ds.readable)
+  return run(new DecompressionStream(format), bytes)
 }
 
 /**
