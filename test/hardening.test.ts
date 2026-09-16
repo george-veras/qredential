@@ -38,7 +38,7 @@ describe('the cached status list has to be the right one', () => {
       size: 1024,
     })
 
-    const result = await verify(qr, { trust: issuer.trust, status: short })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status: short })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_unavailable')
@@ -61,7 +61,7 @@ describe('the cached status list has to be the right one', () => {
       size: 1024,
     })
 
-    const result = await verify(qr, { trust, status: foreign })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust, status: foreign })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_unavailable')
@@ -79,7 +79,7 @@ describe('the cached status list has to be the right one', () => {
       revoked: [],
     })
 
-    const result = await verify(qr, { trust: issuer.trust, status: wrongList })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust, status: wrongList })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('status_unavailable')
@@ -100,7 +100,7 @@ describe('a disclosure describes the subject, never the token', () => {
       disclose: ['iss'],
     })
 
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('digest_mismatch')
@@ -127,7 +127,7 @@ describe('the combined form is parsed strictly', () => {
     const bare = credential.replace(/~+$/, '')
     expect(bare).not.toContain('~')
 
-    const result = await verify(bare, { trust: issuer.trust })
+    const result = await verify(bare, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('malformed')
@@ -142,7 +142,7 @@ describe('the combined form is parsed strictly', () => {
       key: issuer.privateJwk,
       claims: CLAIMS,
     })
-    expect((await verify(credential, { trust: issuer.trust })).ok).toBe(true)
+    expect((await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })).ok).toBe(true)
   })
 })
 
@@ -224,7 +224,7 @@ describe('selective disclosure this version cannot resolve is refused, not ignor
       [top.raw]
     )
 
-    const result = await verify(credential, { trust: issuer.trust })
+    const result = await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('unsupported_feature')
@@ -242,7 +242,7 @@ describe('selective disclosure this version cannot resolve is refused, not ignor
       [top.raw]
     )
 
-    const result = await verify(credential, { trust: issuer.trust })
+    const result = await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(false)
     if (result.ok) return
     expect(result.reason).toBe('unsupported_feature')
@@ -262,7 +262,7 @@ describe('selective disclosure this version cannot resolve is refused, not ignor
       },
     })
 
-    const result = await verify(qr, { trust: issuer.trust })
+    const result = await verify(qr, { acceptWithoutHolderProof: true, trust: issuer.trust })
     expect(result.ok).toBe(true)
     if (!result.ok) return
     expect(result.claims['address']).toEqual({ country: 'BR', city: 'Sao Paulo' })

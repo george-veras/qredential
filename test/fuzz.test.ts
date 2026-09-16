@@ -35,7 +35,7 @@ describe('verify never throws', () => {
   it('returns a typed rejection for any string at all', async () => {
     await fc.assert(
       fc.asyncProperty(fc.string(), async (garbage) => {
-        const result = await verify(garbage, { trust })
+        const result = await verify(garbage, { acceptWithoutHolderProof: true, trust })
         expect(result.ok).toBe(false)
         if (result.ok) return
         expect(typeof result.reason).toBe('string')
@@ -53,7 +53,7 @@ describe('verify never throws', () => {
 
     await fc.assert(
       fc.asyncProperty(jwtish, async (candidate) => {
-        const result = await verify(candidate, { trust })
+        const result = await verify(candidate, { acceptWithoutHolderProof: true, trust })
         expect(result.ok).toBe(false)
       }),
       { numRuns: 200 }
@@ -65,7 +65,7 @@ describe('verify never throws', () => {
       fc.asyncProperty(
         fc.stringOf(fc.constantFrom(...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'.split('')), { maxLength: 400 }),
         async (body) => {
-          const result = await verify('QC1:' + body, { trust })
+          const result = await verify('QC1:' + body, { acceptWithoutHolderProof: true, trust })
           expect(result.ok).toBe(false)
         }
       ),
@@ -84,7 +84,7 @@ describe('no mutation of a real credential is ever accepted', () => {
       for (const ch of alphabet) {
         if (ch === original) continue
         const mutated = credential.slice(0, i) + ch + credential.slice(i + 1)
-        const result = await verify(mutated, { trust })
+        const result = await verify(mutated, { acceptWithoutHolderProof: true, trust })
         expect(result.ok, `accepted a mutation at index ${i}: ${original} became ${ch}`).toBe(false)
         checked++
         break
@@ -97,13 +97,13 @@ describe('no mutation of a real credential is ever accepted', () => {
     // Cutting at a separator inside the disclosure region is a legitimate narrower presentation,
     // which is precisely what present() produces. What must never happen is a truncated credential
     // that verifies with a claim the full one did not have.
-    const full = await verify(credential, { trust })
+    const full = await verify(credential, { acceptWithoutHolderProof: true, trust })
     expect(full.ok).toBe(true)
     const originalClaims = full.ok ? Object.keys(full.claims).sort() : []
 
     await fc.assert(
       fc.asyncProperty(fc.integer({ min: 0, max: credential.length - 1 }), async (cut) => {
-        const result = await verify(credential.slice(0, cut), { trust })
+        const result = await verify(credential.slice(0, cut), { acceptWithoutHolderProof: true, trust })
         if (!result.ok) return
         const claims = Object.keys(result.claims).sort()
         expect(claims.every((c) => originalClaims.includes(c))).toBe(true)
@@ -116,7 +116,7 @@ describe('no mutation of a real credential is ever accepted', () => {
   it('rejects anything appended to a valid credential, including an empty segment', async () => {
     await fc.assert(
       fc.asyncProperty(fc.string({ maxLength: 80 }), async (extra) => {
-        const result = await verify(credential + extra + '~', { trust })
+        const result = await verify(credential + extra + '~', { acceptWithoutHolderProof: true, trust })
         expect(result.ok).toBe(false)
       }),
       { numRuns: 150 }
@@ -165,7 +165,7 @@ describe('present never widens what the issuer allowed', () => {
         fc.subarray(['birth_date', 'over_18'], { minLength: 0 }),
         async (reveal) => {
           const presentation = await present(credential, { disclose: reveal })
-          const result = await verify(presentation, { trust })
+          const result = await verify(presentation, { acceptWithoutHolderProof: true, trust })
           expect(result.ok).toBe(true)
           if (!result.ok) return
           expect(result.disclosed.sort()).toEqual([...reveal].sort())
@@ -219,7 +219,7 @@ describe('malformed compression never escapes as an unhandled rejection', () => 
           expect(error).toBeInstanceOf(Error)
         }
 
-        const result = await verify(envelope, { trust })
+        const result = await verify(envelope, { acceptWithoutHolderProof: true, trust })
         expect(result.ok).toBe(false)
       }),
       { numRuns: 150 }

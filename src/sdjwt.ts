@@ -50,6 +50,17 @@ export function parseDisclosure(raw: string): Disclosure {
   return { raw, salt, name, value }
 }
 
+/**
+ * The hash a key binding JWT commits to.
+ *
+ * Taken over the whole presentation up to and including the final separator, so the holder's
+ * signature covers exactly this set of disclosures. Without it a relay could strip or add
+ * disclosures after the holder signed, and the proof would still check out.
+ */
+export async function sdHash(jwt: string, disclosures: string[]): Promise<string> {
+  return b64url(await sha256(utf8(joinCombined(jwt, disclosures))))
+}
+
 /** Digest of a disclosure exactly as transmitted. Hashing a re-serialised copy would not match. */
 export async function digest(raw: string): Promise<string> {
   return b64url(await sha256(utf8(raw)))

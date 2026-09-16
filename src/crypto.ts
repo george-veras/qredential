@@ -64,6 +64,22 @@ export async function verifySignature(
   }
 }
 
+/**
+ * Work out which algorithm a key is for.
+ *
+ * The JWK's own `alg` wins when it is there. Otherwise the curve decides, because a P-256 key can
+ * only be used one way here and guessing wrong fails loudly at import rather than quietly.
+ */
+export function algForJwk(jwk: Jwk): Alg {
+  if (jwk.alg === 'ES256' || jwk.alg === 'EdDSA') return jwk.alg
+  if (jwk.crv === 'P-256') return 'ES256'
+  if (jwk.crv === 'Ed25519') return 'EdDSA'
+  throw new QredentialError(
+    'unsupported_alg',
+    `cannot tell which algorithm this key is for: kty ${String(jwk.kty)}, crv ${String(jwk.crv)}`
+  )
+}
+
 export async function sha256(data: Uint8Array): Promise<Uint8Array> {
   const buf = await crypto.subtle.digest('SHA-256', data as BufferSource)
   return new Uint8Array(buf)
