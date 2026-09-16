@@ -107,6 +107,45 @@ export function joinCombined(jwt: string, disclosures: string[], keyBinding?: st
  * skipped: a verifier that silently ignores an injected claim is the bug that makes the format
  * pointless.
  */
+/**
+ * Find selective disclosure structure this version does not resolve.
+ *
+ * SD-JWT allows `_sd` inside a nested object and `{"...": digest}` as an array element, and the
+ * European wallet ecosystem uses both. This version resolves only top level properties. Copying the
+ * unresolved structure into the result would hand a caller `address: { _sd: ["dSThj..."] }` to
+ * display, and would mean quietly ignoring a disclosure the issuer intended, which is the failure
+ * this format exists to prevent. So it is detected and refused instead.
+ */
+function findUnsupportedDisclosure(value: unknown, path: string[] = []): string | null {
+  if (Array.isArray(value)) {
+    for (let i = 0; i < value.length; i++) {
+      const item = value[i]
+      if (
+        item !== null &&
+        typeof item === 'object' &&
+        !Array.isArray(item) &&
+        Object.keys(item as object).length === 1 &&
+        '...' in (item as object)
+      ) {
+        return [...path, `[${i}]`].join('.')
+      }
+      const nested = findUnsupportedDisclosure(item, [...path, `[${i}]`])
+      if (nested) return nested
+    }
+    return null
+  }
+
+  if (value !== null && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
+      if (key === '_sd') return [...path, '_sd'].join('.')
+      const nested = findUnsupportedDisclosure(child, [...path, key])
+      if (nested) return nested
+    }
+  }
+
+  return null
+}
+
 export async function reconstructClaims(
   payload: Record<string, unknown>,
   disclosures: string[]
@@ -118,6 +157,17 @@ export async function reconstructClaims(
   const claims: Record<string, unknown> = {}
   for (const [key, value] of Object.entries(payload)) {
     if (REGISTERED_CLAIMS.has(key)) continue
+
+    const unsupported = findUnsupportedDisclosure(value, [key])
+    if (unsupported !== null) {
+      throw new QredentialError(
+        'unsupported_feature',
+        `this credential uses nested or array selective disclosure at "${unsupported}", ` +
+          'which this version does not resolve. Accepting it would mean silently ignoring a ' +
+          'disclosure the issuer intended.'
+      )
+    }
+
     claims[key] = value
   }
 

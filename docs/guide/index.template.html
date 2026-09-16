@@ -596,7 +596,7 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
             <tr><td><span class="reason">revoked</span></td><td>The issuer set this credential's bit. Covers suspended too.</td></tr>
             <tr><td><span class="reason">status_unavailable</span></td><td>Revocation could not be determined: no list supplied, unreadable, bound to a different issuer or uri, or the index falls outside it.</td></tr>
             <tr><td><span class="reason">status_list_stale</span></td><td>Your cached list is older than <code>maxStatusAge</code>.</td></tr>
-            <tr><td><span class="reason">unsupported_feature</span></td><td>A key binding JWT, which is not implemented yet and is not silently ignored.</td></tr>
+            <tr><td><span class="reason">unsupported_feature</span></td><td>A key binding JWT, or selective disclosure nested in an object or an array element. Neither is implemented yet, and neither is silently ignored.</td></tr>
           </tbody>
         </table>
       </div>
@@ -654,6 +654,7 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
       <ul>
         <li><strong>Not a wallet.</strong> No UI, no storage.</li>
         <li><strong>Not key management.</strong> You bring your own keys and your own trust list distribution.</li>
+        <li><strong>Only top level selective disclosure.</strong> SD-JWT also allows <code>_sd</code> inside a nested object and <code>{"...": digest}</code> as an array element, and the European wallet ecosystem uses both. This version resolves neither, and refuses such a credential with <code>unsupported_feature</code> rather than copying the unresolved digests into <code>claims</code> for you to display.</li>
         <li><strong>Not ISO 18013-5 mDL yet.</strong> That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.</li>
         <li><strong>No key binding yet.</strong> A presentation proves the issuer signed the claims, not that the person presenting it is the subject. A credential carrying a key binding JWT is rejected rather than accepted with the binding ignored.</li>
         <li><strong>Not audited.</strong> It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.</li>
