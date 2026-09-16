@@ -207,7 +207,9 @@ for (const code of codes) {
   const page = await context.newPage()
   await page.goto(`file://${join(root, file)}`, { waitUntil: 'domcontentloaded' })
   try {
-    await page.waitForSelector('#hero-verdict.pass', { timeout: 15000 })
+    // Generous on purpose. Nine browser contexts in a row on a loaded CI box is not the same as one
+    // on an idle laptop, and a check that fails on a busy machine teaches people to ignore it.
+    await page.waitForSelector('#hero-verdict.pass', { timeout: 45000 })
   } catch {
     const word = await page.locator('#hero-word').textContent().catch(() => '')
     fail(file, `the hero demo did not verify its own credential (verdict reads "${word}")`)
