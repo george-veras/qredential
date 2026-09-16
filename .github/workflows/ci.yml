@@ -78,3 +78,9 @@ jobs:
       - name: translations are not behind the English
         run: npm run check:translations
         continue-on-error: true
+
+      # The playground prints an expected rejection code on every attack button. This clicks all of
+      # them and checks the verifier actually answers with it. A README that lies is embarrassing;
+      # a live demo that lies is worse, because the visitor came specifically to check.
+      - run: npx playwright install chromium --with-deps
+      - run: npm run check:playground

@@ -218,5 +218,6 @@
   </url>
   <url>
     <loc>https://george-veras.github.io/qredential/playground/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
   </url>
 </urlset>
