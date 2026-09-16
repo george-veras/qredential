@@ -255,6 +255,10 @@ design rests on, what changes to the verification path need, and a section calle
 project will say no to**, which is there so a no reaches you before you build something rather than
 after.
 
+There are [good first issues](https://github.com/george-veras/qredential/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+open, each one written with enough context to start without asking me anything: what to change,
+which file, how to know it worked, and which section of the RFC settles the question.
+
 Questions go in [Discussions](https://github.com/george-veras/qredential/discussions) and are not a
 bother. A question the documentation cannot answer is a documentation bug.
 
