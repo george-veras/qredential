@@ -47,6 +47,21 @@ for (const code of codes) {
   }
 }
 
+const landing = {}
+const playground = {}
+for (const code of codes) {
+  try {
+    landing[code] = JSON.parse(await readFile(join(root, `content/landing/${code}.json`), 'utf8'))
+  } catch {
+    // Not translated yet. The language simply does not get a landing page.
+  }
+  try {
+    playground[code] = JSON.parse(await readFile(join(root, `content/playground/${code}.json`), 'utf8'))
+  } catch {
+    // Same for the playground.
+  }
+}
+
 const sourceBody = readStamp(guideSources[SOURCE] ?? '').body
 const sourceHash = sha(sourceBody)
 const shell = await readFile(join(docs, 'guide/_shell.html'), 'utf8')
@@ -164,17 +179,19 @@ function provenance(code, { stale, unstamped }) {
  */
 function head(code, { path, title, description, type }) {
   const url = `${SITE}/${path}`
-  const available = (c) => (type === 'guide' ? guideSources[c] : landing[c])
+  const pool = { guide: guideSources, landing, playground }[type]
+  const available = (c) => pool[c]
+  const localePath = (c) =>
+    type === 'landing'
+      ? c === SOURCE ? '' : `${c}/`
+      : c === SOURCE ? `${type}/` : `${c}/${type}/`
 
   const tags = codes
     .filter(available)
-    .map((c) => {
-      const p = type === 'guide' ? (c === SOURCE ? 'guide/' : `${c}/guide/`) : c === SOURCE ? '' : `${c}/`
-      return `<link rel="alternate" hreflang="${c}" href="${SITE}/${p}">`
-    })
+    .map((c) => `<link rel="alternate" hreflang="${c}" href="${SITE}/${localePath(c)}">`)
 
   tags.push(
-    `<link rel="alternate" hreflang="x-default" href="${SITE}/${type === 'guide' ? 'guide/' : ''}">`,
+    `<link rel="alternate" hreflang="x-default" href="${SITE}/${localePath(SOURCE)}">`,
     `<link rel="canonical" href="${url}">`,
     `<meta name="description" content="${escapeAttr(description)}">`,
     `<meta name="viewport" content="width=device-width, initial-scale=1">`,
@@ -241,14 +258,6 @@ function escapeAttr(s) {
 // Runtime strings, the ones the demo writes only after a credential has been verified, ride along
 // as a T object injected before the page script.
 
-const landing = {}
-for (const code of codes) {
-  try {
-    landing[code] = JSON.parse(await readFile(join(root, `content/landing/${code}.json`), 'utf8'))
-  } catch {
-    // Not translated yet. The language simply does not get a landing page.
-  }
-}
 
 // -------------------------------------------------- the landing and the playground, with a bundle
 
@@ -278,6 +287,46 @@ for (const template of await templates(docs)) {
   if (!source.includes('__BUNDLE__')) continue
 
   const isLanding = template === join(docs, 'index.template.html')
+  const isPlayground = template === join(docs, 'playground/index.template.html')
+
+  if (isPlayground) {
+    for (const code of codes) {
+      const strings = playground[code]
+      if (!strings) continue
+
+      const gaps = [...source.matchAll(/\{\{([a-zA-Z.0-9]+)\}\}/g)]
+        .map((m) => m[1])
+        .filter((k) => strings[k] === undefined)
+      if (gaps.length > 0) {
+        throw new Error(`playground/${code}.json is missing keys: ${[...new Set(gaps)].join(', ')}`)
+      }
+
+      let page = source
+        .replace(/\{\{([a-zA-Z.0-9]+)\}\}/g, (_, k) => strings[k])
+        .replace('__STRINGS__', `window.__T=${JSON.stringify(strings)};`)
+        .replace('__BUNDLE__', () => bundle)
+
+      const path = code === SOURCE ? 'playground/' : `${code}/playground/`
+      page =
+        `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
+        page.replace(
+          /<title>[^<]*<\/title>/,
+          head(code, {
+            path,
+            title: locales[code].seo.playgroundTitle,
+            description: locales[code].seo.playgroundDesc,
+            type: 'playground',
+          }) + `\n<title>${locales[code].seo.playgroundTitle}</title>`
+        )
+
+      const out = join(docs, path, 'index.html')
+      await mkdir(dirname(out), { recursive: true })
+      await writeFile(out, page)
+      console.log(`playground ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
+    }
+    continue
+  }
+
   if (!isLanding) {
     const out = template.replace(/index\.template\.html$/, 'index.html')
     await writeFile(out, source.replace('__BUNDLE__', () => bundle))
@@ -364,7 +413,14 @@ for (const code of codes.filter((c) => guideSources[c])) {
       .map((c) => [c, `${SITE}/${c === SOURCE ? 'guide' : c + '/guide'}/`]),
   })
 }
-urls.push({ loc: `${SITE}/playground/`, alts: [] })
+for (const code of codes.filter((c) => playground[c])) {
+  urls.push({
+    loc: `${SITE}/${code === SOURCE ? 'playground' : code + '/playground'}/`,
+    alts: codes
+      .filter((c) => playground[c])
+      .map((c) => [c, `${SITE}/${c === SOURCE ? 'playground' : c + '/playground'}/`]),
+  })
+}
 
 const sitemap = [
   '<?xml version="1.0" encoding="UTF-8"?>',

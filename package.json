@@ -27,7 +27,8 @@
     "prepublishOnly": "npm run typecheck && npm test",
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "check:translations": "CHECK_TRANSLATIONS=1 node scripts/build-site.mjs",
-    "build:og": "node scripts/build-og.mjs"
+    "build:og": "node scripts/build-og.mjs",
+    "check:playground": "node scripts/check-playground.mjs"
   },
   "keywords": [
     "verifiable-credentials",

@@ -19,7 +19,9 @@
       "landingTitle": "Qredential, offline credential verification",
       "landingDesc": "Verify a digital credential from a QR code with no network connection. SD-JWT selective disclosure, key binding, offline revocation, zero dependencies.",
       "guideTitle": "Qredential documentation",
-      "guideDesc": "How to issue, present and verify SD-JWT credentials offline: selective disclosure, key binding, the QR size budget, revocation and the full error model."
+      "guideDesc": "How to issue, present and verify SD-JWT credentials offline: selective disclosure, key binding, the QR size budget, revocation and the full error model.",
+      "playgroundTitle": "Qredential playground, break it yourself",
+      "playgroundDesc": "Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects."
     }
   },
   "pt": {
@@ -46,7 +48,9 @@
       "landingTitle": "Qredential, verificação de credenciais offline",
       "landingDesc": "Verifique uma credencial digital a partir de um QR code sem conexão de rede. Divulgação seletiva SD-JWT, key binding, revogação offline, zero dependências.",
       "guideTitle": "Documentação do Qredential",
-      "guideDesc": "Como emitir, apresentar e verificar credenciais SD-JWT offline: divulgação seletiva, key binding, orçamento de tamanho do QR, revogação e o modelo de erros."
+      "guideDesc": "Como emitir, apresentar e verificar credenciais SD-JWT offline: divulgação seletiva, key binding, orçamento de tamanho do QR, revogação e o modelo de erros.",
+      "playgroundTitle": "Playground do Qredential, quebre você mesmo",
+      "playgroundDesc": "Rode a biblioteca inteira no navegador e dispare dez ataques reais contra o verificador. Cada botão imprime o código de recusa que espera."
     }
   },
   "es": {
@@ -73,7 +77,9 @@
       "landingTitle": "Qredential, verificación de credenciales sin conexión",
       "landingDesc": "Verifica una credencial digital desde un código QR sin conexión de red. Divulgación selectiva SD-JWT, key binding, revocación offline, cero dependencias.",
       "guideTitle": "Documentación de Qredential",
-      "guideDesc": "Cómo emitir, presentar y verificar credenciales SD-JWT sin conexión: divulgación selectiva, key binding, presupuesto de tamaño del QR, revocación y errores."
+      "guideDesc": "Cómo emitir, presentar y verificar credenciales SD-JWT sin conexión: divulgación selectiva, key binding, presupuesto de tamaño del QR, revocación y errores.",
+      "playgroundTitle": "Playground de Qredential, rómpelo tú mismo",
+      "playgroundDesc": "Ejecuta la biblioteca entera en tu navegador y lanza diez ataques reales al verificador. Cada botón imprime el código de rechazo que espera."
     }
   },
   "fr": {
@@ -100,7 +106,9 @@
       "landingTitle": "Qredential, vérification de justificatifs hors ligne",
       "landingDesc": "Vérifiez un justificatif numérique depuis un QR code sans connexion réseau. Divulgation sélective SD-JWT, liaison de clé, révocation hors ligne, zéro dépendance.",
       "guideTitle": "Documentation de Qredential",
-      "guideDesc": "Émettre, présenter et vérifier des justificatifs SD-JWT hors ligne : divulgation sélective, liaison de clé, budget de taille du QR, révocation et modèle d'erreurs."
+      "guideDesc": "Émettre, présenter et vérifier des justificatifs SD-JWT hors ligne : divulgation sélective, liaison de clé, budget de taille du QR, révocation et modèle d'erreurs.",
+      "playgroundTitle": "Playground Qredential, cassez-le vous-même",
+      "playgroundDesc": "Exécutez toute la bibliothèque dans votre navigateur et envoyez dix attaques réelles au vérificateur. Chaque bouton affiche le code de refus attendu."
     }
   },
   "de": {
@@ -127,7 +135,9 @@
       "landingTitle": "Qredential, Nachweisprüfung ohne Netz",
       "landingDesc": "Prüfen Sie einen digitalen Nachweis aus einem QR-Code ohne Netzverbindung. Selektive SD-JWT-Offenlegung, Key Binding, Offline-Sperrprüfung, null Abhängigkeiten.",
       "guideTitle": "Qredential-Dokumentation",
-      "guideDesc": "SD-JWT-Nachweise offline ausstellen, vorzeigen und prüfen: selektive Offenlegung, Key Binding, QR-Größenbudget, Sperrprüfung und das Fehlermodell."
+      "guideDesc": "SD-JWT-Nachweise offline ausstellen, vorzeigen und prüfen: selektive Offenlegung, Key Binding, QR-Größenbudget, Sperrprüfung und das Fehlermodell.",
+      "playgroundTitle": "Qredential-Playground, brechen Sie es selbst",
+      "playgroundDesc": "Führen Sie die ganze Bibliothek im Browser aus und schicken Sie dem Prüfer zehn echte Angriffe. Jeder Knopf druckt den erwarteten Ablehnungscode."
     }
   },
   "ja": {
@@ -154,7 +164,9 @@
       "landingTitle": "Qredential、オフラインで資格情報を検証",
       "landingDesc": "ネットワーク接続なしで QR コードから資格情報を検証します。SD-JWT の選択的開示、鍵バインディング、オフライン失効確認、依存関係ゼロ。",
       "guideTitle": "Qredential ドキュメント",
-      "guideDesc": "SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。"
+      "guideDesc": "SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。",
+      "playgroundTitle": "Qredential プレイグラウンド、自分で壊してみる",
+      "playgroundDesc": "ライブラリ全体をブラウザで動かし、検証器に実際の攻撃を十件投げつけます。各ボタンには期待される拒否コードが書かれています。"
     }
   },
   "ko": {
@@ -181,7 +193,9 @@
       "landingTitle": "Qredential, 오프라인 자격증명 검증",
       "landingDesc": "네트워크 연결 없이 QR 코드에서 디지털 자격증명을 검증합니다. SD-JWT 선택적 공개, 키 바인딩, 오프라인 폐기 확인, 의존성 0.",
       "guideTitle": "Qredential 문서",
-      "guideDesc": "SD-JWT 자격증명을 오프라인으로 발급, 제시, 검증하는 방법. 선택적 공개, 키 바인딩, QR 크기 예산, 폐기 확인, 그리고 오류 모델."
+      "guideDesc": "SD-JWT 자격증명을 오프라인으로 발급, 제시, 검증하는 방법. 선택적 공개, 키 바인딩, QR 크기 예산, 폐기 확인, 그리고 오류 모델.",
+      "playgroundTitle": "Qredential 플레이그라운드, 직접 깨보세요",
+      "playgroundDesc": "라이브러리 전체를 브라우저에서 돌리고 검증기에 실제 공격 열 가지를 던집니다. 각 버튼에는 예상되는 거절 코드가 적혀 있습니다."
     }
   },
   "zh-Hans": {
@@ -208,7 +222,9 @@
       "landingTitle": "Qredential，离线验证数字凭证",
       "landingDesc": "断网也能从二维码验证数字凭证。SD-JWT 选择性披露、密钥绑定、离线吊销检查，零运行时依赖。",
       "guideTitle": "Qredential 文档",
-      "guideDesc": "如何离线签发、出示和验证 SD-JWT 凭证：选择性披露、密钥绑定、二维码体积预算、吊销检查，以及完整的错误模型。"
+      "guideDesc": "如何离线签发、出示和验证 SD-JWT 凭证：选择性披露、密钥绑定、二维码体积预算、吊销检查，以及完整的错误模型。",
+      "playgroundTitle": "Qredential 演练场，自己来破",
+      "playgroundDesc": "在浏览器里跑起整个函式库，朝验证器打出十种真实攻击。每个按钮都写明它预期的拒绝代码。"
     }
   },
   "zh-Hant": {
@@ -235,7 +251,9 @@
       "landingTitle": "Qredential，離線驗證數位憑證",
       "landingDesc": "斷網也能從 QR Code 驗證數位憑證。SD-JWT 選擇性揭露、金鑰綁定、離線撤銷檢查，零執行期相依。",
       "guideTitle": "Qredential 文件",
-      "guideDesc": "如何離線簽發、出示與驗證 SD-JWT 憑證：選擇性揭露、金鑰綁定、QR Code 大小預算、撤銷檢查，以及完整的錯誤模型。"
+      "guideDesc": "如何離線簽發、出示與驗證 SD-JWT 憑證：選擇性揭露、金鑰綁定、QR Code 大小預算、撤銷檢查，以及完整的錯誤模型。",
+      "playgroundTitle": "Qredential 試用場，自己來破",
+      "playgroundDesc": "在瀏覽器裡跑起整個函式庫，朝驗證器打出十種真實攻擊。每個按鈕都寫明它預期的拒絕代碼。"
     }
   }
 }

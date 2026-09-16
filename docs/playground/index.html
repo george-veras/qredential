@@ -1,4 +1,25 @@
-<title>Qredential Playground</title>
+<html lang="en" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/">
+<link rel="canonical" href="https://george-veras.github.io/qredential/playground/">
+<meta name="description" content="Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://george-veras.github.io/qredential/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="qredential">
+<meta property="og:title" content="Qredential playground, break it yourself">
+<meta property="og:description" content="Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects.">
+<meta property="og:url" content="https://george-veras.github.io/qredential/playground/">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://george-veras.github.io/qredential/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qredential playground, break it yourself">
+<meta name="twitter:description" content="Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects.">
+<meta name="twitter:image" content="https://george-veras.github.io/qredential/og.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"qredential","description":"Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects.","inLanguage":"en","url":"https://george-veras.github.io/qredential/playground/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","author":{"@type":"Person","name":"George Veras Valentim"}}</script>
+<title>Qredential playground, break it yourself</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -405,10 +426,7 @@
       <section>
         <h2>The credential</h2>
         <p class="note">
-          A fictional driving licence from <span class="inline-code">id.arcadia.example</span>.
-          Two separate decisions shape what a verifier ends up seeing: the issuer decides which
-          claims <em>may</em> be withheld, and then the holder decides which of those to actually
-          show. Change either column and the QR code rebuilds.
+          A fictional driving licence from <span class="inline-code">id.arcadia.example</span>. Two separate decisions shape what a verifier ends up seeing: the issuer decides which claims <em>may</em> be withheld, and then the holder decides which of those to actually show. Change either column and the QR code rebuilds.
         </p>
         <table class="ledger">
           <thead>
@@ -443,8 +461,7 @@
     <section class="terminal">
       <h2>Verifier</h2>
       <p class="note">
-        The result below is produced by <span class="inline-code">verify()</span> running against a
-        pinned trust list and a cached status list. No request leaves the page.
+        The result below is produced by <span class="inline-code">verify()</span> running against a pinned trust list and a cached status list. No request leaves the page.
       </p>
       <div class="verdict">
         <div class="stamp" id="stamp">
@@ -463,9 +480,7 @@
     <section class="attacks">
       <h2>Try to break it</h2>
       <p class="note">
-        Each button takes the credential above and does something an attacker would actually do, in
-        plain string operations. The expected rejection code is printed on the button, so you can
-        check the library against its own claims.
+        Each button takes the credential above and does something an attacker would actually do, in plain string operations. The expected rejection code is printed on the button, so you can check the library against its own claims.
       </p>
       <div class="attack-grid" id="attack-grid"></div>
     </section>
@@ -473,9 +488,7 @@
     <section class="paste">
       <h2>Verify any payload</h2>
       <p class="note">
-        Paste a <span class="inline-code">QC1:</span> envelope, or the raw SD-JWT form. Only the
-        demo issuer is on this page's trust list, so a credential from anywhere else is rejected as
-        an unknown issuer, which is the correct answer.
+        Paste a <span class="inline-code">QC1:</span> envelope, or the raw SD-JWT form. Only the demo issuer is on this page's trust list, so a credential from anywhere else is rejected as an unknown issuer, which is the correct answer.
       </p>
       <textarea id="paste-box" spellcheck="false" aria-label="Credential payload to verify"></textarea>
       <div class="actions">
@@ -492,10 +505,12 @@
   </main>
 </div>
 
+<script>window.__T={"chip":"ES256 &middot; SD-JWT","boot":"Generating an issuer key pair and signing a demo credential&hellip;","cred.title":"The credential","cred.note":"A fictional driving licence from <span class=\"inline-code\">id.arcadia.example</span>. Two separate decisions shape what a verifier ends up seeing: the issuer decides which claims <em>may</em> be withheld, and then the holder decides which of those to actually show. Change either column and the QR code rebuilds.","cred.thClaim":"Claim","cred.thValue":"Value","cred.thIssuer":"Issuer allows<br>withholding","cred.thHolder":"Holder<br>reveals","wire.title":"What actually travels","qr.title":"Presented code","verifier.title":"Verifier","verifier.note":"The result below is produced by <span class=\"inline-code\">verify()</span> running against a pinned trust list and a cached status list. No request leaves the page.","attacks.title":"Try to break it","attacks.note":"Each button takes the credential above and does something an attacker would actually do, in plain string operations. The expected rejection code is printed on the button, so you can check the library against its own claims.","paste.title":"Verify any payload","paste.note":"Paste a <span class=\"inline-code\">QC1:</span> envelope, or the raw SD-JWT form. Only the demo issuer is on this page's trust list, so a credential from anywhere else is rejected as an unknown issuer, which is the correct answer.","paste.label":"Credential payload to verify","paste.verify":"Verify payload","paste.reset":"Reset to the honest credential","foot.license":"qredential &middot; MIT","foot.tech":"SD-JWT selective disclosure, base45 envelope, Token Status List revocation","foot.deps":"Zero runtime dependencies, WebCrypto only","tagline":"Scan a credential and get an answer with no network connection. Everything on this page runs in your browser.","run.qrFail":"QR renderer did not load. The payload below is still the real thing.","run.tooLarge":"This payload is too large for any QR code. Make fewer claims disclosable.","run.qrCaption":"Version {version} · {modules} × {modules} modules · error correction M","run.always":"always","run.pass":"Pass","run.reject":"Reject","run.verified":"verified","run.passWhy":"Signature checks out against a pinned issuer key.","run.scenarioHonest":"Honest presentation","run.scenarioPasted":"Pasted payload","run.withheldPill":"{n} withheld, unreadable","run.factIssuer":"issuer","run.factExpires":"expires","run.factNever":"never","run.factRevocation":"revocation checked","run.yes":"yes","run.no":"no","run.failFacts":"Nothing is trusted from a credential that fails, including its claims.","run.rowChars":"Characters in the code","run.rowVersion":"Smallest QR version","run.rowNone":"none fits","run.rowScans":"Scans reliably","run.rowTooDense":"too dense","run.rowWithheld":"Claims withheld","run.bootFail":"Could not start: ","run.expects":"expects","attack.0.label":"Flip a claim in the payload","attack.0.note":"Rewrites over_18 to true and leaves the original signature in place.","attack.1.label":"Invent a claim that was never issued","attack.1.note":"Appends a well formed disclosure the issuer never signed a digest for. Shown against a static presentation, because with a holder proof attached the sd_hash catches the tampering first and this check never gets a turn.","attack.2.label":"Send the same disclosure twice","attack.2.note":"A repeated disclosure is a cheap way to probe a sloppy verifier. Also shown against a static presentation, for the same reason.","attack.3.label":"Sign it with the wrong key","attack.3.note":"Same issuer name, same claims, a key that is not the pinned one.","attack.4.label":"Claim to be another authority","attack.4.note":"A perfectly valid credential from an issuer nobody pinned.","attack.5.label":"Use it ten years from now","attack.5.note":"The same honest credential, checked against a clock past its expiry.","attack.6.label":"Use it after it was revoked","attack.6.note":"Signature still perfect. The issuer set this credential's bit.","attack.7.label":"Hide behind a stale status list","attack.7.note":"An attacker who blocks updates cannot turn a maybe into a yes.","attack.8.label":"Replay a recorded presentation","attack.8.note":"The same scan, recorded and shown again later. The challenge has moved on.","attack.9.label":"Present a photograph of this code","attack.9.note":"A picture carries the issuer signature but cannot sign this scan. That is the whole point."};</script>
 <script>
 (function () {
   'use strict';
   var Q = window.Q;
+  var T = window.__T;
 
   var ISSUER = 'https://id.arcadia.example';
   var STATUS_URI = 'https://id.arcadia.example/status/3';
@@ -548,7 +563,7 @@
         '<td class="mid">' + (canHide
           ? '<input type="checkbox" data-kind="reveal" data-claim="' + name + '"' +
             (shown ? ' checked' : '') + ' aria-label="Reveal ' + name + '">'
-          : '<span class="always">always</span>') + '</td>' +
+          : '<span class="always">' + T['run.always'] + '</span>') + '</td>' +
       '</tr>';
     });
     el('ledger-body').innerHTML = rows.join('');
@@ -558,7 +573,7 @@
     var host = el('qr');
     host.innerHTML = '';
     if (typeof qrcode === 'undefined') {
-      host.innerHTML = '<div class="qr-fail">QR renderer did not load. The payload below is still the real thing.</div>';
+      host.innerHTML = '<div class="qr-fail">' + T['run.qrFail'] + '</div>';
       el('plate-note').textContent = '';
       return;
     }
@@ -568,10 +583,11 @@
       code.make();
       host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
       var modules = code.getModuleCount();
-      el('plate-note').textContent = 'Version ' + ((modules - 17) / 4) + ' · ' + modules +
-        ' × ' + modules + ' modules · error correction M';
+      el('plate-note').textContent = T['run.qrCaption']
+        .replace('{version}', String((modules - 17) / 4))
+        .replace(/\{modules\}/g, String(modules));
     } catch (e) {
-      host.innerHTML = '<div class="qr-fail">This payload is too large for any QR code. Make fewer claims disclosable.</div>';
+      host.innerHTML = '<div class="qr-fail">' + T['run.tooLarge'] + '</div>';
       el('plate-note').textContent = '';
     }
   }
@@ -586,10 +602,10 @@
   function renderReadout(text) {
     var fit = Q.fits(text);
     var rows = [
-      ['Characters in the code', text.length, false],
-      ['Smallest QR version', fit.version === null ? 'none fits' : 'v' + fit.version, fit.version === null],
-      ['Scans reliably', fit.comfortable ? 'yes' : 'too dense', !fit.comfortable],
-      ['Claims withheld', String(countWithheld()), false]
+      [T['run.rowChars'], text.length, false],
+      [T['run.rowVersion'], fit.version === null ? T['run.rowNone'] : 'v' + fit.version, fit.version === null],
+      [T['run.rowScans'], fit.comfortable ? T['run.yes'] : T['run.rowTooDense'], !fit.comfortable],
+      [T['run.rowWithheld'], String(countWithheld()), false]
     ];
     el('readout').innerHTML = rows.map(function (r) {
       return '<div class="row"><span class="k">' + r[0] + '</span><span class="v' +
@@ -610,10 +626,10 @@
     var stamp = el('stamp');
     stamp.classList.remove('pass', 'fail');
     stamp.classList.add(result.ok ? 'pass' : 'fail');
-    el('stamp-word').textContent = result.ok ? 'Pass' : 'Reject';
-    el('stamp-code').textContent = result.ok ? 'verified' : result.reason;
+    el('stamp-word').textContent = result.ok ? T['run.pass'] : T['run.reject'];
+    el('stamp-code').textContent = result.ok ? T['run.verified'] : result.reason;
     el('stamp-why').textContent = result.ok
-      ? 'Signature checks out against a pinned issuer key.'
+      ? T['run.passWhy']
       : result.message;
     el('scenario').textContent = scenario;
 
@@ -626,23 +642,25 @@
         return '<span class="claim-pill">' + k + ' = ' + String(result.claims[k]) + '</span>';
       }).join('');
       if (result.withheld > 0) {
-        pills += '<span class="claim-pill hidden-count">' + result.withheld +
-          ' withheld, unreadable</span>';
+        pills += '<span class="claim-pill hidden-count">' +
+          T['run.withheldPill'].replace('{n}', String(result.withheld)) + '</span>';
       }
       el('facts').innerHTML =
-        '<span>issuer <b>' + result.issuer + '</b></span>' +
-        '<span>expires <b>' + (result.expiresAt
-          ? new Date(result.expiresAt * 1000).toISOString().slice(0, 10) : 'never') + '</b></span>' +
-        '<span>revocation checked <b>' + (result.revocationChecked ? 'yes' : 'no') + '</b></span>';
+        '<span>' + T['run.factIssuer'] + ' <b>' + result.issuer + '</b></span>' +
+        '<span>' + T['run.factExpires'] + ' <b>' + (result.expiresAt
+          ? new Date(result.expiresAt * 1000).toISOString().slice(0, 10) : T['run.factNever']) + '</b></span>' +
+        '<span>' + T['run.factRevocation'] + ' <b>' +
+          (result.revocationChecked ? T['run.yes'] : T['run.no']) + '</b></span>';
     } else {
-      el('facts').innerHTML = '<span>Nothing is trusted from a credential that fails, ' +
-        'including its claims.</span>';
+      el('facts').innerHTML = '<span>' + T['run.failFacts'] + '</span>';
     }
     el('claims-out').innerHTML = pills;
   }
 
   // ---- state that only exists after key generation ----
-  var keys, forger, trust, statusClean, statusRevoked, statusStale, credential, presentation;
+  var keys, forger, holder, trust, statusClean, statusRevoked, statusStale, credential, presentation;
+  var NONCE = 'scan-' + Math.random().toString(36).slice(2, 10);
+  var AUDIENCE = 'https://bar.arcadia.example/door';
 
   async function makeKeys() {
     var pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
@@ -662,20 +680,26 @@
       vct: 'https://id.arcadia.example/driving-licence',
       expiresIn: '1825d',
       disclose: disclose,
-      status: { idx: STATUS_IDX, uri: STATUS_URI }
+      status: { idx: STATUS_IDX, uri: STATUS_URI },
+      holderKey: holder.pub
     });
     credential = issued.credential;
 
     var reveal = disclose.filter(function (n) { return S.revealed[n]; });
-    presentation = await Q.present(credential, { disclose: reveal });
+    presentation = await Q.present(credential, {
+      disclose: reveal,
+      keyBinding: { key: holder.priv, audience: AUDIENCE, nonce: NONCE }
+    });
 
     renderQR(presentation);
     renderStrip(presentation);
     renderReadout(presentation);
     el('paste-box').value = presentation;
 
-    var result = await Q.verify(presentation, { trust: trust, status: statusClean, maxStatusAge: '7d' });
-    showVerdict('Honest presentation', result);
+    var result = await Q.verify(presentation, {
+      trust: trust, status: statusClean, maxStatusAge: '7d', nonce: NONCE, audience: AUDIENCE
+    });
+    showVerdict(T['run.scenarioHonest'], result);
     clearPressed();
   }
 
@@ -706,28 +730,34 @@
         payload.over_18 = true;
         payload.birth_date = '2012-01-01';
         var forged = seg[0] + '.' + b64uEncode(JSON.stringify(payload)) + '.' + seg[2];
-        return { text: joinCombined(forged, parts.disclosures), opts: {} };
+        return { text: joinCombined(forged, parts.disclosures), opts: { acceptWithoutHolderProof: true } };
       }
     },
     {
       label: 'Invent a claim that was never issued',
       expect: 'digest_mismatch',
-      note: 'Appends a well formed disclosure the issuer never signed a digest for.',
+      note: 'Appends a well formed disclosure the issuer never signed a digest for. Shown against a static presentation, because with a holder proof attached the sd_hash catches the tampering first and this check never gets a turn.',
       run: async function () {
         var parts = splitCombined(credential);
         var salt = b64uEncode(String(Math.random()).slice(2) + String(Date.now()));
         var invented = b64uEncode(JSON.stringify([salt, 'security_clearance', 'TOP SECRET']));
-        return { text: joinCombined(parts.jwt, parts.disclosures.concat([invented])), opts: {} };
+        return {
+          text: joinCombined(parts.jwt, parts.disclosures.concat([invented])),
+          opts: { acceptWithoutHolderProof: true }
+        };
       }
     },
     {
       label: 'Send the same disclosure twice',
       expect: 'digest_mismatch',
-      note: 'A replayed disclosure is a cheap way to probe a sloppy verifier.',
+      note: 'A repeated disclosure is a cheap way to probe a sloppy verifier. Also shown against a static presentation, for the same reason.',
       run: async function () {
         var parts = splitCombined(credential);
         if (!parts.disclosures.length) return null;
-        return { text: joinCombined(parts.jwt, parts.disclosures.concat([parts.disclosures[0]])), opts: {} };
+        return {
+          text: joinCombined(parts.jwt, parts.disclosures.concat([parts.disclosures[0]])),
+          opts: { acceptWithoutHolderProof: true }
+        };
       }
     },
     {
@@ -781,14 +811,32 @@
       run: async function () {
         return { text: presentation, opts: { status: statusStale, maxStatusAge: '7d' } };
       }
+    },
+    {
+      label: 'Replay a recorded presentation',
+      expect: 'holder_proof_invalid',
+      note: 'The same scan, recorded and shown again later. The challenge has moved on.',
+      run: async function () {
+        return { text: presentation, opts: { nonce: 'a-different-challenge' } };
+      }
+    },
+    {
+      label: 'Present a photograph of this code',
+      expect: 'holder_proof_missing',
+      note: 'A picture carries the issuer signature but cannot sign this scan. That is the whole point.',
+      run: async function () {
+        var reveal = ORDER.filter(function (n) { return S.disclosable[n] && S.revealed[n]; });
+        // A photograph is a copy with no wallet behind it, so it cannot attach a fresh proof.
+        return { text: await Q.present(credential, { disclose: reveal }), opts: {} };
+      }
     }
   ];
 
   function renderAttacks() {
     el('attack-grid').innerHTML = ATTACKS.map(function (a, i) {
       return '<button class="attack" type="button" data-i="' + i + '" aria-pressed="false">' +
-        '<span class="label">' + a.label + '</span>' +
-        '<span class="expect">expects ' + a.expect + '</span>' +
+        '<span class="label">' + T['attack.' + i + '.label'] + '</span>' +
+        '<span class="expect">' + T['run.expects'] + ' ' + a.expect + '</span>' +
       '</button>';
     }).join('');
   }
@@ -797,10 +845,13 @@
     var a = ATTACKS[i];
     var built = await a.run();
     if (!built) return;
-    var opts = Object.assign({ trust: trust, status: statusClean, maxStatusAge: '7d' }, built.opts);
+    var opts = Object.assign(
+      { trust: trust, status: statusClean, maxStatusAge: '7d', nonce: NONCE, audience: AUDIENCE },
+      built.opts
+    );
     var result = await Q.verify(built.text, opts);
     el('paste-box').value = built.text;
-    showVerdict(a.label + ': ' + a.note, result);
+    showVerdict(T['attack.' + i + '.label'] + ': ' + T['attack.' + i + '.note'], result);
     clearPressed();
     var btn = document.querySelector('button.attack[data-i="' + i + '"]');
     if (btn) btn.setAttribute('aria-pressed', 'true');
@@ -828,8 +879,10 @@
     if (e.target.closest && e.target.closest('#verify-btn')) {
       var text = el('paste-box').value.trim();
       if (!text) return;
-      Q.verify(text, { trust: trust, status: statusClean, maxStatusAge: '7d' }).then(function (r) {
-        showVerdict('Pasted payload', r);
+      Q.verify(text, {
+        trust: trust, status: statusClean, maxStatusAge: '7d', nonce: NONCE, audience: AUDIENCE
+      }).then(function (r) {
+        showVerdict(T['run.scenarioPasted'], r);
         clearPressed();
       });
     }
@@ -839,6 +892,7 @@
     try {
       keys = await makeKeys();
       forger = await makeKeys();
+      holder = await makeKeys();
       trust = { issuers: {} };
       trust.issuers[ISSUER] = { name: 'Arcadia Motor Vehicle Authority', keys: [{ kid: 'arc-2026', alg: 'ES256', jwk: keys.pub }] };
 
@@ -856,7 +910,7 @@
       el('boot').hidden = true;
       el('app').hidden = false;
     } catch (err) {
-      el('boot').textContent = 'Could not start: ' + (err && err.message ? err.message : String(err));
+      el('boot').textContent = T['run.bootFail'] + (err && err.message ? err.message : String(err));
     }
   })();
 })();
