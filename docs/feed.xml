@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
   <title>qredential releases</title>
-  <link>https://george-veras.github.io/qredential/</link>
+  <link>https://qredential.js.org/</link>
   <description>Offline credential verification from a QR code. New versions, and every change to the error codes.</description>
   <language>en</language>
-  <atom:link href="https://george-veras.github.io/qredential/feed.xml" rel="self" type="application/rss+xml"/>
+  <atom:link href="https://qredential.js.org/feed.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>qredential 0.2.0</title>
     <link>https://github.com/george-veras/qredential/blob/main/CHANGELOG.md</link>

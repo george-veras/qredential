@@ -1,489 +1,489 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://george-veras.github.io/qredential/</loc>
+    <loc>https://qredential.js.org/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/pt/</loc>
+    <loc>https://qredential.js.org/pt/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/es/</loc>
+    <loc>https://qredential.js.org/es/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/fr/</loc>
+    <loc>https://qredential.js.org/fr/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/de/</loc>
+    <loc>https://qredential.js.org/de/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ja/</loc>
+    <loc>https://qredential.js.org/ja/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ko/</loc>
+    <loc>https://qredential.js.org/ko/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hans/</loc>
+    <loc>https://qredential.js.org/zh-Hans/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hant/</loc>
+    <loc>https://qredential.js.org/zh-Hant/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/guide/</loc>
+    <loc>https://qredential.js.org/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/pt/guide/</loc>
+    <loc>https://qredential.js.org/pt/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/es/guide/</loc>
+    <loc>https://qredential.js.org/es/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/fr/guide/</loc>
+    <loc>https://qredential.js.org/fr/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/de/guide/</loc>
+    <loc>https://qredential.js.org/de/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ja/guide/</loc>
+    <loc>https://qredential.js.org/ja/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ko/guide/</loc>
+    <loc>https://qredential.js.org/ko/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hans/guide/</loc>
+    <loc>https://qredential.js.org/zh-Hans/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hant/guide/</loc>
+    <loc>https://qredential.js.org/zh-Hant/guide/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/guide/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/guide/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/guide/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/guide/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/guide/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/playground/</loc>
+    <loc>https://qredential.js.org/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/pt/playground/</loc>
+    <loc>https://qredential.js.org/pt/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/es/playground/</loc>
+    <loc>https://qredential.js.org/es/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/fr/playground/</loc>
+    <loc>https://qredential.js.org/fr/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/de/playground/</loc>
+    <loc>https://qredential.js.org/de/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ja/playground/</loc>
+    <loc>https://qredential.js.org/ja/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/ko/playground/</loc>
+    <loc>https://qredential.js.org/ko/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hans/playground/</loc>
+    <loc>https://qredential.js.org/zh-Hans/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
   <url>
-    <loc>https://george-veras.github.io/qredential/zh-Hant/playground/</loc>
+    <loc>https://qredential.js.org/zh-Hant/playground/</loc>
     <lastmod>2026-09-16</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/playground/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/playground/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://george-veras.github.io/qredential/es/playground/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://george-veras.github.io/qredential/fr/playground/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://george-veras.github.io/qredential/de/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://george-veras.github.io/qredential/ja/playground/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://george-veras.github.io/qredential/ko/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://george-veras.github.io/qredential/zh-Hans/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://george-veras.github.io/qredential/zh-Hant/playground/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/playground/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/playground/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/playground/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/playground/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/playground/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/playground/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/playground/"/>
   </url>
 </urlset>
