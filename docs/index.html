@@ -1,3 +1,7 @@
+<html lang="en" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/">
 <title>Qredential</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,6 +200,11 @@
   .std li b { font-family: var(--data); font-size: 13px; font-weight: 500; color: var(--ink); display: block; }
 
   footer { border-top: 2px solid var(--ink); }
+  .langs-row { padding-top: 22px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
+  .langs-row a { color: var(--slate); text-decoration: none; }
+  .langs-row a:hover { color: var(--ink); }
+  .langs-row a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+
   footer .wrap {
     padding-block: 24px 44px; font-size: 13.5px; color: var(--slate);
     display: flex; flex-wrap: wrap; gap: 8px 28px;
@@ -225,12 +234,10 @@
       <p class="eyebrow">SD-JWT &middot; Token Status List &middot; base45</p>
       <h1>The answer is already <em>inside</em> the code</h1>
       <p class="lede">
-        A credential that proves itself. Signature, expiry, revocation and claims, all checked
-        without one request leaving the device.
+        A credential that proves itself. Signature, expiry, revocation and claims, all checked without one request leaving the device.
       </p>
       <p class="sub">
-        TypeScript, zero runtime dependencies, WebCrypto only. Node, browsers and React Native,
-        because the thing doing the verifying is usually a phone.
+        TypeScript, zero runtime dependencies, WebCrypto only. Node, browsers and React Native, because the thing doing the verifying is usually a phone.
       </p>
       <div class="cta-row">
         <a class="cta" href="./playground/">Try to break it</a>
@@ -248,8 +255,8 @@
         <div class="lines" id="hero-lines"></div>
       </div>
       <div class="demo-meta">
-        <span>network requests <b id="hero-net">·</b></span>
-        <span>verified in <b id="hero-ms">·</b></span>
+        <span>network requests<b id="hero-net">·</b></span>
+        <span>verified in<b id="hero-ms">·</b></span>
       </div>
     </div>
   </div>
@@ -259,19 +266,13 @@
   <div class="wrap measure">
     <h2>Built for the moment there is no signal</h2>
     <p>
-      I built the eCNH, Brazil's digital driving licence, used by more than 40 million people. The
-      part that taught me the most was not the app. It was the roadside: an officer scanning a
-      licence on a highway with one bar of signal, or none, needing a yes or no in under a second.
+      I built the eCNH, Brazil's digital driving licence, used by more than 40 million people. The part that taught me the most was not the app. It was the roadside: an officer scanning a licence on a highway with one bar of signal, or none, needing a yes or no in under a second.
     </p>
     <p>
-      Everything you need for that answer fits in the code. The signature proves the issuer, the
-      claims are right there, and the only thing you need from outside is the issuer's public key,
-      which changes so rarely that you can ship it and refresh it weekly.
+      Everything you need for that answer fits in the code. The signature proves the issuer, the claims are right there, and the only thing you need from outside is the issuer's public key, which changes so rarely that you can ship it and refresh it weekly.
     </p>
     <p>
-      Libraries for this exist. They are enterprise SDKs: heavy, tied to one country's profile, and
-      written as though you already work in the identity industry. This is the version a product
-      engineer can add on a Tuesday.
+      Libraries for this exist. They are enterprise SDKs: heavy, tied to one country's profile, and written as though you already work in the identity industry. This is the version a product engineer can add on a Tuesday.
     </p>
   </div>
 </section>
@@ -340,14 +341,10 @@
     <h2>Prove you are over 18 without handing over your birthday</h2>
     <div class="measure">
       <p>
-        Age verification laws are arriving faster than the tooling. The usual implementation has the
-        customer upload a photo of their ID to a third party, which is a privacy disaster and a
-        breach waiting to happen.
+        Age verification laws are arriving faster than the tooling. The usual implementation has the customer upload a photo of their ID to a third party, which is a privacy disaster and a breach waiting to happen.
       </p>
       <p>
-        Selective disclosure does it properly. The verifier cannot learn the birth date even if it
-        wants to, because that value never left the wallet. The property is cryptographic, not a
-        promise in a privacy policy.
+        Selective disclosure does it properly. The verifier cannot learn the birth date even if it wants to, because that value never left the wallet. The property is cryptographic, not a promise in a privacy policy.
       </p>
     </div>
     <pre style="margin-top:22px"><code><span class="tok-c">// The credential holds name, address, birth date and document number.</span>
@@ -365,8 +362,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
   <div class="wrap">
     <h2>Real numbers, including the awkward one</h2>
     <p class="measure">
-      A realistic driving licence, eight claims, five year expiry, status list pointer. Measured, not
-      estimated:
+      A realistic driving licence, eight claims, five year expiry, status list pointer. Measured, not estimated:
     </p>
     <div class="tablewrap" style="max-width:640px">
       <table>
@@ -379,13 +375,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       </table>
     </div>
     <div class="aside">
-      <strong>Selective disclosure roughly doubles the credential.</strong> Every disclosable claim
-      costs a salt plus a signed digest, and the digests stay in the payload whether the holder
-      reveals the claim or not. That is deliberate, since a digest count that shrank with what you
-      revealed would leak what you withheld. It does mean the saving at presentation time is
-      thirty percent here, not the eighty that intuition promises. Make two or three claims
-      disclosable, not all of them, and let <code>fits()</code> tell you where you stand before you
-      print anything.
+      <strong>Selective disclosure roughly doubles the credential.</strong> Every disclosable claim costs a salt plus a signed digest, and the digests stay in the payload whether the holder reveals the claim or not. That is deliberate, since a digest count that shrank with what you revealed would leak what you withheld. It does mean the saving at presentation time is thirty percent here, not the eighty that intuition promises. Make two or three claims disclosable, not all of them, and let <code>fits()</code> tell you where you stand before you print anything.
     </div>
   </div>
 </section>
@@ -394,9 +384,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
   <div class="wrap">
     <h2>Don't take my word for it</h2>
     <p class="measure">
-      The playground runs the whole library in your browser and fires eight real attacks at it. Each
-      one prints the rejection code it expects, so you can check the library against its own claims
-      instead of trusting a README.
+      The playground runs the whole library in your browser and fires eight real attacks at it. Each one prints the rejection code it expects, so you can check the library against its own claims instead of trusting a README.
     </p>
     <div class="attack-list">
       <div><div class="what">Flip a claim in the payload</div><div class="code">bad_signature</div></div>
@@ -420,8 +408,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       <h2>Install</h2>
       <pre><code>npm i qredential</code></pre>
       <p style="margin-top:16px;color:var(--slate);font-size:14.5px">
-        Node 20 or newer, every current browser, React Native. About 700 lines of source with no
-        runtime dependencies, specifically so that reading it before you trust it is realistic.
+        Node 20 or newer, every current browser, React Native. About 700 lines of source with no runtime dependencies, specifically so that reading it before you trust it is realistic.
       </p>
       <div class="cta-row">
         <a class="cta ghost" href="./guide/">Documentation</a>
@@ -437,27 +424,28 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
         <li><b>base45, RFC 9285</b>the QR envelope, chosen for scanner compatibility</li>
       </ul>
       <p style="margin-top:18px;font-size:14px;color:var(--slate)">
-        Not ISO 18013-5 mDL, which is CBOR and COSE rather than JWT, and no path selector yet for
-        presenting individual array elements. Both are on the roadmap, and a credential using
-        something unsupported is refused rather than half understood. Claiming half of a compliance
-        standard is worse than not claiming it.
+        Not ISO 18013-5 mDL, which is CBOR and COSE rather than JWT, and no path selector yet for presenting individual array elements. Both are on the roadmap, and a credential using something unsupported is refused rather than half understood. Claiming half of a compliance standard is worse than not claiming it.
       </p>
     </div>
   </div>
 </section>
 
 <footer>
+  <div class="wrap langs-row"><a href="./" hreflang="en" lang="en" aria-current="page">English</a>
+    <a href="./pt/" hreflang="pt" lang="pt">Português</a></div>
   <div class="wrap">
     <span>qredential &middot; MIT</span>
-    <span>No third party audit. <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">What that means</a></span>
+    <span>No third party audit.<a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">What that means</a></span>
     <span><a href="https://github.com/george-veras/qredential">Source and issues</a></span>
   </div>
 </footer>
 
+<script>window.__T={"demo.signing":"signing a demo credential&hellip;","demo.networkRequests":"network requests","demo.verifiedIn":"verified in","demo.qrFail":"QR renderer unavailable. The credential below is still real.","demo.tooLarge":"payload too large for a QR code","demo.caption":"QR version {version} · {chars} characters","demo.pass":"Pass","demo.reject":"Reject","demo.claimShown":"claim shown: <b>over_18 = true</b>","demo.withheldLine":"withheld and unreadable: <b>{n}</b>","demo.reasonLine":"reason: <b>{reason}</b>","demo.bootFail":"could not run the demo: "};</script>
 <script>
 (function () {
   'use strict';
   var Q = window.Q;
+  var T = window.__T;
   var el = function (id) { return document.getElementById(id); };
 
   // ---- guilloche: the rosette is drawn from the credential's own signature bytes ----
@@ -518,7 +506,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
   function renderQR(text) {
     var host = el('hero-qr');
     if (typeof qrcode === 'undefined') {
-      host.innerHTML = '<div class="fallback">QR renderer unavailable. The credential below is still real.</div>';
+      host.innerHTML = '<div class="fallback">' + T['demo.qrFail'] + '</div>';
       return;
     }
     try {
@@ -527,9 +515,11 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
       code.make();
       host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
       var modules = code.getModuleCount();
-      el('hero-caption').textContent = 'QR version ' + ((modules - 17) / 4) + ' · ' + text.length + ' characters';
+      el('hero-caption').textContent = T['demo.caption']
+        .replace('{version}', String((modules - 17) / 4))
+        .replace('{chars}', String(text.length));
     } catch (e) {
-      host.innerHTML = '<div class="fallback">payload too large for a QR code</div>';
+      host.innerHTML = '<div class="fallback">' + T['demo.tooLarge'] + '</div>';
     }
   }
 
@@ -571,12 +561,12 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
 
       if (result.ok) {
         el('hero-verdict').classList.add('pass');
-        el('hero-word').textContent = 'Pass';
+        el('hero-word').textContent = T['demo.pass'];
         el('hero-lines').innerHTML =
-          'claim shown: <b>over_18 = true</b><br>withheld and unreadable: <b>' + result.withheld + '</b>';
+          T['demo.claimShown'] + '<br>' + T['demo.withheldLine'].replace('{n}', String(result.withheld));
       } else {
-        el('hero-word').textContent = 'Reject';
-        el('hero-lines').innerHTML = 'reason: <b>' + result.reason + '</b>';
+        el('hero-word').textContent = T['demo.reject'];
+        el('hero-lines').innerHTML = T['demo.reasonLine'].replace('{reason}', result.reason);
       }
       el('hero-net').textContent = calls;
       el('hero-ms').textContent = ms.toFixed(1) + ' ms';
@@ -593,7 +583,7 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
         resize = setTimeout(function () { drawGuilloche(seed); }, 180);
       });
     } catch (err) {
-      el('hero-qr').innerHTML = '<div class="fallback">could not run the demo: ' +
+      el('hero-qr').innerHTML = '<div class="fallback">' + T['demo.bootFail'] +
         (err && err.message ? err.message : String(err)) + '</div>';
     }
   })();
