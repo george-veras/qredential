@@ -2,7 +2,7 @@
   "name": "qredential",
   "version": "0.2.0",
   "description": "Verify a digital credential from a QR code with no network connection. SD-JWT selective disclosure, offline revocation, zero dependencies.",
-  "homepage": "https://george-veras.github.io/qredential/",
+  "homepage": "https://qredential.js.org/",
   "bugs": {
     "url": "https://github.com/george-veras/qredential/issues"
   },

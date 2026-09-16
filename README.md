@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/qredential)](https://www.npmjs.com/package/qredential)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/george-veras/qredential/badge)](https://scorecard.dev/viewer/?uri=github.com/george-veras/qredential)
 
-[English](https://george-veras.github.io/qredential/) · [Português](https://george-veras.github.io/qredential/pt/) · [Español](https://george-veras.github.io/qredential/es/) · [Français](https://george-veras.github.io/qredential/fr/) · [Deutsch](https://george-veras.github.io/qredential/de/) · [日本語](https://george-veras.github.io/qredential/ja/) · [한국어](https://george-veras.github.io/qredential/ko/) · [简体中文](https://george-veras.github.io/qredential/zh-Hans/) · [繁體中文](https://george-veras.github.io/qredential/zh-Hant/)
+[English](https://qredential.js.org/) · [Português](https://qredential.js.org/pt/) · [Español](https://qredential.js.org/es/) · [Français](https://qredential.js.org/fr/) · [Deutsch](https://qredential.js.org/de/) · [日本語](https://qredential.js.org/ja/) · [한국어](https://qredential.js.org/ko/) · [简体中文](https://qredential.js.org/zh-Hans/) · [繁體中文](https://qredential.js.org/zh-Hant/)
 
 Verify a digital credential from a QR code with **no network connection**.
 
@@ -193,11 +193,11 @@ Four functions. That is the whole surface.
 
 ## Website
 
-[**george-veras.github.io/qredential**](https://george-veras.github.io/qredential/)
+[**qredential.js.org**](https://qredential.js.org/)
 
-- [Documentation](https://george-veras.github.io/qredential/guide/), including the full API and
+- [Documentation](https://qredential.js.org/guide/), including the full API and
   every rejection reason
-- [Playground](https://george-veras.github.io/qredential/playground/), which runs the whole library
+- [Playground](https://qredential.js.org/playground/), which runs the whole library
   in your browser. The part worth your time is the attack bench: eight things an attacker would
   actually try, each printing the rejection code it expects, so you can check the library against
   its own claims rather than taking my word for it.
@@ -234,7 +234,7 @@ try {
 
 Codes and reasons are covered by semver; message text is not. Branch on the code, print the
 message. The full tables are in the
-[error handling guide](https://george-veras.github.io/qredential/guide/#errors).
+[error handling guide](https://qredential.js.org/guide/#errors).
 
 ## Security
 
@@ -250,15 +250,15 @@ otherwise.
 
 | Language | Code | Status |
 |---|---|---|
-| [English](https://george-veras.github.io/qredential/guide/) | `en` | source |
-| [Português](https://george-veras.github.io/qredential/pt/guide/) | `pt` | **needs a reviewer** |
-| [Español](https://george-veras.github.io/qredential/es/guide/) | `es` | **needs a reviewer** |
-| [Français](https://george-veras.github.io/qredential/fr/guide/) | `fr` | **needs a reviewer** |
-| [Deutsch](https://george-veras.github.io/qredential/de/guide/) | `de` | **needs a reviewer** |
-| [日本語](https://george-veras.github.io/qredential/ja/guide/) | `ja` | **needs a reviewer** |
-| [한국어](https://george-veras.github.io/qredential/ko/guide/) | `ko` | **needs a reviewer** |
-| [简体中文](https://george-veras.github.io/qredential/zh-Hans/guide/) | `zh-Hans` | **needs a reviewer** |
-| [繁體中文](https://george-veras.github.io/qredential/zh-Hant/guide/) | `zh-Hant` | **needs a reviewer** |
+| [English](https://qredential.js.org/guide/) | `en` | source |
+| [Português](https://qredential.js.org/pt/guide/) | `pt` | **needs a reviewer** |
+| [Español](https://qredential.js.org/es/guide/) | `es` | **needs a reviewer** |
+| [Français](https://qredential.js.org/fr/guide/) | `fr` | **needs a reviewer** |
+| [Deutsch](https://qredential.js.org/de/guide/) | `de` | **needs a reviewer** |
+| [日本語](https://qredential.js.org/ja/guide/) | `ja` | **needs a reviewer** |
+| [한국어](https://qredential.js.org/ko/guide/) | `ko` | **needs a reviewer** |
+| [简体中文](https://qredential.js.org/zh-Hans/guide/) | `zh-Hans` | **needs a reviewer** |
+| [繁體中文](https://qredential.js.org/zh-Hant/guide/) | `zh-Hant` | **needs a reviewer** |
 
 If you speak one of the languages marked as needing a reviewer, you know something I cannot. Reading
 one page and saying whether it is sound is the most useful thing a speaker of that language can do

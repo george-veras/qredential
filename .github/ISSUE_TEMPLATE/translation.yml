@@ -36,7 +36,7 @@ body:
     attributes:
       label: Which page and which section
       description: The section heading is enough. A link to the anchor is ideal.
-      placeholder: "The error handling section, or https://george-veras.github.io/qredential/pt/guide/#errors"
+      placeholder: "The error handling section, or https://qredential.js.org/pt/guide/#errors"
     validations:
       required: true
 

@@ -22,7 +22,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const docs = join(root, 'docs')
 
 const REPO = 'https://github.com/george-veras/qredential'
-const SITE = 'https://george-veras.github.io/qredential'
+const SITE = 'https://qredential.js.org'
 
 const locales = JSON.parse(await readFile(join(root, 'content/locales.json'), 'utf8'))
 const codes = Object.keys(locales).filter((k) => k !== '_comment')
