@@ -1,5 +1,6 @@
 import { b64url, b64urlJson, unb64urlJson, randomBytes, utf8, timingSafeEqual } from './bytes.js'
 import { sha256 } from './crypto.js'
+import { QredentialError } from './errors.js'
 
 export const SEPARATOR = '~'
 
@@ -30,13 +31,21 @@ export function makeDisclosure(name: string, value: unknown): Disclosure {
 }
 
 export function parseDisclosure(raw: string): Disclosure {
-  const parsed = unb64urlJson<unknown>(raw)
+  let parsed: unknown
+  try {
+    parsed = unb64urlJson<unknown>(raw)
+  } catch (error) {
+    throw new QredentialError('malformed_credential', 'disclosure is not readable', { cause: error })
+  }
   if (!Array.isArray(parsed) || parsed.length !== 3) {
-    throw new Error('disclosure is not a three element array')
+    throw new QredentialError('malformed_credential', 'disclosure is not a three element array')
   }
   const [salt, name, value] = parsed as [unknown, unknown, unknown]
   if (typeof salt !== 'string' || typeof name !== 'string') {
-    throw new Error('disclosure salt and claim name must be strings')
+    throw new QredentialError(
+      'malformed_credential',
+      'disclosure salt and claim name must be strings'
+    )
   }
   return { raw, salt, name, value }
 }
@@ -67,7 +76,10 @@ export function splitCombined(combined: string): { jwt: string; disclosures: str
   // quietly would mean this parser and a stricter one disagree about whether the same bytes are a
   // valid credential, which is exactly how parser differentials start.
   if (rest.some((d) => d === '')) {
-    throw new Error('credential contains an empty disclosure segment')
+    throw new QredentialError(
+      'malformed_credential',
+      'credential contains an empty disclosure segment'
+    )
   }
 
   return { jwt, disclosures: rest, keyBinding }
@@ -90,7 +102,7 @@ export async function reconstructClaims(
   disclosures: string[]
 ): Promise<{ claims: Record<string, unknown>; disclosed: string[]; withheld: number }> {
   const sdAlg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
-  if (sdAlg !== 'sha-256') throw new Error(`unsupported _sd_alg: ${sdAlg}`)
+  if (sdAlg !== 'sha-256') throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
 
   const signedDigests = Array.isArray(payload['_sd']) ? (payload['_sd'] as string[]) : []
   const claims: Record<string, unknown> = {}
@@ -105,9 +117,17 @@ export async function reconstructClaims(
     const d = parseDisclosure(raw)
     const dig = await digest(raw)
     if (!signedDigests.some((s) => timingSafeEqual(s, dig))) {
-      throw new Error(`disclosure for "${d.name}" does not match any digest signed by the issuer`)
+      throw new QredentialError(
+        'malformed_credential',
+        `disclosure for "${d.name}" does not match any digest signed by the issuer`
+      )
     }
-    if (seen.has(dig)) throw new Error(`disclosure for "${d.name}" was sent more than once`)
+    if (seen.has(dig)) {
+      throw new QredentialError(
+        'malformed_credential',
+        `disclosure for "${d.name}" was sent more than once`
+      )
+    }
     seen.add(dig)
     claims[d.name] = d.value
     disclosed.push(d.name)

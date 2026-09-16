@@ -8,6 +8,8 @@
  * practice, which is why the EU covid certificate used it.
  */
 
+import { QredentialError } from './errors.js'
+
 const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
 
 const REVERSE: Record<string, number> = {}
@@ -36,23 +38,29 @@ export function decodeBase45(text: string): Uint8Array {
   const values: number[] = []
   for (const ch of text) {
     const v = REVERSE[ch]
-    if (v === undefined) throw new Error(`invalid base45 character: ${JSON.stringify(ch)}`)
+    if (v === undefined) {
+      throw new QredentialError('invalid_encoding', `invalid base45 character: ${JSON.stringify(ch)}`)
+    }
     values.push(v)
   }
 
   const remainder = values.length % 3
-  if (remainder === 1) throw new Error('invalid base45 length')
+  if (remainder === 1) throw new QredentialError('invalid_encoding', 'invalid base45 length')
 
   const out: number[] = []
   let i = 0
   for (; i + 2 < values.length; i += 3) {
     const n = values[i]! + values[i + 1]! * 45 + values[i + 2]! * 2025
-    if (n > 0xffff) throw new Error('invalid base45 triplet: value exceeds two bytes')
+    if (n > 0xffff) {
+      throw new QredentialError('invalid_encoding', 'invalid base45 triplet: value exceeds two bytes')
+    }
     out.push(n >> 8, n & 0xff)
   }
   if (remainder === 2) {
     const n = values[i]! + values[i + 1]! * 45
-    if (n > 0xff) throw new Error('invalid base45 pair: value exceeds one byte')
+    if (n > 0xff) {
+      throw new QredentialError('invalid_encoding', 'invalid base45 pair: value exceeds one byte')
+    }
     out.push(n)
   }
   return new Uint8Array(out)
