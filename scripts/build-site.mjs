@@ -105,9 +105,19 @@ for (const code of codes) {
     .replace('__CONTENT__', html)
     .replace('__PROVENANCE__', provenance(code, { stale, unstamped }))
 
+  const seo = locales[code].seo
   const withHead =
     `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
-    page.replace('<title>', alternates(code) + '\n<title>')
+    page
+      .replace(
+        /<title>[^<]*<\/title>/,
+        head(code, {
+          path: `${guidePath(code)}/`,
+          title: seo.guideTitle,
+          description: seo.guideDesc,
+          type: 'guide',
+        }) + `\n<title>${seo.guideTitle}</title>`
+      )
 
   const out = join(docs, guidePath(code), 'index.html')
   await mkdir(dirname(out), { recursive: true })
@@ -145,17 +155,83 @@ function provenance(code, { stale, unstamped }) {
 `
 }
 
-/** hreflang tags, so a search engine serves the right language instead of guessing. */
-function alternates(code) {
+/**
+ * Everything a search engine and a link preview need, in the page's own language.
+ *
+ * Before this existed the nine landings all announced themselves as "Qredential" and the nine
+ * guides as "Qredential Documentation" in English, which is nine duplicate titles to a crawler and
+ * a Japanese page describing itself in a language its reader did not ask for.
+ */
+function head(code, { path, title, description, type }) {
+  const url = `${SITE}/${path}`
+  const available = (c) => (type === 'guide' ? guideSources[c] : landing[c])
+
   const tags = codes
-    .filter((c) => guideSources[c])
+    .filter(available)
     .map((c) => {
-      const href = c === SOURCE ? `${SITE}/guide/` : `${SITE}/${c}/guide/`
-      return `<link rel="alternate" hreflang="${c}" href="${href}">`
+      const p = type === 'guide' ? (c === SOURCE ? 'guide/' : `${c}/guide/`) : c === SOURCE ? '' : `${c}/`
+      return `<link rel="alternate" hreflang="${c}" href="${SITE}/${p}">`
     })
-  tags.push(`<link rel="alternate" hreflang="x-default" href="${SITE}/guide/">`)
-  tags.push(`<link rel="canonical" href="${SITE}/${guidePath(code)}/">`)
+
+  tags.push(
+    `<link rel="alternate" hreflang="x-default" href="${SITE}/${type === 'guide' ? 'guide/' : ''}">`,
+    `<link rel="canonical" href="${url}">`,
+    `<meta name="description" content="${escapeAttr(description)}">`,
+    `<meta name="viewport" content="width=device-width, initial-scale=1">`,
+    `<link rel="icon" href="${SITE}/favicon.svg" type="image/svg+xml">`,
+
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:site_name" content="qredential">`,
+    `<meta property="og:title" content="${escapeAttr(title)}">`,
+    `<meta property="og:description" content="${escapeAttr(description)}">`,
+    `<meta property="og:url" content="${url}">`,
+    `<meta property="og:locale" content="${code.replace('-', '_')}">`,
+    `<meta property="og:image" content="${SITE}/og.png">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${escapeAttr(title)}">`,
+    `<meta name="twitter:description" content="${escapeAttr(description)}">`,
+    `<meta name="twitter:image" content="${SITE}/og.png">`
+  )
+
+  for (const c of codes.filter(available)) {
+    if (c !== code) tags.push(`<meta property="og:locale:alternate" content="${c.replace('-', '_')}">`)
+  }
+
+  // Structured data. The landing is the software itself; a guide page is documentation about it.
+  const ld =
+    type === 'guide'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: title,
+          description,
+          inLanguage: code,
+          url,
+          author: { '@type': 'Person', name: 'George Veras Valentim' },
+          license: 'https://opensource.org/licenses/MIT',
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareSourceCode',
+          name: 'qredential',
+          description,
+          inLanguage: code,
+          url,
+          codeRepository: REPO,
+          programmingLanguage: 'TypeScript',
+          runtimePlatform: ['Node.js', 'Browser', 'React Native'],
+          license: 'https://opensource.org/licenses/MIT',
+          author: { '@type': 'Person', name: 'George Veras Valentim' },
+        }
+  tags.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`)
+
   return tags.join('\n')
+}
+
+function escapeAttr(s) {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 }
 
 // ------------------------------------------------------------- the landing, one page per locale
@@ -248,14 +324,18 @@ for (const template of await templates(docs)) {
       .replace('__STRINGS__', `window.__T=${JSON.stringify(runtime)};`)
       .replace('__BUNDLE__', () => bundle)
 
-    const alt = codes
-      .filter((c) => landing[c])
-      .map((c) => `<link rel="alternate" hreflang="${c}" href="${SITE}/${c === SOURCE ? '' : c + '/'}">`)
-      .concat([`<link rel="alternate" hreflang="x-default" href="${SITE}/">`])
-      .join('\n')
-
-    page = `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
-      page.replace('<title>', alt + '\n<title>')
+    const seo = locales[code].seo
+    page =
+      `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
+      page.replace(
+        /<title>[^<]*<\/title>/,
+        head(code, {
+          path: code === SOURCE ? '' : `${code}/`,
+          title: seo.landingTitle,
+          description: seo.landingDesc,
+          type: 'landing',
+        }) + `\n<title>${seo.landingTitle}</title>`
+      )
 
     const out = join(docs, code === SOURCE ? '' : code, 'index.html')
     await mkdir(dirname(out), { recursive: true })
@@ -263,6 +343,62 @@ for (const template of await templates(docs)) {
     console.log(`landing ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
   }
 }
+
+// ------------------------------------------------------------ robots, sitemap and the site icon
+//
+// Generated rather than committed by hand, so a language added tomorrow appears in the sitemap
+// without anyone remembering to edit it.
+
+const urls = []
+for (const code of codes.filter((c) => landing[c])) {
+  urls.push({
+    loc: `${SITE}/${code === SOURCE ? '' : code + '/'}`,
+    alts: codes.filter((c) => landing[c]).map((c) => [c, `${SITE}/${c === SOURCE ? '' : c + '/'}`]),
+  })
+}
+for (const code of codes.filter((c) => guideSources[c])) {
+  urls.push({
+    loc: `${SITE}/${guidePath(code)}/`,
+    alts: codes
+      .filter((c) => guideSources[c])
+      .map((c) => [c, `${SITE}/${c === SOURCE ? 'guide' : c + '/guide'}/`]),
+  })
+}
+urls.push({ loc: `${SITE}/playground/`, alts: [] })
+
+const sitemap = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'
+    .replace('www.sitemap.org', 'www.sitemaps.org'),
+  ...urls.map(({ loc, alts }) =>
+    [
+      '  <url>',
+      `    <loc>${loc}</loc>`,
+      ...alts.map(([c, href]) => `    <xhtml:link rel="alternate" hreflang="${c}" href="${href}"/>`),
+      '  </url>',
+    ].join('\n')
+  ),
+  '</urlset>',
+].join('\n')
+
+await writeFile(join(docs, 'sitemap.xml'), sitemap + '\n')
+await writeFile(
+  join(docs, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`
+)
+
+// The mark from the masthead, as a tab icon. Inline so it costs no request and scales anywhere.
+await writeFile(
+  join(docs, 'favicon.svg'),
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#111A1D"/>
+  <text x="32" y="46" text-anchor="middle" font-family="Archivo, Helvetica, Arial, sans-serif"
+        font-size="44" font-weight="700" fill="#0E6B54">q</text>
+</svg>
+`
+)
+
+console.log(`\nsitemap: ${urls.length} URLs, robots.txt and favicon.svg written`)
 
 // ------------------------------------------------------------------------------------- the report
 

@@ -14,6 +14,12 @@
       "langTitle": "Language",
       "footerSource": "Source and issues",
       "behind": "behind English"
+    },
+    "seo": {
+      "landingTitle": "Qredential, offline credential verification",
+      "landingDesc": "Verify a digital credential from a QR code with no network connection. SD-JWT selective disclosure, key binding, offline revocation, zero dependencies.",
+      "guideTitle": "Qredential documentation",
+      "guideDesc": "How to issue, present and verify SD-JWT credentials offline: selective disclosure, key binding, the QR size budget, revocation and the full error model."
     }
   },
   "pt": {
@@ -35,6 +41,12 @@
       "reviewed": "Tradução revisada por {who}. O inglês continua sendo a versão de referência. Se algo estiver errado ou soar estranho, isso é um bug e o relato é bem-vindo.",
       "stale": "Atenção: a versão em inglês mudou depois desta tradução, então esta página pode estar desatualizada. Em caso de divergência, o inglês prevalece.",
       "fix": "Corrigir esta página"
+    },
+    "seo": {
+      "landingTitle": "Qredential, verificação de credenciais offline",
+      "landingDesc": "Verifique uma credencial digital a partir de um QR code sem conexão de rede. Divulgação seletiva SD-JWT, key binding, revogação offline, zero dependências.",
+      "guideTitle": "Documentação do Qredential",
+      "guideDesc": "Como emitir, apresentar e verificar credenciais SD-JWT offline: divulgação seletiva, key binding, orçamento de tamanho do QR, revogação e o modelo de erros."
     }
   },
   "es": {
@@ -56,6 +68,12 @@
       "reviewed": "Traducción revisada por {who}. El inglés sigue siendo la versión de referencia. Si algo está mal o suena raro, es un error y agradecemos que lo reportes.",
       "stale": "Aviso: la versión en inglés cambió después de esta traducción, así que esta página puede estar desactualizada. Si hay discrepancia, manda el inglés.",
       "fix": "Corregir esta página"
+    },
+    "seo": {
+      "landingTitle": "Qredential, verificación de credenciales sin conexión",
+      "landingDesc": "Verifica una credencial digital desde un código QR sin conexión de red. Divulgación selectiva SD-JWT, key binding, revocación offline, cero dependencias.",
+      "guideTitle": "Documentación de Qredential",
+      "guideDesc": "Cómo emitir, presentar y verificar credenciales SD-JWT sin conexión: divulgación selectiva, key binding, presupuesto de tamaño del QR, revocación y errores."
     }
   },
   "fr": {
@@ -77,6 +95,12 @@
       "reviewed": "Traduction relue par {who}. L'anglais reste la version de référence. Si quelque chose est faux ou sonne mal, c'est un bug et le signalement est bienvenu.",
       "stale": "Attention : la version anglaise a changé depuis cette traduction, donc cette page peut être périmée. En cas de divergence, l'anglais fait foi.",
       "fix": "Corriger cette page"
+    },
+    "seo": {
+      "landingTitle": "Qredential, vérification de justificatifs hors ligne",
+      "landingDesc": "Vérifiez un justificatif numérique depuis un QR code sans connexion réseau. Divulgation sélective SD-JWT, liaison de clé, révocation hors ligne, zéro dépendance.",
+      "guideTitle": "Documentation de Qredential",
+      "guideDesc": "Émettre, présenter et vérifier des justificatifs SD-JWT hors ligne : divulgation sélective, liaison de clé, budget de taille du QR, révocation et modèle d'erreurs."
     }
   },
   "de": {
@@ -98,6 +122,12 @@
       "reviewed": "Übersetzung gegengelesen von {who}. Maßgeblich bleibt die englische Fassung. Wenn etwas falsch ist oder schief klingt, ist das ein Fehler, und eine Meldung ist willkommen.",
       "stale": "Hinweis: Die englische Fassung hat sich seit dieser Übersetzung geändert, diese Seite kann also veraltet sein. Bei Abweichungen gilt das Englische.",
       "fix": "Diese Seite korrigieren"
+    },
+    "seo": {
+      "landingTitle": "Qredential, Nachweisprüfung ohne Netz",
+      "landingDesc": "Prüfen Sie einen digitalen Nachweis aus einem QR-Code ohne Netzverbindung. Selektive SD-JWT-Offenlegung, Key Binding, Offline-Sperrprüfung, null Abhängigkeiten.",
+      "guideTitle": "Qredential-Dokumentation",
+      "guideDesc": "SD-JWT-Nachweise offline ausstellen, vorzeigen und prüfen: selektive Offenlegung, Key Binding, QR-Größenbudget, Sperrprüfung und das Fehlermodell."
     }
   },
   "ja": {
@@ -119,6 +149,12 @@
       "reviewed": "{who} がレビューした翻訳です。正典は英語版のままです。誤りや不自然な表現があれば不具合として報告してください。",
       "stale": "注意: この翻訳の後に英語版が更新されているため、このページは古い可能性があります。食い違う場合は英語版が優先します。",
       "fix": "このページを修正する"
+    },
+    "seo": {
+      "landingTitle": "Qredential、オフラインで資格情報を検証",
+      "landingDesc": "ネットワーク接続なしで QR コードから資格情報を検証します。SD-JWT の選択的開示、鍵バインディング、オフライン失効確認、依存関係ゼロ。",
+      "guideTitle": "Qredential ドキュメント",
+      "guideDesc": "SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。"
     }
   },
   "ko": {
@@ -140,6 +176,12 @@
       "reviewed": "{who} 님이 검수한 번역입니다. 기준은 여전히 영어판입니다. 틀렸거나 어색한 부분이 있다면 결함으로 제보해 주세요.",
       "stale": "주의: 이 번역 이후 영어판이 변경되어 이 페이지는 오래되었을 수 있습니다. 내용이 다를 경우 영어판이 우선합니다.",
       "fix": "이 페이지 수정하기"
+    },
+    "seo": {
+      "landingTitle": "Qredential, 오프라인 자격증명 검증",
+      "landingDesc": "네트워크 연결 없이 QR 코드에서 디지털 자격증명을 검증합니다. SD-JWT 선택적 공개, 키 바인딩, 오프라인 폐기 확인, 의존성 0.",
+      "guideTitle": "Qredential 문서",
+      "guideDesc": "SD-JWT 자격증명을 오프라인으로 발급, 제시, 검증하는 방법. 선택적 공개, 키 바인딩, QR 크기 예산, 폐기 확인, 그리고 오류 모델."
     }
   },
   "zh-Hans": {
@@ -161,6 +203,12 @@
       "reviewed": "译文由 {who} 校对。英文版仍为准。如果有错误或读起来别扭，那就是一个缺陷，欢迎反馈。",
       "stale": "注意：英文版在此译文之后有过改动，本页可能已过时。如有出入，以英文版为准。",
       "fix": "修正本页"
+    },
+    "seo": {
+      "landingTitle": "Qredential，离线验证数字凭证",
+      "landingDesc": "断网也能从二维码验证数字凭证。SD-JWT 选择性披露、密钥绑定、离线吊销检查，零运行时依赖。",
+      "guideTitle": "Qredential 文档",
+      "guideDesc": "如何离线签发、出示和验证 SD-JWT 凭证：选择性披露、密钥绑定、二维码体积预算、吊销检查，以及完整的错误模型。"
     }
   },
   "zh-Hant": {
@@ -182,6 +230,12 @@
       "reviewed": "翻譯由 {who} 校閱。仍以英文版為準。若有錯誤或讀來不順，那就是缺陷，歡迎回報。",
       "stale": "注意：英文版在此翻譯之後有所變動，本頁可能已過時。如有出入，以英文版為準。",
       "fix": "修正本頁"
+    },
+    "seo": {
+      "landingTitle": "Qredential，離線驗證數位憑證",
+      "landingDesc": "斷網也能從 QR Code 驗證數位憑證。SD-JWT 選擇性揭露、金鑰綁定、離線撤銷檢查，零執行期相依。",
+      "guideTitle": "Qredential 文件",
+      "guideDesc": "如何離線簽發、出示與驗證 SD-JWT 憑證：選擇性揭露、金鑰綁定、QR Code 大小預算、撤銷檢查，以及完整的錯誤模型。"
     }
   }
 }
