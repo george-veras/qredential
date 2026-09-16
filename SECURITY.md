@@ -33,8 +33,10 @@ The latest published minor. This is a young project and there is no long term su
 ## What this library has not had
 
 No third party audit. No formal verification. It implements published standards (SD-JWT,
-SD-JWT VC, Token Status List, base45) and is tested against the attacks listed above, but tests
-prove the presence of defences, never their completeness.
+SD-JWT VC, Token Status List, base45) and is tested against the attacks listed above, including
+property based tests that throw random and mutated input at the parser and assert that `verify()`
+returns a typed rejection rather than throwing. Tests prove the presence of defences, never their
+completeness.
 
 If you are deciding whether to put this between a person and a right they hold, read the source
 first. It is about 700 lines and has no runtime dependencies precisely so that reading it is

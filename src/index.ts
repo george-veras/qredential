@@ -118,7 +118,18 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     return reject('malformed', (error as Error).message)
   }
 
-  const { jwt, disclosures, keyBinding } = splitCombined(combined)
+  let jwt: string
+  let disclosures: string[]
+  let keyBinding: string | undefined
+  try {
+    // Strict parsing throws, and verify() is the one place that must never do that: hostile input
+    // is its whole job, and a verifier that throws gets wrapped in a try/catch that waves people
+    // through.
+    ;({ jwt, disclosures, keyBinding } = splitCombined(combined))
+  } catch (error) {
+    return reject('malformed', (error as Error).message)
+  }
+
   if (keyBinding !== undefined) {
     return reject('unsupported_feature', 'key binding JWTs are not supported yet, and ignoring one would weaken the check it exists to provide')
   }
