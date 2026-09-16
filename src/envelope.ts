@@ -1,6 +1,7 @@
 import { encodeBase45, decodeBase45 } from './base45.js'
 import { utf8, fromUtf8, concat } from './bytes.js'
 import { deflate, inflate, hasCompression } from './compress.js'
+import { QredentialError, isQredentialError } from './errors.js'
 
 export const PREFIX = 'QC1:'
 
@@ -33,11 +34,19 @@ export async function pack(payload: string): Promise<string> {
 
 export async function unpack(envelope: string): Promise<string> {
   if (!envelope.startsWith(PREFIX)) {
-    throw new Error(`not a qredential envelope: expected the ${PREFIX} prefix`)
+    throw new QredentialError(
+      'malformed_envelope',
+      `not a qredential envelope: expected the ${PREFIX} prefix`
+    )
   }
-  const bytes = decodeBase45(envelope.slice(PREFIX.length))
+  let bytes: Uint8Array
+  try {
+    bytes = decodeBase45(envelope.slice(PREFIX.length))
+  } catch (error) {
+    throw new QredentialError('malformed_envelope', 'envelope is not valid base45', { cause: error })
+  }
   // One byte is a complete envelope: the flag, with an empty payload after it.
-  if (bytes.length < 1) throw new Error('envelope is truncated')
+  if (bytes.length < 1) throw new QredentialError('malformed_envelope', 'envelope is truncated')
 
   const flag = bytes[0]!
   const body = bytes.subarray(1)
@@ -45,11 +54,17 @@ export async function unpack(envelope: string): Promise<string> {
   if (flag === FLAG_RAW) return fromUtf8(body)
   if (flag === FLAG_DEFLATE) {
     if (!hasCompression()) {
-      throw new Error('this credential is deflate compressed and the runtime has no DecompressionStream')
+      throw new QredentialError(
+        'unsupported_runtime',
+        'this credential is deflate compressed and the runtime has no DecompressionStream'
+      )
     }
     return fromUtf8(await inflate(body))
   }
-  throw new Error(`unknown envelope encoding flag: 0x${flag.toString(16)}`)
+  throw new QredentialError(
+    'malformed_envelope',
+    `unknown envelope encoding flag: 0x${flag.toString(16)}`
+  )
 }
 
 export function isEnvelope(text: string): boolean {

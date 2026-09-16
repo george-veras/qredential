@@ -2,6 +2,7 @@ import { b64url, b64urlJson, unb64url, unb64urlJson } from './bytes.js'
 import { deflate, inflateEither } from './compress.js'
 import { importPrivateKey, sign } from './crypto.js'
 import { seconds, nowSeconds } from './duration.js'
+import { QredentialError } from './errors.js'
 import type { Alg, Jwk } from './types.js'
 
 export type StatusValue = 'valid' | 'invalid' | 'suspended' | 'unknown'
@@ -24,14 +25,27 @@ export interface StatusListToken {
  */
 export async function parseStatusList(token: string): Promise<{ payload: Record<string, unknown>; list: StatusListToken }> {
   const parts = token.split('.')
-  if (parts.length !== 3) throw new Error('status list token is not a JWT')
-  const payload = unb64urlJson<Record<string, unknown>>(parts[1]!)
+  if (parts.length !== 3) {
+    throw new QredentialError('malformed_status_list', 'status list token is not a JWT')
+  }
+  let payload: Record<string, unknown>
+  try {
+    payload = unb64urlJson<Record<string, unknown>>(parts[1]!)
+  } catch (error) {
+    throw new QredentialError('malformed_status_list', 'status list payload is not readable', {
+      cause: error,
+    })
+  }
 
   const sl = payload['status_list'] as { bits?: number; lst?: string } | undefined
-  if (!sl || typeof sl.lst !== 'string') throw new Error('status list token has no status_list.lst')
+  if (!sl || typeof sl.lst !== 'string') {
+    throw new QredentialError('malformed_status_list', 'status list token has no status_list.lst')
+  }
 
   const bits = sl.bits ?? 1
-  if (![1, 2, 4, 8].includes(bits)) throw new Error(`unsupported status list bit width: ${bits}`)
+  if (![1, 2, 4, 8].includes(bits)) {
+    throw new QredentialError('malformed_status_list', `unsupported status list bit width: ${bits}`)
+  }
 
   return {
     payload,
@@ -48,7 +62,9 @@ export async function parseStatusList(token: string): Promise<{ payload: Record<
 
 /** Read one entry. Values are packed least significant bits first, per the spec. */
 export function readStatus(list: StatusListToken, idx: number): StatusValue {
-  if (idx < 0 || !Number.isInteger(idx)) throw new Error(`invalid status index: ${idx}`)
+  if (idx < 0 || !Number.isInteger(idx)) {
+    throw new QredentialError('invalid_option', `invalid status index: ${idx}`)
+  }
 
   const perByte = 8 / list.bits
   const byteIndex = Math.floor(idx / perByte)
@@ -100,11 +116,31 @@ export async function createStatusList(options: {
   const alg = options.alg ?? 'ES256'
   const iat = options.issuedAt ?? nowSeconds()
 
-  const bytes = new Uint8Array(Math.ceil(options.size / 8))
+  if (!Number.isSafeInteger(options.size) || options.size < 1) {
+    throw new QredentialError(
+      'invalid_option',
+      `status list size must be a positive integer, received ${options.size}`
+    )
+  }
+
+  let bytes: Uint8Array
+  try {
+    bytes = new Uint8Array(Math.ceil(options.size / 8))
+  } catch (error) {
+    // A size large enough to fail allocation is a caller mistake, not a crash to pass upward.
+    throw new QredentialError(
+      'invalid_option',
+      `status list of ${options.size} entries cannot be allocated`,
+      { cause: error }
+    )
+  }
   const set = (indices: number[] | undefined, value: number) => {
     for (const idx of indices ?? []) {
       if (idx < 0 || idx >= options.size || !Number.isInteger(idx)) {
-        throw new Error(`status index ${idx} is outside a list of ${options.size}`)
+        throw new QredentialError(
+          'invalid_option',
+          `status index ${idx} is outside a list of ${options.size}`
+        )
       }
       bytes[Math.floor(idx / 8)]! |= value << idx % 8
     }

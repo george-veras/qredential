@@ -11,16 +11,37 @@ import {
   parseDisclosure,
   reconstructClaims,
 } from './sdjwt.js'
+import { QredentialError } from './errors.js'
 import type {
   Alg,
   IssueOptions,
   IssueResult,
   RejectedCredential,
+  VerifiedCredential,
   VerifyOptions,
   VerifyResult,
 } from './types.js'
 
 export type * from './types.js'
+export { QredentialError, isQredentialError } from './errors.js'
+export type { ErrorCode, QredentialErrorOptions } from './errors.js'
+
+/**
+ * Turn a rejected result into a thrown {@link QredentialError}, for callers who would rather use
+ * try/catch than branch on `result.ok`.
+ *
+ * The thrown error carries `code: 'verification_failed'` and the original `reason`, so nothing is
+ * lost by choosing this style.
+ *
+ * ```ts
+ * const credential = assertVerified(await verify(scanned, { trust }))
+ * console.log(credential.claims.over_18)
+ * ```
+ */
+export function assertVerified(result: VerifyResult): VerifiedCredential {
+  if (result.ok) return result
+  throw new QredentialError('verification_failed', result.message, { reason: result.reason })
+}
 export { fits } from './qr.js'
 export type { ErrorCorrection, FitResult } from './qr.js'
 export { pack, unpack, isEnvelope } from './envelope.js'
@@ -48,7 +69,10 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
 
   const unknown = disclosable.filter((name) => !(name in options.claims))
   if (unknown.length > 0) {
-    throw new Error(`disclose lists claims that are not in the credential: ${unknown.join(', ')}`)
+    throw new QredentialError(
+      'invalid_option',
+      `disclose lists claims that are not in the credential: ${unknown.join(', ')}`
+    )
   }
 
   const disclosures = disclosable.map((name) => makeDisclosure(name, options.claims[name]))
@@ -100,7 +124,7 @@ export async function present(
 
   const missing = options.disclose.filter((name) => !available.has(name))
   if (missing.length > 0) {
-    throw new Error(`this credential cannot disclose: ${missing.join(', ')}`)
+    throw new QredentialError('not_disclosable', `this credential cannot disclose: ${missing.join(', ')}`)
   }
 
   const kept = disclosures.filter((raw) => wanted.has(parseDisclosure(raw).name))

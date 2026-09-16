@@ -1,5 +1,7 @@
 /** Encoding helpers. Everything here is platform neutral: no Buffer, no Node imports. */
 
+import { QredentialError } from './errors.js'
+
 const B64URL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
 
 export function utf8(s: string): Uint8Array {
@@ -34,7 +36,7 @@ export function unb64url(s: string): Uint8Array {
   let n = 0
   for (const ch of clean) {
     const v = B64URL.indexOf(ch)
-    if (v < 0) throw new Error(`invalid base64url character: ${ch}`)
+    if (v < 0) throw new QredentialError('invalid_encoding', `invalid base64url character: ${ch}`)
     acc = (acc << 6) | v
     bits += 6
     if (bits >= 8) {
@@ -51,7 +53,13 @@ export function b64urlJson(value: unknown): string {
 }
 
 export function unb64urlJson<T = unknown>(s: string): T {
-  return JSON.parse(fromUtf8(unb64url(s))) as T
+  const text = fromUtf8(unb64url(s))
+  try {
+    return JSON.parse(text) as T
+  } catch (error) {
+    // JSON.parse throws SyntaxError, which is not this library's error and is documented nowhere.
+    throw new QredentialError('invalid_encoding', 'segment is not valid JSON', { cause: error })
+  }
 }
 
 export function randomBytes(n: number): Uint8Array {

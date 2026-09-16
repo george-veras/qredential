@@ -163,6 +163,37 @@ Four functions. That is the whole surface.
 The site is built from `docs/` by `npm run build:site` and deployed by GitHub Actions on every push
 to main.
 
+## Errors
+
+Two contracts, and that is the whole model:
+
+1. **`verify()` never throws.** For any input at all. It returns a discriminated union, and a
+   failure carries a typed `reason`.
+2. **Everything else throws only `QredentialError`**, which carries a stable `code`.
+
+Both are held to by property based tests that generate random strings, malformed keys, corrupt
+envelopes and hostile options and assert that nothing else escapes: no `SyntaxError` from a JSON
+parse, no `DOMException` from WebCrypto, no `RangeError` from an allocation.
+
+```ts
+import { verify, assertVerified, isQredentialError } from 'qredential'
+
+// Style 1: look at the result.
+const result = await verify(scanned, { trust })
+if (!result.ok) return refuse(result.reason)
+
+// Style 2: let it throw, if that suits your codebase better.
+try {
+  const credential = assertVerified(await verify(scanned, { trust }))
+} catch (error) {
+  if (isQredentialError(error)) refuse(error.reason ?? error.code)
+}
+```
+
+Codes and reasons are covered by semver; message text is not. Branch on the code, print the
+message. The full tables are in the
+[error handling guide](https://george-veras.github.io/qredential/guide/#errors).
+
 ## Security
 
 Report vulnerabilities privately through the Security tab. Scope, response times and an honest
