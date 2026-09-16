@@ -285,6 +285,25 @@ result.claims.birth_date  <span class="tok-c">// undefined, and it never left th
         claim means sending the original string so the verifier can hash it and find the digest.
         Withholding it means the verifier is left holding a digest it can never open.
       </p>
+
+      <h3>Nested, array, and recursive disclosure</h3>
+      <p>
+        RFC 9901 allows all three, and the European wallet ecosystem uses all three. Verification
+        here resolves them at any depth, following the processing model in Section 7.1:
+      </p>
+      <ul>
+        <li>An <code>_sd</code> array inside a nested object hides properties of that object.</li>
+        <li>An array element shaped <code>{"...": digest}</code> hides the element itself. A
+          withheld one is <em>removed</em> from the array rather than left as a placeholder, so what
+          you receive is a clean value you can render.</li>
+        <li>A disclosed value can itself contain either shape, so resolving one uncovers more.</li>
+      </ul>
+      <p>
+        None of that leaks into <code>claims</code>: no <code>_sd</code> key and no
+        <code>"..."</code> element ever reaches the caller. Disclosed names come back as paths, such
+        as <code>address.locality</code>, and the whole thing is checked both ways against an
+        independent implementation of the same RFC.
+      </p>
       <div class="aside">
         <strong>Why this matters for age checks.</strong> The usual implementation has the customer
         upload a photo of their ID to a third party, which creates a breach waiting to happen. Here
@@ -711,7 +730,6 @@ result.holderVerified   <span class="tok-c">// false, and it says so whichever w
             <tr><td><span class="reason">status_list_stale</span></td><td>Your cached list is older than <code>maxStatusAge</code>.</td></tr>
             <tr><td><span class="reason">holder_proof_missing</span></td><td>No holder proof was offered and the caller did not pass <code>acceptWithoutHolderProof</code>.</td></tr>
             <tr><td><span class="reason">holder_proof_invalid</span></td><td>A proof was offered and failed: wrong key, wrong nonce, wrong audience, a different disclosure set, stale, or attached to a credential with no bound key.</td></tr>
-            <tr><td><span class="reason">unsupported_feature</span></td><td>Selective disclosure nested in an object or an array element. Not implemented yet, and not silently ignored.</td></tr>
           </tbody>
         </table>
       </div>
@@ -769,7 +787,7 @@ result.holderVerified   <span class="tok-c">// false, and it says so whichever w
       <ul>
         <li><strong>Not a wallet.</strong> No UI, no storage.</li>
         <li><strong>Not key management.</strong> You bring your own keys and your own trust list distribution.</li>
-        <li><strong>Only top level selective disclosure.</strong> SD-JWT also allows <code>_sd</code> inside a nested object and <code>{"...": digest}</code> as an array element, and the European wallet ecosystem uses both. This version resolves neither, and refuses such a credential with <code>unsupported_feature</code> rather than copying the unresolved digests into <code>claims</code> for you to display.</li>
+        <li><strong>Presenting individual array elements.</strong> Verification resolves them; <code>present()</code> selects by claim name, and an array element has none, so this version withholds them. The credential still verifies, with those elements removed. A path based selector is the fix and is not built yet.</li>
         <li><strong>Not ISO 18013-5 mDL yet.</strong> That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.</li>
         <li><strong>Not audited.</strong> It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.</li>
       </ul>

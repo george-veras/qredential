@@ -88,7 +88,6 @@ export type FailReason =
   | 'revoked'
   | 'status_list_stale'
   | 'status_unavailable'
-  | 'unsupported_feature'
 
 /** What the holder's wallet signs at presentation time to prove the credential is theirs. */
 export interface KeyBindingRequest {

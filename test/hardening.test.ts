@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { issue, present, verify, createStatusList, unpack } from '../src/index.js'
 import { unb64url, b64urlJson } from '../src/bytes.js'
-import { digest, makeDisclosure, reconstructClaims, splitCombined, joinCombined } from '../src/sdjwt.js'
+import {
+  digest,
+  makeDisclosure,
+  makeElementDisclosure,
+  reconstructClaims,
+  splitCombined,
+  joinCombined,
+} from '../src/sdjwt.js'
 import { makeIssuer } from './helpers.js'
 import type { QredentialError } from '../src/errors.js'
 
@@ -199,7 +206,7 @@ describe('the digest order is shuffled with a cryptographic source', () => {
   })
 })
 
-describe('selective disclosure this version cannot resolve is refused, not ignored', () => {
+describe('nested and array selective disclosure, per RFC 9901 section 7.1', () => {
   /** Build a credential by hand, the way another implementation would shape one. */
   async function handBuilt(payloadExtra: Record<string, unknown>, disclosures: string[]) {
     const issuer = await makeIssuer('https://eu.example')
@@ -219,40 +226,108 @@ describe('selective disclosure this version cannot resolve is refused, not ignor
     return { issuer, credential: joinCombined(jwt, disclosures) }
   }
 
-  it('refuses nested _sd rather than handing back a digest blob to display', async () => {
+  it('resolves a disclosure nested inside an object', async () => {
     const street = makeDisclosure('street_address', 'Rua das Flores 10')
-    const top = makeDisclosure('over_18', true)
     const { issuer, credential } = await handBuilt(
-      {
-        address: { country: 'BR', _sd: [await digest(street.raw)] },
-        _sd: [await digest(top.raw)],
-      },
-      [top.raw]
+      { address: { country: 'BR', _sd: [await digest(street.raw)] } },
+      [street.raw]
     )
 
-    const result = await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })
-    expect(result.ok).toBe(false)
-    if (result.ok) return
-    expect(result.reason).toBe('unsupported_feature')
-    expect(result.message).toContain('address._sd')
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({ country: 'BR', street_address: 'Rua das Flores 10' })
+    expect(result.disclosed).toContain('address.street_address')
   })
 
-  it('refuses array element disclosure for the same reason', async () => {
-    const tag = makeDisclosure('nationality', 'BR')
-    const top = makeDisclosure('over_18', true)
+  it('leaves the object intact, without _sd, when the holder withholds', async () => {
+    const street = makeDisclosure('street_address', 'Rua das Flores 10')
     const { issuer, credential } = await handBuilt(
-      {
-        nationalities: [{ '...': await digest(tag.raw) }],
-        _sd: [await digest(top.raw)],
-      },
-      [top.raw]
+      { address: { country: 'BR', _sd: [await digest(street.raw)] } },
+      []
     )
 
-    const result = await verify(credential, { acceptWithoutHolderProof: true, trust: issuer.trust })
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({ country: 'BR' })
+    expect(result.withheld).toBe(1)
+  })
+
+  it('resolves array element disclosures and drops the withheld ones', async () => {
+    const br = makeElementDisclosure('BR')
+    const pt = makeElementDisclosure('PT')
+    const { issuer, credential } = await handBuilt(
+      {
+        nationalities: [
+          { '...': await digest(br.raw) },
+          { '...': await digest(pt.raw) },
+        ],
+      },
+      [br.raw]
+    )
+
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    // Section 7.1 step d: the unresolved element is removed, not left as a placeholder.
+    expect(result.claims['nationalities']).toEqual(['BR'])
+    expect(result.withheld).toBe(1)
+  })
+
+  it('resolves recursively, when a disclosed value hides more of itself', async () => {
+    const city = makeDisclosure('city', 'Sao Paulo')
+    const address = makeDisclosure('address', {
+      country: 'BR',
+      _sd: [await digest(city.raw)],
+    })
+    const { issuer, credential } = await handBuilt({ _sd: [await digest(address.raw)] }, [
+      address.raw,
+      city.raw,
+    ])
+
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({ country: 'BR', city: 'Sao Paulo' })
+    expect(result.disclosed).toContain('address.city')
+  })
+
+  it('rejects the same digest embedded twice', async () => {
+    const tag = makeDisclosure('nickname', 'Aninha')
+    const dig = await digest(tag.raw)
+    const { issuer, credential } = await handBuilt({ _sd: [dig, dig] }, [tag.raw])
+
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
     expect(result.ok).toBe(false)
     if (result.ok) return
-    expect(result.reason).toBe('unsupported_feature')
-    expect(result.message).toContain('nationalities')
+    expect(result.message).toContain('more than once')
+  })
+
+  it('rejects a nested disclosure that collides with a sibling already there', async () => {
+    const clash = makeDisclosure('country', 'PT')
+    const { issuer, credential } = await handBuilt(
+      { address: { country: 'BR', _sd: [await digest(clash.raw)] } },
+      [clash.raw]
+    )
+
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(false)
+    if (result.ok) return
+    expect(result.message).toContain('collides')
+  })
+
+  it('rejects an array digest that resolves to an object property disclosure', async () => {
+    const wrongShape = makeDisclosure('nationality', 'BR')
+    const { issuer, credential } = await handBuilt(
+      { nationalities: [{ '...': await digest(wrongShape.raw) }] },
+      [wrongShape.raw]
+    )
+
+    const result = await verify(credential, { trust: issuer.trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(false)
+    if (result.ok) return
+    expect(result.message).toContain('array element digest')
   })
 
   it('leaves ordinary nested objects and arrays alone', async () => {

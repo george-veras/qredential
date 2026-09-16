@@ -190,3 +190,93 @@ describe('the two implementations agree on the primitives', () => {
     }
   })
 })
+
+describe('nested and array selective disclosure, across implementations', () => {
+  const NESTED = {
+    iss: ISSUER,
+    iat: Math.floor(Date.now() / 1000),
+    given_name: 'Ana',
+    address: {
+      street_address: 'Rua das Flores 10',
+      locality: 'Sao Paulo',
+      country: 'BR',
+    },
+    nationalities: ['BR', 'PT'],
+  }
+
+  it('reads a credential where they hid a property inside an object', async () => {
+    const credential = await theirs.issue(NESTED, {
+      address: { _sd: ['street_address', 'locality'] },
+    })
+
+    const result = await verify(credential, { trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({
+      street_address: 'Rua das Flores 10',
+      locality: 'Sao Paulo',
+      country: 'BR',
+    })
+    // And no _sd leaks into what the caller sees.
+    expect(JSON.stringify(result.claims)).not.toContain('_sd')
+  })
+
+  it('reads a narrowed presentation of that nested credential', async () => {
+    const credential = await theirs.issue(NESTED, {
+      address: { _sd: ['street_address', 'locality'] },
+    })
+    const presentation = await theirs.present(credential, {
+      address: { locality: true },
+    })
+
+    const result = await verify(presentation, { trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({ locality: 'Sao Paulo', country: 'BR' })
+    expect(result.disclosed).toContain('address.locality')
+    expect(result.withheld).toBe(1)
+  })
+
+  it('reads array element disclosures they produced', async () => {
+    const credential = await theirs.issue(NESTED, {
+      nationalities: { _sd: [0, 1] },
+    })
+
+    const result = await verify(credential, { trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['nationalities']).toEqual(['BR', 'PT'])
+    expect(JSON.stringify(result.claims)).not.toContain('...')
+  })
+
+  it('drops the array elements the holder withheld, and keeps the order of the rest', async () => {
+    const credential = await theirs.issue(NESTED, {
+      nationalities: { _sd: [0, 1] },
+    })
+    const presentation = await theirs.present(credential, {
+      nationalities: [true, false],
+    })
+
+    const result = await verify(presentation, { trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['nationalities']).toEqual(['BR'])
+    expect(result.withheld).toBe(1)
+  })
+
+  it('reads a recursive disclosure, where revealing one value uncovers another', async () => {
+    const credential = await theirs.issue(NESTED, {
+      _sd: ['address'],
+      address: { _sd: ['street_address'] },
+    })
+
+    const result = await verify(credential, { trust, acceptWithoutHolderProof: true })
+    expect(result.ok).toBe(true)
+    if (!result.ok) return
+    expect(result.claims['address']).toEqual({
+      street_address: 'Rua das Flores 10',
+      locality: 'Sao Paulo',
+      country: 'BR',
+    })
+  })
+})

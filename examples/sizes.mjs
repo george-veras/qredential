@@ -83,9 +83,16 @@ const statusList = await createStatusList({
   revoked: [12, 9001],
 })
 
-const result = await verify(ageOnly, { trust, status: statusList, maxStatusAge: '7d' })
+// This credential is static: no holder key, so nothing can sign at scan time. Saying so is
+// required, and the result reports holderVerified: false either way.
+const result = await verify(ageOnly, {
+  trust,
+  status: statusList,
+  maxStatusAge: '7d',
+  acceptWithoutHolderProof: true,
+})
 console.log(
   result.ok
-    ? `verified offline: ${JSON.stringify(result.claims)}, ${result.withheld} claims withheld`
+    ? `verified offline: ${JSON.stringify(result.claims)}, ${result.withheld} withheld, holder proved: ${result.holderVerified}`
     : `rejected: ${result.reason}`
 )

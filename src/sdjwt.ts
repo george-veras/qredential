@@ -1,4 +1,4 @@
-import { b64url, b64urlJson, unb64urlJson, randomBytes, utf8, timingSafeEqual } from './bytes.js'
+import { b64url, b64urlJson, unb64urlJson, randomBytes, utf8 } from './bytes.js'
 import { sha256 } from './crypto.js'
 import { QredentialError } from './errors.js'
 
@@ -19,15 +19,24 @@ export interface Disclosure {
   /** The transmitted string. The digest is taken over exactly these characters. */
   raw: string
   salt: string
-  name: string
+  /** Present for an object property, absent for an array element. */
+  name?: string
   value: unknown
+  kind: 'property' | 'element'
 }
 
 export function makeDisclosure(name: string, value: unknown): Disclosure {
   const salt = b64url(randomBytes(16))
-  // The array form and its ordering are fixed by the SD-JWT spec: [salt, claim name, claim value].
+  // The array form and its ordering are fixed by RFC 9901: [salt, claim name, claim value].
   const raw = b64urlJson([salt, name, value])
-  return { raw, salt, name, value }
+  return { raw, salt, name, value, kind: 'property' }
+}
+
+/** RFC 9901 section 4.2.2: an array element disclosure carries no claim name. */
+export function makeElementDisclosure(value: unknown): Disclosure {
+  const salt = b64url(randomBytes(16))
+  const raw = b64urlJson([salt, value])
+  return { raw, salt, value, kind: 'element' }
 }
 
 export function parseDisclosure(raw: string): Disclosure {
@@ -37,17 +46,27 @@ export function parseDisclosure(raw: string): Disclosure {
   } catch (error) {
     throw new QredentialError('malformed_credential', 'disclosure is not readable', { cause: error })
   }
-  if (!Array.isArray(parsed) || parsed.length !== 3) {
-    throw new QredentialError('malformed_credential', 'disclosure is not a three element array')
-  }
-  const [salt, name, value] = parsed as [unknown, unknown, unknown]
-  if (typeof salt !== 'string' || typeof name !== 'string') {
+  if (!Array.isArray(parsed) || (parsed.length !== 2 && parsed.length !== 3)) {
     throw new QredentialError(
       'malformed_credential',
-      'disclosure salt and claim name must be strings'
+      'disclosure must be an array of two elements (array member) or three (object property)'
     )
   }
-  return { raw, salt, name, value }
+
+  const salt = parsed[0]
+  if (typeof salt !== 'string') {
+    throw new QredentialError('malformed_credential', 'disclosure salt must be a string')
+  }
+
+  if (parsed.length === 2) {
+    return { raw, salt, value: parsed[1], kind: 'element' }
+  }
+
+  const name = parsed[1]
+  if (typeof name !== 'string') {
+    throw new QredentialError('malformed_credential', 'disclosure claim name must be a string')
+  }
+  return { raw, salt, name, value: parsed[2], kind: 'property' }
 }
 
 /**
@@ -119,44 +138,18 @@ export function joinCombined(jwt: string, disclosures: string[], keyBinding?: st
  * pointless.
  */
 /**
- * Find selective disclosure structure this version does not resolve.
+ * Rebuild the claim set, following the processing model in RFC 9901 section 7.1.
  *
- * SD-JWT allows `_sd` inside a nested object and `{"...": digest}` as an array element, and the
- * European wallet ecosystem uses both. This version resolves only top level properties. Copying the
- * unresolved structure into the result would hand a caller `address: { _sd: ["dSThj..."] }` to
- * display, and would mean quietly ignoring a disclosure the issuer intended, which is the failure
- * this format exists to prevent. So it is detected and refused instead.
+ * Two shapes of embedded digest exist and both are resolved here, at any depth:
+ *
+ *   - an object with an `_sd` array, whose digests stand for properties of that object
+ *   - an array element shaped `{"...": digest}`, which stands for the element itself
+ *
+ * Resolution is recursive, because a disclosed value can itself contain either shape. The rules
+ * that reject rather than skip are the ones that matter: a disclosure the issuer never signed, one
+ * used twice, one naming a reserved or already-present claim, or one left over at the end. A
+ * verifier that silently ignores any of those is the bug that makes the format pointless.
  */
-function findUnsupportedDisclosure(value: unknown, path: string[] = []): string | null {
-  if (Array.isArray(value)) {
-    for (let i = 0; i < value.length; i++) {
-      const item = value[i]
-      if (
-        item !== null &&
-        typeof item === 'object' &&
-        !Array.isArray(item) &&
-        Object.keys(item as object).length === 1 &&
-        '...' in (item as object)
-      ) {
-        return [...path, `[${i}]`].join('.')
-      }
-      const nested = findUnsupportedDisclosure(item, [...path, `[${i}]`])
-      if (nested) return nested
-    }
-    return null
-  }
-
-  if (value !== null && typeof value === 'object') {
-    for (const [key, child] of Object.entries(value as Record<string, unknown>)) {
-      if (key === '_sd') return [...path, '_sd'].join('.')
-      const nested = findUnsupportedDisclosure(child, [...path, key])
-      if (nested) return nested
-    }
-  }
-
-  return null
-}
-
 export async function reconstructClaims(
   payload: Record<string, unknown>,
   disclosures: string[]
@@ -164,62 +157,168 @@ export async function reconstructClaims(
   const sdAlg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
   if (sdAlg !== 'sha-256') throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
 
-  const signedDigests = Array.isArray(payload['_sd']) ? (payload['_sd'] as string[]) : []
-  const claims: Record<string, unknown> = {}
-  for (const [key, value] of Object.entries(payload)) {
-    if (REGISTERED_CLAIMS.has(key)) continue
-
-    const unsupported = findUnsupportedDisclosure(value, [key])
-    if (unsupported !== null) {
-      throw new QredentialError(
-        'unsupported_feature',
-        `this credential uses nested or array selective disclosure at "${unsupported}", ` +
-          'which this version does not resolve. Accepting it would mean silently ignoring a ' +
-          'disclosure the issuer intended.'
-      )
-    }
-
-    claims[key] = value
-  }
-
-  const disclosed: string[] = []
-  const seen = new Set<string>()
+  const byDigest = new Map<string, Disclosure>()
   for (const raw of disclosures) {
-    const d = parseDisclosure(raw)
     const dig = await digest(raw)
-    if (!signedDigests.some((s) => timingSafeEqual(s, dig))) {
+    // Keying by digest would quietly swallow a repeat, and a presentation that sends the same
+    // disclosure twice is malformed however harmless it looks.
+    if (byDigest.has(dig)) {
       throw new QredentialError(
         'malformed_credential',
-        `disclosure for "${d.name}" does not match any digest signed by the issuer`
+        'the same disclosure was sent more than once'
       )
     }
+    byDigest.set(dig, parseDisclosure(raw))
+  }
+
+  const used = new Set<string>()
+  const seen = new Set<string>()
+  const disclosed: string[] = []
+  let withheld = 0
+
+  /** Record a digest the payload embeds, rejecting a second sighting of the same one. */
+  const note = (dig: string) => {
     if (seen.has(dig)) {
       throw new QredentialError(
         'malformed_credential',
-        `disclosure for "${d.name}" was sent more than once`
+        'the same digest appears more than once in this credential'
       )
     }
     seen.add(dig)
-
-    // A disclosure names its own claim, so these two are the ways it could say something the
-    // payload already settled. Both break the invariant the result type promises, that everything
-    // in `claims` describes the subject and nothing describes the token.
-    if (REGISTERED_CLAIMS.has(d.name)) {
-      throw new QredentialError(
-        'malformed_credential',
-        `disclosure tries to set the registered claim "${d.name}"`
-      )
-    }
-    if (Object.prototype.hasOwnProperty.call(claims, d.name)) {
-      throw new QredentialError(
-        'malformed_credential',
-        `disclosure for "${d.name}" collides with a claim already in the payload`
-      )
-    }
-
-    claims[d.name] = d.value
-    disclosed.push(d.name)
   }
 
-  return { claims, disclosed, withheld: signedDigests.length - disclosed.length }
+  const resolveObject = (node: Record<string, unknown>, path: string[]): void => {
+    const sd = node['_sd']
+    delete node['_sd']
+
+    if (sd !== undefined) {
+      if (!Array.isArray(sd) || sd.some((d) => typeof d !== 'string')) {
+        throw new QredentialError('malformed_credential', '_sd must be an array of strings')
+      }
+
+      for (const dig of sd as string[]) {
+        note(dig)
+        const found = byDigest.get(dig)
+        // A digest with no disclosure is a claim the holder withheld. It is ignored on purpose:
+        // that is what withholding looks like from here.
+        if (!found) {
+          withheld++
+          continue
+        }
+        if (found.kind !== 'property' || found.name === undefined) {
+          throw new QredentialError(
+            'malformed_credential',
+            'a digest under _sd resolved to an array element disclosure'
+          )
+        }
+        if (found.name === '_sd' || found.name === '...') {
+          throw new QredentialError(
+            'malformed_credential',
+            `disclosure uses the reserved claim name "${found.name}"`
+          )
+        }
+        if (REGISTERED_CLAIMS.has(found.name)) {
+          throw new QredentialError(
+            'malformed_credential',
+            `disclosure tries to set the registered claim "${found.name}"`
+          )
+        }
+        if (Object.prototype.hasOwnProperty.call(node, found.name)) {
+          throw new QredentialError(
+            'malformed_credential',
+            `disclosure for "${found.name}" collides with a claim already in the payload`
+          )
+        }
+
+        used.add(dig)
+        node[found.name] = found.value
+        disclosed.push([...path, found.name].join('.'))
+        walk(found.value, [...path, found.name])
+      }
+    }
+
+    for (const [key, value] of Object.entries(node)) {
+      walk(value, [...path, key])
+    }
+  }
+
+  const resolveArray = (node: unknown[], path: string[]): void => {
+    const kept: unknown[] = []
+
+    for (let i = 0; i < node.length; i++) {
+      const item = node[i]
+      const dig = elementDigest(item)
+
+      if (dig === null) {
+        walk(item, [...path, `[${i}]`])
+        kept.push(item)
+        continue
+      }
+
+      note(dig)
+      const found = byDigest.get(dig)
+      // Section 7.1 step d: an element whose digest has no disclosure is removed, not left behind
+      // as a placeholder for the caller to trip over.
+      if (!found) {
+        withheld++
+        continue
+      }
+      if (found.kind !== 'element') {
+        throw new QredentialError(
+          'malformed_credential',
+          'an array element digest resolved to an object property disclosure'
+        )
+      }
+
+      used.add(dig)
+      const at = `${path.join('.')}[${kept.length}]`
+      disclosed.push(at)
+      walk(found.value, [...path, `[${kept.length}]`])
+      kept.push(found.value)
+    }
+
+    node.length = 0
+    node.push(...kept)
+  }
+
+  const walk = (node: unknown, path: string[]): void => {
+    if (Array.isArray(node)) return resolveArray(node, path)
+    if (node !== null && typeof node === 'object') {
+      return resolveObject(node as Record<string, unknown>, path)
+    }
+  }
+
+  const claims: Record<string, unknown> = {}
+  for (const [key, value] of Object.entries(payload)) {
+    if (REGISTERED_CLAIMS.has(key)) continue
+    claims[key] = structuredClone(value)
+  }
+
+  // The top level `_sd` lives on the payload, so it is copied in for the walk and stripped after.
+  const root: Record<string, unknown> = { ...claims }
+  if (payload['_sd'] !== undefined) root['_sd'] = structuredClone(payload['_sd'])
+  resolveObject(root, [])
+
+  // Section 7.1 step 5: anything the payload never referenced is an attempt to add a claim after
+  // the fact, and fails the whole credential rather than being skipped.
+  const orphan = [...byDigest.entries()].find(([dig]) => !used.has(dig))
+  if (orphan) {
+    const [, d] = orphan
+    const what = d.name !== undefined ? `"${d.name}"` : 'an array element'
+    throw new QredentialError(
+      'malformed_credential',
+      `disclosure for ${what} does not match any digest signed by the issuer`
+    )
+  }
+
+  return { claims: root, disclosed, withheld }
+}
+
+/** An array element stands for a hidden value when it is exactly `{"...": "<digest>"}`. */
+function elementDigest(item: unknown): string | null {
+  if (item === null || typeof item !== 'object' || Array.isArray(item)) return null
+  const keys = Object.keys(item as object)
+  if (keys.length !== 1 || keys[0] !== '...') return null
+  const value = (item as Record<string, unknown>)['...']
+  return typeof value === 'string' ? value : null
 }

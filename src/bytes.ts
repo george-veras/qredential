@@ -77,17 +77,3 @@ export function concat(...parts: Uint8Array[]): Uint8Array {
   }
   return out
 }
-
-/**
- * Length-independent comparison for the digest checks.
- *
- * Being honest about what this buys: the caller scans a list with `.some`, which short-circuits, so
- * the search as a whole is not constant time. Digests are public values and there is no secret to
- * leak here, but comparing them without an early return costs nothing and keeps the habit.
- */
-export function timingSafeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false
-  let diff = 0
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
-  return diff === 0
-}

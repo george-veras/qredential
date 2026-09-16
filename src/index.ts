@@ -168,14 +168,23 @@ export async function present(
 
   const wanted = new Set(options.disclose)
   const available = new Map<string, string>()
-  for (const raw of disclosures) available.set(parseDisclosure(raw).name, raw)
+  for (const raw of disclosures) {
+    const parsed = parseDisclosure(raw)
+    // Array element disclosures carry no claim name, so this name based API cannot address them.
+    // They are withheld, which is always a valid presentation, and the verifier drops the element.
+    // Choosing individual array members needs a path based selector, which is not built yet.
+    if (parsed.name !== undefined) available.set(parsed.name, raw)
+  }
 
   const missing = options.disclose.filter((name) => !available.has(name))
   if (missing.length > 0) {
     throw new QredentialError('not_disclosable', `this credential cannot disclose: ${missing.join(', ')}`)
   }
 
-  const kept = disclosures.filter((raw) => wanted.has(parseDisclosure(raw).name))
+  const kept = disclosures.filter((raw) => {
+    const name = parseDisclosure(raw).name
+    return name !== undefined && wanted.has(name)
+  })
 
   if (options.keyBinding === undefined) return pack(joinCombined(jwt, kept))
 
@@ -302,9 +311,6 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     disclosed = rebuilt.disclosed
     withheld = rebuilt.withheld
   } catch (error) {
-    if (error instanceof QredentialError && error.code === 'unsupported_feature') {
-      return reject('unsupported_feature', error.message)
-    }
     return reject('digest_mismatch', (error as Error).message)
   }
 

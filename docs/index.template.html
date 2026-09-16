@@ -430,15 +430,16 @@ result.withheld           <span class="tok-c">// 4, and it cannot tell you which
     <div>
       <h2 style="font-size:19px">Standards, not inventions</h2>
       <ul class="std">
-        <li><b>SD-JWT</b>selective disclosure and key binding, the mechanism the European identity wallet uses</li>
+        <li><b>SD-JWT, RFC 9901</b>selective disclosure and key binding, nested and recursive, the mechanism the European identity wallet uses</li>
         <li><b>SD-JWT VC</b>the credential shape</li>
         <li><b>Token Status List</b>revocation that works from a cached copy</li>
         <li><b>base45, RFC 9285</b>the QR envelope, chosen for scanner compatibility</li>
       </ul>
       <p style="margin-top:18px;font-size:14px;color:var(--slate)">
-        Top level selective disclosure only, and not ISO 18013-5 mDL. Both are on the roadmap, and a
-        credential using one of them is refused rather than half understood. Claiming half of a
-        compliance standard is worse than not claiming it.
+        Not ISO 18013-5 mDL, which is CBOR and COSE rather than JWT, and no path selector yet for
+        presenting individual array elements. Both are on the roadmap, and a credential using
+        something unsupported is refused rather than half understood. Claiming half of a compliance
+        standard is worse than not claiming it.
       </p>
     </div>
   </div>

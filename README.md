@@ -104,8 +104,9 @@ promise in a privacy policy.
 
 Boring, published standards, not an invention of mine:
 
-- **SD-JWT** for selective disclosure and key binding, the same mechanism the European digital
-  identity wallet uses
+- **SD-JWT** ([RFC 9901](https://www.rfc-editor.org/rfc/rfc9901.html)) for selective disclosure and
+  key binding, including nested, array element and recursive disclosure, checked against the
+  specification's own test vectors and against an independent implementation
 - **SD-JWT VC** for the credential shape
 - **Token Status List** for revocation that works from a cached copy
 - **base45 plus deflate** for the QR envelope, the same envelope trick the EU covid certificate
@@ -184,9 +185,9 @@ Four functions. That is the whole surface.
 
 - Not a wallet. It has no UI and no storage.
 - Not a key management system. You bring your own keys and your own trust list distribution.
-- Only top level selective disclosure. SD-JWT also allows `_sd` inside a nested object and
-  `{"...": digest}` as an array element. This version resolves neither and refuses such a credential
-  rather than ignoring the part it does not understand.
+- Presenting individual array elements. Verification resolves them at any depth; `present()`
+  selects by claim name and an array element has none, so this version withholds them. The
+  credential still verifies, with those elements removed.
 - Not ISO 18013-5 mDL yet. That is CBOR and COSE rather than JWT, and it is on the roadmap, but
   claiming half of a compliance standard is worse than not claiming it.
 - Not audited. It is new. Read the code before you put it between a person and a right they hold.

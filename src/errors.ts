@@ -35,8 +35,6 @@ export type ErrorCode =
   | 'unsupported_alg'
   /** The platform is missing something required, such as DecompressionStream on React Native. */
   | 'unsupported_runtime'
-  /** A credential uses an SD-JWT feature this version does not resolve, such as nested disclosure. */
-  | 'unsupported_feature'
   /** WebCrypto refused a key or an operation. Its `cause` is the original DOMException. */
   | 'crypto_failure'
   /** Only from {@link assertVerified}, for callers who prefer try/catch over the result union. */
