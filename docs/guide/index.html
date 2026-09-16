@@ -211,6 +211,21 @@
         Node specific, because the device doing the verifying is usually a phone. There are no
         runtime dependencies.
       </p>
+      <p>
+        The full test suite runs on Node 20, 22 and 24 across Linux, macOS and Windows, and in
+        Chromium, Firefox and WebKit on every commit. Ed25519 is exercised in all four.
+      </p>
+      <div class="aside">
+        <strong>One caveat on React Native.</strong> It has no
+        <code>CompressionStream</code>, and issuing, presenting and verifying all work without it:
+        the envelope simply stays uncompressed, which costs size and nothing else. <em>Offline
+        revocation does not work</em>, because reading a status list means inflating a bitstring. A
+        verifier that cannot inflate the cached list refuses with
+        <span class="reason">status_unavailable</span> rather than treating an unreadable list as a
+        clean one. If you need revocation on React Native, polyfill
+        <code>DecompressionStream</code>. There is a test that runs the whole flow with both globals
+        deleted, so this description is checked rather than assumed.
+      </div>
 
       <h3>Verify something</h3>
       <pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span> <span class="tok-s">'qredential'</span>
