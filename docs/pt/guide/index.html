@@ -1,0 +1,469 @@
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/">
+<link rel="canonical" href="https://george-veras.github.io/qredential/pt/guide/">
+<title>Qredential Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #5C6C6B;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+      --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+    --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 15.5px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--ground);
+  }
+  .masthead-inner {
+    max-width: 1140px; margin: 0 auto; padding: 14px 22px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
+  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
+
+  .shell {
+    max-width: 1140px; margin: 0 auto; padding: 36px 22px 90px;
+    display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 46px; align-items: start;
+  }
+  @media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+  .toc { position: sticky; top: 74px; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .toc { position: static; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  }
+  .toc h2 {
+    font-family: var(--display); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate);
+    margin: 0 0 10px;
+  }
+  .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .toc a { color: var(--slate); text-decoration: none; display: block; }
+  .toc a:hover { color: var(--ink); }
+
+  article { min-width: 0; max-width: 72ch; }
+  article > section { margin-bottom: 52px; scroll-margin-top: 78px; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.08;
+    letter-spacing: -0.028em; color: var(--ink); margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--body); margin: 0 0 8px; text-wrap: balance; }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: 22px;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 12px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; color: var(--ink); margin: 26px 0 8px;
+  }
+  .eyebrow {
+    font-family: var(--data); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); }
+
+  code {
+    font-family: var(--data); font-size: 0.88em; color: var(--guilloche);
+    word-break: break-word;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 16px;
+  }
+  pre code { color: var(--ink); font-size: 13px; line-height: 1.7; word-break: normal; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 14px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .signature {
+    font-family: var(--data); font-size: 13.5px; color: var(--ink);
+    background: var(--viridian-wash); border-left: 3px solid var(--viridian);
+    padding: 11px 14px; margin: 0 0 14px; overflow-x: auto; white-space: pre;
+  }
+  .aside {
+    border-left: 3px solid var(--amber); padding: 2px 0 2px 15px;
+    margin: 0 0 18px; color: var(--slate); font-size: 14.5px;
+  }
+  .aside strong { color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 14.5px;
+    padding: 10px 20px; text-decoration: none; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  .reason { font-family: var(--data); font-size: 12.5px; color: var(--oxblood); white-space: nowrap; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
+    font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="../../">q<span>redential</span></a>
+    <nav>
+      <a href="../../">Início</a>
+      <a href="./" aria-current="page">Documentação</a>
+      <a href="../../playground/">Playground</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc">
+    <h2>Nesta página</h2>
+    <ol><li><a href="#start">Primeiros passos</a></li>
+      <li><a href="#disclosure">Divulgação seletiva</a></li>
+      <li><a href="#holder">Provar o portador</a></li>
+      <li><a href="#size">O orçamento de tamanho</a></li>
+      <li><a href="#revocation">Revogação offline</a></li>
+      <li><a href="#trust">Listas de confiança</a></li>
+      <li><a href="#api">Referência da API</a></li>
+      <li><a href="#errors">Tratamento de erros</a></li>
+      <li><a href="#limits">O que isto não é</a></li></ol>
+    <h2 style="margin-top:22px">Idioma</h2>
+    <ol class="langs"><li><a href="../../guide/" hreflang="en" lang="en">English</a></li>
+      <li><a href="../../pt/guide/" hreflang="pt" lang="pt" aria-current="page">Português</a></li></ol>
+  </aside>
+
+  <article>
+<section id="top">
+<p class="eyebrow">Documentação</p>
+<h1>Credenciais que se verificam com a rede desligada</h1>
+<p class="lede">Um QR code carrega a própria prova. O <code>qredential</code> confere a assinatura, a validade, a revogação e os claims sem que uma única requisição saia do dispositivo.</p>
+<!-- cta --> [Abrir o playground](../../playground/)
+
+<!-- cta --> [Ler o código](https://github.com/george-veras/qredential)
+
+</section>
+<section id="start">
+<h2>Primeiros passos</h2>
+<pre><code>npm i qredential</code></pre><p>Node 20 ou mais novo, todos os navegadores atuais e React Native. Usa WebCrypto e nada específico do Node, porque quem verifica costuma ser um celular. Não há nenhuma dependência de runtime.</p>
+<p>A suíte completa roda no Node 20, 22 e 24, em Linux, macOS e Windows, e em Chromium, Firefox e WebKit a cada commit. Ed25519 é exercitado nos quatro.</p>
+<div class="aside"><strong>Uma ressalva sobre React Native.</strong> Ele não tem <code>CompressionStream</code>, e emitir, apresentar e verificar funcionam sem ele: o envelope apenas fica sem compressão, o que custa tamanho e nada mais. <em>Revogação offline não funciona</em>, porque ler uma lista de status exige descomprimir um bitstring. Um verificador que não consegue descomprimir a lista em cache recusa com <code>status_unavailable</code> em vez de tratar lista ilegível como lista limpa. Se você precisa de revogação no React Native, faça polyfill de <code>DecompressionStream</code>. Existe um teste que roda o fluxo inteiro com os dois globais apagados, então esta descrição é verificada e não suposta.</div><h3>Verificar alguma coisa</h3>
+<pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span>  <span class="tok-s">2</span> 
+
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scannedText, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  console.log(result.claims.given_name)    <span class="tok-s">0</span> 
+} <span class="tok-k">else</span> {
+  console.log(result.reason)               <span class="tok-s">1</span> 
+}</code></pre><h3>O ciclo completo</h3>
+<p>Três partes, três chamadas. O emissor assina uma vez, o portador estreita o que viaja, o verificador decide.</p>
+<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">6</span> 
+
+ <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential, qr } = <span class="tok-k">await</span> issue({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">7</span> ,
+  key: issuerPrivateJwk,
+  claims: {
+    given_name:  <span class="tok-s">8</span> ,
+    family_name:  <span class="tok-s">9</span> ,
+    birth_date:  <span class="tok-s">10</span> ,
+    over_18: <span class="tok-k">true</span>,
+  },
+  disclose: [ <span class="tok-s">11</span> ,  <span class="tok-s">12</span> ],
+  expiresIn:  <span class="tok-s">13</span> ,
+})
+
+ <span class="tok-s">2</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [ <span class="tok-s">14</span> ] })
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
+result.claims        <span class="tok-s">4</span> 
+result.claims.birth_date   <span class="tok-s">5</span> </code></pre>
+</section>
+<section id="disclosure">
+<h2>Divulgação seletiva</h2>
+<p>Duas partes diferentes tomam duas decisões diferentes, e confundir as duas é o erro de desenho mais comum. O <strong>emissor</strong> decide quais claims <em>podem</em> ser omitidos, na hora de assinar, com <code>disclose</code>. O <strong>portador</strong> então decide quais daqueles vai de fato mostrar, na hora do scan, também com <code>disclose</code>. Um claim que o emissor nunca marcou não pode ser omitido por ninguém.</p>
+<p>O mecanismo é hash comum. Cada claim divulgável é serializado com um salt aleatório de 128 bits, e só o digest dessa string é assinado na credencial. Revelar um claim significa enviar a string original para o verificador fazer o hash e achar o digest. Omitir significa deixar o verificador com um digest que ele nunca vai conseguir abrir.</p>
+<h3>Divulgação aninhada, em array e recursiva</h3>
+<p>O RFC 9901 permite as três, e o ecossistema da carteira europeia usa as três. A verificação aqui resolve todas em qualquer profundidade, seguindo o modelo de processamento da seção 7.1:</p>
+<ul>
+<li>Um array <code>_sd</code> dentro de objeto aninhado esconde propriedades daquele objeto.</li>
+<li>Um elemento de array na forma <code>{&quot;...&quot;: digest}</code> esconde o próprio elemento. Um elemento omitido é <em>removido</em> do array em vez de virar marcador, então o que você recebe é valor limpo, pronto para exibir.</li>
+<li>Um valor revelado pode conter qualquer uma das duas formas, então resolver um descobre mais.</li>
+</ul>
+<p>Nada disso vaza para <code>claims</code>: nenhuma chave <code>_sd</code> e nenhum elemento <code>&quot;...&quot;</code> chega em quem chamou. Os nomes revelados voltam como caminho, por exemplo <code>address.locality</code>, e o conjunto todo é conferido nos dois sentidos contra uma implementação independente do mesmo RFC.</p>
+<div class="aside"><strong>Por que isso importa em verificação de idade.</strong> A implementação de sempre faz o cliente enviar foto do documento para um terceiro, o que cria um vazamento à espera de acontecer. Aqui o bar aprende um booleano e não consegue aprender a data de nascimento nem se quiser. Essa propriedade é criptográfica, não é promessa em política de privacidade.</div><p>Pedir um claim que o emissor não tornou divulgável lança exceção, em vez de devolver em silêncio menos do que você pediu.</p>
+
+</section>
+<section id="holder">
+<h2>Provar o portador</h2>
+<p>Divulgação seletiva prova que o emissor assinou aqueles claims. Sozinha, ela não prova que quem está apresentando é o titular, e a brecha não é teórica: a foto do código de outra pessoa carrega a mesma assinatura e verifica exatamente igual.</p>
+<p>Key binding fecha isso. O emissor grava a chave pública do portador na credencial, e na hora do scan a carteira do portador assina um desafio novo com a chave privada correspondente. Uma foto não consegue fazer isso.</p>
+<h3>Os três passos</h3>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> { credential } = <span class="tok-k">await</span> issue({
+  ...,
+  holderKey: holderPublicJwk,
+})
+
+ <span class="tok-s">1</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, {
+  disclose: [ <span class="tok-s">6</span> ],
+  keyBinding: {
+    key: holderPrivateJwk,
+    audience: 'https: <span class="tok-s">2</span> 
+    nonce: challengeFromTheVerifier,
+  },
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  nonce: challengeIIssued,
+  audience: 'https: <span class="tok-s">4</span> 
+})
+result.holderVerified    <span class="tok-s">5</span> </code></pre><p>A prova se compromete com quatro coisas, e cada uma fecha um ataque específico: o <strong>nonce</strong> impede que uma apresentação gravada seja repetida, a <strong>audience</strong> impede que uma prova feita para um verificador seja usada em outro, a <strong>assinatura</strong> amarra à chave que o emissor registrou, e o <code>sd_hash</code> cobre o conjunto exato de disclosures, de modo que um intermediário não consegue acrescentar nem remover nenhuma depois que o portador assinou. Ela também expira, cinco minutos por padrão, ajustável com <code>maxKeyBindingAge</code>.</p>
+<h3>Credenciais estáticas, e por que a escolha é sua e em voz alta</h3>
+<p>Um código impresso num cartão não consegue nada disso. Não existe dispositivo para assinar na hora do scan, então credencial estática é copiável por natureza. Isso é situação real e comum, não erro, mas é decisão que o verificador deve tomar sabendo:</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust, acceptWithoutHolderProof: <span class="tok-k">true</span> })
+result.holderVerified    <span class="tok-s">0</span> </code></pre><p>Sem essa opção, uma apresentação sem prova é recusada com <code>holder_proof_missing</code>. O padrão é o estrito de propósito: o caso perigoso é alguém montando um leitor de porta, nunca tendo ouvido falar de key binding, e entregando algo que um print derruba. Uma falha barulhenta que nomeia o problema vale mais que um padrão silencioso que o esconde.</p>
+<div class="aside"><strong>Optar por aceitar nunca deixa passar uma prova quebrada.</strong> O <code>acceptWithoutHolderProof</code> cobre o caso em que nenhuma prova foi oferecida. Se uma estiver presente e falhar, a credencial é recusada independentemente da opção.</div><h3>O que custa</h3>
+<p>Amarrar não é de graça em termos de QR. A chave pública do portador vive na credencial, e a prova viaja junto com a apresentação:</p>
+<div class="tablewrap"><table><thead><tr><th>Apresentação</th><th>Caracteres</th><th>Versão do QR</th></tr></thead><tbody><tr><td>estática, tudo visível</td><td>~740</td><td>18, escaneia bem</td></tr><tr><td>só maioridade, amarrada mas sem prova</td><td>~1320</td><td>24, denso</td></tr><tr><td>só maioridade, com prova do portador</td><td>~1605</td><td>27, denso demais</td></tr></tbody></table></div><p>A prova em si tem cerca de 285 caracteres. Isso importa menos do que parece, porque credencial capaz de key binding está, por definição, sendo exibida numa tela, onde o código pode ser grande e claro. O limite de densidade é problema de cartão impresso e gasto, e cartão impresso nunca ia fazer key binding mesmo.</p>
+
+</section>
+<section id="size">
+<h2>O orçamento de tamanho</h2>
+<p>Um QR code guarda cerca de 4300 caracteres alfanuméricos no maior tamanho, mas um código desse tamanho é ilegível num cartão arranhado ou numa tela trincada. O teto prático fica por volta da versão 20.</p>
+<p>Eis o que uma habilitação realista custa. Oito claims, validade de cinco anos, ponteiro de lista de status, medido pelo <code>examples/sizes.mjs</code> no repositório:</p>
+<div class="tablewrap"><table><thead><tr><th>Credencial</th><th>Caracteres</th><th>Versão do QR</th></tr></thead><tbody><tr><td>tudo visível</td><td>~740</td><td>18, escaneia bem</td></tr><tr><td>os oito claims divulgáveis</td><td>~1590</td><td>27, denso demais</td></tr><tr><td>apresentando só <code>over_18</code></td><td>~1115</td><td>22, ainda denso</td></tr></tbody></table></div><p>A linha do meio é a incômoda, e é melhor descobrir aqui do que depois de imprimir cartões. Divulgação seletiva praticamente dobra a credencial, porque cada claim divulgável custa um salt mais um digest assinado, e <strong>os digests ficam no payload quer o portador revele o claim ou não</strong>. Isso é proposital: uma contagem de digest que encolhesse conforme o que você revela vazaria o que você escondeu. A consequência prática é que a economia na hora da apresentação é menor do que a intuição promete. Trinta por cento aqui, não oitenta.</p>
+<p>Então torne divulgáveis apenas os claims que um verificador pode genuinamente precisar ver sozinhos. Dois ou três, não todos. O <code>fits()</code> te diz onde você está antes de se comprometer.</p>
+<div class="aside"><strong>Sobre o base45.</strong> O folclore diz que ele é escolhido por compactação. Não é. O base45 no modo alfanumérico do QR custa cerca de 8,25 bits por byte original, contra 10,67 do base64 em modo byte e 8 do binário puro. Ele ganha claramente do base64 e perde de pouco para os bytes crus. Os bytes crus são abandonados de propósito, porque o modo byte carrega ambiguidade de charset e muitos leitores devolvem string corrompida. Uma credencial que sobrevive a ser copiada, colada e registrada em log vale uma penalidade de três por cento.</div>
+</section>
+<section id="revocation">
+<h2>Revogação offline</h2>
+<p>Revogação é a parte que as implementações pulam, e aí uma credencial roubada funciona para sempre.</p>
+<p>Uma lista de status é um bitstring comprimido com um bit por credencial. Uma lista cobrindo um milhão de credenciais tem 125 KB quase todos de zeros, que comprimem para poucos kilobytes. Busque quando tiver sinal, confira quando não tiver.</p>
+<pre><code> <span class="tok-s">0</span> 
+<span class="tok-k">const</span> statusList = <span class="tok-k">await</span> createStatusList({
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">4</span> ,
+  key: issuerPrivateJwk,
+  uri: 'https: <span class="tok-s">2</span> 
+  size: <span class="tok-s">1_000_000</span>,
+  revoked: [<span class="tok-s">48219</span>],
+  expiresIn:  <span class="tok-s">5</span> ,
+})
+
+ <span class="tok-s">3</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
+  trust,
+  status: cachedStatusList,
+  maxStatusAge:  <span class="tok-s">6</span> ,
+})</code></pre><p>As recusas valem a leitura, porque cada uma é um lugar onde uma biblioteca mais quieta devolveria um sim falso:</p>
+<ul>
+<li>Você não passou lista nenhuma, então a revogação nunca foi conferida: <code>status_unavailable</code></li>
+<li>Sua lista em cache é mais velha que <code>maxStatusAge</code>, então não dá para descartar revogação: <code>status_list_stale</code></li>
+<li>A lista está assinada por uma chave que não está na sua lista de confiança, que é como um atacante limparia uma credencial revogada: <code>bad_signature</code></li>
+<li>A lista foi publicada por um emissor diferente do da credencial, ou para uma <code>uri</code> diferente. Um mesmo índice significa coisa diferente em cada lista, então lista não amarrada não é resposta: <code>status_unavailable</code></li>
+<li>O índice da credencial cai fora da lista que você guardou, então nada foi de fato lido: <code>status_unavailable</code></li>
+</ul>
+<div class="aside"><strong>Um resultado limpo nunca fica calado sobre isso.</strong> Quando a revogação foi conferida, o resultado diz <code>revocationChecked: true</code>. Se a biblioteca não consegue chegar a uma resposta real, ela recusa em vez de aprovar a credencial com essa marca ligada, porque garantia falsa é pior que nenhuma resposta.</div><p>O que fazer quando não dá para ter certeza é questão de política da sua implantação, não da biblioteca, então o <code>qredential</code> se recusa a decidir isso em silêncio por você. Quando a revogação foi conferida, o resultado bem-sucedido diz isso com <code>revocationChecked: true</code>.</p>
+
+</section>
+<section id="trust">
+<h2>Listas de confiança</h2>
+<p>A única coisa que precisa chegar ao dispositivo por fora é o conjunto de chaves públicas de emissores em que você está disposto a acreditar. Muda raramente, então distribuir junto com o aplicativo e atualizar uma vez por semana é estratégia perfeitamente razoável.</p>
+<pre><code><span class="tok-k">const</span> trust = {
+  issuers: {
+    'https: <span class="tok-s">0</span> 
+      name:  <span class="tok-s">1</span> ,
+      keys: [{ kid:  <span class="tok-s">2</span> , alg:  <span class="tok-s">3</span> , jwk: publicJwk }],
+    },
+  },
+}</code></pre><p>A chave confiável decide qual algoritmo é usado, nunca o algoritmo nomeado no cabeçalho da própria credencial. Essa é a defesa inteira contra substituição de algoritmo, e é por isso que o <code>alg</code> vive na chave da sua lista de confiança em vez de ser inferido.</p>
+<p>Como a lista chega ao dispositivo, como as chaves rotacionam e onde a chave privada mora estão fora de escopo. A biblioteca recebe tudo isso como entrada.</p>
+
+</section>
+<section id="api">
+<h2>Referência da API</h2>
+<p>Quatro funções cobrem o ciclo de vida da credencial, mais uma para emissores que publicam revogação.</p>
+<h3>issue(options)</h3>
+<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>Opção</th><th>Tipo</th><th>Significado</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>Identificador que precisa casar com uma chave na lista de confiança do verificador.</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>Chave privada. Nunca sai da chamada.</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>Id da chave, escrito no cabeçalho para o verificador escolher a chave certa durante rotação.</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>Padrão <code>ES256</code>, que toda plataforma suporta.</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>O que a credencial afirma.</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>Nomes de claims que o portador pode omitir. Todo o resto fica sempre visível. Nomear um claim que não existe lança exceção.</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>Tipo de credencial, o <code>vct</code> do SD-JWT VC.</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>Identificador opcional do titular.</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>Segundos, ou uma duração como <code>&#39;1825d&#39;</code>.</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>As mesmas formas, para credenciais que começam a valer depois.</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>A vaga desta credencial numa lista de status.</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>A chave <strong>pública</strong> do portador, gravada em <code>cnf</code>. Omita apenas para credenciais estáticas. Uma chave que carregue componente privado é recusada.</td></tr></tbody></table></div><p>Devolve <code>credential</code> (a forma combinada do SD-JWT, guarde esta na carteira), <code>qr</code> (o envelope escaneável), <code>bytes</code> (caracteres em <code>qr</code>) e <code>disclosable</code> (os nomes de claims que o portador pode omitir).</p>
+<h3>present(credential, options)</h3>
+<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>Estreita uma credencial para os claims listados e devolve um envelope escaneável. O JWT assinado nunca é tocado, então a assinatura do emissor continua válida sobre o que restou. Aceita tanto a forma combinada quanto um envelope. Pedir um claim que o emissor não tornou divulgável lança exceção.</p>
+<h3>verify(input, options)</h3>
+<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>Opção</th><th>Tipo</th><th>Significado</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>Obrigatório. Emissores e chaves em que você acredita.</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>Token de lista de status em cache. Sem ele, uma credencial que aponta para uma não pode ser liberada.</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>Recusar responder a partir de lista mais velha que isto.</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>Tolerância em segundos para diferença de relógio entre emissor e verificador. Padrão 60.</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>O desafio que este verificador emitiu para este scan. Obrigatório para aceitar prova do portador.</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>O identificador deste verificador, conferido contra o <code>aud</code> da prova.</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>Aceitar apresentação sem prova nenhuma. Necessário para credenciais estáticas, e nunca deixa passar prova presente e quebrada.</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>Idade máxima de uma prova do portador. Padrão 5 minutos.</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>Sobrescrever o horário atual. Para testes e análise de replay.</td></tr></tbody></table></div><p>Nunca lança exceção com entrada hostil. Devolve uma união discriminada: em sucesso <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>, e em falha <code>{ ok: false, reason, message }</code> com <code>reason</code> vindo da tabela abaixo.</p>
+<p>O <code>withheld</code> conta os claims divulgáveis que não viajaram. É útil para política, e por construção ele não consegue dizer quais eram.</p>
+<p><strong>Tudo que está em <code>claims</code> descreve o titular.</strong> Claims registrados que descrevem o token, como <code>iss</code>, <code>iat</code>, <code>exp</code> e <code>status</code>, aparecem como campos tipados no lugar, e uma disclosure que tente definir um deles, ou sobrescrever um claim que o payload já resolveu, faz a credencial inteira falhar. Ou seja, percorrer <code>claims</code> é seguro.</p>
+<h3>fits(payload, errorCorrection)</h3>
+<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>Síncrona. Devolve <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>. A correção de erro tem padrão <code>M</code>, porque o <code>L</code> parece generoso no papel e depois falha num cartão impresso e gasto. O <code>version</code> é <code>null</code> quando nada comporta o payload, e o <code>advice</code> é uma frase que você pode imprimir direto num log de build.</p>
+<h3>createStatusList(options)</h3>
+<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>Para emissores. Recebe <code>issuer</code>, <code>key</code>, <code>kid</code>, <code>alg</code>, <code>uri</code>, <code>size</code>, <code>revoked</code>, <code>suspended</code>, <code>expiresIn</code> e <code>issuedAt</code>, e devolve um token de lista de status assinado. Um índice fora da lista lança exceção em vez de corromper o bit de uma credencial vizinha.</p>
+<h3>Também exportados</h3>
+<p><code>pack</code>, <code>unpack</code> e <code>isEnvelope</code> para o envelope do QR, e <code>encodeBase45</code> e <code>decodeBase45</code> para o codec sozinho. Úteis para ferramentas; desnecessários no uso comum.</p>
+
+</section>
+<section id="errors">
+<h2>Tratamento de erros</h2>
+<p>São exatamente dois contratos, e a separação é proposital, não acidental. Aprenda estas duas frases e você consegue escrever um único bloco catch sabendo o que pode cair nele.</p>
+<div class="signature">1. verify() nunca lança. Para qualquer entrada.
+2. Todo o resto lança apenas QredentialError.</div><p>O motivo de serem diferentes: o <code>verify()</code> existe para receber entrada hostil, e um verificador que lança é um que alguém embrulha num <code>try/catch</code> e passa o sujeito adiante. Então ele devolve um resultado que você é obrigado a olhar. O resto falha em condições que quem chama corrige no código, onde lançar é a forma certa.</p>
+<p>As duas regras são sustentadas por testes de propriedade que geram strings aleatórias, chaves malformadas, envelopes corrompidos e opções hostis, e afirmam que nada além disso escapa. Nenhum <code>SyntaxError</code> de um parse de JSON, nenhum <code>DOMException</code> do WebCrypto, nenhum <code>RangeError</code> de uma alocação.</p>
+<h3>Lidar com um resultado de verificação</h3>
+<p>O resultado é uma união discriminada, então o TypeScript estreita o tipo para você:</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust })
+
+<span class="tok-k">if</span> (result.ok) {
+  result.claims           <span class="tok-s">0</span> 
+  result.withheld         <span class="tok-s">1</span> 
+} <span class="tok-k">else</span> {
+  <span class="tok-k">switch</span> (result.reason) {
+    <span class="tok-k">case</span>  <span class="tok-s">2</span> :            <span class="tok-k">return</span> askForARenewal()
+    <span class="tok-k">case</span>  <span class="tok-s">3</span> :            <span class="tok-k">return</span> refuseAndLog()
+    <span class="tok-k">case</span>  <span class="tok-s">4</span> :  <span class="tok-k">return</span> retryWhenOnline()
+    <span class="tok-k">default</span>:                   <span class="tok-k">return</span> refuse(result.reason)
+  }
+}</code></pre><p>Se o seu código é construído em torno de <code>try/catch</code>, passe o mesmo resultado pelo <code>assertVerified()</code>. Nada se perde: o erro lançado carrega a razão original.</p>
+<pre><code><span class="tok-k">import</span> { verify, assertVerified, isQredentialError } <span class="tok-k">from</span>  <span class="tok-s">1</span> 
+
+<span class="tok-k">try</span> {
+  <span class="tok-k">const</span> credential = assertVerified(<span class="tok-k">await</span> verify(scanned, { trust }))
+  admit(credential.claims)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error) &amp;&amp; error.code ===  <span class="tok-s">2</span> ) {
+    refuse(error.reason)    <span class="tok-s">0</span> 
+  } <span class="tok-k">else</span> {
+    <span class="tok-k">throw</span> error
+  }
+}</code></pre><h3>Razões de recusa</h3>
+<p>Devolvidas pelo <code>verify()</code> em <code>result.reason</code>. O playground dispara cada uma delas contra o verificador para você ver acontecer.</p>
+<div class="tablewrap"><table><thead><tr><th>Razão</th><th>O que aconteceu</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>Não é credencial, ou o envelope está corrompido, ou a forma combinada está sem o separador final.</td></tr><tr><td><code>unknown_issuer</code></td><td>O claim <code>iss</code> não está na sua lista de confiança.</td></tr><tr><td><code>unknown_key</code></td><td>O emissor é confiável mas não tem chave com aquele <code>kid</code>.</td></tr><tr><td><code>unsupported_alg</code></td><td>O cabeçalho pede um algoritmo que a chave confiável não usa.</td></tr><tr><td><code>bad_signature</code></td><td>A assinatura não confere. Cobre também lista de status forjada.</td></tr><tr><td><code>expired</code></td><td>Passou do <code>exp</code>, além da tolerância de relógio.</td></tr><tr><td><code>not_yet_valid</code></td><td>Antes do <code>nbf</code>.</td></tr><tr><td><code>digest_mismatch</code></td><td>Uma disclosure que o emissor nunca assinou, uma enviada duas vezes, uma nomeando claim registrado, ou uma colidindo com claim já presente no payload.</td></tr><tr><td><code>revoked</code></td><td>O emissor ligou o bit desta credencial. Cobre suspensa também.</td></tr><tr><td><code>status_unavailable</code></td><td>A revogação não pôde ser determinada: lista não fornecida, ilegível, amarrada a outro emissor ou outra uri, ou índice fora dela.</td></tr><tr><td><code>status_list_stale</code></td><td>Sua lista em cache é mais velha que <code>maxStatusAge</code>.</td></tr><tr><td><code>holder_proof_missing</code></td><td>Nenhuma prova do portador foi oferecida e quem chamou não passou <code>acceptWithoutHolderProof</code>.</td></tr><tr><td><code>holder_proof_invalid</code></td><td>Uma prova foi oferecida e falhou: chave errada, nonce errado, audience errada, conjunto de disclosures diferente, velha, ou anexada a credencial sem chave amarrada.</td></tr></tbody></table></div><h3>Erros lançados</h3>
+<p>Tudo exceto o <code>verify()</code> lança <code>QredentialError</code>, que carrega um <code>code</code>. Use <code>isQredentialError()</code> em vez de <code>instanceof</code>: ele confere o formato, então continua funcionando quando duas cópias do pacote caem na mesma árvore de dependências, que é o motivo habitual de o <code>instanceof</code> parar de casar em silêncio.</p>
+<div class="tablewrap"><table><thead><tr><th>Código</th><th>Lançado por</th><th>O que aconteceu</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>, <code>createStatusList</code></td><td>Um argumento que a API não consegue usar: nome de claim desconhecido, duração inválida, índice de status fora da lista.</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>Você pediu para revelar um claim que o emissor nunca tornou divulgável.</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>A forma combinada do SD-JWT está malformada.</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>, <code>present</code></td><td>O envelope do QR está malformado. Veja o <code>cause</code> para o erro de codec por baixo.</td></tr><tr><td><code>malformed_status_list</code></td><td>leitura de lista de status</td><td>O token não é uma lista de status legível.</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>Texto que deveria ser base45 ou base64url não é, ou um segmento não é JSON.</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>Um algoritmo que esta versão não implementa.</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>A plataforma não tem algo necessário, como <code>DecompressionStream</code> em React Native antigo.</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>, <code>createStatusList</code></td><td>O WebCrypto recusou uma chave ou uma operação. O <code>DOMException</code> original está no <code>cause</code>.</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>Só desse helper. Carrega a <code>reason</code> original.</td></tr></tbody></table></div><h3>Ler o que está por baixo</h3>
+<p>Onde esta biblioteca embrulha a falha de outro, ela guarda a original na propriedade padrão <code>cause</code>, de modo que um código específico nunca te custa o detalhe:</p>
+<pre><code><span class="tok-k">try</span> {
+  <span class="tok-k">await</span> unpack(scanned)
+} <span class="tok-k">catch</span> (error) {
+  <span class="tok-k">if</span> (isQredentialError(error)) {
+    error.code            <span class="tok-s">0</span> 
+    error.cause           <span class="tok-s">1</span> 
+  }
+}</code></pre><div class="aside"><strong>Códigos são API, mensagens não são.</strong> Todo valor de <code>code</code> e de <code>reason</code> é coberto por semver: um valor nunca é reaproveitado para outra coisa, e valores novos só chegam em versões minor. O texto da mensagem pode mudar num patch, então ramifique pelo código e imprima a mensagem. Um teste no repositório fixa o conjunto completo de códigos, de modo que adicionar ou remover um tem que ser ato deliberado e não efeito colateral.</div>
+</section>
+<section id="limits">
+<h2>O que isto não é</h2>
+<ul>
+<li><strong>Não é carteira.</strong> Sem interface, sem armazenamento.</li>
+<li><strong>Não é gerência de chaves.</strong> Você traz suas chaves e sua própria distribuição de lista de confiança.</li>
+<li><strong>Apresentar elementos individuais de array.</strong> A verificação resolve; o <code>present()</code> seleciona por nome de claim, e elemento de array não tem nome, então esta versão os omite. A credencial continua válida, com aqueles elementos removidos. Um seletor por caminho é o conserto e ainda não existe.</li>
+<li><strong>Ainda não é mDL ISO 18013-5.</strong> Aquilo é CBOR e COSE, não JWT. Está no roteiro, e afirmar metade de um padrão de conformidade é pior que não afirmar nada.</li>
+<li><strong>Não foi auditado.</strong> Implementa padrões publicados e é testado contra os ataques do playground, mas teste prova a presença de defesas, nunca que elas são completas.</li>
+</ul>
+<p>O código tem cerca de 700 linhas sem dependência de runtime nenhuma, exatamente para que ler antes de confiar seja realista. Vulnerabilidades passam pela aba Security no GitHub, e o <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">SECURITY.md</a> define escopo e prazos de resposta.</p>
+
+</section>
+    <div class="provenance">
+      Esta tradução ainda não foi revisada por alguém que fale português nativamente. Ela foi feita com auxílio de IA a partir do texto em inglês, que é a versão de referência. Se alguma frase estiver errada, estranha ou usando um termo que ninguém usa, isso é um bug e o relato é bem-vindo.
+      <a class="fix" href="https://github.com/george-veras/qredential/blob/main/content/guide/pt.md">Corrigir esta página</a>
+    </div>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
+      <span><a href="https://github.com/george-veras/qredential">Código e issues</a></span>
+    </footer>
+  </article>
+</div>

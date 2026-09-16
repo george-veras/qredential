@@ -25,7 +25,8 @@
     "check:site": "node scripts/build-site.mjs && git diff --exit-code docs/",
     "prepack": "npm run build",
     "prepublishOnly": "npm run typecheck && npm test",
-    "test:browser": "vitest run --config vitest.browser.config.ts"
+    "test:browser": "vitest run --config vitest.browser.config.ts",
+    "check:translations": "CHECK_TRANSLATIONS=1 node scripts/build-site.mjs"
   },
   "keywords": [
     "verifiable-credentials",
@@ -56,6 +57,7 @@
     "@vitest/browser-playwright": "^5.0.1",
     "esbuild": "^0.28.2",
     "fast-check": "^3.23.2",
+    "marked": "^15.0.12",
     "playwright": "^1.63.0",
     "qrcode-generator": "^1.5.2",
     "typescript": "^5.7.0",

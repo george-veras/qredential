@@ -67,7 +67,14 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      # docs/index.html carries an inlined copy of the library. This fails when someone edits src
-      # and forgets to rebuild it, which would otherwise ship a playground that disagrees with the
-      # package people install.
+      # The pages carry an inlined copy of the library. This fails when someone edits src and
+      # forgets to rebuild, which would otherwise ship a playground that disagrees with the package
+      # people install.
       - run: npm run check:site
+
+      # A translation records the hash of the English it was made from. When the English changes and
+      # a translation does not, this says so, rather than letting the page quietly drift into being
+      # wrong in a language nobody here can read.
+      - name: translations are not behind the English
+        run: npm run check:translations
+        continue-on-error: true

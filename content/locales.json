@@ -1,0 +1,187 @@
+{
+  "_comment": "One entry per language. `reviewedBy` is the honest bit: null means nobody who speaks the language natively has read it yet, and the page says so out loud rather than pretending. Fill it in when someone does, and credit them.",
+  "en": {
+    "native": "English",
+    "name": "English",
+    "dir": "ltr",
+    "source": true,
+    "reviewedBy": "George Veras Valentim",
+    "ui": {
+      "navHome": "Home",
+      "navDocs": "Docs",
+      "navPlayground": "Playground",
+      "tocTitle": "On this page",
+      "langTitle": "Language",
+      "footerSource": "Source and issues",
+      "behind": "behind English"
+    }
+  },
+  "pt": {
+    "native": "Português",
+    "name": "Portuguese",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "Início",
+      "navDocs": "Documentação",
+      "navPlayground": "Playground",
+      "tocTitle": "Nesta página",
+      "langTitle": "Idioma",
+      "footerSource": "Código e issues",
+      "behind": "atrás do inglês"
+    },
+    "provenance": {
+      "unreviewed": "Esta tradução ainda não foi revisada por alguém que fale português nativamente. Ela foi feita com auxílio de IA a partir do texto em inglês, que é a versão de referência. Se alguma frase estiver errada, estranha ou usando um termo que ninguém usa, isso é um bug e o relato é bem-vindo.",
+      "reviewed": "Tradução revisada por {who}. O inglês continua sendo a versão de referência. Se algo estiver errado ou soar estranho, isso é um bug e o relato é bem-vindo.",
+      "stale": "Atenção: a versão em inglês mudou depois desta tradução, então esta página pode estar desatualizada. Em caso de divergência, o inglês prevalece.",
+      "fix": "Corrigir esta página"
+    }
+  },
+  "es": {
+    "native": "Español",
+    "name": "Spanish",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "Inicio",
+      "navDocs": "Documentación",
+      "navPlayground": "Playground",
+      "tocTitle": "En esta página",
+      "langTitle": "Idioma",
+      "footerSource": "Código e issues",
+      "behind": "por detrás del inglés"
+    },
+    "provenance": {
+      "unreviewed": "Esta traducción todavía no ha sido revisada por alguien que hable español de forma nativa. Se hizo con ayuda de IA a partir del texto en inglés, que es la versión de referencia. Si alguna frase está mal, suena rara o usa un término que nadie usa, eso es un error y agradecemos que lo reportes.",
+      "reviewed": "Traducción revisada por {who}. El inglés sigue siendo la versión de referencia. Si algo está mal o suena raro, es un error y agradecemos que lo reportes.",
+      "stale": "Aviso: la versión en inglés cambió después de esta traducción, así que esta página puede estar desactualizada. Si hay discrepancia, manda el inglés.",
+      "fix": "Corregir esta página"
+    }
+  },
+  "fr": {
+    "native": "Français",
+    "name": "French",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "Accueil",
+      "navDocs": "Documentation",
+      "navPlayground": "Playground",
+      "tocTitle": "Sur cette page",
+      "langTitle": "Langue",
+      "footerSource": "Code source et issues",
+      "behind": "en retard sur l'anglais"
+    },
+    "provenance": {
+      "unreviewed": "Cette traduction n'a pas encore été relue par une personne dont le français est la langue maternelle. Elle a été produite avec l'aide d'une IA à partir du texte anglais, qui fait référence. Si une phrase est fausse, maladroite ou emploie un terme que personne n'utilise, c'est un bug et le signalement est bienvenu.",
+      "reviewed": "Traduction relue par {who}. L'anglais reste la version de référence. Si quelque chose est faux ou sonne mal, c'est un bug et le signalement est bienvenu.",
+      "stale": "Attention : la version anglaise a changé depuis cette traduction, donc cette page peut être périmée. En cas de divergence, l'anglais fait foi.",
+      "fix": "Corriger cette page"
+    }
+  },
+  "de": {
+    "native": "Deutsch",
+    "name": "German",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "Start",
+      "navDocs": "Dokumentation",
+      "navPlayground": "Playground",
+      "tocTitle": "Auf dieser Seite",
+      "langTitle": "Sprache",
+      "footerSource": "Quellcode und Issues",
+      "behind": "hinter dem Englischen"
+    },
+    "provenance": {
+      "unreviewed": "Diese Übersetzung wurde noch von niemandem mit Deutsch als Muttersprache gegengelesen. Sie entstand mit Hilfe einer KI aus dem englischen Text, der maßgeblich bleibt. Wenn ein Satz falsch ist, holprig klingt oder einen Begriff verwendet, den niemand benutzt, ist das ein Fehler, und eine Meldung ist willkommen.",
+      "reviewed": "Übersetzung gegengelesen von {who}. Maßgeblich bleibt die englische Fassung. Wenn etwas falsch ist oder schief klingt, ist das ein Fehler, und eine Meldung ist willkommen.",
+      "stale": "Hinweis: Die englische Fassung hat sich seit dieser Übersetzung geändert, diese Seite kann also veraltet sein. Bei Abweichungen gilt das Englische.",
+      "fix": "Diese Seite korrigieren"
+    }
+  },
+  "ja": {
+    "native": "日本語",
+    "name": "Japanese",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "ホーム",
+      "navDocs": "ドキュメント",
+      "navPlayground": "プレイグラウンド",
+      "tocTitle": "このページの内容",
+      "langTitle": "言語",
+      "footerSource": "ソースと課題",
+      "behind": "英語版より古い"
+    },
+    "provenance": {
+      "unreviewed": "この翻訳は日本語を母語とする人によるレビューをまだ受けていません。英語の原文をもとに AI の支援で作成したもので、正典は英語版です。訳が間違っている、不自然である、あるいは誰も使わない用語を使っている場合、それは不具合です。報告を歓迎します。",
+      "reviewed": "{who} がレビューした翻訳です。正典は英語版のままです。誤りや不自然な表現があれば不具合として報告してください。",
+      "stale": "注意: この翻訳の後に英語版が更新されているため、このページは古い可能性があります。食い違う場合は英語版が優先します。",
+      "fix": "このページを修正する"
+    }
+  },
+  "ko": {
+    "native": "한국어",
+    "name": "Korean",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "홈",
+      "navDocs": "문서",
+      "navPlayground": "플레이그라운드",
+      "tocTitle": "이 페이지의 내용",
+      "langTitle": "언어",
+      "footerSource": "소스와 이슈",
+      "behind": "영어판보다 오래됨"
+    },
+    "provenance": {
+      "unreviewed": "이 번역은 아직 한국어 원어민의 검수를 거치지 않았습니다. 영어 원문을 바탕으로 AI의 도움을 받아 작성했으며, 기준이 되는 것은 영어판입니다. 문장이 틀렸거나 어색하거나 아무도 쓰지 않는 용어를 사용했다면 그것은 결함이며, 제보를 환영합니다.",
+      "reviewed": "{who} 님이 검수한 번역입니다. 기준은 여전히 영어판입니다. 틀렸거나 어색한 부분이 있다면 결함으로 제보해 주세요.",
+      "stale": "주의: 이 번역 이후 영어판이 변경되어 이 페이지는 오래되었을 수 있습니다. 내용이 다를 경우 영어판이 우선합니다.",
+      "fix": "이 페이지 수정하기"
+    }
+  },
+  "zh-Hans": {
+    "native": "简体中文",
+    "name": "Chinese (Simplified)",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "首页",
+      "navDocs": "文档",
+      "navPlayground": "演练场",
+      "tocTitle": "本页内容",
+      "langTitle": "语言",
+      "footerSource": "源码与问题反馈",
+      "behind": "落后于英文版"
+    },
+    "provenance": {
+      "unreviewed": "这份译文尚未经过母语为中文的人校对。它是在人工智能协助下，根据英文原文翻译的，英文版为准。如果某处翻译有误、读起来别扭，或者用了没人会用的术语，那就是一个缺陷，欢迎反馈。",
+      "reviewed": "译文由 {who} 校对。英文版仍为准。如果有错误或读起来别扭，那就是一个缺陷，欢迎反馈。",
+      "stale": "注意：英文版在此译文之后有过改动，本页可能已过时。如有出入，以英文版为准。",
+      "fix": "修正本页"
+    }
+  },
+  "zh-Hant": {
+    "native": "繁體中文",
+    "name": "Chinese (Traditional)",
+    "dir": "ltr",
+    "reviewedBy": null,
+    "ui": {
+      "navHome": "首頁",
+      "navDocs": "文件",
+      "navPlayground": "試用場",
+      "tocTitle": "本頁內容",
+      "langTitle": "語言",
+      "footerSource": "原始碼與問題回報",
+      "behind": "落後於英文版"
+    },
+    "provenance": {
+      "unreviewed": "這份翻譯尚未經過以繁體中文為母語的人校閱。它是在 AI 協助下，依英文原文翻譯的，以英文版為準。若有翻譯錯誤、讀起來不順，或使用了沒有人會用的術語，那就是缺陷，歡迎回報。",
+      "reviewed": "翻譯由 {who} 校閱。仍以英文版為準。若有錯誤或讀來不順，那就是缺陷，歡迎回報。",
+      "stale": "注意：英文版在此翻譯之後有所變動，本頁可能已過時。如有出入，以英文版為準。",
+      "fix": "修正本頁"
+    }
+  }
+}

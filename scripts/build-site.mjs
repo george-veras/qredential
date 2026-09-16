@@ -1,16 +1,162 @@
-// Builds every docs page from its template, inlining a fresh bundle of the library.
+// Builds the site.
 //
-// The pages have to be self contained: they are served from GitHub Pages and also published as
-// standalone pages, where relative script paths do not exist. That means the library is duplicated
-// inside the HTML, so this script is the only thing allowed to write those files, and CI fails when
-// a committed page does not match what this produces.
+// Two mechanisms, because the pages have two shapes.
+//
+// The guide is prose, so its content lives as Markdown in content/guide/<locale>.md and the design
+// lives once in docs/guide/_shell.html. A design change is one edit rather than one per language,
+// and a translator edits sentences rather than markup.
+//
+// The landing and the playground are app shaped, with a live demo and interactive state, so they
+// stay as templates with the library bundle inlined. They have to be self contained: they are
+// served from GitHub Pages and also published standalone, where relative script paths do not exist.
+// That means the library is duplicated inside the HTML, so this script is the only thing allowed to
+// write those files, and CI fails when a committed page disagrees with the source.
 import { build } from 'esbuild'
-import { readFile, writeFile, readdir } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { renderGuide } from './render.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const docs = join(root, 'docs')
+
+const REPO = 'https://github.com/george-veras/qredential'
+const SITE = 'https://george-veras.github.io/qredential'
+
+const locales = JSON.parse(await readFile(join(root, 'content/locales.json'), 'utf8'))
+const codes = Object.keys(locales).filter((k) => k !== '_comment')
+const SOURCE = codes.find((c) => locales[c].source) ?? 'en'
+
+const sha = (s) => createHash('sha256').update(s, 'utf8').digest('hex').slice(0, 16)
+
+/** Every translation records the hash of the English it was made from, on its first line. */
+function readStamp(markdown) {
+  const m = /^<!--\s*translated-from:\s*([0-9a-f]+)\s*-->/.exec(markdown)
+  return { stamp: m?.[1] ?? null, body: markdown.replace(/^<!--\s*translated-from:[^>]*-->\n?/, '') }
+}
+
+// ---------------------------------------------------------------- the guide, one page per locale
+
+const guideSources = {}
+for (const code of codes) {
+  try {
+    guideSources[code] = await readFile(join(root, `content/guide/${code}.md`), 'utf8')
+  } catch {
+    // A language with no file yet simply does not appear. Half a page is worse than none.
+  }
+}
+
+const sourceBody = readStamp(guideSources[SOURCE] ?? '').body
+const sourceHash = sha(sourceBody)
+const shell = await readFile(join(docs, 'guide/_shell.html'), 'utf8')
+
+/** Where a locale's guide lives, and how deep it is relative to the site root. */
+const guidePath = (code) => (code === SOURCE ? 'guide' : `${code}/guide`)
+const rootFrom = (code) => (code === SOURCE ? '../' : '../../')
+
+const status = []
+
+for (const code of codes) {
+  const raw = guideSources[code]
+  if (!raw) {
+    status.push({ code, state: 'missing' })
+    continue
+  }
+
+  const { stamp, body } = readStamp(raw)
+  const isSource = code === SOURCE
+  const stale = !isSource && stamp !== null && stamp !== sourceHash
+  const unstamped = !isSource && stamp === null
+
+  const { html, headings } = renderGuide(body)
+  const ui = locales[code].ui
+
+  const toc = headings.map((h) => `<li><a href="#${h.id}">${h.text}</a></li>`).join('\n      ')
+
+  const langs = codes
+    .filter((c) => guideSources[c])
+    .map((c) => {
+      const here = c === code
+      const href = c === SOURCE ? `${rootFrom(code)}guide/` : `${rootFrom(code)}${c}/guide/`
+      const behind =
+        !here && c !== SOURCE && readStamp(guideSources[c]).stamp !== sourceHash
+          ? `<span class="behind">${locales[c].ui.behind}</span>`
+          : ''
+      return `<li><a href="${href}" hreflang="${c}" lang="${c}"${
+        here ? ' aria-current="page"' : ''
+      }>${locales[c].native}</a>${behind}</li>`
+    })
+    .join('\n      ')
+
+  const page = shell
+    .replace(/__ROOT__/g, rootFrom(code))
+    .replace('__NAV_HOME__', ui.navHome)
+    .replace('__NAV_DOCS__', ui.navDocs)
+    .replace('__NAV_PLAYGROUND__', ui.navPlayground)
+    .replace('__TOC_TITLE__', ui.tocTitle)
+    .replace('__LANG_TITLE__', ui.langTitle)
+    .replace('__FOOTER_SOURCE__', ui.footerSource)
+    .replace('__TOC__', toc)
+    .replace('__LANGS__', langs)
+    .replace('__CONTENT__', html)
+    .replace('__PROVENANCE__', provenance(code, { stale, unstamped }))
+
+  const withHead = page.replace(
+    '<title>',
+    alternates(code) + '\n<title>'
+  )
+
+  const out = join(docs, guidePath(code), 'index.html')
+  await mkdir(dirname(out), { recursive: true })
+  await writeFile(out, withHead)
+
+  status.push({
+    code,
+    state: isSource ? 'source' : stale ? 'stale' : unstamped ? 'unstamped' : 'current',
+    reviewed: Boolean(locales[code].reviewedBy),
+    bytes: withHead.length,
+  })
+}
+
+/**
+ * The notice that appears on every translated page.
+ *
+ * It says out loud whether a native speaker has read the page, and links straight at the file, so
+ * the distance between noticing a bad sentence and fixing it is one click. An unreviewed
+ * translation is not a secret to keep; it is an open invitation.
+ */
+function provenance(code, { stale, unstamped }) {
+  if (code === SOURCE) return ''
+  const p = locales[code].provenance
+  const who = locales[code].reviewedBy
+
+  const lines = []
+  if (stale || unstamped) lines.push(`<strong>${p.stale}</strong>`)
+  lines.push(who ? p.reviewed.replace('{who}', who) : p.unreviewed)
+
+  const file = `${REPO}/blob/main/content/guide/${code}.md`
+  return `    <div class="provenance">
+      ${lines.join('<br>')}
+      <a class="fix" href="${file}">${p.fix}</a>
+    </div>
+`
+}
+
+/** hreflang tags, so a search engine serves the right language instead of guessing. */
+function alternates(code) {
+  const tags = codes
+    .filter((c) => guideSources[c])
+    .map((c) => {
+      const href = c === SOURCE ? `${SITE}/guide/` : `${SITE}/${c}/guide/`
+      return `<link rel="alternate" hreflang="${c}" href="${href}">`
+    })
+  tags.push(`<link rel="alternate" hreflang="x-default" href="${SITE}/guide/">`)
+  tags.push(`<link rel="canonical" href="${SITE}/${guidePath(code)}/">`)
+  return tags.join('\n')
+}
+
+// -------------------------------------------------- the landing and the playground, with a bundle
 
 const result = await build({
   entryPoints: [join(root, 'src/index.ts')],
@@ -34,12 +180,31 @@ async function templates(dir) {
 }
 
 for (const template of await templates(docs)) {
+  // The guide is content driven now and its old template is gone; anything left is app shaped.
   const source = await readFile(template, 'utf8')
+  if (!source.includes('__BUNDLE__')) continue
   const out = template.replace(/index\.template\.html$/, 'index.html')
-  // A page with no placeholder is static and just gets copied through.
-  const page = source.includes('__BUNDLE__') ? source.replace('__BUNDLE__', () => bundle) : source
-  await writeFile(out, page)
-  console.log(`${out.slice(root.length + 1)}: ${(page.length / 1024).toFixed(1)} KB`)
+  await writeFile(out, source.replace('__BUNDLE__', () => bundle))
+  console.log(`${out.slice(root.length + 1)}: ${(source.length / 1024).toFixed(1)} KB`)
 }
 
-console.log(`bundle ${(bundle.length / 1024).toFixed(1)} KB`)
+// ------------------------------------------------------------------------------------- the report
+
+console.log(`\nbundle ${(bundle.length / 1024).toFixed(1)} KB`)
+console.log(`guide source hash ${sourceHash}\n`)
+
+const label = { source: 'source', current: 'up to date', stale: 'BEHIND', unstamped: 'no stamp', missing: 'not translated yet' }
+for (const s of status) {
+  const review = s.state === 'missing' ? '' : s.reviewed ? 'reviewed' : 'unreviewed'
+  console.log(`  ${s.code.padEnd(8)} ${label[s.state].padEnd(20)} ${review}`)
+}
+
+const behind = status.filter((s) => s.state === 'stale' || s.state === 'unstamped')
+if (behind.length && process.env['CHECK_TRANSLATIONS'] === '1') {
+  console.error(
+    `\nThese translations are behind the English guide: ${behind.map((s) => s.code).join(', ')}.\n` +
+      `Update them, or re-stamp with the current hash once you have checked the change does not\n` +
+      `affect them: <!-- translated-from: ${sourceHash} -->`
+  )
+  process.exit(1)
+}

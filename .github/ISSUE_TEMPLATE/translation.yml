@@ -1,0 +1,81 @@
+name: A translation is wrong
+description: A sentence in your language is incorrect, awkward, or uses a term nobody actually uses
+title: "[l10n] "
+labels: ["translation", "documentation", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Most of the translations on this site have **not been read by a native speaker**. Each page
+        says so at the top, because hiding it would be worse than admitting it.
+
+        So this is not a complaint form. If you speak the language, you know something the
+        maintainer cannot know, and telling us is the only way it gets fixed.
+
+        **Rough is fine.** "This sentence is weird" is a useful report. You do not need to propose
+        the corrected wording, though it helps if you have one.
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - "Português"
+        - "Español"
+        - "Français"
+        - "Deutsch"
+        - "日本語"
+        - "한국어"
+        - "简体中文"
+        - "繁體中文"
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Which page and which section
+      description: The section heading is enough. A link to the anchor is ideal.
+      placeholder: "The error handling section, or https://george-veras.github.io/qredential/pt/guide/#errors"
+    validations:
+      required: true
+
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What it says now
+      description: Paste the sentence or phrase as it appears
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem
+      options:
+        - "It says something factually different from the English"
+        - "It is grammatically wrong"
+        - "It is understandable but nobody would phrase it that way"
+        - "The technical term is not the one used in this language"
+        - "It reads as machine translated"
+        - "Something else"
+    validations:
+      required: true
+
+  - type: textarea
+    id: better
+    attributes:
+      label: What it should say, if you have a suggestion
+      description: Optional. Reporting the problem without a fix is still worth doing.
+
+  - type: checkboxes
+    id: review
+    attributes:
+      label: Would you be willing to read the whole page
+      description: >
+        If you go through one page and say it is sound, that language stops being marked as
+        unreviewed on the site, and you are credited by name in the page footer and in the release
+        notes. It is the single most useful thing a speaker of one of these languages can do here.
+      options:
+        - label: I would be up for reviewing a full page
+        - label: I would be up for maintaining this language going forward

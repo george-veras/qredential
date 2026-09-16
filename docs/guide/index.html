@@ -1,3 +1,7 @@
+<link rel="alternate" hreflang="en" href="https://george-veras.github.io/qredential/guide/">
+<link rel="alternate" hreflang="pt" href="https://george-veras.github.io/qredential/pt/guide/">
+<link rel="alternate" hreflang="x-default" href="https://george-veras.github.io/qredential/guide/">
+<link rel="canonical" href="https://george-veras.github.io/qredential/guide/">
 <title>Qredential Documentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,6 +163,34 @@
     border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
     font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
   }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
 </style>
 
 <header class="masthead">
@@ -169,7 +201,6 @@
       <a href="./" aria-current="page">Docs</a>
       <a href="../playground/">Playground</a>
       <a href="https://github.com/george-veras/qredential">GitHub</a>
-      <a href="https://www.npmjs.com/package/qredential">npm</a>
     </nav>
   </div>
 </header>
@@ -177,8 +208,7 @@
 <div class="shell">
   <aside class="toc">
     <h2>On this page</h2>
-    <ol>
-      <li><a href="#start">Getting started</a></li>
+    <ol><li><a href="#start">Getting started</a></li>
       <li><a href="#disclosure">Selective disclosure</a></li>
       <li><a href="#holder">Proving the holder</a></li>
       <li><a href="#size">The size budget</a></li>
@@ -186,618 +216,245 @@
       <li><a href="#trust">Trust lists</a></li>
       <li><a href="#api">API reference</a></li>
       <li><a href="#errors">Error handling</a></li>
-      <li><a href="#limits">What this is not</a></li>
-    </ol>
+      <li><a href="#limits">What this is not</a></li></ol>
+    <h2 style="margin-top:22px">Language</h2>
+    <ol class="langs"><li><a href="../guide/" hreflang="en" lang="en" aria-current="page">English</a></li>
+      <li><a href="../pt/guide/" hreflang="pt" lang="pt">Português</a></li></ol>
   </aside>
 
   <article>
-    <section id="top">
-      <p class="eyebrow">Documentation</p>
-      <h1>Credentials that verify with the network off</h1>
-      <p class="lede">
-        A QR code carries its own proof. <code>qredential</code> checks the signature, the expiry,
-        the revocation status and the claims without a single request leaving the device.
-      </p>
-      <div class="cta-row">
-        <a class="cta" href="../playground/">Open the playground</a>
-        <a class="cta ghost" href="https://github.com/george-veras/qredential">Read the source</a>
-      </div>
-    </section>
+<section id="top">
+<p class="eyebrow">Documentation</p>
+<h1>Credentials that verify with the network off</h1>
+<p class="lede">A QR code carries its own proof. <code>qredential</code> checks the signature, the expiry, the revocation status and the claims without a single request leaving the device.</p>
+<!-- cta --> [Open the playground](../playground/)
 
-    <section id="start">
-      <h2>Getting started</h2>
-      <pre><code>npm i qredential</code></pre>
-      <p>
-        Node 20 or newer, every current browser, and React Native. It uses WebCrypto and nothing
-        Node specific, because the device doing the verifying is usually a phone. There are no
-        runtime dependencies.
-      </p>
-      <p>
-        The full test suite runs on Node 20, 22 and 24 across Linux, macOS and Windows, and in
-        Chromium, Firefox and WebKit on every commit. Ed25519 is exercised in all four.
-      </p>
-      <div class="aside">
-        <strong>One caveat on React Native.</strong> It has no
-        <code>CompressionStream</code>, and issuing, presenting and verifying all work without it:
-        the envelope simply stays uncompressed, which costs size and nothing else. <em>Offline
-        revocation does not work</em>, because reading a status list means inflating a bitstring. A
-        verifier that cannot inflate the cached list refuses with
-        <span class="reason">status_unavailable</span> rather than treating an unreadable list as a
-        clean one. If you need revocation on React Native, polyfill
-        <code>DecompressionStream</code>. There is a test that runs the whole flow with both globals
-        deleted, so this description is checked rather than assumed.
-      </div>
+<!-- cta --> [Read the source](https://github.com/george-veras/qredential)
 
-      <h3>Verify something</h3>
-      <pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span> <span class="tok-s">'qredential'</span>
+</section>
+<section id="start">
+<h2>Getting started</h2>
+<pre><code>npm i qredential</code></pre><p>Node 20 or newer, every current browser, and React Native. It uses WebCrypto and nothing Node specific, because the device doing the verifying is usually a phone. There are no runtime dependencies.</p>
+<p>The full test suite runs on Node 20, 22 and 24 across Linux, macOS and Windows, and in Chromium, Firefox and WebKit on every commit. Ed25519 is exercised in all four.</p>
+<div class="aside"><strong>One caveat on React Native.</strong> It has no <code>CompressionStream</code>, and issuing, presenting and verifying all work without it: the envelope simply stays uncompressed, which costs size and nothing else. <em>Offline revocation does not work</em>, because reading a status list means inflating a bitstring. A verifier that cannot inflate the cached list refuses with <code>status_unavailable</code> rather than treating an unreadable list as a clean one. If you need revocation on React Native, polyfill <code>DecompressionStream</code>. There is a test that runs the whole flow with both globals deleted, so this description is checked rather than assumed.</div><h3>Verify something</h3>
+<pre><code><span class="tok-k">import</span> { verify } <span class="tok-k">from</span>  <span class="tok-s">2</span> 
 
 <span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scannedText, { trust })
 
 <span class="tok-k">if</span> (result.ok) {
-  console.log(result.claims.given_name)   <span class="tok-c">// 'Ana'</span>
+  console.log(result.claims.given_name)    <span class="tok-s">0</span> 
 } <span class="tok-k">else</span> {
-  console.log(result.reason)              <span class="tok-c">// 'expired', 'revoked', 'bad_signature'…</span>
-}</code></pre>
+  console.log(result.reason)               <span class="tok-s">1</span> 
+}</code></pre><h3>The whole round trip</h3>
+<p>Three parties, three calls. The issuer signs once, the holder narrows what travels, the verifier decides.</p>
+<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">6</span> 
 
-      <h3>The whole round trip</h3>
-      <p>
-        Three parties, three calls. The issuer signs once, the holder narrows what travels, the
-        verifier decides.
-      </p>
-      <pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span> <span class="tok-s">'qredential'</span>
-
-<span class="tok-c">// 1. The issuer, once, when the licence is granted.</span>
+ <span class="tok-s">0</span> 
 <span class="tok-k">const</span> { credential, qr } = <span class="tok-k">await</span> issue({
-  issuer: <span class="tok-s">'https://id.example.gov'</span>,
-  kid: <span class="tok-s">'2026-a'</span>,
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">7</span> ,
   key: issuerPrivateJwk,
   claims: {
-    given_name: <span class="tok-s">'Ana'</span>,
-    family_name: <span class="tok-s">'Goncalves'</span>,
-    birth_date: <span class="tok-s">'1991-04-02'</span>,
+    given_name:  <span class="tok-s">8</span> ,
+    family_name:  <span class="tok-s">9</span> ,
+    birth_date:  <span class="tok-s">10</span> ,
     over_18: <span class="tok-k">true</span>,
   },
-  disclose: [<span class="tok-s">'birth_date'</span>, <span class="tok-s">'over_18'</span>],
-  expiresIn: <span class="tok-s">'1825d'</span>,
+  disclose: [ <span class="tok-s">11</span> ,  <span class="tok-s">12</span> ],
+  expiresIn:  <span class="tok-s">13</span> ,
 })
 
-<span class="tok-c">// 2. The holder's wallet, at scan time. Reveals age, keeps the birth date.</span>
-<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [<span class="tok-s">'over_18'</span>] })
+ <span class="tok-s">2</span> 
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [ <span class="tok-s">14</span> ] })
 
-<span class="tok-c">// 3. The verifier, offline.</span>
+ <span class="tok-s">3</span> 
 <span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
-result.claims       <span class="tok-c">// { given_name: 'Ana', family_name: 'Goncalves', over_18: true }</span>
-result.claims.birth_date  <span class="tok-c">// undefined, and it never left the wallet</span></code></pre>
-    </section>
+result.claims        <span class="tok-s">4</span> 
+result.claims.birth_date   <span class="tok-s">5</span> </code></pre>
+</section>
+<section id="disclosure">
+<h2>Selective disclosure</h2>
+<p>Two separate parties make two separate decisions, and conflating them is the usual design mistake. The <strong>issuer</strong> decides which claims <em>may</em> be withheld, at signing time, with <code>disclose</code>. The <strong>holder</strong> then decides which of those to actually show, at scan time, also with <code>disclose</code>. A claim the issuer never marked cannot be withheld by anyone.</p>
+<p>The mechanism is ordinary hashing. Each disclosable claim is serialised with a random 128 bit salt, and only the digest of that string is signed into the credential. Revealing a claim means sending the original string so the verifier can hash it and find the digest. Withholding it means the verifier is left holding a digest it can never open.</p>
+<h3>Nested, array, and recursive disclosure</h3>
+<p>RFC 9901 allows all three, and the European wallet ecosystem uses all three. Verification here resolves them at any depth, following the processing model in Section 7.1:</p>
+<ul>
+<li>An <code>_sd</code> array inside a nested object hides properties of that object.</li>
+<li>An array element shaped <code>{&quot;...&quot;: digest}</code> hides the element itself. A withheld one is <em>removed</em> from the array rather than left as a placeholder, so what you receive is a clean value you can render.</li>
+<li>A disclosed value can itself contain either shape, so resolving one uncovers more.</li>
+</ul>
+<p>None of that leaks into <code>claims</code>: no <code>_sd</code> key and no <code>&quot;...&quot;</code> element ever reaches the caller. Disclosed names come back as paths, such as <code>address.locality</code>, and the whole thing is checked both ways against an independent implementation of the same RFC.</p>
+<div class="aside"><strong>Why this matters for age checks.</strong> The usual implementation has the customer upload a photo of their ID to a third party, which creates a breach waiting to happen. Here the bar learns one boolean and cannot learn the birth date even if it wants to. That property is cryptographic, not a promise in a privacy policy.</div><p>Asking for a claim the issuer did not make disclosable throws rather than silently returning less than you asked for.</p>
 
-    <section id="disclosure">
-      <h2>Selective disclosure</h2>
-      <p>
-        Two separate parties make two separate decisions, and conflating them is the usual design
-        mistake. The <strong>issuer</strong> decides which claims <em>may</em> be withheld, at
-        signing time, with <code>disclose</code>. The <strong>holder</strong> then decides which of
-        those to actually show, at scan time, also with <code>disclose</code>. A claim the issuer
-        never marked cannot be withheld by anyone.
-      </p>
-      <p>
-        The mechanism is ordinary hashing. Each disclosable claim is serialised with a random
-        128 bit salt, and only the digest of that string is signed into the credential. Revealing a
-        claim means sending the original string so the verifier can hash it and find the digest.
-        Withholding it means the verifier is left holding a digest it can never open.
-      </p>
-
-      <h3>Nested, array, and recursive disclosure</h3>
-      <p>
-        RFC 9901 allows all three, and the European wallet ecosystem uses all three. Verification
-        here resolves them at any depth, following the processing model in Section 7.1:
-      </p>
-      <ul>
-        <li>An <code>_sd</code> array inside a nested object hides properties of that object.</li>
-        <li>An array element shaped <code>{"...": digest}</code> hides the element itself. A
-          withheld one is <em>removed</em> from the array rather than left as a placeholder, so what
-          you receive is a clean value you can render.</li>
-        <li>A disclosed value can itself contain either shape, so resolving one uncovers more.</li>
-      </ul>
-      <p>
-        None of that leaks into <code>claims</code>: no <code>_sd</code> key and no
-        <code>"..."</code> element ever reaches the caller. Disclosed names come back as paths, such
-        as <code>address.locality</code>, and the whole thing is checked both ways against an
-        independent implementation of the same RFC.
-      </p>
-      <div class="aside">
-        <strong>Why this matters for age checks.</strong> The usual implementation has the customer
-        upload a photo of their ID to a third party, which creates a breach waiting to happen. Here
-        the bar learns one boolean and cannot learn the birth date even if it wants to. That
-        property is cryptographic, not a promise in a privacy policy.
-      </div>
-      <p>
-        Asking for a claim the issuer did not make disclosable throws rather than silently returning
-        less than you asked for.
-      </p>
-    </section>
-
-    <section id="holder">
-      <h2>Proving the holder</h2>
-      <p>
-        Selective disclosure proves the issuer signed these claims. On its own it does not prove
-        that the person presenting them is the subject, and the gap is not theoretical: a photograph
-        of someone else's code carries the same signature and verifies just as well.
-      </p>
-      <p>
-        Key binding closes it. The issuer writes the holder's public key into the credential, and at
-        scan time the holder's wallet signs a fresh challenge with the matching private key. A
-        picture cannot do that.
-      </p>
-
-      <h3>The three steps</h3>
-      <pre><code><span class="tok-c">// 1. The issuer binds the holder's public key.</span>
+</section>
+<section id="holder">
+<h2>Proving the holder</h2>
+<p>Selective disclosure proves the issuer signed these claims. On its own it does not prove that the person presenting them is the subject, and the gap is not theoretical: a photograph of someone else&#39;s code carries the same signature and verifies just as well.</p>
+<p>Key binding closes it. The issuer writes the holder&#39;s public key into the credential, and at scan time the holder&#39;s wallet signs a fresh challenge with the matching private key. A picture cannot do that.</p>
+<h3>The three steps</h3>
+<pre><code> <span class="tok-s">0</span> 
 <span class="tok-k">const</span> { credential } = <span class="tok-k">await</span> issue({
   ...,
   holderKey: holderPublicJwk,
 })
 
-<span class="tok-c">// 2. The wallet signs this verifier's challenge, at scan time.</span>
+ <span class="tok-s">1</span> 
 <span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, {
-  disclose: [<span class="tok-s">'over_18'</span>],
+  disclose: [ <span class="tok-s">6</span> ],
   keyBinding: {
     key: holderPrivateJwk,
-    audience: <span class="tok-s">'https://bar.example/door'</span>,
+    audience: 'https: <span class="tok-s">2</span> 
     nonce: challengeFromTheVerifier,
   },
 })
 
-<span class="tok-c">// 3. The verifier checks the proof answers its own challenge.</span>
+ <span class="tok-s">3</span> 
 <span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
   trust,
   nonce: challengeIIssued,
-  audience: <span class="tok-s">'https://bar.example/door'</span>,
+  audience: 'https: <span class="tok-s">4</span> 
 })
-result.holderVerified   <span class="tok-c">// true</span></code></pre>
+result.holderVerified    <span class="tok-s">5</span> </code></pre><p>The proof commits to four things, and each one closes a specific attack: the <strong>nonce</strong> stops a recorded presentation being replayed, the <strong>audience</strong> stops a proof made for one verifier being used at another, the <strong>signature</strong> ties it to the key the issuer bound, and <code>sd_hash</code> covers the exact set of disclosures, so a relay cannot add or strip one after the holder signed. It also expires, five minutes by default, tunable with <code>maxKeyBindingAge</code>.</p>
+<h3>Static credentials, and why the choice is yours to make out loud</h3>
+<p>A code printed on a card cannot do any of this. There is no device to sign at scan time, so a static credential is inherently copyable. That is a real and common situation, not a mistake, but it is a decision a verifier should make knowingly:</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust, acceptWithoutHolderProof: <span class="tok-k">true</span> })
+result.holderVerified    <span class="tok-s">0</span> </code></pre><p>Without that flag, a presentation with no proof is refused with <code>holder_proof_missing</code>. The default is the strict one on purpose: the dangerous case is someone building a door scanner, never hearing of key binding, and shipping something a screenshot defeats. A loud failure that names the problem is worth more than a quiet default that hides it.</p>
+<div class="aside"><strong>Opting out never waves through a broken proof.</strong> <code>acceptWithoutHolderProof</code> covers the case where no proof was offered. If one is present and fails, the credential is refused regardless of the flag.</div><h3>What it costs</h3>
+<p>Binding is not free in QR terms. The holder&#39;s public key lives in the credential and the proof rides along with the presentation:</p>
+<div class="tablewrap"><table><thead><tr><th>Presentation</th><th>Characters</th><th>QR version</th></tr></thead><tbody><tr><td>static, everything visible</td><td>~740</td><td>18, scans fine</td></tr><tr><td>age only, bound but unproved</td><td>~1320</td><td>24, dense</td></tr><tr><td>age only, with holder proof</td><td>~1605</td><td>27, too dense</td></tr></tbody></table></div><p>The proof itself is about 285 characters. That matters less than it looks, because a credential that can do key binding is by definition being shown on a screen, where the code can be large and bright. The density limit is a problem for worn printed cards, and a printed card was never going to do key binding anyway.</p>
 
-      <p>
-        The proof commits to four things, and each one closes a specific attack: the
-        <strong>nonce</strong> stops a recorded presentation being replayed, the
-        <strong>audience</strong> stops a proof made for one verifier being used at another, the
-        <strong>signature</strong> ties it to the key the issuer bound, and <code>sd_hash</code>
-        covers the exact set of disclosures, so a relay cannot add or strip one after the holder
-        signed. It also expires, five minutes by default, tunable with
-        <code>maxKeyBindingAge</code>.
-      </p>
-
-      <h3>Static credentials, and why the choice is yours to make out loud</h3>
-      <p>
-        A code printed on a card cannot do any of this. There is no device to sign at scan time, so
-        a static credential is inherently copyable. That is a real and common situation, not a
-        mistake, but it is a decision a verifier should make knowingly:
-      </p>
-      <pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust, acceptWithoutHolderProof: <span class="tok-k">true</span> })
-result.holderVerified   <span class="tok-c">// false, and it says so whichever way you chose</span></code></pre>
-      <p>
-        Without that flag, a presentation with no proof is refused with
-        <span class="reason">holder_proof_missing</span>. The default is the strict one on purpose:
-        the dangerous case is someone building a door scanner, never hearing of key binding, and
-        shipping something a screenshot defeats. A loud failure that names the problem is worth more
-        than a quiet default that hides it.
-      </p>
-      <div class="aside">
-        <strong>Opting out never waves through a broken proof.</strong>
-        <code>acceptWithoutHolderProof</code> covers the case where no proof was offered. If one is
-        present and fails, the credential is refused regardless of the flag.
-      </div>
-
-      <h3>What it costs</h3>
-      <p>
-        Binding is not free in QR terms. The holder's public key lives in the credential and the
-        proof rides along with the presentation:
-      </p>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>Presentation</th><th class="num">Characters</th><th>QR version</th></tr></thead>
-          <tbody>
-            <tr><td>static, everything visible</td><td class="num">~740</td><td>18, scans fine</td></tr>
-            <tr><td>age only, bound but unproved</td><td class="num">~1320</td><td>24, dense</td></tr>
-            <tr><td>age only, with holder proof</td><td class="num">~1605</td><td>27, too dense</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        The proof itself is about 285 characters. That matters less than it looks, because a
-        credential that can do key binding is by definition being shown on a screen, where the code
-        can be large and bright. The density limit is a problem for worn printed cards, and a
-        printed card was never going to do key binding anyway.
-      </p>
-    </section>
-
-    <section id="size">
-      <h2>The size budget</h2>
-      <p>
-        A QR code holds roughly 4300 alphanumeric characters at its largest, but a code that big is
-        unreadable on a scuffed card or a cracked screen. The practical ceiling is around version
-        20.
-      </p>
-      <p>
-        Here is what a realistic driving licence costs. Eight claims, a five year expiry, a status
-        list pointer, measured by <code>examples/sizes.mjs</code> in the repository:
-      </p>
-      <div class="tablewrap">
-        <table>
-          <thead>
-            <tr><th>Credential</th><th class="num">Characters</th><th>QR version</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>everything visible</td><td class="num">~740</td><td>18, scans fine</td></tr>
-            <tr><td>all eight claims disclosable</td><td class="num">~1590</td><td>27, too dense</td></tr>
-            <tr><td>presenting only <code>over_18</code></td><td class="num">~1115</td><td>22, still dense</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        The middle row is the uncomfortable one, and it is better learned here than after printing
-        cards. Selective disclosure roughly doubles the credential, because every disclosable claim
-        costs a salt plus a signed digest, and <strong>the digests stay in the payload whether the
-        holder reveals the claim or not</strong>. That is deliberate: a digest count that shrank
-        with what you revealed would leak what you withheld. The practical consequence is that
-        savings at presentation time are smaller than intuition promises. Thirty percent here, not
-        eighty.
-      </p>
-      <p>
-        So make disclosable only the claims a verifier might genuinely need to see alone. Two or
-        three, not all of them. <code>fits()</code> tells you where you stand before you commit.
-      </p>
-      <div class="aside">
-        <strong>On base45.</strong> The folklore says it is chosen for compactness. It is not.
-        base45 in QR alphanumeric mode costs about 8.25 bits per original byte, against 10.67 for
-        base64 in byte mode and 8 flat for raw binary. It beats base64 clearly and loses slightly to
-        raw bytes. Raw bytes are given up on purpose, because byte mode carries charset ambiguity
-        and plenty of scanners hand back a mangled string. A credential that survives being copied,
-        pasted and logged is worth a three percent penalty.
-      </div>
-    </section>
-
-    <section id="revocation">
-      <h2>Offline revocation</h2>
-      <p>
-        Revocation is the part implementations skip, and then a stolen credential works forever.
-      </p>
-      <p>
-        A status list is a compressed bitstring with one bit per credential. A list covering a
-        million credentials is 125 KB of mostly zeroes, which deflates to a few kilobytes. Fetch it
-        when you have signal, check it when you do not.
-      </p>
-      <pre><code><span class="tok-c">// The issuer publishes this, on whatever schedule suits them.</span>
+</section>
+<section id="size">
+<h2>The size budget</h2>
+<p>A QR code holds roughly 4300 alphanumeric characters at its largest, but a code that big is unreadable on a scuffed card or a cracked screen. The practical ceiling is around version 20.</p>
+<p>Here is what a realistic driving licence costs. Eight claims, a five year expiry, a status list pointer, measured by <code>examples/sizes.mjs</code> in the repository:</p>
+<div class="tablewrap"><table><thead><tr><th>Credential</th><th>Characters</th><th>QR version</th></tr></thead><tbody><tr><td>everything visible</td><td>~740</td><td>18, scans fine</td></tr><tr><td>all eight claims disclosable</td><td>~1590</td><td>27, too dense</td></tr><tr><td>presenting only <code>over_18</code></td><td>~1115</td><td>22, still dense</td></tr></tbody></table></div><p>The middle row is the uncomfortable one, and it is better learned here than after printing cards. Selective disclosure roughly doubles the credential, because every disclosable claim costs a salt plus a signed digest, and <strong>the digests stay in the payload whether the holder reveals the claim or not</strong>. That is deliberate: a digest count that shrank with what you revealed would leak what you withheld. The practical consequence is that savings at presentation time are smaller than intuition promises. Thirty percent here, not eighty.</p>
+<p>So make disclosable only the claims a verifier might genuinely need to see alone. Two or three, not all of them. <code>fits()</code> tells you where you stand before you commit.</p>
+<div class="aside"><strong>On base45.</strong> The folklore says it is chosen for compactness. It is not. base45 in QR alphanumeric mode costs about 8.25 bits per original byte, against 10.67 for base64 in byte mode and 8 flat for raw binary. It beats base64 clearly and loses slightly to raw bytes. Raw bytes are given up on purpose, because byte mode carries charset ambiguity and plenty of scanners hand back a mangled string. A credential that survives being copied, pasted and logged is worth a three percent penalty.</div>
+</section>
+<section id="revocation">
+<h2>Offline revocation</h2>
+<p>Revocation is the part implementations skip, and then a stolen credential works forever.</p>
+<p>A status list is a compressed bitstring with one bit per credential. A list covering a million credentials is 125 KB of mostly zeroes, which deflates to a few kilobytes. Fetch it when you have signal, check it when you do not.</p>
+<pre><code> <span class="tok-s">0</span> 
 <span class="tok-k">const</span> statusList = <span class="tok-k">await</span> createStatusList({
-  issuer: <span class="tok-s">'https://id.example.gov'</span>,
-  kid: <span class="tok-s">'2026-a'</span>,
+  issuer: 'https: <span class="tok-s">1</span> 
+  kid:  <span class="tok-s">4</span> ,
   key: issuerPrivateJwk,
-  uri: <span class="tok-s">'https://id.example.gov/status/3'</span>,
+  uri: 'https: <span class="tok-s">2</span> 
   size: <span class="tok-s">1_000_000</span>,
   revoked: [<span class="tok-s">48219</span>],
-  expiresIn: <span class="tok-s">'14d'</span>,
+  expiresIn:  <span class="tok-s">5</span> ,
 })
 
-<span class="tok-c">// The verifier checks against its cached copy.</span>
+ <span class="tok-s">3</span> 
 <span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, {
   trust,
   status: cachedStatusList,
-  maxStatusAge: <span class="tok-s">'7d'</span>,
-})</code></pre>
-      <p>
-        The refusals are worth reading, because each one is a place where a quieter library would
-        hand back a false yes:
-      </p>
-      <ul>
-        <li>
-          You passed no list, so revocation was never checked:
-          <span class="reason">status_unavailable</span>
-        </li>
-        <li>
-          Your cached list is older than <code>maxStatusAge</code>, so revocation cannot be ruled
-          out: <span class="reason">status_list_stale</span>
-        </li>
-        <li>
-          The list is signed by a key that is not on your trust list, which is how an attacker would
-          clear a revoked credential: <span class="reason">bad_signature</span>
-        </li>
-        <li>
-          The list was published by a different issuer than the credential, or for a different
-          <code>uri</code>. A given index means something different in every list, so an unbound
-          list is not an answer: <span class="reason">status_unavailable</span>
-        </li>
-        <li>
-          The credential's index falls outside the list you cached, so nothing was actually read:
-          <span class="reason">status_unavailable</span>
-        </li>
-      </ul>
-      <div class="aside">
-        <strong>A clean result is never silent about this.</strong> When revocation did get checked
-        the result says <code>revocationChecked: true</code>. If the library cannot reach a real
-        answer it refuses rather than passing the credential with that flag set, because a false
-        assurance is worse than no answer.
-      </div>
-      <p>
-        What to do when you cannot be sure is a policy question about your deployment, not a
-        library question, so <code>qredential</code> refuses to decide it quietly on your behalf.
-        When revocation did get checked, the successful result says so with
-        <code>revocationChecked: true</code>.
-      </p>
-    </section>
+  maxStatusAge:  <span class="tok-s">6</span> ,
+})</code></pre><p>The refusals are worth reading, because each one is a place where a quieter library would hand back a false yes:</p>
+<ul>
+<li>You passed no list, so revocation was never checked: <code>status_unavailable</code></li>
+<li>Your cached list is older than <code>maxStatusAge</code>, so revocation cannot be ruled out: <code>status_list_stale</code></li>
+<li>The list is signed by a key that is not on your trust list, which is how an attacker would clear a revoked credential: <code>bad_signature</code></li>
+<li>The list was published by a different issuer than the credential, or for a different <code>uri</code>. A given index means something different in every list, so an unbound list is not an answer: <code>status_unavailable</code></li>
+<li>The credential&#39;s index falls outside the list you cached, so nothing was actually read: <code>status_unavailable</code></li>
+</ul>
+<div class="aside"><strong>A clean result is never silent about this.</strong> When revocation did get checked the result says <code>revocationChecked: true</code>. If the library cannot reach a real answer it refuses rather than passing the credential with that flag set, because a false assurance is worse than no answer.</div><p>What to do when you cannot be sure is a policy question about your deployment, not a library question, so <code>qredential</code> refuses to decide it quietly on your behalf. When revocation did get checked, the successful result says so with <code>revocationChecked: true</code>.</p>
 
-    <section id="trust">
-      <h2>Trust lists</h2>
-      <p>
-        The one thing that has to reach the device out of band is the set of issuer public keys you
-        are willing to believe. It changes rarely, so shipping it with the app and refreshing it
-        weekly is a perfectly reasonable distribution strategy.
-      </p>
-      <pre><code><span class="tok-k">const</span> trust = {
+</section>
+<section id="trust">
+<h2>Trust lists</h2>
+<p>The one thing that has to reach the device out of band is the set of issuer public keys you are willing to believe. It changes rarely, so shipping it with the app and refreshing it weekly is a perfectly reasonable distribution strategy.</p>
+<pre><code><span class="tok-k">const</span> trust = {
   issuers: {
-    <span class="tok-s">'https://id.example.gov'</span>: {
-      name: <span class="tok-s">'Example Motor Vehicle Authority'</span>,
-      keys: [{ kid: <span class="tok-s">'2026-a'</span>, alg: <span class="tok-s">'ES256'</span>, jwk: publicJwk }],
+    'https: <span class="tok-s">0</span> 
+      name:  <span class="tok-s">1</span> ,
+      keys: [{ kid:  <span class="tok-s">2</span> , alg:  <span class="tok-s">3</span> , jwk: publicJwk }],
     },
   },
-}</code></pre>
-      <p>
-        The trusted key decides which algorithm is used, never the algorithm named in the
-        credential's own header. That is the whole defence against algorithm substitution, and it
-        is why <code>alg</code> lives on the key in your trust list rather than being inferred.
-      </p>
-      <p>
-        How the list reaches the device, how keys rotate, and where the private key lives are out
-        of scope. The library takes them as inputs.
-      </p>
-    </section>
+}</code></pre><p>The trusted key decides which algorithm is used, never the algorithm named in the credential&#39;s own header. That is the whole defence against algorithm substitution, and it is why <code>alg</code> lives on the key in your trust list rather than being inferred.</p>
+<p>How the list reaches the device, how keys rotate, and where the private key lives are out of scope. The library takes them as inputs.</p>
 
-    <section id="api">
-      <h2>API reference</h2>
-      <p>Four functions cover the credential lifecycle, plus one for issuers publishing revocation.</p>
+</section>
+<section id="api">
+<h2>API reference</h2>
+<p>Four functions cover the credential lifecycle, plus one for issuers publishing revocation.</p>
+<h3>issue(options)</h3>
+<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>Option</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>Identifier that must match a key in the verifier&#39;s trust list.</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>Private key. Never leaves the call.</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>Key id, written into the header so verifiers can pick the right key during rotation.</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>Defaults to <code>ES256</code>, which every platform supports.</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>What the credential asserts.</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>Claim names the holder may withhold. Everything else is always visible. Naming a claim that does not exist throws.</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>Credential type, the <code>vct</code> of SD-JWT VC.</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>Optional subject identifier.</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>Seconds, or a duration like <code>&#39;1825d&#39;</code>.</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>Same forms, for credentials that start later.</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>This credential&#39;s slot in a status list.</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>The holder&#39;s <strong>public</strong> key, written into <code>cnf</code>. Omit only for static credentials. A key carrying a private component is refused.</td></tr></tbody></table></div><p>Returns <code>credential</code> (the SD-JWT combined form, store this in the wallet), <code>qr</code> (the scannable envelope), <code>bytes</code> (characters in <code>qr</code>), and <code>disclosable</code> (the claim names the holder can withhold).</p>
+<h3>present(credential, options)</h3>
+<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>Narrows a credential to the listed claims and returns a scannable envelope. The signed JWT is never touched, so the issuer&#39;s signature still verifies on what is left. Accepts either the combined form or an envelope. Asking for a claim the issuer did not make disclosable throws.</p>
+<h3>verify(input, options)</h3>
+<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>Option</th><th>Type</th><th>Meaning</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>Required. Issuers and keys you are willing to believe.</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>A cached status list token. Without it, a credential pointing at one cannot be cleared.</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>Refuse to answer from a list older than this.</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>Tolerance in seconds for drift between issuer and verifier. Defaults to 60.</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>The challenge this verifier issued for this scan. Required to accept a holder proof.</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>This verifier&#39;s identifier, checked against the proof&#39;s <code>aud</code>.</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>Accept a presentation carrying no proof. Necessary for static credentials, and never waves through a proof that is present and broken.</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>How old a holder proof may be. Defaults to 5 minutes.</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>Override the current time. For tests and replay analysis.</td></tr></tbody></table></div><p>Never throws on hostile input. It returns a discriminated union: on success <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>, and on failure <code>{ ok: false, reason, message }</code> with <code>reason</code> drawn from the table below.</p>
+<p><code>withheld</code> counts the disclosable claims that did not travel. It is useful for policy, and by construction it cannot tell you which ones they were.</p>
+<p><strong>Everything in <code>claims</code> describes the subject.</strong> Registered claims that describe the token, such as <code>iss</code>, <code>iat</code>, <code>exp</code> and <code>status</code>, are surfaced as typed fields instead, and a disclosure that tries to set one, or to overwrite a claim the payload already settled, fails the whole credential. So looping over <code>claims</code> is safe.</p>
+<h3>fits(payload, errorCorrection)</h3>
+<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>Synchronous. Returns <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>. Error correction defaults to <code>M</code>, because <code>L</code> looks generous on paper and then fails on a scuffed printed card. <code>version</code> is <code>null</code> when nothing holds the payload, and <code>advice</code> is a sentence you can print straight into a build log.</p>
+<h3>createStatusList(options)</h3>
+<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>For issuers. Takes <code>issuer</code>, <code>key</code>, <code>kid</code>, <code>alg</code>, <code>uri</code>, <code>size</code>, <code>revoked</code>, <code>suspended</code>, <code>expiresIn</code> and <code>issuedAt</code>, and returns a signed status list token. An index outside the list throws rather than corrupting a neighbouring credential&#39;s bit.</p>
+<h3>Also exported</h3>
+<p><code>pack</code>, <code>unpack</code> and <code>isEnvelope</code> for the QR envelope, and <code>encodeBase45</code> and <code>decodeBase45</code> for the codec on its own. Useful for tooling; not needed for ordinary use.</p>
 
-      <h3>issue(options)</h3>
-      <div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>Option</th><th>Type</th><th>Meaning</th></tr></thead>
-          <tbody>
-            <tr><td><code>issuer</code></td><td><code>string</code></td><td>Identifier that must match a key in the verifier's trust list.</td></tr>
-            <tr><td><code>key</code></td><td><code>Jwk</code></td><td>Private key. Never leaves the call.</td></tr>
-            <tr><td><code>kid</code></td><td><code>string</code></td><td>Key id, written into the header so verifiers can pick the right key during rotation.</td></tr>
-            <tr><td><code>alg</code></td><td><code>'ES256' | 'EdDSA'</code></td><td>Defaults to <code>ES256</code>, which every platform supports.</td></tr>
-            <tr><td><code>claims</code></td><td><code>object</code></td><td>What the credential asserts.</td></tr>
-            <tr><td><code>disclose</code></td><td><code>string[]</code></td><td>Claim names the holder may withhold. Everything else is always visible. Naming a claim that does not exist throws.</td></tr>
-            <tr><td><code>vct</code></td><td><code>string</code></td><td>Credential type, the <code>vct</code> of SD-JWT VC.</td></tr>
-            <tr><td><code>subject</code></td><td><code>string</code></td><td>Optional subject identifier.</td></tr>
-            <tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>Seconds, or a duration like <code>'1825d'</code>.</td></tr>
-            <tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>Same forms, for credentials that start later.</td></tr>
-            <tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>This credential's slot in a status list.</td></tr>
-            <tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>The holder's <strong>public</strong> key, written into <code>cnf</code>. Omit only for static credentials. A key carrying a private component is refused.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        Returns <code>credential</code> (the SD-JWT combined form, store this in the wallet),
-        <code>qr</code> (the scannable envelope), <code>bytes</code> (characters in <code>qr</code>),
-        and <code>disclosable</code> (the claim names the holder can withhold).
-      </p>
-
-      <h3>present(credential, options)</h3>
-      <div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div>
-      <p>
-        Narrows a credential to the listed claims and returns a scannable envelope. The signed JWT
-        is never touched, so the issuer's signature still verifies on what is left. Accepts either
-        the combined form or an envelope. Asking for a claim the issuer did not make disclosable
-        throws.
-      </p>
-
-      <h3>verify(input, options)</h3>
-      <div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>Option</th><th>Type</th><th>Meaning</th></tr></thead>
-          <tbody>
-            <tr><td><code>trust</code></td><td><code>TrustList</code></td><td>Required. Issuers and keys you are willing to believe.</td></tr>
-            <tr><td><code>status</code></td><td><code>string</code></td><td>A cached status list token. Without it, a credential pointing at one cannot be cleared.</td></tr>
-            <tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>Refuse to answer from a list older than this.</td></tr>
-            <tr><td><code>clockSkew</code></td><td><code>number</code></td><td>Tolerance in seconds for drift between issuer and verifier. Defaults to 60.</td></tr>
-            <tr><td><code>nonce</code></td><td><code>string</code></td><td>The challenge this verifier issued for this scan. Required to accept a holder proof.</td></tr>
-            <tr><td><code>audience</code></td><td><code>string</code></td><td>This verifier's identifier, checked against the proof's <code>aud</code>.</td></tr>
-            <tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>Accept a presentation carrying no proof. Necessary for static credentials, and never waves through a proof that is present and broken.</td></tr>
-            <tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>How old a holder proof may be. Defaults to 5 minutes.</td></tr>
-            <tr><td><code>now</code></td><td><code>number</code></td><td>Override the current time. For tests and replay analysis.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>
-        Never throws on hostile input. It returns a discriminated union: on success
-        <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld,
-        revocationChecked }</code>, and on failure <code>{ ok: false, reason, message }</code> with
-        <code>reason</code> drawn from the table below.
-      </p>
-      <p>
-        <code>withheld</code> counts the disclosable claims that did not travel. It is useful for
-        policy, and by construction it cannot tell you which ones they were.
-      </p>
-      <p>
-        <strong>Everything in <code>claims</code> describes the subject.</strong> Registered claims
-        that describe the token, such as <code>iss</code>, <code>iat</code>, <code>exp</code> and
-        <code>status</code>, are surfaced as typed fields instead, and a disclosure that tries to
-        set one, or to overwrite a claim the payload already settled, fails the whole credential. So
-        looping over <code>claims</code> is safe.
-      </p>
-
-      <h3>fits(payload, errorCorrection)</h3>
-      <div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div>
-      <p>
-        Synchronous. Returns <code>{ chars, version, capacity, comfortable, errorCorrection, advice
-        }</code>. Error correction defaults to <code>M</code>, because <code>L</code> looks generous
-        on paper and then fails on a scuffed printed card. <code>version</code> is
-        <code>null</code> when nothing holds the payload, and <code>advice</code> is a sentence you
-        can print straight into a build log.
-      </p>
-
-      <h3>createStatusList(options)</h3>
-      <div class="signature">createStatusList(options): Promise&lt;string&gt;</div>
-      <p>
-        For issuers. Takes <code>issuer</code>, <code>key</code>, <code>kid</code>, <code>alg</code>,
-        <code>uri</code>, <code>size</code>, <code>revoked</code>, <code>suspended</code>,
-        <code>expiresIn</code> and <code>issuedAt</code>, and returns a signed status list token.
-        An index outside the list throws rather than corrupting a neighbouring credential's bit.
-      </p>
-
-      <h3>Also exported</h3>
-      <p>
-        <code>pack</code>, <code>unpack</code> and <code>isEnvelope</code> for the QR envelope, and
-        <code>encodeBase45</code> and <code>decodeBase45</code> for the codec on its own. Useful for
-        tooling; not needed for ordinary use.
-      </p>
-    </section>
-
-    <section id="errors">
-      <h2>Error handling</h2>
-      <p>
-        There are exactly two contracts, and the split is deliberate rather than accidental. Learn
-        these two sentences and you can write one catch block and know what can land in it.
-      </p>
-
-      <div class="signature">1. verify() never throws. For any input at all.
-2. Everything else throws only QredentialError.</div>
-
-      <p>
-        The reason they differ: <code>verify()</code> exists to be pointed at hostile input, and a
-        verifier that throws is one somebody wraps in a <code>try/catch</code> that waves people
-        through. So it returns a result you have to look at. Everything else fails on conditions a
-        caller fixes in code, where throwing is the right shape.
-      </p>
-      <p>
-        Both rules are held to by property based tests that generate random strings, malformed keys,
-        corrupt envelopes and hostile options and assert that nothing else escapes. No
-        <code>SyntaxError</code> from a JSON parse, no <code>DOMException</code> from WebCrypto, no
-        <code>RangeError</code> from an allocation.
-      </p>
-
-      <h3>Handling a verification result</h3>
-      <p>The result is a discriminated union, so TypeScript narrows it for you:</p>
-      <pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust })
+</section>
+<section id="errors">
+<h2>Error handling</h2>
+<p>There are exactly two contracts, and the split is deliberate rather than accidental. Learn these two sentences and you can write one catch block and know what can land in it.</p>
+<div class="signature">1. verify() never throws. For any input at all.
+2. Everything else throws only QredentialError.</div><p>The reason they differ: <code>verify()</code> exists to be pointed at hostile input, and a verifier that throws is one somebody wraps in a <code>try/catch</code> that waves people through. So it returns a result you have to look at. Everything else fails on conditions a caller fixes in code, where throwing is the right shape.</p>
+<p>Both rules are held to by property based tests that generate random strings, malformed keys, corrupt envelopes and hostile options and assert that nothing else escapes. No <code>SyntaxError</code> from a JSON parse, no <code>DOMException</code> from WebCrypto, no <code>RangeError</code> from an allocation.</p>
+<h3>Handling a verification result</h3>
+<p>The result is a discriminated union, so TypeScript narrows it for you:</p>
+<pre><code><span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(scanned, { trust })
 
 <span class="tok-k">if</span> (result.ok) {
-  result.claims          <span class="tok-c">// narrowed: the subject's attributes</span>
-  result.withheld        <span class="tok-c">// how many disclosable claims did not travel</span>
+  result.claims           <span class="tok-s">0</span> 
+  result.withheld         <span class="tok-s">1</span> 
 } <span class="tok-k">else</span> {
   <span class="tok-k">switch</span> (result.reason) {
-    <span class="tok-k">case</span> <span class="tok-s">'expired'</span>:            <span class="tok-k">return</span> askForARenewal()
-    <span class="tok-k">case</span> <span class="tok-s">'revoked'</span>:            <span class="tok-k">return</span> refuseAndLog()
-    <span class="tok-k">case</span> <span class="tok-s">'status_list_stale'</span>:  <span class="tok-k">return</span> retryWhenOnline()
+    <span class="tok-k">case</span>  <span class="tok-s">2</span> :            <span class="tok-k">return</span> askForARenewal()
+    <span class="tok-k">case</span>  <span class="tok-s">3</span> :            <span class="tok-k">return</span> refuseAndLog()
+    <span class="tok-k">case</span>  <span class="tok-s">4</span> :  <span class="tok-k">return</span> retryWhenOnline()
     <span class="tok-k">default</span>:                   <span class="tok-k">return</span> refuse(result.reason)
   }
-}</code></pre>
-
-      <p>
-        If your codebase is built around <code>try/catch</code>, take the same result through
-        <code>assertVerified()</code> instead. Nothing is lost: the thrown error carries the original
-        reason.
-      </p>
-      <pre><code><span class="tok-k">import</span> { verify, assertVerified, isQredentialError } <span class="tok-k">from</span> <span class="tok-s">'qredential'</span>
+}</code></pre><p>If your codebase is built around <code>try/catch</code>, take the same result through <code>assertVerified()</code> instead. Nothing is lost: the thrown error carries the original reason.</p>
+<pre><code><span class="tok-k">import</span> { verify, assertVerified, isQredentialError } <span class="tok-k">from</span>  <span class="tok-s">1</span> 
 
 <span class="tok-k">try</span> {
   <span class="tok-k">const</span> credential = assertVerified(<span class="tok-k">await</span> verify(scanned, { trust }))
   admit(credential.claims)
 } <span class="tok-k">catch</span> (error) {
-  <span class="tok-k">if</span> (isQredentialError(error) &amp;&amp; error.code === <span class="tok-s">'verification_failed'</span>) {
-    refuse(error.reason)   <span class="tok-c">// the same FailReason as above</span>
+  <span class="tok-k">if</span> (isQredentialError(error) &amp;&amp; error.code ===  <span class="tok-s">2</span> ) {
+    refuse(error.reason)    <span class="tok-s">0</span> 
   } <span class="tok-k">else</span> {
     <span class="tok-k">throw</span> error
   }
-}</code></pre>
-
-      <h3>Rejection reasons</h3>
-      <p>
-        Returned by <code>verify()</code> as <code>result.reason</code>. The playground fires each of
-        these at the verifier so you can watch them land.
-      </p>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>Reason</th><th>What happened</th></tr></thead>
-          <tbody>
-            <tr><td><span class="reason">malformed</span></td><td>Not a credential at all, a corrupt envelope, or a combined form missing its trailing separator.</td></tr>
-            <tr><td><span class="reason">unknown_issuer</span></td><td>The <code>iss</code> claim is not in your trust list.</td></tr>
-            <tr><td><span class="reason">unknown_key</span></td><td>The issuer is trusted but has no key with that <code>kid</code>.</td></tr>
-            <tr><td><span class="reason">unsupported_alg</span></td><td>The header asks for an algorithm the trusted key does not use.</td></tr>
-            <tr><td><span class="reason">bad_signature</span></td><td>The signature does not check out. Also covers a forged status list.</td></tr>
-            <tr><td><span class="reason">expired</span></td><td>Past <code>exp</code>, beyond the clock skew allowance.</td></tr>
-            <tr><td><span class="reason">not_yet_valid</span></td><td>Before <code>nbf</code>.</td></tr>
-            <tr><td><span class="reason">digest_mismatch</span></td><td>A disclosure the issuer never signed, one sent twice, one naming a registered claim, or one colliding with a claim already in the payload.</td></tr>
-            <tr><td><span class="reason">revoked</span></td><td>The issuer set this credential's bit. Covers suspended too.</td></tr>
-            <tr><td><span class="reason">status_unavailable</span></td><td>Revocation could not be determined: no list supplied, unreadable, bound to a different issuer or uri, or the index falls outside it.</td></tr>
-            <tr><td><span class="reason">status_list_stale</span></td><td>Your cached list is older than <code>maxStatusAge</code>.</td></tr>
-            <tr><td><span class="reason">holder_proof_missing</span></td><td>No holder proof was offered and the caller did not pass <code>acceptWithoutHolderProof</code>.</td></tr>
-            <tr><td><span class="reason">holder_proof_invalid</span></td><td>A proof was offered and failed: wrong key, wrong nonce, wrong audience, a different disclosure set, stale, or attached to a credential with no bound key.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3>Thrown errors</h3>
-      <p>
-        Everything except <code>verify()</code> throws <code>QredentialError</code>, which carries a
-        <code>code</code>. Use <code>isQredentialError()</code> rather than <code>instanceof</code>:
-        it checks the shape, so it keeps working when two copies of the package end up in one
-        dependency tree, which is the usual reason <code>instanceof</code> quietly stops matching.
-      </p>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>Code</th><th>Thrown by</th><th>What happened</th></tr></thead>
-          <tbody>
-            <tr><td><span class="reason">invalid_option</span></td><td><code>issue</code>, <code>createStatusList</code></td><td>An argument the API cannot use: an unknown claim name, a bad duration, a status index outside the list.</td></tr>
-            <tr><td><span class="reason">not_disclosable</span></td><td><code>present</code></td><td>You asked to reveal a claim the issuer never made disclosable.</td></tr>
-            <tr><td><span class="reason">malformed_credential</span></td><td><code>present</code></td><td>The SD-JWT combined form is not well formed.</td></tr>
-            <tr><td><span class="reason">malformed_envelope</span></td><td><code>unpack</code>, <code>present</code></td><td>The QR envelope is not well formed. Check <code>cause</code> for the codec error underneath.</td></tr>
-            <tr><td><span class="reason">malformed_status_list</span></td><td>status list parsing</td><td>The token is not a readable status list.</td></tr>
-            <tr><td><span class="reason">invalid_encoding</span></td><td><code>decodeBase45</code></td><td>Text that should have been base45 or base64url is not, or a segment is not JSON.</td></tr>
-            <tr><td><span class="reason">unsupported_alg</span></td><td><code>issue</code></td><td>An algorithm this version does not implement.</td></tr>
-            <tr><td><span class="reason">unsupported_runtime</span></td><td><code>unpack</code></td><td>The platform lacks something required, such as <code>DecompressionStream</code> on older React Native.</td></tr>
-            <tr><td><span class="reason">crypto_failure</span></td><td><code>issue</code>, <code>createStatusList</code></td><td>WebCrypto refused a key or an operation. The original <code>DOMException</code> is on <code>cause</code>.</td></tr>
-            <tr><td><span class="reason">verification_failed</span></td><td><code>assertVerified</code></td><td>Only from that helper. Carries the original <code>reason</code>.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3>Reading what is underneath</h3>
-      <p>
-        Where this library wraps someone else's failure it keeps the original on the standard
-        <code>cause</code> property, so a specific code never costs you the detail:
-      </p>
-      <pre><code><span class="tok-k">try</span> {
+}</code></pre><h3>Rejection reasons</h3>
+<p>Returned by <code>verify()</code> as <code>result.reason</code>. The playground fires each of these at the verifier so you can watch them land.</p>
+<div class="tablewrap"><table><thead><tr><th>Reason</th><th>What happened</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>Not a credential at all, a corrupt envelope, or a combined form missing its trailing separator.</td></tr><tr><td><code>unknown_issuer</code></td><td>The <code>iss</code> claim is not in your trust list.</td></tr><tr><td><code>unknown_key</code></td><td>The issuer is trusted but has no key with that <code>kid</code>.</td></tr><tr><td><code>unsupported_alg</code></td><td>The header asks for an algorithm the trusted key does not use.</td></tr><tr><td><code>bad_signature</code></td><td>The signature does not check out. Also covers a forged status list.</td></tr><tr><td><code>expired</code></td><td>Past <code>exp</code>, beyond the clock skew allowance.</td></tr><tr><td><code>not_yet_valid</code></td><td>Before <code>nbf</code>.</td></tr><tr><td><code>digest_mismatch</code></td><td>A disclosure the issuer never signed, one sent twice, one naming a registered claim, or one colliding with a claim already in the payload.</td></tr><tr><td><code>revoked</code></td><td>The issuer set this credential&#39;s bit. Covers suspended too.</td></tr><tr><td><code>status_unavailable</code></td><td>Revocation could not be determined: no list supplied, unreadable, bound to a different issuer or uri, or the index falls outside it.</td></tr><tr><td><code>status_list_stale</code></td><td>Your cached list is older than <code>maxStatusAge</code>.</td></tr><tr><td><code>holder_proof_missing</code></td><td>No holder proof was offered and the caller did not pass <code>acceptWithoutHolderProof</code>.</td></tr><tr><td><code>holder_proof_invalid</code></td><td>A proof was offered and failed: wrong key, wrong nonce, wrong audience, a different disclosure set, stale, or attached to a credential with no bound key.</td></tr></tbody></table></div><h3>Thrown errors</h3>
+<p>Everything except <code>verify()</code> throws <code>QredentialError</code>, which carries a <code>code</code>. Use <code>isQredentialError()</code> rather than <code>instanceof</code>: it checks the shape, so it keeps working when two copies of the package end up in one dependency tree, which is the usual reason <code>instanceof</code> quietly stops matching.</p>
+<div class="tablewrap"><table><thead><tr><th>Code</th><th>Thrown by</th><th>What happened</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>, <code>createStatusList</code></td><td>An argument the API cannot use: an unknown claim name, a bad duration, a status index outside the list.</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>You asked to reveal a claim the issuer never made disclosable.</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>The SD-JWT combined form is not well formed.</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>, <code>present</code></td><td>The QR envelope is not well formed. Check <code>cause</code> for the codec error underneath.</td></tr><tr><td><code>malformed_status_list</code></td><td>status list parsing</td><td>The token is not a readable status list.</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>Text that should have been base45 or base64url is not, or a segment is not JSON.</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>An algorithm this version does not implement.</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>The platform lacks something required, such as <code>DecompressionStream</code> on older React Native.</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>, <code>createStatusList</code></td><td>WebCrypto refused a key or an operation. The original <code>DOMException</code> is on <code>cause</code>.</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>Only from that helper. Carries the original <code>reason</code>.</td></tr></tbody></table></div><h3>Reading what is underneath</h3>
+<p>Where this library wraps someone else&#39;s failure it keeps the original on the standard <code>cause</code> property, so a specific code never costs you the detail:</p>
+<pre><code><span class="tok-k">try</span> {
   <span class="tok-k">await</span> unpack(scanned)
 } <span class="tok-k">catch</span> (error) {
   <span class="tok-k">if</span> (isQredentialError(error)) {
-    error.code           <span class="tok-c">// 'malformed_envelope'</span>
-    error.cause          <span class="tok-c">// the invalid_encoding error from the base45 decoder</span>
+    error.code            <span class="tok-s">0</span> 
+    error.cause           <span class="tok-s">1</span> 
   }
-}</code></pre>
+}</code></pre><div class="aside"><strong>Codes are API, messages are not.</strong> Every <code>code</code> and every <code>reason</code> value is covered by semver: a value is never repurposed, and new ones arrive only in minor versions. Message text is free to change in a patch, so branch on the code and print the message. A test in the repository pins the full set of codes, so adding or removing one has to be a deliberate act rather than a side effect.</div>
+</section>
+<section id="limits">
+<h2>What this is not</h2>
+<ul>
+<li><strong>Not a wallet.</strong> No UI, no storage.</li>
+<li><strong>Not key management.</strong> You bring your own keys and your own trust list distribution.</li>
+<li><strong>Presenting individual array elements.</strong> Verification resolves them; <code>present()</code> selects by claim name, and an array element has none, so this version withholds them. The credential still verifies, with those elements removed. A path based selector is the fix and is not built yet.</li>
+<li><strong>Not ISO 18013-5 mDL yet.</strong> That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.</li>
+<li><strong>Not audited.</strong> It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.</li>
+</ul>
+<p>The source is about 700 lines with no runtime dependencies, specifically so that reading it before you trust it is realistic. Vulnerabilities go through the Security tab on GitHub, and <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">SECURITY.md</a> sets out scope and response times.</p>
 
-      <div class="aside">
-        <strong>Codes are API, messages are not.</strong> Every <code>code</code> and every
-        <code>reason</code> value is covered by semver: a value is never repurposed, and new ones
-        arrive only in minor versions. Message text is free to change in a patch, so branch on the
-        code and print the message. A test in the repository pins the full set of codes, so adding
-        or removing one has to be a deliberate act rather than a side effect.
-      </div>
-    </section>
-
-    <section id="limits">
-      <h2>What this is not</h2>
-      <ul>
-        <li><strong>Not a wallet.</strong> No UI, no storage.</li>
-        <li><strong>Not key management.</strong> You bring your own keys and your own trust list distribution.</li>
-        <li><strong>Presenting individual array elements.</strong> Verification resolves them; <code>present()</code> selects by claim name, and an array element has none, so this version withholds them. The credential still verifies, with those elements removed. A path based selector is the fix and is not built yet.</li>
-        <li><strong>Not ISO 18013-5 mDL yet.</strong> That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.</li>
-        <li><strong>Not audited.</strong> It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.</li>
-      </ul>
-      <p>
-        The source is about 700 lines with no runtime dependencies, specifically so that reading it
-        before you trust it is realistic. Vulnerabilities go through the Security tab on GitHub, and
-        <a href="https://github.com/george-veras/qredential/blob/main/SECURITY.md">SECURITY.md</a>
-        sets out scope and response times.
-      </p>
-    </section>
+</section>
 
     <footer>
       <span>qredential &middot; MIT</span>
