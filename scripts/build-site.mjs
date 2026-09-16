@@ -155,6 +155,22 @@ function alternates(code) {
   return tags.join('\n')
 }
 
+// ------------------------------------------------------------- the landing, one page per locale
+//
+// The landing is app shaped rather than prose: a fixed layout wrapped around a live demo. So its
+// text lives in a key catalogue rather than Markdown, and the same template is filled nine times.
+// Runtime strings, the ones the demo writes only after a credential has been verified, ride along
+// as a T object injected before the page script.
+
+const landing = {}
+for (const code of codes) {
+  try {
+    landing[code] = JSON.parse(await readFile(join(root, `content/landing/${code}.json`), 'utf8'))
+  } catch {
+    // Not translated yet. The language simply does not get a landing page.
+  }
+}
+
 // -------------------------------------------------- the landing and the playground, with a bundle
 
 const result = await build({
@@ -179,12 +195,70 @@ async function templates(dir) {
 }
 
 for (const template of await templates(docs)) {
-  // The guide is content driven now and its old template is gone; anything left is app shaped.
   const source = await readFile(template, 'utf8')
   if (!source.includes('__BUNDLE__')) continue
-  const out = template.replace(/index\.template\.html$/, 'index.html')
-  await writeFile(out, source.replace('__BUNDLE__', () => bundle))
-  console.log(`${out.slice(root.length + 1)}: ${(source.length / 1024).toFixed(1)} KB`)
+
+  const isLanding = template === join(docs, 'index.template.html')
+  if (!isLanding) {
+    const out = template.replace(/index\.template\.html$/, 'index.html')
+    await writeFile(out, source.replace('__BUNDLE__', () => bundle))
+    console.log(`${out.slice(root.length + 1)}: ${(source.length / 1024).toFixed(1)} KB`)
+    continue
+  }
+
+  for (const code of codes) {
+    const strings = landing[code]
+    if (!strings) continue
+
+    const missing = [...source.matchAll(/\{\{([a-zA-Z.0-9]+)\}\}/g)]
+      .map((m) => m[1])
+      .filter((k) => strings[k] === undefined)
+    if (missing.length > 0) {
+      // A page half in one language and half in another is worse than an untranslated one.
+      throw new Error(`landing/${code}.json is missing keys: ${[...new Set(missing)].join(', ')}`)
+    }
+
+    const home = code === SOURCE ? './' : '../'
+    const guide = code === SOURCE ? './guide/' : './guide/'
+    const play = code === SOURCE ? './playground/' : '../playground/'
+
+    const langRow = codes
+      .filter((c) => landing[c])
+      .map((c) => {
+        const href = c === SOURCE ? (code === SOURCE ? './' : '../') : (code === SOURCE ? `./${c}/` : `../${c}/`)
+        const here = c === code ? ' aria-current="page"' : ''
+        return `<a href="${href}" hreflang="${c}" lang="${c}"${here}>${locales[c].native}</a>`
+      })
+      .join('\n    ')
+
+    // Only the keys the demo needs at runtime travel into the page as data.
+    const runtime = Object.fromEntries(
+      Object.entries(strings).filter(([k]) => k.startsWith('demo.'))
+    )
+
+    let page = source
+      .replace(/\{\{([a-zA-Z.0-9]+)\}\}/g, (_, k) => strings[k])
+      .replace('__HOME__', home)
+      .replace(/__GUIDE__/g, guide)
+      .replace(/__PLAYGROUND__/g, play)
+      .replace('__LANGS__', langRow)
+      .replace('__STRINGS__', `window.__T=${JSON.stringify(runtime)};`)
+      .replace('__BUNDLE__', () => bundle)
+
+    const alt = codes
+      .filter((c) => landing[c])
+      .map((c) => `<link rel="alternate" hreflang="${c}" href="${SITE}/${c === SOURCE ? '' : c + '/'}">`)
+      .concat([`<link rel="alternate" hreflang="x-default" href="${SITE}/">`])
+      .join('\n')
+
+    page = `<html lang="${code}" dir="${locales[code].dir ?? 'ltr'}">\n` +
+      page.replace('<title>', alt + '\n<title>')
+
+    const out = join(docs, code === SOURCE ? '' : code, 'index.html')
+    await mkdir(dirname(out), { recursive: true })
+    await writeFile(out, page)
+    console.log(`landing ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
+  }
 }
 
 // ------------------------------------------------------------------------------------- the report
