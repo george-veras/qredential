@@ -137,17 +137,17 @@
       "modified": "2026-09-16"
     },
     "docs/guide/_shell.html": {
-      "sha": "0cdbd7848824f0b5",
+      "sha": "bd57b018a21eab29",
       "created": "2026-09-15",
       "modified": "2026-09-17"
     },
     "docs/index.template.html": {
-      "sha": "29e8f5294984a071",
+      "sha": "c91e64cf9c6954ba",
       "created": "2026-09-15",
       "modified": "2026-09-17"
     },
     "docs/playground/index.template.html": {
-      "sha": "6e463cae13d23229",
+      "sha": "62181afbf87bc5b7",
       "created": "2026-09-15",
       "modified": "2026-09-17"
     }

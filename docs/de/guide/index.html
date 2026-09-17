@@ -47,7 +47,7 @@
 <meta name="msvalidate.01" content="9023E565BA2902195A4DF09FBAD0EE59">
 <meta name="applicable-device" content="pc,mobile">
 <link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
-<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54)}#qr-lang button{background:none;border:0;padding:0 .25rem;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1}#qr-lang button:hover{opacity:1}</style>
+<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
 <script>(function(){var O={"en":["https://qredential.js.org/guide/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/guide/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/guide/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/guide/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/guide/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/guide/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/guide/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/guide/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/guide/","以繁體中文閱讀本頁","關閉"]},cur="de";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/de/","inLanguage":"de","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","sameAs":["https://github.com/george-veras"]},{"@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"Prüfen Sie einen digitalen Nachweis aus einem QR-Code ohne Netzverbindung. Selektive SD-JWT-Offenlegung, Key Binding, Offline-Sperrprüfung, null Abhängigkeiten.","inLanguage":"de","url":"https://qredential.js.org/de/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-16"},{"@type":"TechArticle","@id":"https://qredential.js.org/de/guide/#article","headline":"Qredential-Dokumentation","description":"SD-JWT-Nachweise offline ausstellen, vorzeigen und prüfen: selektive Offenlegung, Key Binding, QR-Größenbudget, Sperrprüfung und das Fehlermodell.","inLanguage":"de","url":"https://qredential.js.org/de/guide/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-15","dateModified":"2026-09-16"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/de/guide/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"Start","item":"https://qredential.js.org/de/"},{"@type":"ListItem","position":2,"name":"Dokumentation","item":"https://qredential.js.org/de/guide/"}]}]}</script>
 <title>Qredential-Dokumentation</title>
@@ -107,8 +107,13 @@
     letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
   }
   .mark span { color: var(--viridian); }
-  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
-  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav { display: flex; flex-wrap: wrap; gap: 18px; margin-left: auto; font-size: 14px; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  .masthead nav a { color: var(--slate); text-decoration: none;
+                    display: inline-flex; align-items: center; min-height: 24px; }
   .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
 
   .shell {
@@ -127,7 +132,8 @@
     margin: 0 0 10px;
   }
   .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-  .toc a { color: var(--slate); text-decoration: none; display: block; }
+  .toc a { color: var(--slate); text-decoration: none;
+           display: flex; align-items: center; min-height: 24px; }
   .toc a:hover { color: var(--ink); }
 
   article { min-width: 0; max-width: 72ch; }
@@ -238,12 +244,14 @@
   .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
   /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
      Off screen until focused, which is the only way it stays useful without being in the way. */
-  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
   .skip:focus {
     left: 10px; top: 10px; padding: 10px 14px;
-    background: var(--panel); color: var(--ink);
+    background: var(--panel); color: var(--ink); min-height: 24px;
     border: 2px solid var(--viridian); text-decoration: none;
   }
+  article footer a { display: inline-flex; align-items: center; min-height: 24px; }
 </style>
 
 <a class="skip" href="#content">Zum Inhalt springen</a>
@@ -289,10 +297,7 @@
 <p class="eyebrow">Dokumentation</p>
 <h1>Nachweise, die sich ohne Netz prüfen lassen</h1>
 <p class="lede">Ein QR-Code trägt seinen eigenen Beweis. <code>qredential</code> prüft Signatur, Ablauf, Sperrstatus und Claims, ohne dass eine einzige Anfrage das Gerät verlässt.</p>
-<!-- cta --> [Playground öffnen](../../playground/)
-
-<!-- cta --> [Quellcode lesen](https://github.com/george-veras/qredential)
-
+<div class="cta-row"><a class="cta" href="../../playground/">Playground öffnen</a><a class="cta ghost" href="https://github.com/george-veras/qredential">Quellcode lesen</a></div>
 </section>
 <section id="start">
 <h2>Erste Schritte</h2>

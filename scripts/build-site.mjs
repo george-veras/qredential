@@ -338,7 +338,8 @@ function head(code, { path, title, description, type }) {
       'padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;' +
       'background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);' +
       'border-bottom:1px solid var(--line,#D4DCD7)}' +
-      '#qr-lang a{color:var(--viridian,#0E6B54)}' +
+      '#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;' +
+      'min-height:24px}' +
       '#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;' +
       // WCAG 2.2 adds a 24 by 24 minimum for anything you have to hit with a finger.
       'font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;' +

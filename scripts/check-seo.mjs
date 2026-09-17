@@ -90,6 +90,14 @@ for (const file of pages) {
   else if (!existsSync(join(docs, m.ogImage.replace(`${SITE}/`, ''))))
     fail(where, `og:image points at ${m.ogImage}, which is not in docs/`)
 
+  // Markdown that reached the page still written as Markdown. It happened to both call to action
+  // buttons in all nine guides for weeks: the marker opened its line, CommonMark turned the whole
+  // paragraph into a raw HTML block, and the links were printed as [text](href) to every reader.
+  // Nothing errored and nothing looked broken enough to notice.
+  const prose = html.replace(/<pre[\s\S]*?<\/pre>/g, '').replace(/<code[\s\S]*?<\/code>/g, '')
+  const raw = /\[[^\]\n]{2,60}\]\((?!\s)[^)\s]{2,120}\)/.exec(prose)
+  if (raw) fail(where, `unrendered Markdown in the page: ${raw[0].slice(0, 60)}`)
+
   if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(html))
     fail(where, 'calls Google Fonts, which is unreachable from mainland China and blocks the render')
 
