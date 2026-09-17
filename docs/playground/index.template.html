@@ -3,10 +3,10 @@
   :root {
     --ground: #E8ECE8;
     --panel: #F4F6F3;
-    --plate: #FDFDFB;
+    --plate: #FDFDFB; --plate-ink: #596968;
     --ink: #111A1D;
     --body: #24312F;
-    --slate: #5C6C6B;
+    --slate: #596968;
     --line: #C7D0CA;
     --line-soft: #DBE2DC;
     --viridian: #0E6B54;
@@ -25,7 +25,7 @@
     :root:not([data-theme="light"]) {
       --ground: #0C1214;
       --panel: #141D20;
-      --plate: #FDFDFB;
+      --plate: #FDFDFB; --plate-ink: #596968;
       --ink: #E4EAE5;
       --body: #C4CFCA;
       --slate: #8A9A97;
@@ -43,7 +43,7 @@
   :root[data-theme="dark"] {
     --ground: #0C1214;
     --panel: #141D20;
-    --plate: #FDFDFB;
+    --plate: #FDFDFB; --plate-ink: #596968;
     --ink: #E4EAE5;
     --body: #C4CFCA;
     --slate: #8A9A97;
@@ -181,7 +181,7 @@
     font-size: 10.5px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #6B7A78;
+    color: var(--plate-ink);
     text-align: center;
     margin-top: 10px;
   }
@@ -381,10 +381,22 @@
   }
   footer a { color: var(--guilloche); }
   .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+                     padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 </style>
 
 
+<a class="skip" href="#content">__SKIP__</a>
 <div class="wrap">
+  <h1 class="visually-hidden">__H1__</h1>
   <header class="masthead">
     <div class="mark">q<span>redential</span></div>
     <div class="tagline">{{tagline}}</div>
@@ -394,7 +406,7 @@
 
   <div id="boot" class="boot">{{boot}}</div>
 
-  <main id="app" hidden>
+  <main id="content" tabindex="-1" hidden>
     <div class="bench">
       <section>
         <h2>{{cred.title}}</h2>
@@ -417,7 +429,7 @@
           <h2 style="margin:0">{{wire.title}}</h2>
           <span class="chip" id="strip-len"></span>
         </div>
-        <div class="strip"><pre id="strip"></pre></div>
+        <div class="strip" tabindex="0"><pre id="strip"></pre></div>
       </section>
 
       <section>
@@ -436,7 +448,7 @@
       <p class="note">
         {{verifier.note}}
       </p>
-      <div class="verdict">
+      <div class="verdict" role="status">
         <div class="stamp" id="stamp">
           <div class="word" id="stamp-word">Ready</div>
           <div class="code" id="stamp-code"></div>
@@ -886,7 +898,7 @@ __QRLIB__
       await rebuild();
 
       el('boot').hidden = true;
-      el('app').hidden = false;
+      el('content').hidden = false;
     } catch (err) {
       el('boot').textContent = T['run.bootFail'] + (err && err.message ? err.message : String(err));
     }

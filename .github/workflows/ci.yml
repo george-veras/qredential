@@ -90,3 +90,8 @@ jobs:
       # language offer actually behaving in a browser set to somebody else's language. This kind of
       # thing breaks silently, which is why it is tested rather than eyeballed.
       - run: npm run check:seo
+
+      # WCAG 2.2 AA across all twenty seven pages in both themes, plus the one thing no scanner
+      # checks: that a keyboard reaches the skip link first and that using it moves focus. Automation
+      # sees about a third of the standard, so this is a floor, not a pass mark.
+      - run: npm run check:a11y

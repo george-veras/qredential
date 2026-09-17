@@ -5,7 +5,7 @@
     --panel: #F4F6F3;
     --ink: #111A1D;
     --body: #24312F;
-    --slate: #5C6C6B;
+    --slate: #596968;
     --line: #C7D0CA;
     --line-soft: #DBE2DC;
     --viridian: #0E6B54;
@@ -184,8 +184,17 @@
     color: var(--ink);
   }
   .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
 </style>
 
+<a class="skip" href="#content">__SKIP__</a>
 <header class="masthead">
   <div class="masthead-inner">
     <a class="mark" href="__HOME__">q<span>redential</span></a>
@@ -206,6 +215,7 @@
     <ol class="langs">__LANGS__</ol>
   </aside>
 
+  <main id="content" tabindex="-1">
   <article>
 __CONTENT__
 __PROVENANCE__
@@ -215,4 +225,5 @@ __PROVENANCE__
       <span><a href="https://github.com/george-veras/qredential">__FOOTER_SOURCE__</a></span>
     </footer>
   </article>
+  </main>
 </div>

@@ -58,7 +58,7 @@
     --panel: #F4F6F3;
     --ink: #111A1D;
     --body: #24312F;
-    --slate: #5C6C6B;
+    --slate: #596968;
     --line: #C7D0CA;
     --line-soft: #DBE2DC;
     --viridian: #0E6B54;
@@ -237,8 +237,17 @@
     color: var(--ink);
   }
   .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
 </style>
 
+<a class="skip" href="#content">跳到主要内容</a>
 <header class="masthead">
   <div class="masthead-inner">
     <a class="mark" href="../">q<span>redential</span></a>
@@ -275,6 +284,7 @@
       <li><a href="../../zh-Hant/guide/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li></ol>
   </aside>
 
+  <main id="content" tabindex="-1">
   <article>
 <section id="top">
 <p class="eyebrow">文档</p>
@@ -374,14 +384,14 @@ result.holderVerified    <span class="tok-s">5</span> </code></pre><p>这份证�
 result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这个选项，没有证明的出示会以 <code>holder_proof_missing</code> 被拒。默认选严格的那一侧是有意为之：危险的情形是有人做门禁扫码，从没听说过密钥绑定，然后交付了一个截图就能攻破的东西。一次点名问题的大声失败，比一个把问题藏起来的安静默认值更有价值。</p>
 <div class="aside"><strong>选择接受，永远不会放过一份坏掉的证明。</strong> <code>acceptWithoutHolderProof</code> 覆盖的是根本没有提供证明的情形。如果证明存在却验不过，无论这个选项如何，凭证都会被拒。</div><h3>代价</h3>
 <p>绑定在二维码这个尺度上不是免费的。持有人的公钥住在凭证里，证明则随着出示一起走：</p>
-<div class="tablewrap"><table><thead><tr><th>出示</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>静态，全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>仅年龄，已绑定但无证明</td><td>~1320</td><td>24，偏密</td></tr><tr><td>仅年龄，带持有人证明</td><td>~1605</td><td>27，太密</td></tr></tbody></table></div><p>证明本身约 285 个字符。这比看上去要不打紧，因为能做密钥绑定的凭证，按定义就是显示在屏幕上的，那里的码可以又大又亮。密度的上限困扰的是磨损的印刷卡片，而印刷卡片本来也做不了密钥绑定。</p>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>出示</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>静态，全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>仅年龄，已绑定但无证明</td><td>~1320</td><td>24，偏密</td></tr><tr><td>仅年龄，带持有人证明</td><td>~1605</td><td>27，太密</td></tr></tbody></table></div><p>证明本身约 285 个字符。这比看上去要不打紧，因为能做密钥绑定的凭证，按定义就是显示在屏幕上的，那里的码可以又大又亮。密度的上限困扰的是磨损的印刷卡片，而印刷卡片本来也做不了密钥绑定。</p>
 
 </section>
 <section id="size">
 <h2>体积预算</h2>
 <p>二维码在最大版本下大约能装 4300 个字母数字字符，但那么大的码在划花的卡片或碎屏上根本读不出来。实用上限在版本 20 附近。</p>
 <p>一份现实的驾照要花多少，看下面。八个 claim、五年有效期、一个状态列表指针，用仓库里的 <code>examples/sizes.mjs</code> 测得：</p>
-<div class="tablewrap"><table><thead><tr><th>凭证</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>八个 claim 全部可披露</td><td>~1590</td><td>27，太密</td></tr><tr><td>只出示 <code>over_18</code></td><td>~1115</td><td>22，仍然偏密</td></tr></tbody></table></div><p>中间那行才是难受的，而在这里知道总比印完卡片再知道好。选择性披露几乎让凭证翻倍，因为每个可披露的 claim 都要花一个盐加一个被签名的摘要，而且<strong>无论持有人是否展示该 claim，摘要都留在载荷里</strong>。这是有意的：如果摘要数量随着你展示的内容缩水，就会泄露你隐藏了什么。实际后果是，出示时省下的比直觉承诺的要少。这里是三成，不是八成。</p>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>凭证</th><th>字符数</th><th>二维码版本</th></tr></thead><tbody><tr><td>全部可见</td><td>~740</td><td>18，扫得挺好</td></tr><tr><td>八个 claim 全部可披露</td><td>~1590</td><td>27，太密</td></tr><tr><td>只出示 <code>over_18</code></td><td>~1115</td><td>22，仍然偏密</td></tr></tbody></table></div><p>中间那行才是难受的，而在这里知道总比印完卡片再知道好。选择性披露几乎让凭证翻倍，因为每个可披露的 claim 都要花一个盐加一个被签名的摘要，而且<strong>无论持有人是否展示该 claim，摘要都留在载荷里</strong>。这是有意的：如果摘要数量随着你展示的内容缩水，就会泄露你隐藏了什么。实际后果是，出示时省下的比直觉承诺的要少。这里是三成，不是八成。</p>
 <p>所以只把验证方真有可能单独需要看到的 claim 设为可披露。两三个，不是全部。<code>fits()</code> 会在你定下来之前告诉你处境。</p>
 <div class="aside"><strong>关于 base45。</strong> 民间说法是它因为紧凑才被选中。不是。二维码字母数字模式下的 base45，每个原始字节约花 8.25 比特，字节模式下的 base64 是 10.67，裸二进制正好 8。它明显赢过 base64，略输给裸字节。放弃裸字节是有意的，因为字节模式带着字符集的歧义，不少读码器会返回一串乱掉的文本。一份经得起复制、粘贴和写进日志的凭证，值这三个百分点。</div>
 </section>
@@ -434,21 +444,21 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这�
 <h2>API 参考</h2>
 <p>四个函数覆盖凭证的一生，外加一个给发布吊销信息的签发方用。</p>
 <h3>issue(options)</h3>
-<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>必须与验证方信任列表中某把密钥对应的标识。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>私钥。不会离开这次调用。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>密钥标识，写进头部，好让验证方在轮换期间选对密钥。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>默认 <code>ES256</code>，所有平台都支持。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>凭证所主张的内容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>持有人可以隐藏的 claim 名。其余的一直可见。写一个不存在的名字会抛异常。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>凭证类型，即 SD-JWT VC 的 <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>可选的主体标识。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒数，或者像 <code>&#39;1825d&#39;</code> 这样的时长。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同样的写法，用于稍后才生效的凭证。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>这份凭证在状态列表中的位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>持有人的<strong>公钥</strong>，写进 <code>cnf</code>。只有静态凭证才省略它。带私钥成分的密钥会被拒绝。</td></tr></tbody></table></div><p>返回 <code>credential</code>（SD-JWT 的组合形式，存进钱包的就是它）、<code>qr</code>（可扫描的信封）、<code>bytes</code>（<code>qr</code> 的字符数），以及 <code>disclosable</code>（持有人可以隐藏的 claim 名）。</p>
+<div class="signature" tabindex="0">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap" tabindex="0"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>必须与验证方信任列表中某把密钥对应的标识。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>私钥。不会离开这次调用。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>密钥标识，写进头部，好让验证方在轮换期间选对密钥。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>默认 <code>ES256</code>，所有平台都支持。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>凭证所主张的内容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>持有人可以隐藏的 claim 名。其余的一直可见。写一个不存在的名字会抛异常。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>凭证类型，即 SD-JWT VC 的 <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>可选的主体标识。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒数，或者像 <code>&#39;1825d&#39;</code> 这样的时长。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同样的写法，用于稍后才生效的凭证。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>这份凭证在状态列表中的位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>持有人的<strong>公钥</strong>，写进 <code>cnf</code>。只有静态凭证才省略它。带私钥成分的密钥会被拒绝。</td></tr></tbody></table></div><p>返回 <code>credential</code>（SD-JWT 的组合形式，存进钱包的就是它）、<code>qr</code>（可扫描的信封）、<code>bytes</code>（<code>qr</code> 的字符数），以及 <code>disclosable</code>（持有人可以隐藏的 claim 名）。</p>
 <h3>present(credential, options)</h3>
-<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>把凭证收窄到列出的那些 claim，返回一个可扫描的信封。签名过的 JWT 一个字都不动，所以签发方的签名对剩下的内容依然成立。组合形式和信封都接受。要一个签发方没有设为可披露的 claim 会抛异常。</p>
+<div class="signature" tabindex="0">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>把凭证收窄到列出的那些 claim，返回一个可扫描的信封。签名过的 JWT 一个字都不动，所以签发方的签名对剩下的内容依然成立。组合形式和信封都接受。要一个签发方没有设为可披露的 claim 会抛异常。</p>
 <p><code>disclose</code> 接受路径，和 <code>verify()</code> 在 <code>disclosed</code> 里返回的是同一种：</p>
 <pre><code><span class="tok-k">await</span> present(credential, {
   disclose: [ <span class="tok-s">0</span> ,  <span class="tok-s">1</span> ,  <span class="tok-s">2</span> ],
 })</code></pre><p>只写一个名字就是单段路径，所以 <code>&#39;over_18&#39;</code> 还是原来的意思。<strong>数组下标是签发时凭证里的位置</strong>，不是出示时的位置，所以无论持有人还隐藏了什么，选择器都保持它原本的含义。另外，嵌套的披露离开包着它的那一条就无法合法传递，所以要 <code>address.locality</code> 时也会一并送出 <code>address</code>，由这个库替你算好，而不是丢给调用方。</p>
 <h3>verify(input, options)</h3>
-<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必填。你愿意相信的签发方和密钥。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>缓存的状态列表令牌。没有它，指向列表的凭证无法被放行。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>比这更旧的列表，拒绝据此作答。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>签发方与验证方之间时钟漂移的容忍秒数。默认 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>本次扫码中这个验证方发出的挑战值。要接受持有人证明就必须有。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>这个验证方自己的标识，用来核对证明里的 <code>aud</code>。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>接受不带任何证明的出示。静态凭证需要它，而且它绝不会放过一份存在却坏掉的证明。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>持有人证明最多可以多旧。默认 5 分钟。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>覆盖当前时间。用于测试和重放分析。</td></tr></tbody></table></div><p>面对敌意输入从不抛异常。它返回一个可辨识联合：成功时是 <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>，失败时是 <code>{ ok: false, reason, message }</code>，其中 <code>reason</code> 取自下面的表。</p>
+<div class="signature" tabindex="0">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap" tabindex="0"><table><thead><tr><th>选项</th><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必填。你愿意相信的签发方和密钥。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>缓存的状态列表令牌。没有它，指向列表的凭证无法被放行。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>比这更旧的列表，拒绝据此作答。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>签发方与验证方之间时钟漂移的容忍秒数。默认 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>本次扫码中这个验证方发出的挑战值。要接受持有人证明就必须有。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>这个验证方自己的标识，用来核对证明里的 <code>aud</code>。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>接受不带任何证明的出示。静态凭证需要它，而且它绝不会放过一份存在却坏掉的证明。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>持有人证明最多可以多旧。默认 5 分钟。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>覆盖当前时间。用于测试和重放分析。</td></tr></tbody></table></div><p>面对敌意输入从不抛异常。它返回一个可辨识联合：成功时是 <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>，失败时是 <code>{ ok: false, reason, message }</code>，其中 <code>reason</code> 取自下面的表。</p>
 <p><code>withheld</code> 统计的是没有随行的可披露 claim 数量。它对做策略有用，而且从构造上它无法告诉你那些是哪几个。</p>
 <p><strong><code>claims</code> 里的一切都在描述主体。</strong> 那些描述令牌本身的注册 claim，比如 <code>iss</code>、<code>iat</code>、<code>exp</code> 和 <code>status</code>，改以带类型的字段出现；而试图设置其中之一、或覆盖载荷已经定下的 claim 的披露，会让整份凭证失败。所以遍历 <code>claims</code> 是安全的。</p>
 <h3>fits(payload, errorCorrection)</h3>
-<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同步函数。返回 <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>。纠错等级默认 <code>M</code>，因为 <code>L</code> 在纸面上看着慷慨，到了磨损的印刷卡片上就不行了。当没有任何版本装得下载荷时 <code>version</code> 是 <code>null</code>，而 <code>advice</code> 是一句可以直接打进构建日志的话。</p>
+<div class="signature" tabindex="0">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同步函数。返回 <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>。纠错等级默认 <code>M</code>，因为 <code>L</code> 在纸面上看着慷慨，到了磨损的印刷卡片上就不行了。当没有任何版本装得下载荷时 <code>version</code> 是 <code>null</code>，而 <code>advice</code> 是一句可以直接打进构建日志的话。</p>
 <h3>createStatusList(options)</h3>
-<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>给签发方用。接受 <code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code> 和 <code>issuedAt</code>，返回一个签名过的状态列表令牌。超出列表范围的下标会抛异常，而不是去破坏邻近凭证的那一位。</p>
+<div class="signature" tabindex="0">createStatusList(options): Promise&lt;string&gt;</div><p>给签发方用。接受 <code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code> 和 <code>issuedAt</code>，返回一个签名过的状态列表令牌。超出列表范围的下标会抛异常，而不是去破坏邻近凭证的那一位。</p>
 <h3>另外导出的</h3>
 <p>给二维码信封用的 <code>pack</code>、<code>unpack</code> 和 <code>isEnvelope</code>，以及单独的编解码 <code>encodeBase45</code> 和 <code>decodeBase45</code>。做工具时有用，日常使用不需要。</p>
 
@@ -456,7 +466,7 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这�
 <section id="errors">
 <h2>错误处理</h2>
 <p>恰好两条约定，这个划分是有意的，不是碰巧。记住这两句话，你就能只写一个 catch 块，并且知道里面会落下什么。</p>
-<div class="signature">1. verify() 从不抛异常。对任何输入都是。
+<div class="signature" tabindex="0">1. verify() 从不抛异常。对任何输入都是。
 2. 其余一切只抛 QredentialError。</div><p>两者不同的原因：<code>verify()</code> 的存在就是为了面对敌意输入，而一个会抛异常的验证器，会被人用 <code>try/catch</code> 一裹，然后把人放过去。所以它返回一个你必须去看的结果。其余部分失败在调用方能在代码里修好的条件上，那里抛异常才是对的形状。</p>
 <p>这两条规则都由基于性质的测试撑着：它们生成随机字符串、畸形密钥、损坏的信封和敌意选项，并断言没有别的东西逃出去。没有来自 JSON 解析的 <code>SyntaxError</code>，没有来自 WebCrypto 的 <code>DOMException</code>，也没有来自分配的 <code>RangeError</code>。</p>
 <h3>处理验证结果</h3>
@@ -487,9 +497,9 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这�
   }
 }</code></pre><h3>拒绝理由</h3>
 <p>由 <code>verify()</code> 通过 <code>result.reason</code> 返回。演练场会把每一条都朝验证器打过去，好让你看着它们落地。</p>
-<div class="tablewrap"><table><thead><tr><th>理由</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>根本不是凭证，或者信封损坏，或者组合形式少了结尾的分隔符。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> claim 不在你的信任列表里。</td></tr><tr><td><code>unknown_key</code></td><td>签发方受信任，但没有带那个 <code>kid</code> 的密钥。</td></tr><tr><td><code>unsupported_alg</code></td><td>头部要求的算法不是受信任密钥所用的那个。</td></tr><tr><td><code>bad_signature</code></td><td>签名对不上。也包括伪造的状态列表。</td></tr><tr><td><code>expired</code></td><td>超过 <code>exp</code>，并且超出了时钟容差。</td></tr><tr><td><code>not_yet_valid</code></td><td>在 <code>nbf</code> 之前。</td></tr><tr><td><code>digest_mismatch</code></td><td>一条签发方从未签过的披露、一条发了两次的披露、一条用了注册 claim 名的披露，或者一条与载荷中已有 claim 撞名的披露。</td></tr><tr><td><code>revoked</code></td><td>签发方置上了这份凭证的那一位。也包括暂停。</td></tr><tr><td><code>status_unavailable</code></td><td>无法判定吊销状态：没提供列表、读不了、绑在别的签发方或别的 uri 上，或者下标在范围之外。</td></tr><tr><td><code>status_list_stale</code></td><td>你缓存的列表比 <code>maxStatusAge</code> 更旧。</td></tr><tr><td><code>holder_proof_missing</code></td><td>没有提供持有人证明，调用方也没有传 <code>acceptWithoutHolderProof</code>。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>提供了证明但没通过：密钥不对、nonce 不对、audience 不对、披露集合不同、已过期，或者挂在一份没有绑定密钥的凭证上。</td></tr></tbody></table></div><h3>抛出的错误</h3>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>理由</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>根本不是凭证，或者信封损坏，或者组合形式少了结尾的分隔符。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> claim 不在你的信任列表里。</td></tr><tr><td><code>unknown_key</code></td><td>签发方受信任，但没有带那个 <code>kid</code> 的密钥。</td></tr><tr><td><code>unsupported_alg</code></td><td>头部要求的算法不是受信任密钥所用的那个。</td></tr><tr><td><code>bad_signature</code></td><td>签名对不上。也包括伪造的状态列表。</td></tr><tr><td><code>expired</code></td><td>超过 <code>exp</code>，并且超出了时钟容差。</td></tr><tr><td><code>not_yet_valid</code></td><td>在 <code>nbf</code> 之前。</td></tr><tr><td><code>digest_mismatch</code></td><td>一条签发方从未签过的披露、一条发了两次的披露、一条用了注册 claim 名的披露，或者一条与载荷中已有 claim 撞名的披露。</td></tr><tr><td><code>revoked</code></td><td>签发方置上了这份凭证的那一位。也包括暂停。</td></tr><tr><td><code>status_unavailable</code></td><td>无法判定吊销状态：没提供列表、读不了、绑在别的签发方或别的 uri 上，或者下标在范围之外。</td></tr><tr><td><code>status_list_stale</code></td><td>你缓存的列表比 <code>maxStatusAge</code> 更旧。</td></tr><tr><td><code>holder_proof_missing</code></td><td>没有提供持有人证明，调用方也没有传 <code>acceptWithoutHolderProof</code>。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>提供了证明但没通过：密钥不对、nonce 不对、audience 不对、披露集合不同、已过期，或者挂在一份没有绑定密钥的凭证上。</td></tr></tbody></table></div><h3>抛出的错误</h3>
 <p>除 <code>verify()</code> 之外的一切都抛 <code>QredentialError</code>，它带着一个 <code>code</code>。请用 <code>isQredentialError()</code> 而不是 <code>instanceof</code>：它看的是形状，所以当同一棵依赖树里混进两份这个包的副本时依然管用，而那正是 <code>instanceof</code> 悄悄不再匹配的常见原因。</p>
-<div class="tablewrap"><table><thead><tr><th>代码</th><th>抛出方</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API 无法使用的参数：未知的 claim 名、非法的时长、超出列表范围的状态下标。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>你要展示一个签发方从未设为可披露的 claim。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT 的组合形式格式不对。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>二维码信封格式不对。底下那层编解码的错误请看 <code>cause</code>。</td></tr><tr><td><code>malformed_status_list</code></td><td>读取状态列表时</td><td>该令牌不是一份可读的状态列表。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>本该是 base45 或 base64url 的文本不是，或者某个片段不是 JSON。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>这个版本没有实现的算法。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>平台缺少必需的东西，比如旧版 React Native 上的 <code>DecompressionStream</code>。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto 拒绝了一把密钥或一次操作。原始的 <code>DOMException</code> 在 <code>cause</code> 里。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>只来自这个辅助函数。带着原本的 <code>reason</code>。</td></tr></tbody></table></div><h3>读取底下的东西</h3>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>代码</th><th>抛出方</th><th>发生了什么</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API 无法使用的参数：未知的 claim 名、非法的时长、超出列表范围的状态下标。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>你要展示一个签发方从未设为可披露的 claim。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT 的组合形式格式不对。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>二维码信封格式不对。底下那层编解码的错误请看 <code>cause</code>。</td></tr><tr><td><code>malformed_status_list</code></td><td>读取状态列表时</td><td>该令牌不是一份可读的状态列表。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>本该是 base45 或 base64url 的文本不是，或者某个片段不是 JSON。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>这个版本没有实现的算法。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>平台缺少必需的东西，比如旧版 React Native 上的 <code>DecompressionStream</code>。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto 拒绝了一把密钥或一次操作。原始的 <code>DOMException</code> 在 <code>cause</code> 里。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>只来自这个辅助函数。带着原本的 <code>reason</code>。</td></tr></tbody></table></div><h3>读取底下的东西</h3>
 <p>在这个库包住别人的失败的地方，它把原始错误保留在标准的 <code>cause</code> 属性上，所以拿到一个具体的代码，不会让你失去细节：</p>
 <pre><code><span class="tok-k">try</span> {
   <span class="tok-k">await</span> unpack(scanned)
@@ -522,4 +532,5 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加这�
       <span><a href="https://github.com/george-veras/qredential">源码与问题反馈</a></span>
     </footer>
   </article>
+  </main>
 </div>

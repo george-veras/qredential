@@ -58,7 +58,7 @@
     --panel: #F4F6F3;
     --ink: #111A1D;
     --body: #24312F;
-    --slate: #5C6C6B;
+    --slate: #596968;
     --line: #C7D0CA;
     --line-soft: #DBE2DC;
     --viridian: #0E6B54;
@@ -237,8 +237,17 @@
     color: var(--ink);
   }
   .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
 </style>
 
+<a class="skip" href="#content">跳至主要內容</a>
 <header class="masthead">
   <div class="masthead-inner">
     <a class="mark" href="../">q<span>redential</span></a>
@@ -275,6 +284,7 @@
       <li><a href="../../zh-Hant/guide/" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li></ol>
   </aside>
 
+  <main id="content" tabindex="-1">
   <article>
 <section id="top">
 <p class="eyebrow">文件</p>
@@ -374,14 +384,14 @@ result.holderVerified    <span class="tok-s">5</span> </code></pre><p>這份證�
 result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加這個選項，沒有證明的出示會以 <code>holder_proof_missing</code> 被拒。預設選嚴格的那一邊是刻意的：危險的情境是有人在做門禁掃碼，從沒聽過金鑰綁定，然後交付了一個截圖就能破的東西。一次點名問題的大聲失敗，比一個把問題藏起來的安靜預設值更有價值。</p>
 <div class="aside"><strong>選擇接受，永遠不會放過一份壞掉的證明。</strong> <code>acceptWithoutHolderProof</code> 涵蓋的是根本沒有提供證明的情形。如果證明存在卻驗不過，無論這個選項為何，憑證都會被拒。</div><h3>代價</h3>
 <p>綁定在 QR Code 的尺度上並非免費。持有人的公鑰住在憑證裡，證明則跟著出示一起走：</p>
-<div class="tablewrap"><table><thead><tr><th>出示</th><th>字元數</th><th>QR Code 版本</th></tr></thead><tbody><tr><td>靜態，全部可見</td><td>~740</td><td>18，掃得很順</td></tr><tr><td>僅年齡，已綁定但無證明</td><td>~1320</td><td>24，偏密</td></tr><tr><td>僅年齡，帶持有人證明</td><td>~1605</td><td>27，太密</td></tr></tbody></table></div><p>證明本身約 285 個字元。這比看起來要不要緊，因為做得了金鑰綁定的憑證，按定義就是顯示在螢幕上的，那裡的碼可以又大又亮。密度上限困擾的是磨損的印刷卡片，而印刷卡片本來就做不了金鑰綁定。</p>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>出示</th><th>字元數</th><th>QR Code 版本</th></tr></thead><tbody><tr><td>靜態，全部可見</td><td>~740</td><td>18，掃得很順</td></tr><tr><td>僅年齡，已綁定但無證明</td><td>~1320</td><td>24，偏密</td></tr><tr><td>僅年齡，帶持有人證明</td><td>~1605</td><td>27，太密</td></tr></tbody></table></div><p>證明本身約 285 個字元。這比看起來要不要緊，因為做得了金鑰綁定的憑證，按定義就是顯示在螢幕上的，那裡的碼可以又大又亮。密度上限困擾的是磨損的印刷卡片，而印刷卡片本來就做不了金鑰綁定。</p>
 
 </section>
 <section id="size">
 <h2>大小預算</h2>
 <p>QR Code 在最大版本下大約裝得下 4300 個英數字元，但那麼大的碼在刮花的卡片或裂掉的螢幕上根本讀不出來。實務上限落在版本 20 附近。</p>
 <p>一份符合現實的駕照要花多少，看以下。八個 claim、五年效期、一個狀態清單指標，用儲存庫裡的 <code>examples/sizes.mjs</code> 量出來：</p>
-<div class="tablewrap"><table><thead><tr><th>憑證</th><th>字元數</th><th>QR Code 版本</th></tr></thead><tbody><tr><td>全部可見</td><td>~740</td><td>18，掃得很順</td></tr><tr><td>八個 claim 全部可揭露</td><td>~1590</td><td>27，太密</td></tr><tr><td>只出示 <code>over_18</code></td><td>~1115</td><td>22，仍然偏密</td></tr></tbody></table></div><p>中間那一列才是難受的，而在這裡知道總比印完卡片才知道好。選擇性揭露幾乎讓憑證翻倍，因為每個可揭露的 claim 都要花一個鹽加一個被簽章的摘要，而且<strong>不論持有人是否揭露該 claim，摘要都留在酬載裡</strong>。這是刻意的：如果摘要數量隨著你揭露的內容縮水，就會洩漏你藏了什麼。實際後果是，出示時省下的比直覺答應的要少。這裡是三成，不是八成。</p>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>憑證</th><th>字元數</th><th>QR Code 版本</th></tr></thead><tbody><tr><td>全部可見</td><td>~740</td><td>18，掃得很順</td></tr><tr><td>八個 claim 全部可揭露</td><td>~1590</td><td>27，太密</td></tr><tr><td>只出示 <code>over_18</code></td><td>~1115</td><td>22，仍然偏密</td></tr></tbody></table></div><p>中間那一列才是難受的，而在這裡知道總比印完卡片才知道好。選擇性揭露幾乎讓憑證翻倍，因為每個可揭露的 claim 都要花一個鹽加一個被簽章的摘要，而且<strong>不論持有人是否揭露該 claim，摘要都留在酬載裡</strong>。這是刻意的：如果摘要數量隨著你揭露的內容縮水，就會洩漏你藏了什麼。實際後果是，出示時省下的比直覺答應的要少。這裡是三成，不是八成。</p>
 <p>所以只把驗證方真的有可能單獨需要看到的 claim 設為可揭露。兩三個，不是全部。<code>fits()</code> 會在你拍板之前告訴你處境。</p>
 <div class="aside"><strong>關於 base45。</strong> 坊間說法是它因為精簡才被選上。並不是。QR Code 英數模式下的 base45，每個原始位元組約花 8.25 位元，位元組模式下的 base64 是 10.67，裸二進位剛好 8。它明顯贏過 base64，小輸給裸位元組。放掉裸位元組是刻意的，因為位元組模式帶著字元集的歧義，不少讀碼機會回傳一串壞掉的文字。一份禁得起複製、貼上與寫進記錄檔的憑證，值得這三個百分點。</div>
 </section>
@@ -434,21 +444,21 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加這�
 <h2>API 參考</h2>
 <p>四個函式涵蓋憑證的一生，另外一個給要發布撤銷資訊的簽發方用。</p>
 <h3>issue(options)</h3>
-<div class="signature">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap"><table><thead><tr><th>選項</th><th>型別</th><th>意義</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>必須對得上驗證方信任清單中某把金鑰的識別碼。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>私鑰。不會離開這次呼叫。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>金鑰識別碼，寫進標頭，好讓驗證方在輪替期間挑對金鑰。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>預設 <code>ES256</code>，所有平台都支援。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>憑證所主張的內容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>持有人可以不揭露的 claim 名稱。其餘的一律可見。寫一個不存在的名稱會擲出例外。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>憑證型別，也就是 SD-JWT VC 的 <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>選用的主體識別碼。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒數，或像 <code>&#39;1825d&#39;</code> 這樣的時間長度。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同樣的寫法，用於稍後才生效的憑證。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>這份憑證在狀態清單中的位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>持有人的<strong>公鑰</strong>，寫進 <code>cnf</code>。只有靜態憑證才省略它。帶有私鑰成分的金鑰會被拒絕。</td></tr></tbody></table></div><p>回傳 <code>credential</code>（SD-JWT 的組合形式，存進錢包的就是它）、<code>qr</code>（可掃描的信封）、<code>bytes</code>（<code>qr</code> 的字元數），以及 <code>disclosable</code>（持有人可以不揭露的 claim 名稱）。</p>
+<div class="signature" tabindex="0">issue(options: IssueOptions): Promise&lt;IssueResult&gt;</div><div class="tablewrap" tabindex="0"><table><thead><tr><th>選項</th><th>型別</th><th>意義</th></tr></thead><tbody><tr><td><code>issuer</code></td><td><code>string</code></td><td>必須對得上驗證方信任清單中某把金鑰的識別碼。</td></tr><tr><td><code>key</code></td><td><code>Jwk</code></td><td>私鑰。不會離開這次呼叫。</td></tr><tr><td><code>kid</code></td><td><code>string</code></td><td>金鑰識別碼，寫進標頭，好讓驗證方在輪替期間挑對金鑰。</td></tr><tr><td><code>alg</code></td><td><code>&#39;ES256&#39; | &#39;EdDSA&#39;</code></td><td>預設 <code>ES256</code>，所有平台都支援。</td></tr><tr><td><code>claims</code></td><td><code>object</code></td><td>憑證所主張的內容。</td></tr><tr><td><code>disclose</code></td><td><code>string[]</code></td><td>持有人可以不揭露的 claim 名稱。其餘的一律可見。寫一個不存在的名稱會擲出例外。</td></tr><tr><td><code>vct</code></td><td><code>string</code></td><td>憑證型別，也就是 SD-JWT VC 的 <code>vct</code>。</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>選用的主體識別碼。</td></tr><tr><td><code>expiresIn</code></td><td><code>number | string</code></td><td>秒數，或像 <code>&#39;1825d&#39;</code> 這樣的時間長度。</td></tr><tr><td><code>notBefore</code></td><td><code>number | string</code></td><td>同樣的寫法，用於稍後才生效的憑證。</td></tr><tr><td><code>status</code></td><td><code>{ idx, uri }</code></td><td>這份憑證在狀態清單中的位置。</td></tr><tr><td><code>holderKey</code></td><td><code>Jwk</code></td><td>持有人的<strong>公鑰</strong>，寫進 <code>cnf</code>。只有靜態憑證才省略它。帶有私鑰成分的金鑰會被拒絕。</td></tr></tbody></table></div><p>回傳 <code>credential</code>（SD-JWT 的組合形式，存進錢包的就是它）、<code>qr</code>（可掃描的信封）、<code>bytes</code>（<code>qr</code> 的字元數），以及 <code>disclosable</code>（持有人可以不揭露的 claim 名稱）。</p>
 <h3>present(credential, options)</h3>
-<div class="signature">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>把憑證收窄到列出的那些 claim，並回傳一個可掃描的信封。簽好章的 JWT 一個字都不會動，所以簽發方的簽章對剩下的內容依然成立。組合形式與信封都接受。要一個簽發方沒有設為可揭露的 claim 會擲出例外。</p>
+<div class="signature" tabindex="0">present(credential: string, options: { disclose: string[]; keyBinding?: KeyBindingRequest }): Promise&lt;string&gt;</div><p>把憑證收窄到列出的那些 claim，並回傳一個可掃描的信封。簽好章的 JWT 一個字都不會動，所以簽發方的簽章對剩下的內容依然成立。組合形式與信封都接受。要一個簽發方沒有設為可揭露的 claim 會擲出例外。</p>
 <p><code>disclose</code> 接受路徑，和 <code>verify()</code> 在 <code>disclosed</code> 裡回傳的是同一種：</p>
 <pre><code><span class="tok-k">await</span> present(credential, {
   disclose: [ <span class="tok-s">0</span> ,  <span class="tok-s">1</span> ,  <span class="tok-s">2</span> ],
 })</code></pre><p>只寫一個名稱就是單段路徑，所以 <code>&#39;over_18&#39;</code> 還是原本的意思。<strong>陣列索引是簽發時憑證裡的位置</strong>，不是出示時的位置，所以不論持有人還隱藏了什麼，選擇器都保持它原本的含義。另外，巢狀的揭露離開包著它的那一筆就無法合法傳遞，所以要 <code>address.locality</code> 時也會一併送出 <code>address</code>，由這個函式庫替你算好，而不是丟給呼叫端。</p>
 <h3>verify(input, options)</h3>
-<div class="signature">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap"><table><thead><tr><th>選項</th><th>型別</th><th>意義</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必填。你願意相信的簽發方與金鑰。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>快取的狀態清單權杖。沒有它，指向清單的憑證無法放行。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>比這更舊的清單，拒絕據以作答。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>簽發方與驗證方之間時鐘偏移的容許秒數。預設 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>這次掃碼中，這個驗證方發出的挑戰值。要接受持有人證明就必須有。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>這個驗證方自己的識別碼，用來比對證明裡的 <code>aud</code>。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>接受不帶任何證明的出示。靜態憑證需要它，而且它絕不會放過一份存在卻壞掉的證明。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>持有人證明最多可以多舊。預設 5 分鐘。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>覆寫目前時間。供測試與重放分析使用。</td></tr></tbody></table></div><p>面對惡意輸入從不擲出例外。它回傳一個可辨識聯集：成功時是 <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>，失敗時是 <code>{ ok: false, reason, message }</code>，其中 <code>reason</code> 取自下面那張表。</p>
+<div class="signature" tabindex="0">verify(input: string, options: VerifyOptions): Promise&lt;VerifyResult&gt;</div><div class="tablewrap" tabindex="0"><table><thead><tr><th>選項</th><th>型別</th><th>意義</th></tr></thead><tbody><tr><td><code>trust</code></td><td><code>TrustList</code></td><td>必填。你願意相信的簽發方與金鑰。</td></tr><tr><td><code>status</code></td><td><code>string</code></td><td>快取的狀態清單權杖。沒有它，指向清單的憑證無法放行。</td></tr><tr><td><code>maxStatusAge</code></td><td><code>number | string</code></td><td>比這更舊的清單，拒絕據以作答。</td></tr><tr><td><code>clockSkew</code></td><td><code>number</code></td><td>簽發方與驗證方之間時鐘偏移的容許秒數。預設 60。</td></tr><tr><td><code>nonce</code></td><td><code>string</code></td><td>這次掃碼中，這個驗證方發出的挑戰值。要接受持有人證明就必須有。</td></tr><tr><td><code>audience</code></td><td><code>string</code></td><td>這個驗證方自己的識別碼，用來比對證明裡的 <code>aud</code>。</td></tr><tr><td><code>acceptWithoutHolderProof</code></td><td><code>boolean</code></td><td>接受不帶任何證明的出示。靜態憑證需要它，而且它絕不會放過一份存在卻壞掉的證明。</td></tr><tr><td><code>maxKeyBindingAge</code></td><td><code>number | string</code></td><td>持有人證明最多可以多舊。預設 5 分鐘。</td></tr><tr><td><code>now</code></td><td><code>number</code></td><td>覆寫目前時間。供測試與重放分析使用。</td></tr></tbody></table></div><p>面對惡意輸入從不擲出例外。它回傳一個可辨識聯集：成功時是 <code>{ ok: true, claims, issuer, subject, issuedAt, expiresAt, disclosed, withheld, revocationChecked }</code>，失敗時是 <code>{ ok: false, reason, message }</code>，其中 <code>reason</code> 取自下面那張表。</p>
 <p><code>withheld</code> 計的是沒有隨行的可揭露 claim 數量。它對訂定政策有用，而且就結構而言，它無法告訴你那些是哪幾個。</p>
 <p><strong><code>claims</code> 裡的一切都在描述主體。</strong> 那些描述權杖本身的註冊 claim，例如 <code>iss</code>、<code>iat</code>、<code>exp</code> 與 <code>status</code>，改以具型別的欄位出現；而試圖設定其中之一、或覆寫酬載已經定下的 claim 的揭露，會讓整份憑證失敗。所以走訪 <code>claims</code> 是安全的。</p>
 <h3>fits(payload, errorCorrection)</h3>
-<div class="signature">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同步函式。回傳 <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>。錯誤更正等級預設為 <code>M</code>，因為 <code>L</code> 在紙面上看起來大方，到了磨損的印刷卡片上就不行了。當沒有任何版本裝得下酬載時 <code>version</code> 是 <code>null</code>，而 <code>advice</code> 是一句可以直接印進建置記錄的話。</p>
+<div class="signature" tabindex="0">fits(payload: string, errorCorrection?: 'L' | 'M' | 'Q' | 'H'): FitResult</div><p>同步函式。回傳 <code>{ chars, version, capacity, comfortable, errorCorrection, advice }</code>。錯誤更正等級預設為 <code>M</code>，因為 <code>L</code> 在紙面上看起來大方，到了磨損的印刷卡片上就不行了。當沒有任何版本裝得下酬載時 <code>version</code> 是 <code>null</code>，而 <code>advice</code> 是一句可以直接印進建置記錄的話。</p>
 <h3>createStatusList(options)</h3>
-<div class="signature">createStatusList(options): Promise&lt;string&gt;</div><p>給簽發方用。接受 <code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code> 與 <code>issuedAt</code>，回傳一個簽好章的狀態清單權杖。超出清單範圍的索引會擲出例外，而不是去弄壞鄰近憑證的那一個位元。</p>
+<div class="signature" tabindex="0">createStatusList(options): Promise&lt;string&gt;</div><p>給簽發方用。接受 <code>issuer</code>、<code>key</code>、<code>kid</code>、<code>alg</code>、<code>uri</code>、<code>size</code>、<code>revoked</code>、<code>suspended</code>、<code>expiresIn</code> 與 <code>issuedAt</code>，回傳一個簽好章的狀態清單權杖。超出清單範圍的索引會擲出例外，而不是去弄壞鄰近憑證的那一個位元。</p>
 <h3>另外匯出的</h3>
 <p>給 QR Code 信封用的 <code>pack</code>、<code>unpack</code> 與 <code>isEnvelope</code>，以及單獨的編解碼 <code>encodeBase45</code> 與 <code>decodeBase45</code>。做工具時好用，日常使用不需要。</p>
 
@@ -456,7 +466,7 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加這�
 <section id="errors">
 <h2>錯誤處理</h2>
 <p>恰好兩條約定，而這個切分是刻意的，不是碰巧。記住這兩句話，你就能只寫一個 catch 區塊，並且知道裡面會掉下什麼。</p>
-<div class="signature">1. verify() 從不擲出例外。對任何輸入都是。
+<div class="signature" tabindex="0">1. verify() 從不擲出例外。對任何輸入都是。
 2. 其餘一切只擲 QredentialError。</div><p>兩者不同的理由：<code>verify()</code> 的存在就是為了朝惡意輸入去用，而一個會擲例外的驗證器，會被人用 <code>try/catch</code> 一包，然後把人放過去。所以它回傳一個你非看不可的結果。其餘部分失敗在呼叫端能在程式碼裡修好的條件上，那裡擲例外才是對的形狀。</p>
 <p>這兩條規則都由基於性質的測試撐著：它們產生隨機字串、壞掉的金鑰、毀損的信封與惡意選項，並斷言沒有別的東西逃得出去。沒有來自 JSON 剖析的 <code>SyntaxError</code>，沒有來自 WebCrypto 的 <code>DOMException</code>，也沒有來自配置的 <code>RangeError</code>。</p>
 <h3>處理驗證結果</h3>
@@ -487,9 +497,9 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加這�
   }
 }</code></pre><h3>拒絕理由</h3>
 <p>由 <code>verify()</code> 透過 <code>result.reason</code> 回傳。試用場會把每一條都朝驗證器丟過去，好讓你看著它們落地。</p>
-<div class="tablewrap"><table><thead><tr><th>理由</th><th>發生了什麼</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>根本不是憑證，或者信封毀損，或者組合形式少了結尾的分隔符號。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> claim 不在你的信任清單裡。</td></tr><tr><td><code>unknown_key</code></td><td>簽發方受信任，但沒有帶那個 <code>kid</code> 的金鑰。</td></tr><tr><td><code>unsupported_alg</code></td><td>標頭要求的演算法不是受信任金鑰所用的那個。</td></tr><tr><td><code>bad_signature</code></td><td>簽章對不上。也包含偽造的狀態清單。</td></tr><tr><td><code>expired</code></td><td>超過 <code>exp</code>，且超出時鐘容許範圍。</td></tr><tr><td><code>not_yet_valid</code></td><td>在 <code>nbf</code> 之前。</td></tr><tr><td><code>digest_mismatch</code></td><td>一筆簽發方從未簽過的揭露、一筆送了兩次的揭露、一筆用了註冊 claim 名稱的揭露，或者一筆和酬載中已有 claim 撞名的揭露。</td></tr><tr><td><code>revoked</code></td><td>簽發方立起了這份憑證的那個位元。也包含停用。</td></tr><tr><td><code>status_unavailable</code></td><td>無法判定撤銷狀態：沒提供清單、讀不了、綁在別的簽發方或別的 uri 上，或者索引落在範圍之外。</td></tr><tr><td><code>status_list_stale</code></td><td>你快取的清單比 <code>maxStatusAge</code> 更舊。</td></tr><tr><td><code>holder_proof_missing</code></td><td>沒有提供持有人證明，呼叫端也沒有傳 <code>acceptWithoutHolderProof</code>。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>提供了證明但沒過：金鑰不對、nonce 不對、audience 不對、揭露集合不同、已過期，或者掛在一份沒有綁定金鑰的憑證上。</td></tr></tbody></table></div><h3>擲出的錯誤</h3>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>理由</th><th>發生了什麼</th></tr></thead><tbody><tr><td><code>malformed</code></td><td>根本不是憑證，或者信封毀損，或者組合形式少了結尾的分隔符號。</td></tr><tr><td><code>unknown_issuer</code></td><td><code>iss</code> claim 不在你的信任清單裡。</td></tr><tr><td><code>unknown_key</code></td><td>簽發方受信任，但沒有帶那個 <code>kid</code> 的金鑰。</td></tr><tr><td><code>unsupported_alg</code></td><td>標頭要求的演算法不是受信任金鑰所用的那個。</td></tr><tr><td><code>bad_signature</code></td><td>簽章對不上。也包含偽造的狀態清單。</td></tr><tr><td><code>expired</code></td><td>超過 <code>exp</code>，且超出時鐘容許範圍。</td></tr><tr><td><code>not_yet_valid</code></td><td>在 <code>nbf</code> 之前。</td></tr><tr><td><code>digest_mismatch</code></td><td>一筆簽發方從未簽過的揭露、一筆送了兩次的揭露、一筆用了註冊 claim 名稱的揭露，或者一筆和酬載中已有 claim 撞名的揭露。</td></tr><tr><td><code>revoked</code></td><td>簽發方立起了這份憑證的那個位元。也包含停用。</td></tr><tr><td><code>status_unavailable</code></td><td>無法判定撤銷狀態：沒提供清單、讀不了、綁在別的簽發方或別的 uri 上，或者索引落在範圍之外。</td></tr><tr><td><code>status_list_stale</code></td><td>你快取的清單比 <code>maxStatusAge</code> 更舊。</td></tr><tr><td><code>holder_proof_missing</code></td><td>沒有提供持有人證明，呼叫端也沒有傳 <code>acceptWithoutHolderProof</code>。</td></tr><tr><td><code>holder_proof_invalid</code></td><td>提供了證明但沒過：金鑰不對、nonce 不對、audience 不對、揭露集合不同、已過期，或者掛在一份沒有綁定金鑰的憑證上。</td></tr></tbody></table></div><h3>擲出的錯誤</h3>
 <p>除 <code>verify()</code> 之外的一切都擲 <code>QredentialError</code>，它帶著一個 <code>code</code>。請用 <code>isQredentialError()</code> 而不是 <code>instanceof</code>：它看的是形狀，所以當同一棵相依樹裡混進這個套件的兩份副本時依然管用，而那正是 <code>instanceof</code> 悄悄不再吻合的常見原因。</p>
-<div class="tablewrap"><table><thead><tr><th>代碼</th><th>由誰擲出</th><th>發生了什麼</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API 用不了的引數：未知的 claim 名稱、不合法的時間長度、超出清單範圍的狀態索引。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>你要揭露一個簽發方從未設為可揭露的 claim。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT 的組合形式格式不對。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>QR Code 信封格式不對。底下那層編解碼的錯誤請看 <code>cause</code>。</td></tr><tr><td><code>malformed_status_list</code></td><td>讀取狀態清單時</td><td>該權杖不是一份讀得懂的狀態清單。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>本該是 base45 或 base64url 的文字不是，或者某個片段不是 JSON。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>這個版本沒有實作的演算法。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>平台缺少必要的東西，例如舊版 React Native 上的 <code>DecompressionStream</code>。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto 拒絕了一把金鑰或一次操作。原始的 <code>DOMException</code> 在 <code>cause</code> 裡。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>只來自那個輔助函式。帶著原本的 <code>reason</code>。</td></tr></tbody></table></div><h3>讀取底下的東西</h3>
+<div class="tablewrap" tabindex="0"><table><thead><tr><th>代碼</th><th>由誰擲出</th><th>發生了什麼</th></tr></thead><tbody><tr><td><code>invalid_option</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>API 用不了的引數：未知的 claim 名稱、不合法的時間長度、超出清單範圍的狀態索引。</td></tr><tr><td><code>not_disclosable</code></td><td><code>present</code></td><td>你要揭露一個簽發方從未設為可揭露的 claim。</td></tr><tr><td><code>malformed_credential</code></td><td><code>present</code></td><td>SD-JWT 的組合形式格式不對。</td></tr><tr><td><code>malformed_envelope</code></td><td><code>unpack</code>、<code>present</code></td><td>QR Code 信封格式不對。底下那層編解碼的錯誤請看 <code>cause</code>。</td></tr><tr><td><code>malformed_status_list</code></td><td>讀取狀態清單時</td><td>該權杖不是一份讀得懂的狀態清單。</td></tr><tr><td><code>invalid_encoding</code></td><td><code>decodeBase45</code></td><td>本該是 base45 或 base64url 的文字不是，或者某個片段不是 JSON。</td></tr><tr><td><code>unsupported_alg</code></td><td><code>issue</code></td><td>這個版本沒有實作的演算法。</td></tr><tr><td><code>unsupported_runtime</code></td><td><code>unpack</code></td><td>平台缺少必要的東西，例如舊版 React Native 上的 <code>DecompressionStream</code>。</td></tr><tr><td><code>crypto_failure</code></td><td><code>issue</code>、<code>createStatusList</code></td><td>WebCrypto 拒絕了一把金鑰或一次操作。原始的 <code>DOMException</code> 在 <code>cause</code> 裡。</td></tr><tr><td><code>verification_failed</code></td><td><code>assertVerified</code></td><td>只來自那個輔助函式。帶著原本的 <code>reason</code>。</td></tr></tbody></table></div><h3>讀取底下的東西</h3>
 <p>在這個函式庫包住別人的失敗之處，它把原始錯誤留在標準的 <code>cause</code> 屬性上，所以拿到一個具體的代碼，不會讓你失去細節：</p>
 <pre><code><span class="tok-k">try</span> {
   <span class="tok-k">await</span> unpack(scanned)
@@ -522,4 +532,5 @@ result.holderVerified    <span class="tok-s">0</span> </code></pre><p>不加這�
       <span><a href="https://github.com/george-veras/qredential">原始碼與問題回報</a></span>
     </footer>
   </article>
+  </main>
 </div>

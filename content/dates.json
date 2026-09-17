@@ -137,19 +137,19 @@
       "modified": "2026-09-16"
     },
     "docs/guide/_shell.html": {
-      "sha": "4f62c81bdace3088",
+      "sha": "0cdbd7848824f0b5",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-17"
     },
     "docs/index.template.html": {
-      "sha": "9ba73b849e07740c",
+      "sha": "29e8f5294984a071",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-17"
     },
     "docs/playground/index.template.html": {
-      "sha": "ecc9f8a3fa4bb724",
+      "sha": "6e463cae13d23229",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-17"
     }
   },
   "releases": {

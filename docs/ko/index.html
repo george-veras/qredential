@@ -53,8 +53,8 @@
 <title>Qredential, 오프라인 자격증명 검증</title>
 <style>
   :root {
-    --ground: #E8ECE8; --panel: #F4F6F3; --plate: #FDFDFB;
-    --ink: #111A1D; --body: #24312F; --slate: #5C6C6B;
+    --ground: #E8ECE8; --panel: #F4F6F3; --plate: #FDFDFB; --plate-ink: #596968;
+    --ink: #111A1D; --body: #24312F; --slate: #596968;
     --line: #C7D0CA; --line-soft: #DBE2DC;
     --viridian: #0E6B54; --viridian-wash: #D9E7E0;
     --oxblood: #8F2E26; --oxblood-wash: #F0DEDA;
@@ -65,7 +65,7 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+      --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB; --plate-ink: #596968;
       --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
       --line: #263336; --line-soft: #1C272A;
       --viridian: #4FBB98; --viridian-wash: #10322A;
@@ -74,7 +74,7 @@
     }
   }
   :root[data-theme="dark"] {
-    --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB;
+    --ground: #0C1214; --panel: #141D20; --plate: #FDFDFB; --plate-ink: #596968;
     --ink: #E4EAE5; --body: #C4CFCA; --slate: #8A9A97;
     --line: #263336; --line-soft: #1C272A;
     --viridian: #4FBB98; --viridian-wash: #10322A;
@@ -152,7 +152,7 @@
   }
   .demo-caption {
     font-family: var(--data); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: #6B7A78; text-align: center; margin-top: 9px;
+    color: var(--plate-ink); text-align: center; margin-top: 9px;
   }
   .demo-verdict { padding: 14px 16px; display: flex; align-items: center; gap: 13px; }
   .demo-verdict.pass { background: var(--viridian-wash); }
@@ -257,9 +257,18 @@
     padding-block: 24px 44px; font-size: 13.5px; color: var(--slate);
     display: flex; flex-wrap: wrap; gap: 8px 28px;
   }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
 </style>
 
 
+<a class="skip" href="#content">본문으로 건너뛰기</a>
 <header class="masthead">
   <div class="wrap">
     <a class="mark" href="../">q<span>redential</span></a>
@@ -271,6 +280,8 @@
     </nav>
   </div>
 </header>
+
+<main id="content" tabindex="-1">
 
 <div class="hero">
   <canvas id="guilloche" aria-hidden="true"></canvas>
@@ -295,7 +306,7 @@
         <div id="hero-qr"><div class="fallback">데모용 자격증명에 서명하는 중&hellip;</div></div>
         <div class="demo-caption" id="hero-caption">&nbsp;</div>
       </div>
-      <div class="demo-verdict" id="hero-verdict">
+      <div class="demo-verdict" id="hero-verdict" role="status">
         <div class="word" id="hero-word">&nbsp;</div>
         <div class="lines" id="hero-lines"></div>
       </div>
@@ -475,6 +486,8 @@ result.withheld           <span class="tok-c">// 4, 다만 어떤 넷인지는 �
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap langs-row"><a href="../" hreflang="en" lang="en">English</a>
     <a href="../pt/" hreflang="pt" lang="pt">Português</a>
@@ -582,6 +595,7 @@ result.withheld           <span class="tok-c">// 4, 다만 어떤 넷인지는 �
       code.addData(text, 'Alphanumeric');
       code.make();
       host.innerHTML = code.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+      if (host.firstElementChild) host.firstElementChild.setAttribute('aria-hidden', 'true');
       var modules = code.getModuleCount();
       el('hero-caption').textContent = T['demo.caption']
         .replace('{version}', String((modules - 17) / 4))
