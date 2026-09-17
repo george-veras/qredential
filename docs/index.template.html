@@ -50,8 +50,13 @@
     letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
   }
   .mark span { color: var(--viridian); }
-  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14.5px; }
-  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav { flex-wrap: wrap; display: flex; gap: 18px; margin-left: auto; font-size: 14.5px; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  .masthead nav a { color: var(--slate); text-decoration: none;
+                    display: inline-flex; align-items: center; min-height: 24px; }
   .masthead nav a:hover { color: var(--ink); }
 
   /* Hero */
@@ -196,8 +201,10 @@
   .std li b { font-family: var(--data); font-size: 13px; font-weight: 500; color: var(--ink); display: block; }
 
   footer { border-top: 2px solid var(--ink); }
+  footer a { display: inline-flex; align-items: center; min-height: 24px; }
   .langs-row { padding-top: 22px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; }
-  .langs-row a { color: var(--slate); text-decoration: none; }
+  .langs-row a { color: var(--slate); text-decoration: none;
+                 display: inline-flex; align-items: center; min-height: 24px; }
   .langs-row a:hover { color: var(--ink); }
   .langs-row a[aria-current="page"] { color: var(--ink); font-weight: 600; }
 
@@ -207,12 +214,14 @@
   }
   /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
      Off screen until focused, which is the only way it stays useful without being in the way. */
-  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
   .skip:focus {
     left: 10px; top: 10px; padding: 10px 14px;
-    background: var(--panel); color: var(--ink);
+    background: var(--panel); color: var(--ink); min-height: 24px;
     border: 2px solid var(--viridian); text-decoration: none;
   }
+  .flow svg, .band svg { max-width: 100%; height: auto; }
 </style>
 
 

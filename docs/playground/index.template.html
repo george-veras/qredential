@@ -164,7 +164,11 @@
     letter-spacing: 0.06em;
     color: var(--slate);
   }
-  input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--viridian); cursor: pointer; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--viridian); cursor: pointer; }
   input[type="checkbox"]:disabled { cursor: not-allowed; opacity: 0.35; }
   :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
 
@@ -383,14 +387,16 @@
   .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
   /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
      Off screen until focused, which is the only way it stays useful without being in the way. */
-  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
   .skip:focus {
     left: 10px; top: 10px; padding: 10px 14px;
-    background: var(--panel); color: var(--ink);
+    background: var(--panel); color: var(--ink); min-height: 24px;
     border: 2px solid var(--viridian); text-decoration: none;
   }
   .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
                      padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tablewrap { overflow-x: auto; }
 </style>
 
 
@@ -413,7 +419,7 @@
         <p class="note">
           {{cred.note}}
         </p>
-        <table class="ledger">
+        <div class="tablewrap" tabindex="0"><table class="ledger">
           <thead>
             <tr>
               <th>{{cred.thClaim}}</th>
@@ -423,7 +429,7 @@
             </tr>
           </thead>
           <tbody id="ledger-body"></tbody>
-        </table>
+        </table></div>
 
         <div class="strip-head">
           <h2 style="margin:0">{{wire.title}}</h2>

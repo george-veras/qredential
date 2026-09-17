@@ -48,7 +48,7 @@
 <meta name="keywords" content="离线凭证验证,SD-JWT,选择性披露,二维码凭证,数字身份,可验证凭证,RFC 9901,密钥绑定,吊销状态列表,TypeScript">
 <meta name="applicable-device" content="pc,mobile">
 <link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
-<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54)}#qr-lang button{background:none;border:0;padding:0 .25rem;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1}#qr-lang button:hover{opacity:1}</style>
+<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
 <script>(function(){var O={"en":["https://qredential.js.org/guide/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/guide/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/guide/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/guide/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/guide/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/guide/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/guide/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/guide/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/guide/","以繁體中文閱讀本頁","關閉"]},cur="zh-Hans";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/zh-Hans/","inLanguage":"zh-Hans","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","sameAs":["https://github.com/george-veras"]},{"@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"断网也能从二维码验证数字凭证。SD-JWT 选择性披露、密钥绑定、离线吊销检查，零运行时依赖。","inLanguage":"zh-Hans","url":"https://qredential.js.org/zh-Hans/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-16"},{"@type":"TechArticle","@id":"https://qredential.js.org/zh-Hans/guide/#article","headline":"Qredential 文档","description":"如何离线签发、出示和验证 SD-JWT 凭证：选择性披露、密钥绑定、二维码体积预算、吊销检查，以及完整的错误模型。","inLanguage":"zh-Hans","url":"https://qredential.js.org/zh-Hans/guide/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-15","dateModified":"2026-09-16"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/zh-Hans/guide/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://qredential.js.org/zh-Hans/"},{"@type":"ListItem","position":2,"name":"文档","item":"https://qredential.js.org/zh-Hans/guide/"}]}]}</script>
 <title>Qredential 文档</title>
@@ -108,8 +108,13 @@
     letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
   }
   .mark span { color: var(--viridian); }
-  .masthead nav { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
-  .masthead nav a { color: var(--slate); text-decoration: none; }
+  .masthead nav { display: flex; flex-wrap: wrap; gap: 18px; margin-left: auto; font-size: 14px; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  .masthead nav a { color: var(--slate); text-decoration: none;
+                    display: inline-flex; align-items: center; min-height: 24px; }
   .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
 
   .shell {
@@ -128,7 +133,8 @@
     margin: 0 0 10px;
   }
   .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-  .toc a { color: var(--slate); text-decoration: none; display: block; }
+  .toc a { color: var(--slate); text-decoration: none;
+           display: flex; align-items: center; min-height: 24px; }
   .toc a:hover { color: var(--ink); }
 
   article { min-width: 0; max-width: 72ch; }
@@ -239,12 +245,14 @@
   .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
   /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
      Off screen until focused, which is the only way it stays useful without being in the way. */
-  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
   .skip:focus {
     left: 10px; top: 10px; padding: 10px 14px;
-    background: var(--panel); color: var(--ink);
+    background: var(--panel); color: var(--ink); min-height: 24px;
     border: 2px solid var(--viridian); text-decoration: none;
   }
+  article footer a { display: inline-flex; align-items: center; min-height: 24px; }
 </style>
 
 <a class="skip" href="#content">跳到主要内容</a>
@@ -290,10 +298,7 @@
 <p class="eyebrow">文档</p>
 <h1>断网也能验证的凭证</h1>
 <p class="lede">二维码自带证明。<code>qredential</code> 检查签名、有效期、吊销状态和 claim，全程不向外发出一个请求。</p>
-<!-- cta --> [打开演练场](../../playground/)
-
-<!-- cta --> [阅读源码](https://github.com/george-veras/qredential)
-
+<div class="cta-row"><a class="cta" href="../../playground/">打开演练场</a><a class="cta ghost" href="https://github.com/george-veras/qredential">阅读源码</a></div>
 </section>
 <section id="start">
 <h2>快速开始</h2>
