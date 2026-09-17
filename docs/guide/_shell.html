@@ -41,6 +41,11 @@
   a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
   :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
 
+  /* The masthead sticks, so anything scrolled to the top of the window lands underneath it: a
+     heading reached from the table of contents, and, which WCAG 2.2 calls out in 2.4.11, whatever
+     the keyboard just focused. scroll-padding-top on the scroll container fixes both, and 78px is
+     the masthead's measured 66 plus room to see the edge of what you landed on. */
+  html { scroll-padding-top: 78px; }
   .masthead {
     border-bottom: 2px solid var(--ink);
     position: sticky; top: 0; z-index: 20;

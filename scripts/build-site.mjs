@@ -96,6 +96,31 @@ const fontCss = fontFaces
   )
   .join('')
 
+/** Wraps a built page in a real HTML document.
+ *
+ *  The pages were shipping with no doctype, no <head> and no <body>, which put every one of them in
+ *  quirks mode: browsers guessed, and the guesses happened to look right, so nothing ever said so.
+ *  It also left them unparseable by anything stricter than a browser, which is how this surfaced:
+ *  Google Search Console refused to verify the site because the meta tag it was looking for was,
+ *  as far as its parser could tell, not inside a head.
+ *
+ *  Takes a page that already starts with its <html> tag, and puts the boundary between head and
+ *  body at the skip link, which is the first thing in the body of every shell. */
+function asDocument(page) {
+  const open = page.indexOf('\n')
+  const boundary = page.indexOf('<a class="skip"')
+  if (boundary < 0) throw new Error('no skip link: cannot tell where the head ends')
+  return (
+    '<!doctype html>\n' +
+    page.slice(0, open) +
+    '\n<head>\n' +
+    page.slice(open + 1, boundary).trimEnd() +
+    '\n</head>\n<body>\n' +
+    page.slice(boundary).trimEnd() +
+    '\n</body>\n</html>\n'
+  )
+}
+
 /** The tag that goes in <html lang>, which is not always the locale code: Baidu reads this
  *  attribute instead of hreflang, and expects zh-CN rather than the script subtag zh-Hans. */
 const htmlLang = (c) => locales[c].htmlLang ?? c
@@ -223,7 +248,7 @@ for (const code of codes) {
 
   const out = join(docs, guidePath(code), 'index.html')
   await mkdir(dirname(out), { recursive: true })
-  await writeFile(out, withHead)
+  await writeFile(out, asDocument(withHead))
 
   status.push({
     code,
@@ -567,7 +592,7 @@ for (const code of codes) {
 
   const out = join(docs, a11yPath(code), 'index.html')
   await mkdir(dirname(out), { recursive: true })
-  await writeFile(out, page)
+  await writeFile(out, asDocument(page))
   console.log(`statement ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
 }
 
@@ -637,7 +662,7 @@ for (const template of await templates(docs)) {
 
       const out = join(docs, path, 'index.html')
       await mkdir(dirname(out), { recursive: true })
-      await writeFile(out, page)
+      await writeFile(out, asDocument(page))
       console.log(`playground ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
     }
     continue
@@ -707,7 +732,7 @@ for (const template of await templates(docs)) {
 
     const out = join(docs, code === SOURCE ? '' : code, 'index.html')
     await mkdir(dirname(out), { recursive: true })
-    await writeFile(out, page)
+    await writeFile(out, asDocument(page))
     console.log(`landing ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
   }
 }

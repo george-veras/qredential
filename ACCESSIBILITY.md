@@ -60,7 +60,7 @@ a criterion about video is not passed by a site with no video, it is simply not 
 | 2.4.5 Multiple Ways | AA | pass | Four ways to any page: the masthead on every page, the footer, the table of contents on prose pages, and the sitemap. |
 | 2.4.6 Headings and Labels | AA | pass | Headings describe their sections in each language; the playground has a level one heading naming the page. |
 | 2.4.7 Focus Visible | AA | pass | Every focusable element was focused in the browser and its computed style compared before and after, on three page shapes in three languages. |
-| 2.4.11 Focus Not Obscured (Minimum) | AA | pass | After focusing each control, the topmost element at its position is checked to be the control itself. The masthead does not stick. |
+| 2.4.11 Focus Not Obscured (Minimum) | AA | pass | After focusing each control, the topmost element at its position is checked to be the control itself. The guide and this statement have a sticky masthead, which covered whatever focus scrolled to the top of the window until `scroll-padding-top` was set to clear it. The check found that on a second run, after an unrelated change moved the layout; the first run had reported the masthead as not sticky, which was wrong. |
 | 2.5.1 Pointer Gestures | A | n/a | No path based or multipoint gestures. |
 | 2.5.2 Pointer Cancellation | A | pass | Every control acts on click, not on pointerdown. |
 | 2.5.3 Label in Name | A | pass | Accessible names are the visible text, with no `aria-label` overriding a visible label. |

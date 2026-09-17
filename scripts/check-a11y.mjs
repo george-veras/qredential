@@ -196,8 +196,14 @@ for (const loc of layoutLocales) {
         const name = e.tagName.toLowerCase() + (e.className ? '.' + String(e.className).split(' ')[0] : '')
         if (before === after) bad.invisible.push(name)
         const r = e.getBoundingClientRect()
-        if (r.width && r.height) {
-          const top = document.elementFromPoint(r.left + r.width / 2, r.top + Math.min(4, r.height / 2))
+        // Only judge what the viewport can actually see. A region taller than the window has its
+        // top edge above the fold once focus scrolls it into view, and asking what sits at a
+        // coordinate outside the viewport answers about some unrelated element.
+        const x = r.left + r.width / 2
+        const y = r.top + Math.min(4, r.height / 2)
+        const visible = r.width && r.height && x >= 0 && y >= 0 && x <= innerWidth && y <= innerHeight
+        if (visible) {
+          const top = document.elementFromPoint(x, y)
           if (top && top !== e && !e.contains(top) && !top.contains(e)) bad.obscured.push(name)
         }
       }
