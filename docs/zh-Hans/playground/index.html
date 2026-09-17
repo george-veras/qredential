@@ -56,10 +56,10 @@
   :root {
     --ground: #E8ECE8;
     --panel: #F4F6F3;
-    --plate: #FDFDFB;
+    --plate: #FDFDFB; --plate-ink: #596968;
     --ink: #111A1D;
     --body: #24312F;
-    --slate: #5C6C6B;
+    --slate: #596968;
     --line: #C7D0CA;
     --line-soft: #DBE2DC;
     --viridian: #0E6B54;
@@ -78,7 +78,7 @@
     :root:not([data-theme="light"]) {
       --ground: #0C1214;
       --panel: #141D20;
-      --plate: #FDFDFB;
+      --plate: #FDFDFB; --plate-ink: #596968;
       --ink: #E4EAE5;
       --body: #C4CFCA;
       --slate: #8A9A97;
@@ -96,7 +96,7 @@
   :root[data-theme="dark"] {
     --ground: #0C1214;
     --panel: #141D20;
-    --plate: #FDFDFB;
+    --plate: #FDFDFB; --plate-ink: #596968;
     --ink: #E4EAE5;
     --body: #C4CFCA;
     --slate: #8A9A97;
@@ -234,7 +234,7 @@
     font-size: 10.5px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #6B7A78;
+    color: var(--plate-ink);
     text-align: center;
     margin-top: 10px;
   }
@@ -434,10 +434,22 @@
   }
   footer a { color: var(--guilloche); }
   .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink);
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px;
+                     padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 </style>
 
 
+<a class="skip" href="#content">跳到主要内容</a>
 <div class="wrap">
+  <h1 class="visually-hidden">Qredential 演练场，自己来破</h1>
   <header class="masthead">
     <div class="mark">q<span>redential</span></div>
     <div class="tagline">扫一份凭证，断网也能得到答案。这个页面上的一切都在你的浏览器里运行。</div>
@@ -447,7 +459,7 @@
 
   <div id="boot" class="boot">正在生成签发方密钥对，并为演示凭证签名&hellip;</div>
 
-  <main id="app" hidden>
+  <main id="content" tabindex="-1" hidden>
     <div class="bench">
       <section>
         <h2>这份凭证</h2>
@@ -470,7 +482,7 @@
           <h2 style="margin:0">实际传出去的内容</h2>
           <span class="chip" id="strip-len"></span>
         </div>
-        <div class="strip"><pre id="strip"></pre></div>
+        <div class="strip" tabindex="0"><pre id="strip"></pre></div>
       </section>
 
       <section>
@@ -489,7 +501,7 @@
       <p class="note">
         下面的结果由 <span class="inline-code">verify()</span> 对着固定的信任列表和缓存的状态列表跑出来。没有任何请求离开本页。
       </p>
-      <div class="verdict">
+      <div class="verdict" role="status">
         <div class="stamp" id="stamp">
           <div class="word" id="stamp-word">Ready</div>
           <div class="code" id="stamp-code"></div>
@@ -940,7 +952,7 @@
       await rebuild();
 
       el('boot').hidden = true;
-      el('app').hidden = false;
+      el('content').hidden = false;
     } catch (err) {
       el('boot').textContent = T['run.bootFail'] + (err && err.message ? err.message : String(err));
     }

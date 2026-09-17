@@ -193,6 +193,7 @@ for (const code of codes) {
     .replace('__LANGS__', langs)
     .replace('__CONTENT__', html)
     .replace('__PROVENANCE__', provenance(code, { stale, unstamped }))
+    .replace(/__SKIP__/g, ui.skip)
 
   const seo = locales[code].seo
   const withHead =
@@ -338,8 +339,10 @@ function head(code, { path, title, description, type }) {
       'background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);' +
       'border-bottom:1px solid var(--line,#D4DCD7)}' +
       '#qr-lang a{color:var(--viridian,#0E6B54)}' +
-      '#qr-lang button{background:none;border:0;padding:0 .25rem;color:inherit;opacity:.55;' +
-      'cursor:pointer;font-size:1.1rem;line-height:1}' +
+      '#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;' +
+      // WCAG 2.2 adds a 24 by 24 minimum for anything you have to hit with a finger.
+      'font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;' +
+      'place-items:center}' +
       '#qr-lang button:hover{opacity:1}</style>',
     `<script>${languageOffer(code, offers)}</script>`
   )
@@ -506,8 +509,9 @@ for (const template of await templates(docs)) {
         .replace(/\{\{([a-zA-Z.0-9]+)\}\}/g, (_, k) => strings[k])
         .replace('__STRINGS__', `window.__T=${JSON.stringify(strings)};`)
         .replace('__BUNDLE__', () => bundle)
-      .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
         .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
+        .replace(/__SKIP__/g, locales[code].ui.skip)
+        .replace('__H1__', locales[code].seo.playgroundTitle)
 
       const path = code === SOURCE ? 'playground/' : `${code}/playground/`
       page =
@@ -576,6 +580,7 @@ for (const template of await templates(docs)) {
       .replace('__STRINGS__', `window.__T=${JSON.stringify(runtime)};`)
       .replace('__BUNDLE__', () => bundle)
       .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
+      .replace(/__SKIP__/g, locales[code].ui.skip)
 
     const seo = locales[code].seo
     page =
