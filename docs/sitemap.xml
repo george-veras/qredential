@@ -325,6 +325,168 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/guide/"/>
   </url>
   <url>
+    <loc>https://qredential.js.org/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/pt/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/es/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/fr/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/de/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/ja/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/ko/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/zh-Hans/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
+    <loc>https://qredential.js.org/zh-Hant/accessibility/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/"/>
+  </url>
+  <url>
     <loc>https://qredential.js.org/playground/</loc>
     <lastmod>2026-09-17</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://qredential.js.org/playground/"/>

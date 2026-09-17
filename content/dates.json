@@ -137,18 +137,63 @@
       "modified": "2026-09-16"
     },
     "docs/guide/_shell.html": {
-      "sha": "bd57b018a21eab29",
+      "sha": "71d727c496414b82",
       "created": "2026-09-15",
       "modified": "2026-09-17"
     },
     "docs/index.template.html": {
-      "sha": "c91e64cf9c6954ba",
+      "sha": "37d9d0e0be37d178",
       "created": "2026-09-15",
       "modified": "2026-09-17"
     },
     "docs/playground/index.template.html": {
-      "sha": "62181afbf87bc5b7",
+      "sha": "82576cb89c2abd4b",
       "created": "2026-09-15",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/en.md": {
+      "sha": "48cad2b0114eb74e",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/de.md": {
+      "sha": "bcd0a5f428e36f7d",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/es.md": {
+      "sha": "90c467e32c7befad",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/fr.md": {
+      "sha": "4e791fc4f4f77fa9",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/ja.md": {
+      "sha": "3723c44165065ae4",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/ko.md": {
+      "sha": "590280dbd44ae8d3",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/pt.md": {
+      "sha": "d3be6f86bec3f460",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/zh-Hans.md": {
+      "sha": "19820e02f6ca9737",
+      "created": "2026-09-17",
+      "modified": "2026-09-17"
+    },
+    "content/accessibility/zh-Hant.md": {
+      "sha": "fe05a475e69d29c0",
+      "created": "2026-09-17",
       "modified": "2026-09-17"
     }
   },

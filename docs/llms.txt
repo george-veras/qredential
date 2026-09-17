@@ -21,6 +21,7 @@ MIT licensed. No third party security audit; the README says so in the same word
 
 ## Also
 
+- [Accessibility statement](https://qredential.js.org/accessibility/): the WCAG 2.2 AA claim, what it rests on, and what it does not.
 - [Playground](https://qredential.js.org/playground/): runs the library in the browser and fires ten real attacks at the verifier.
 - [Source](https://github.com/george-veras/qredential): implementation, tests and issues.
 - [Changelog](https://github.com/george-veras/qredential/blob/main/CHANGELOG.md): error codes and rejection reasons are API and are versioned as such.
