@@ -56,7 +56,7 @@ const shells = {
 }
 
 const tracked = []
-for (const dir of ['content/guide', 'content/landing', 'content/playground']) {
+for (const dir of ['content/guide', 'content/landing', 'content/playground', 'content/accessibility']) {
   for (const name of await readdir(join(root, dir))) tracked.push(`${dir}/${name}`)
 }
 tracked.push(...Object.values(shells))
@@ -122,6 +122,15 @@ for (const code of codes) {
   }
 }
 
+const a11ySources = {}
+for (const code of codes) {
+  try {
+    a11ySources[code] = await readFile(join(root, `content/accessibility/${code}.md`), 'utf8')
+  } catch {
+    // Same rule as the guide: a language with no statement yet does not get a page claiming one.
+  }
+}
+
 const landing = {}
 const playground = {}
 for (const code of codes) {
@@ -184,6 +193,8 @@ for (const code of codes) {
     .replace(/__HOME__/g, '../')
     .replace(/__ROOT__/g, '../')
     .replace('__NAV_HOME__', ui.navHome)
+    .replace('__DOCS_HREF__', './')
+    .replace('__DOCS_CURRENT__', ' aria-current="page"')
     .replace('__NAV_DOCS__', ui.navDocs)
     .replace('__NAV_PLAYGROUND__', ui.navPlayground)
     .replace('__TOC_TITLE__', ui.tocTitle)
@@ -194,6 +205,7 @@ for (const code of codes) {
     .replace('__CONTENT__', html)
     .replace('__PROVENANCE__', provenance(code, { stale, unstamped }))
     .replace(/__SKIP__/g, ui.skip)
+    .replace(/__A11Y_LABEL__/g, ui.accessibility)
 
   const seo = locales[code].seo
   const withHead =
@@ -254,7 +266,7 @@ function provenance(code, { stale, unstamped }) {
  */
 function head(code, { path, title, description, type }) {
   const url = `${SITE}/${path}`
-  const pool = { guide: guideSources, landing, playground }[type]
+  const pool = { guide: guideSources, landing, playground, accessibility: a11ySources }[type]
   const available = (c) => pool[c]
   const localePath = (c) =>
     type === 'landing'
@@ -355,11 +367,32 @@ function head(code, { path, title, description, type }) {
     guide: `content/guide/${code}.md`,
     landing: `content/landing/${code}.json`,
     playground: `content/playground/${code}.json`,
+    accessibility: `content/accessibility/${code}.md`,
   }[type]
   const modified = lastmodOf([sourceFile])
   const created = createdOf([sourceFile])
   const homeUrl = `${SITE}/${code === SOURCE ? '' : code + '/'}`
   const ui = locales[code].ui
+
+  // The accessibility vocabulary schema.org defines for creative works. Catalogues and search
+  // engines read it, and unlike a logo it says what is actually true in a form a machine can check
+  // against the page. Every value here is one the statement page can defend.
+  const a11y = {
+    accessMode: ['textual', 'visual'],
+    // Nothing on these pages needs sight to be understood: the QR code is a picture of data whose
+    // every value is also printed as text, and the diagram carries a full description.
+    accessModeSufficient: [{ '@type': 'ItemList', itemListElement: ['textual'] }],
+    accessibilityFeature: [
+      'structuralNavigation',
+      'readingOrder',
+      'tableOfContents',
+      'alternativeText',
+      'displayTransformability',
+    ],
+    accessibilityControl: ['fullKeyboardControl', 'fullMouseControl', 'fullTouchControl'],
+    accessibilityHazard: ['noFlashingHazard', 'noSoundHazard', 'noMotionSimulationHazard'],
+    accessibilitySummary: locales[code].seo.a11ySummary,
+  }
 
   const author = {
     '@type': 'Person',
@@ -369,6 +402,7 @@ function head(code, { path, title, description, type }) {
   }
 
   const software = {
+    ...a11y,
     '@type': 'SoftwareSourceCode',
     '@id': `${SITE}/#software`,
     name: 'qredential',
@@ -393,8 +427,10 @@ function head(code, { path, title, description, type }) {
   if (type === 'playground') trail.push(crumb(2, ui.navPlayground, url))
 
   const page =
-    type === 'guide'
+    // The statement is an article about the site, the same shape as the guide, not the software.
+    type === 'guide' || type === 'accessibility'
       ? {
+          ...a11y,
           '@type': 'TechArticle',
           '@id': `${url}#article`,
           headline: title,
@@ -411,6 +447,7 @@ function head(code, { path, title, description, type }) {
         ? {
             // It is not a page about the library, it is the library running. Saying so is both
             // true and the only description under which a result makes sense to click.
+            ...a11y,
             '@type': 'WebApplication',
             '@id': `${url}#app`,
             name: title,
@@ -464,6 +501,76 @@ function escapeAttr(s) {
 // as a T object injected before the page script.
 
 
+// ------------------------------------------------- the accessibility statement, one per locale
+//
+// Prose, like the guide, so it reuses the guide's shell and its provenance machinery rather than
+// growing a second design. It is a page and not a section of the documentation because a
+// conformance claim has to be findable from anywhere, and because it is addressed to a different
+// reader than the API reference is.
+
+const a11ySourceHash = sha(readStamp(a11ySources[SOURCE] ?? '').body)
+const a11yPath = (code) => (code === SOURCE ? 'accessibility' : `${code}/accessibility`)
+
+for (const code of codes) {
+  const raw = a11ySources[code]
+  if (!raw) continue
+
+  const { stamp, body } = readStamp(raw)
+  const isSource = code === SOURCE
+  const { html, headings } = renderGuide(body)
+  const ui = locales[code].ui
+
+  const toc = headings.map((h) => `<li><a href="#${h.id}">${h.text}</a></li>`).join('\n      ')
+  const langs = codes
+    .filter((c) => a11ySources[c])
+    .map((c) => {
+      const here = c === code
+      const href = c === SOURCE ? `${rootFrom(code)}accessibility/` : `${rootFrom(code)}${c}/accessibility/`
+      return `<li><a href="${href}" hreflang="${c}" lang="${htmlLang(c)}"${
+        here ? ' aria-current="page"' : ''
+      }>${locales[c].native}</a></li>`
+    })
+    .join('\n      ')
+
+  const seo = locales[code].seo
+  const page =
+    `<html lang="${htmlLang(code)}" dir="${locales[code].dir ?? 'ltr'}">\n` +
+    shell
+      .replace(/__HOME__/g, code === SOURCE ? '../' : '../../')
+      .replace(/__ROOT__/g, rootFrom(code))
+      .replace('__NAV_HOME__', ui.navHome)
+      .replace('__DOCS_HREF__', '../guide/')
+      .replace('__DOCS_CURRENT__', '')
+    .replace('__NAV_DOCS__', ui.navDocs)
+      .replace('__NAV_PLAYGROUND__', ui.navPlayground)
+      .replace('__TOC_TITLE__', ui.tocTitle)
+      .replace('__LANG_TITLE__', ui.langTitle)
+      .replace('__FOOTER_SOURCE__', ui.footerSource)
+      .replace('__TOC__', toc)
+      .replace('__LANGS__', langs)
+      .replace('__CONTENT__', html)
+      .replace('__PROVENANCE__', provenance(code, {
+        stale: !isSource && stamp !== null && stamp !== a11ySourceHash,
+        unstamped: !isSource && stamp === null,
+      }))
+      .replace(/__SKIP__/g, ui.skip)
+    .replace(/__A11Y_LABEL__/g, ui.accessibility)
+      .replace(
+        /<title>[^<]*<\/title>/,
+        head(code, {
+          path: `${a11yPath(code)}/`,
+          title: seo.a11yTitle,
+          description: seo.a11yDesc,
+          type: 'accessibility',
+        }) + `\n<title>${seo.a11yTitle}</title>`
+      )
+
+  const out = join(docs, a11yPath(code), 'index.html')
+  await mkdir(dirname(out), { recursive: true })
+  await writeFile(out, page)
+  console.log(`statement ${code.padEnd(8)} ${(page.length / 1024).toFixed(1)} KB`)
+}
+
 // -------------------------------------------------- the landing and the playground, with a bundle
 
 const result = await build({
@@ -512,6 +619,7 @@ for (const template of await templates(docs)) {
         .replace('__BUNDLE__', () => bundle)
         .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
         .replace(/__SKIP__/g, locales[code].ui.skip)
+        .replace(/__A11Y_LABEL__/g, locales[code].ui.accessibility)
         .replace('__H1__', locales[code].seo.playgroundTitle)
 
       const path = code === SOURCE ? 'playground/' : `${code}/playground/`
@@ -582,6 +690,7 @@ for (const template of await templates(docs)) {
       .replace('__BUNDLE__', () => bundle)
       .replace('__QRLIB__', `<script src="${SITE}/vendor/qrcode.min.js"></script>`)
       .replace(/__SKIP__/g, locales[code].ui.skip)
+        .replace(/__A11Y_LABEL__/g, locales[code].ui.accessibility)
 
     const seo = locales[code].seo
     page =
@@ -657,6 +766,14 @@ for (const code of codes.filter((c) => guideSources[c])) {
     loc: href(code),
     alts: groupFor(guideSources, href),
     lastmod: lastmodOf([`content/guide/${code}.md`, shells.guide]),
+  })
+}
+for (const code of codes.filter((c) => a11ySources[c])) {
+  const href = (c) => `${SITE}/${c === SOURCE ? 'accessibility' : c + '/accessibility'}/`
+  urls.push({
+    loc: href(code),
+    alts: groupFor(a11ySources, href),
+    lastmod: lastmodOf([`content/accessibility/${code}.md`, shells.guide]),
   })
 }
 for (const code of codes.filter((c) => playground[c])) {
@@ -786,6 +903,7 @@ await writeFile(
     '',
     '## Also',
     '',
+    `- [Accessibility statement](${SITE}/accessibility/): the WCAG 2.2 AA claim, what it rests on, and what it does not.`,
     `- [Playground](${SITE}/playground/): runs the library in the browser and fires ten real attacks at the verifier.`,
     `- [Source](${REPO}): implementation, tests and issues.`,
     `- [Changelog](${REPO}/blob/main/CHANGELOG.md): error codes and rejection reasons are API and are versioned as such.`,

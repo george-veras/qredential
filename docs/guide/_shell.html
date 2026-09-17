@@ -200,6 +200,8 @@
     border: 2px solid var(--viridian); text-decoration: none;
   }
   article footer a { display: inline-flex; align-items: center; min-height: 24px; }
+  article img { max-width: 100%; height: auto; }
+  article img[src$="wcag2.2AA.svg"] { width: 88px; height: 31px; }
 </style>
 
 <a class="skip" href="#content">__SKIP__</a>
@@ -208,7 +210,7 @@
     <a class="mark" href="__HOME__">q<span>redential</span></a>
     <nav>
       <a href="__HOME__">__NAV_HOME__</a>
-      <a href="./" aria-current="page">__NAV_DOCS__</a>
+      <a href="__DOCS_HREF__"__DOCS_CURRENT__>__NAV_DOCS__</a>
       <a href="__ROOT__playground/">__NAV_PLAYGROUND__</a>
       <a href="https://github.com/george-veras/qredential">GitHub</a>
     </nav>
@@ -231,6 +233,7 @@ __PROVENANCE__
       <span>qredential &middot; MIT</span>
       <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
       <span><a href="https://github.com/george-veras/qredential">__FOOTER_SOURCE__</a></span>
+      <span><a href="../accessibility/">__A11Y_LABEL__</a></span>
     </footer>
   </article>
   </main>

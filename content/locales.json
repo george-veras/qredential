@@ -16,7 +16,8 @@
       "behind": "behind English",
       "suggest": "Read this page in English",
       "suggestClose": "Dismiss",
-      "skip": "Skip to main content"
+      "skip": "Skip to main content",
+      "accessibility": "Accessibility"
     },
     "seo": {
       "landingTitle": "Qredential, offline credential verification",
@@ -24,7 +25,10 @@
       "guideTitle": "Qredential documentation",
       "guideDesc": "How to issue, present and verify SD-JWT credentials offline: selective disclosure, key binding, the QR size budget, revocation and the full error model.",
       "playgroundTitle": "Qredential playground, break it yourself",
-      "playgroundDesc": "Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects."
+      "playgroundDesc": "Run the whole library in your browser and fire ten real attacks at the verifier. Each button prints the rejection code it expects.",
+      "a11yTitle": "Qredential accessibility statement",
+      "a11yDesc": "How this site was measured against WCAG 2.2 Level AA: what was tested, how, what was not, and where to report a problem.",
+      "a11ySummary": "Conforms to WCAG 2.2 Level AA by self-declaration. Evaluated with automated, keyboard and manual checks, not with assistive technology, and not audited by a third party."
     },
     "ogLocale": "en_US"
   },
@@ -43,7 +47,8 @@
       "behind": "atrás do inglês",
       "suggest": "Leia esta página em português",
       "suggestClose": "Fechar",
-      "skip": "Pular para o conteúdo"
+      "skip": "Pular para o conteúdo",
+      "accessibility": "Acessibilidade"
     },
     "provenance": {
       "unreviewed": "Esta tradução ainda não foi revisada por alguém que fale português nativamente. Ela foi feita com auxílio de IA a partir do texto em inglês, que é a versão de referência. Se alguma frase estiver errada, estranha ou usando um termo que ninguém usa, isso é um bug e o relato é bem-vindo.",
@@ -57,7 +62,10 @@
       "guideTitle": "Documentação do Qredential",
       "guideDesc": "Como emitir, apresentar e verificar credenciais SD-JWT offline: divulgação seletiva, key binding, orçamento de tamanho do QR, revogação e o modelo de erros.",
       "playgroundTitle": "Playground do Qredential, quebre você mesmo",
-      "playgroundDesc": "Rode a biblioteca inteira no navegador e dispare dez ataques reais contra o verificador. Cada botão imprime o código de recusa que espera."
+      "playgroundDesc": "Rode a biblioteca inteira no navegador e dispare dez ataques reais contra o verificador. Cada botão imprime o código de recusa que espera.",
+      "a11yTitle": "Declaração de acessibilidade do Qredential",
+      "a11yDesc": "Como este site foi medido contra o WCAG 2.2 nível AA: o que foi testado, como, o que não foi, e onde relatar um problema.",
+      "a11ySummary": "Em conformidade com o WCAG 2.2 nível AA por autodeclaração. Avaliado por verificações automatizadas, de teclado e manuais, não com tecnologia assistiva, e sem auditoria de terceiros."
     },
     "ogLocale": "pt_BR"
   },
@@ -76,7 +84,8 @@
       "behind": "por detrás del inglés",
       "suggest": "Lee esta página en español",
       "suggestClose": "Cerrar",
-      "skip": "Saltar al contenido"
+      "skip": "Saltar al contenido",
+      "accessibility": "Accesibilidad"
     },
     "provenance": {
       "unreviewed": "Esta traducción todavía no ha sido revisada por alguien que hable español de forma nativa. Se hizo con ayuda de IA a partir del texto en inglés, que es la versión de referencia. Si alguna frase está mal, suena rara o usa un término que nadie usa, eso es un error y agradecemos que lo reportes.",
@@ -90,7 +99,10 @@
       "guideTitle": "Documentación de Qredential",
       "guideDesc": "Cómo emitir, presentar y verificar credenciales SD-JWT sin conexión: divulgación selectiva, key binding, presupuesto de tamaño del QR, revocación y errores.",
       "playgroundTitle": "Playground de Qredential, rómpelo tú mismo",
-      "playgroundDesc": "Ejecuta la biblioteca entera en tu navegador y lanza diez ataques reales al verificador. Cada botón imprime el código de rechazo que espera."
+      "playgroundDesc": "Ejecuta la biblioteca entera en tu navegador y lanza diez ataques reales al verificador. Cada botón imprime el código de rechazo que espera.",
+      "a11yTitle": "Declaración de accesibilidad de Qredential",
+      "a11yDesc": "Cómo se midió este sitio frente a WCAG 2.2 nivel AA: qué se probó, cómo, qué no se probó y dónde informar de un problema.",
+      "a11ySummary": "Cumple WCAG 2.2 nivel AA por autodeclaración. Evaluado con comprobaciones automáticas, de teclado y manuales, no con tecnología de apoyo y sin auditoría externa."
     },
     "ogLocale": "es_ES"
   },
@@ -109,7 +121,8 @@
       "behind": "en retard sur l'anglais",
       "suggest": "Lire cette page en français",
       "suggestClose": "Fermer",
-      "skip": "Aller au contenu"
+      "skip": "Aller au contenu",
+      "accessibility": "Accessibilité"
     },
     "provenance": {
       "unreviewed": "Cette traduction n'a pas encore été relue par une personne dont le français est la langue maternelle. Elle a été produite avec l'aide d'une IA à partir du texte anglais, qui fait référence. Si une phrase est fausse, maladroite ou emploie un terme que personne n'utilise, c'est un bug et le signalement est bienvenu.",
@@ -123,7 +136,10 @@
       "guideTitle": "Documentation de Qredential",
       "guideDesc": "Émettre, présenter et vérifier des justificatifs SD-JWT hors ligne : divulgation sélective, liaison de clé, budget de taille du QR, révocation et modèle d'erreurs.",
       "playgroundTitle": "Playground Qredential, cassez-le vous-même",
-      "playgroundDesc": "Exécutez toute la bibliothèque dans votre navigateur et envoyez dix attaques réelles au vérificateur. Chaque bouton affiche le code de refus attendu."
+      "playgroundDesc": "Exécutez toute la bibliothèque dans votre navigateur et envoyez dix attaques réelles au vérificateur. Chaque bouton affiche le code de refus attendu.",
+      "a11yTitle": "Déclaration d'accessibilité de Qredential",
+      "a11yDesc": "Comment ce site a été mesuré face au WCAG 2.2 niveau AA : ce qui a été testé, comment, ce qui ne l'a pas été, et où signaler un problème.",
+      "a11ySummary": "Conforme au WCAG 2.2 niveau AA par auto-déclaration. Évalué par des vérifications automatisées, au clavier et manuelles, sans technologie d'assistance et sans audit externe."
     },
     "ogLocale": "fr_FR"
   },
@@ -142,7 +158,8 @@
       "behind": "hinter dem Englischen",
       "suggest": "Diese Seite auf Deutsch lesen",
       "suggestClose": "Schließen",
-      "skip": "Zum Inhalt springen"
+      "skip": "Zum Inhalt springen",
+      "accessibility": "Barrierefreiheit"
     },
     "provenance": {
       "unreviewed": "Diese Übersetzung wurde noch von niemandem mit Deutsch als Muttersprache gegengelesen. Sie entstand mit Hilfe einer KI aus dem englischen Text, der maßgeblich bleibt. Wenn ein Satz falsch ist, holprig klingt oder einen Begriff verwendet, den niemand benutzt, ist das ein Fehler, und eine Meldung ist willkommen.",
@@ -156,7 +173,10 @@
       "guideTitle": "Qredential-Dokumentation",
       "guideDesc": "SD-JWT-Nachweise offline ausstellen, vorzeigen und prüfen: selektive Offenlegung, Key Binding, QR-Größenbudget, Sperrprüfung und das Fehlermodell.",
       "playgroundTitle": "Qredential-Playground, brechen Sie es selbst",
-      "playgroundDesc": "Führen Sie die ganze Bibliothek im Browser aus und schicken Sie dem Prüfer zehn echte Angriffe. Jeder Knopf druckt den erwarteten Ablehnungscode."
+      "playgroundDesc": "Führen Sie die ganze Bibliothek im Browser aus und schicken Sie dem Prüfer zehn echte Angriffe. Jeder Knopf druckt den erwarteten Ablehnungscode.",
+      "a11yTitle": "Barrierefreiheitserklärung von Qredential",
+      "a11yDesc": "Wie diese Website gegen WCAG 2.2 Stufe AA geprüft wurde: was getestet wurde, wie, was nicht, und wo sich ein Problem melden lässt.",
+      "a11ySummary": "Entspricht WCAG 2.2 Stufe AA nach Selbsterklärung. Geprüft mit automatisierten, Tastatur- und manuellen Prüfungen, nicht mit assistiver Technik und ohne externes Audit."
     },
     "ogLocale": "de_DE"
   },
@@ -175,7 +195,8 @@
       "behind": "英語版より古い",
       "suggest": "このページを日本語で読む",
       "suggestClose": "閉じる",
-      "skip": "本文へスキップ"
+      "skip": "本文へスキップ",
+      "accessibility": "アクセシビリティ"
     },
     "provenance": {
       "unreviewed": "この翻訳は日本語を母語とする人によるレビューをまだ受けていません。英語の原文をもとに AI の支援で作成したもので、正典は英語版です。訳が間違っている、不自然である、あるいは誰も使わない用語を使っている場合、それは不具合です。報告を歓迎します。",
@@ -189,7 +210,10 @@
       "guideTitle": "Qredential ドキュメント",
       "guideDesc": "SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。",
       "playgroundTitle": "Qredential プレイグラウンド、自分で壊してみる",
-      "playgroundDesc": "ライブラリ全体をブラウザで動かし、検証器に実際の攻撃を十件投げつけます。各ボタンには期待される拒否コードが書かれています。"
+      "playgroundDesc": "ライブラリ全体をブラウザで動かし、検証器に実際の攻撃を十件投げつけます。各ボタンには期待される拒否コードが書かれています。",
+      "a11yTitle": "Qredential のアクセシビリティ声明",
+      "a11yDesc": "このサイトを WCAG 2.2 レベル AA に照らしてどう測ったか。何をどうやって検証し、何を検証していないか、そして問題の報告先。",
+      "a11ySummary": "自己宣言により WCAG 2.2 レベル AA に適合。自動チェック、キーボード操作、手作業による検証で評価しており、支援技術による検証と第三者監査は行っていません。"
     },
     "ogLocale": "ja_JP"
   },
@@ -208,7 +232,8 @@
       "behind": "영어판보다 오래됨",
       "suggest": "이 페이지를 한국어로 읽기",
       "suggestClose": "닫기",
-      "skip": "본문으로 건너뛰기"
+      "skip": "본문으로 건너뛰기",
+      "accessibility": "접근성"
     },
     "provenance": {
       "unreviewed": "이 번역은 아직 한국어 원어민의 검수를 거치지 않았습니다. 영어 원문을 바탕으로 AI의 도움을 받아 작성했으며, 기준이 되는 것은 영어판입니다. 문장이 틀렸거나 어색하거나 아무도 쓰지 않는 용어를 사용했다면 그것은 결함이며, 제보를 환영합니다.",
@@ -222,7 +247,10 @@
       "guideTitle": "Qredential 문서",
       "guideDesc": "SD-JWT 자격증명을 오프라인으로 발급, 제시, 검증하는 방법. 선택적 공개, 키 바인딩, QR 크기 예산, 폐기 확인, 그리고 오류 모델.",
       "playgroundTitle": "Qredential 플레이그라운드, 직접 깨보세요",
-      "playgroundDesc": "라이브러리 전체를 브라우저에서 돌리고 검증기에 실제 공격 열 가지를 던집니다. 각 버튼에는 예상되는 거절 코드가 적혀 있습니다."
+      "playgroundDesc": "라이브러리 전체를 브라우저에서 돌리고 검증기에 실제 공격 열 가지를 던집니다. 각 버튼에는 예상되는 거절 코드가 적혀 있습니다.",
+      "a11yTitle": "Qredential 접근성 선언",
+      "a11yDesc": "이 사이트를 WCAG 2.2 AA 수준에 비추어 어떻게 측정했는지. 무엇을 어떻게 검증했고, 무엇을 검증하지 않았으며, 문제를 어디에 알리면 되는지.",
+      "a11ySummary": "자기 선언으로 WCAG 2.2 AA 수준을 준수합니다. 자동 검사, 키보드 조작, 수작업으로 평가했으며 보조 기술 검증과 제3자 감사는 하지 않았습니다."
     },
     "ogLocale": "ko_KR"
   },
@@ -241,7 +269,8 @@
       "behind": "落后于英文版",
       "suggest": "用简体中文阅读本页",
       "suggestClose": "关闭",
-      "skip": "跳到主要内容"
+      "skip": "跳到主要内容",
+      "accessibility": "无障碍"
     },
     "provenance": {
       "unreviewed": "这份译文尚未经过母语为中文的人校对。它是在人工智能协助下，根据英文原文翻译的，英文版为准。如果某处翻译有误、读起来别扭，或者用了没人会用的术语，那就是一个缺陷，欢迎反馈。",
@@ -256,7 +285,10 @@
       "guideDesc": "如何离线签发、出示和验证 SD-JWT 凭证：选择性披露、密钥绑定、二维码体积预算、吊销检查，以及完整的错误模型。",
       "playgroundTitle": "Qredential 演练场，自己来破",
       "playgroundDesc": "在浏览器里跑起整个函式库，朝验证器打出十种真实攻击。每个按钮都写明它预期的拒绝代码。",
-      "keywords": "离线凭证验证,SD-JWT,选择性披露,二维码凭证,数字身份,可验证凭证,RFC 9901,密钥绑定,吊销状态列表,TypeScript"
+      "keywords": "离线凭证验证,SD-JWT,选择性披露,二维码凭证,数字身份,可验证凭证,RFC 9901,密钥绑定,吊销状态列表,TypeScript",
+      "a11yTitle": "Qredential 无障碍声明",
+      "a11yDesc": "本站如何对照 WCAG 2.2 AA 级进行评估：测了什么、怎么测的、没测什么，以及在哪里报告问题。",
+      "a11ySummary": "按自我声明符合 WCAG 2.2 AA 级。以自动检查、键盘操作和人工逐条评估，未使用辅助技术验证，也没有第三方审计。"
     },
     "htmlLang": "zh-CN",
     "alsoHreflang": [
@@ -280,7 +312,8 @@
       "behind": "落後於英文版",
       "suggest": "以繁體中文閱讀本頁",
       "suggestClose": "關閉",
-      "skip": "跳至主要內容"
+      "skip": "跳至主要內容",
+      "accessibility": "無障礙"
     },
     "provenance": {
       "unreviewed": "這份翻譯尚未經過以繁體中文為母語的人校閱。它是在 AI 協助下，依英文原文翻譯的，以英文版為準。若有翻譯錯誤、讀起來不順，或使用了沒有人會用的術語，那就是缺陷，歡迎回報。",
@@ -295,7 +328,10 @@
       "guideDesc": "如何離線簽發、出示與驗證 SD-JWT 憑證：選擇性揭露、金鑰綁定、QR Code 大小預算、撤銷檢查，以及完整的錯誤模型。",
       "playgroundTitle": "Qredential 試用場，自己來破",
       "playgroundDesc": "在瀏覽器裡跑起整個函式庫，朝驗證器打出十種真實攻擊。每個按鈕都寫明它預期的拒絕代碼。",
-      "keywords": "離線憑證驗證,SD-JWT,選擇性揭露,QR Code 憑證,數位身分,可驗證憑證,RFC 9901,金鑰綁定,撤銷狀態清單,TypeScript"
+      "keywords": "離線憑證驗證,SD-JWT,選擇性揭露,QR Code 憑證,數位身分,可驗證憑證,RFC 9901,金鑰綁定,撤銷狀態清單,TypeScript",
+      "a11yTitle": "Qredential 無障礙聲明",
+      "a11yDesc": "本站如何對照 WCAG 2.2 AA 級進行評估：測了什麼、怎麼測的、沒測什麼，以及在哪裡回報問題。",
+      "a11ySummary": "按自我宣告符合 WCAG 2.2 AA 級。以自動檢查、鍵盤操作與人工逐條評估，未使用輔助科技驗證，也沒有第三方稽核。"
     },
     "htmlLang": "zh-TW",
     "alsoHreflang": [

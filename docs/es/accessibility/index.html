@@ -1,0 +1,380 @@
+<html lang="es" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/">
+<link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/">
+<link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/">
+<link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/">
+<link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/">
+<link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/">
+<link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/">
+<link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/">
+<link rel="canonical" href="https://qredential.js.org/es/accessibility/">
+<meta name="description" content="Cómo se midió este sitio frente a WCAG 2.2 nivel AA: qué se probó, cómo, qué no se probó y dónde informar de un problema.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>@font-face{font-family:'Archivo';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-700.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:800;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-800.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://qredential.js.org/fonts/ibm-plex-sans-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://qredential.js.org/fonts/archivo-700.woff2">
+<link rel="icon" href="https://qredential.js.org/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="qredential">
+<meta property="og:title" content="Declaración de accesibilidad de Qredential">
+<meta property="og:description" content="Cómo se midió este sitio frente a WCAG 2.2 nivel AA: qué se probó, cómo, qué no se probó y dónde informar de un problema.">
+<meta property="og:url" content="https://qredential.js.org/es/accessibility/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://qredential.js.org/og/es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Declaración de accesibilidad de Qredential">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Declaración de accesibilidad de Qredential">
+<meta name="twitter:description" content="Cómo se midió este sitio frente a WCAG 2.2 nivel AA: qué se probó, cómo, qué no se probó y dónde informar de un problema.">
+<meta name="twitter:image" content="https://qredential.js.org/og/es.png">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta name="google-site-verification" content="baClIecCTfjrq6zjhwCaHnlzue2O2xQBCxWGB9MQEuQ">
+<meta name="msvalidate.01" content="9023E565BA2902195A4DF09FBAD0EE59">
+<meta name="applicable-device" content="pc,mobile">
+<link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
+<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
+<script>(function(){var O={"en":["https://qredential.js.org/accessibility/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/accessibility/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/accessibility/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/accessibility/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/accessibility/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/accessibility/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/accessibility/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/accessibility/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/accessibility/","以繁體中文閱讀本頁","關閉"]},cur="es";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/es/","inLanguage":"es","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","sameAs":["https://github.com/george-veras"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"Cumple WCAG 2.2 nivel AA por autodeclaración. Evaluado con comprobaciones automáticas, de teclado y manuales, no con tecnología de apoyo y sin auditoría externa.","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"Verifica una credencial digital desde un código QR sin conexión de red. Divulgación selectiva SD-JWT, key binding, revocación offline, cero dependencias.","inLanguage":"es","url":"https://qredential.js.org/es/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-17"},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"Cumple WCAG 2.2 nivel AA por autodeclaración. Evaluado con comprobaciones automáticas, de teclado y manuales, no con tecnología de apoyo y sin auditoría externa.","@type":"TechArticle","@id":"https://qredential.js.org/es/accessibility/#article","headline":"Declaración de accesibilidad de Qredential","description":"Cómo se midió este sitio frente a WCAG 2.2 nivel AA: qué se probó, cómo, qué no se probó y dónde informar de un problema.","inLanguage":"es","url":"https://qredential.js.org/es/accessibility/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-17","dateModified":"2026-09-17"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/es/accessibility/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://qredential.js.org/es/"}]}]}</script>
+<title>Declaración de accesibilidad de Qredential</title>
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #596968;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+      --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+    --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 15.5px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--ground);
+  }
+  .masthead-inner {
+    max-width: 1140px; margin: 0 auto; padding: 14px 22px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; flex-wrap: wrap; gap: 18px; margin-left: auto; font-size: 14px; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  .masthead nav a { color: var(--slate); text-decoration: none;
+                    display: inline-flex; align-items: center; min-height: 24px; }
+  .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
+
+  .shell {
+    max-width: 1140px; margin: 0 auto; padding: 36px 22px 90px;
+    display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 46px; align-items: start;
+  }
+  @media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+  .toc { position: sticky; top: 74px; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .toc { position: static; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  }
+  .toc h2 {
+    font-family: var(--display); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate);
+    margin: 0 0 10px;
+  }
+  .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .toc a { color: var(--slate); text-decoration: none;
+           display: flex; align-items: center; min-height: 24px; }
+  .toc a:hover { color: var(--ink); }
+
+  article { min-width: 0; max-width: 72ch; }
+  article > section { margin-bottom: 52px; scroll-margin-top: 78px; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.08;
+    letter-spacing: -0.028em; color: var(--ink); margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--body); margin: 0 0 8px; text-wrap: balance; }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: 22px;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 12px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; color: var(--ink); margin: 26px 0 8px;
+  }
+  .eyebrow {
+    font-family: var(--data); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); }
+
+  code {
+    font-family: var(--data); font-size: 0.88em; color: var(--guilloche);
+    word-break: break-word;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 16px;
+  }
+  pre code { color: var(--ink); font-size: 13px; line-height: 1.7; word-break: normal; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 14px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .signature {
+    font-family: var(--data); font-size: 13.5px; color: var(--ink);
+    background: var(--viridian-wash); border-left: 3px solid var(--viridian);
+    padding: 11px 14px; margin: 0 0 14px; overflow-x: auto; white-space: pre;
+  }
+  .aside {
+    border-left: 3px solid var(--amber); padding: 2px 0 2px 15px;
+    margin: 0 0 18px; color: var(--slate); font-size: 14.5px;
+  }
+  .aside strong { color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 14.5px;
+    padding: 10px 20px; text-decoration: none; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  .reason { font-family: var(--data); font-size: 12.5px; color: var(--oxblood); white-space: nowrap; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
+    font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink); min-height: 24px;
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
+  article footer a { display: inline-flex; align-items: center; min-height: 24px; }
+  article img { max-width: 100%; height: auto; }
+  article img[src$="wcag2.2AA.svg"] { width: 88px; height: 31px; }
+</style>
+
+<a class="skip" href="#content">Saltar al contenido</a>
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="../../">q<span>redential</span></a>
+    <nav>
+      <a href="../../">Inicio</a>
+      <a href="../guide/">Documentación</a>
+      <a href="../../playground/">Playground</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc">
+    <h2>En esta página</h2>
+    <ol><li><a href="#scope">Qué cubre la afirmación</a></li>
+      <li><a href="#method">Cómo se evaluó</a></li>
+      <li><a href="#limits">Qué no cubre</a></li>
+      <li><a href="#known">Limitaciones conocidas</a></li>
+      <li><a href="#report">Si encuentras algo mal</a></li></ol>
+    <h2 style="margin-top:22px">Idioma</h2>
+    <ol class="langs"><li><a href="../../accessibility/" hreflang="en" lang="en">English</a></li>
+      <li><a href="../../pt/accessibility/" hreflang="pt" lang="pt">Português</a></li>
+      <li><a href="../../es/accessibility/" hreflang="es" lang="es" aria-current="page">Español</a></li>
+      <li><a href="../../fr/accessibility/" hreflang="fr" lang="fr">Français</a></li>
+      <li><a href="../../de/accessibility/" hreflang="de" lang="de">Deutsch</a></li>
+      <li><a href="../../ja/accessibility/" hreflang="ja" lang="ja">日本語</a></li>
+      <li><a href="../../ko/accessibility/" hreflang="ko" lang="ko">한국어</a></li>
+      <li><a href="../../zh-Hans/accessibility/" hreflang="zh-Hans" lang="zh-CN">简体中文</a></li>
+      <li><a href="../../zh-Hant/accessibility/" hreflang="zh-Hant" lang="zh-TW">繁體中文</a></li></ol>
+  </aside>
+
+  <main id="content" tabindex="-1">
+  <article>
+<section id="statement">
+<p class="eyebrow">Accesibilidad</p>
+<h1>Este sitio, medido frente a WCAG 2.2 AA</h1>
+<p class="lede">Todas las páginas de este sitio pretenden cumplir <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> en el
+nivel AA. Esta página dice en qué se apoya esa afirmación, y en qué no.</p>
+
+</section>
+<section id="scope">
+<h2>Qué cubre la afirmación</h2>
+<p>Las treinta y seis páginas de este sitio, en los nueve idiomas: la página de inicio, la documentación,
+el playground y esta declaración. Los dos temas, claro y oscuro. Última evaluación el 17 de septiembre de 2026, contra
+la versión publicada ese día.</p>
+<p><a href="https://www.w3.org/WAI/standards-guidelines/wcag/conformance-logos/"><img src="https://qredential.js.org/wcag2.2AA.svg" alt="Conformidad de nivel AA, Pautas de Accesibilidad para el Contenido Web 2.2 del W3C WAI"></a></p>
+<p>El logotipo de arriba es una autodeclaración. El W3C lo publica para que cualquiera lo use y no
+revisa ni verifica ninguna afirmación hecha con él, que es justamente por lo que existe el resto de
+esta página.</p>
+
+</section>
+<section id="method">
+<h2>Cómo se evaluó</h2>
+<p>De cuatro maneras, todas repetibles, y todas ejecutadas de nuevo con cada cambio por la integración
+continua:</p>
+<ul>
+<li><strong>Motor de reglas.</strong> <code>axe-core</code> contra treinta y nueve cargas de página, cubriendo las treinta y seis páginas
+en nueve idiomas, más una página de cada forma en el tema oscuro, comprobando las etiquetas que
+corresponden a WCAG 2.2 niveles A y AA.</li>
+<li><strong>Criterios que ningún motor de reglas ve.</strong> Un navegador dirigido a propósito: la página
+redistribuida a 320 píxeles CSS, texto ampliado al 200 por ciento, los ajustes de espaciado de
+texto que especifica la norma, indicadores de foco comparados antes y después del foco, controles
+enfocados contrastados con cualquier cosa que pueda quedar encima, cada objetivo de puntero medido
+contra el mínimo de 24 por 24, y cada control comprobado para que tenga nombre accesible.</li>
+<li><strong>Teclado.</strong> Que el enlace para saltar al contenido sea lo primero que alcanza un teclado en cada
+página, y que usarlo mueva el foco al contenido en lugar de solo desplazar la página.</li>
+<li><strong>A mano, criterio por criterio.</strong> Los cincuenta y cinco criterios de éxito de nivel A y AA de WCAG
+2.2, cada uno registrado con su veredicto y la evidencia detrás, en
+<a href="https://github.com/george-veras/qredential/blob/main/ACCESSIBILITY.md">ACCESSIBILITY.md</a>.</li>
+</ul>
+
+</section>
+<section id="limits">
+<h2>Qué no cubre</h2>
+<p>Dicho sin rodeos, porque una declaración de conformidad vale exactamente lo que valen sus límites:</p>
+<ul>
+<li><strong>Ninguna prueba con tecnología de apoyo.</strong> No se usó ningún lector de pantalla, y ninguna persona
+con discapacidad ha probado este sitio. La estructura se verificó inspeccionando el árbol de
+accesibilidad, que no es lo mismo que escucharlo.</li>
+<li><strong>Ninguna auditoría externa.</strong> Nadie independiente ha revisado nada de esto, igual que nadie
+independiente ha auditado la criptografía de la biblioteca.</li>
+<li>Las pruebas automáticas cubren alrededor de un tercio de lo que pide WCAG. Los otros tres métodos
+existen por eso, y aun así no sustituyen a una persona que depende de esto.</li>
+</ul>
+
+</section>
+<section id="known">
+<h2>Limitaciones conocidas</h2>
+<ul>
+<li><strong>El código QR es una imagen de datos.</strong> Ninguna tecnología de apoyo puede leer uno, y ninguna
+debería tener que hacerlo: el pie que lo acompaña da su versión y su número de caracteres, y todo
+valor que codifica está impreso como texto en la misma página.</li>
+<li><strong>El playground necesita JavaScript</strong>, porque ejecuta la biblioteca en el navegador de quien lee,
+que es justamente su propósito. La documentación y la página de inicio no lo necesitan: su
+contenido está en el HTML.</li>
+</ul>
+
+</section>
+<section id="report">
+<h2>Si encuentras algo mal</h2>
+<p>Que nos lo digan es la única forma de que esto mejore. Abre una incidencia en
+<a href="https://github.com/george-veras/qredential/issues">github.com/george-veras/qredential/issues</a>, o dilo de la manera que te resulte más
+fácil. Con describir qué pasó basta; nombrar el criterio de éxito se agradece, pero nunca hace
+falta.</p>
+<div class="cta-row"><a class="cta" href="https://github.com/george-veras/qredential/issues/new">Informar de un problema de accesibilidad</a><a class="cta ghost" href="https://github.com/george-veras/qredential/blob/main/ACCESSIBILITY.md">Leer la evaluación completa</a></div>
+</section>
+    <div class="provenance">
+      Esta traducción todavía no ha sido revisada por alguien que hable español de forma nativa. Se hizo con ayuda de IA a partir del texto en inglés, que es la versión de referencia. Si alguna frase está mal, suena rara o usa un término que nadie usa, eso es un error y agradecemos que lo reportes.
+      <a class="fix" href="https://github.com/george-veras/qredential/blob/main/content/guide/es.md">Corregir esta página</a>
+    </div>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
+      <span><a href="https://github.com/george-veras/qredential">Código e issues</a></span>
+      <span><a href="../accessibility/">Accesibilidad</a></span>
+    </footer>
+  </article>
+  </main>
+</div>

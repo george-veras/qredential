@@ -47,7 +47,13 @@ const urlOf = (file) => {
   return `${SITE}/${rel}`
 }
 const typeOf = (file) =>
-  file.includes('/guide/') ? 'guide' : file.includes('/playground/') ? 'playground' : 'landing'
+  file.includes('/guide/')
+    ? 'guide'
+    : file.includes('/playground/')
+      ? 'playground'
+      : file.includes('/accessibility/')
+        ? 'accessibility'
+        : 'landing'
 
 const pages = (await walk(docs)).sort()
 const meta = new Map()

@@ -383,6 +383,7 @@
     flex-wrap: wrap;
     gap: 6px 22px;
   }
+  footer a { display: inline-flex; align-items: center; min-height: 24px; }
   footer a { color: var(--guilloche); }
   .boot { padding: 60px 0; font-family: var(--data); font-size: 13px; color: var(--slate); }
   /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
@@ -492,6 +493,7 @@
       <span>{{foot.license}}</span>
       <span>{{foot.tech}}</span>
       <span>{{foot.deps}}</span>
+      <span><a href="../accessibility/">__A11Y_LABEL__</a></span>
     </footer>
   </main>
 </div>

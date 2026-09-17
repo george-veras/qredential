@@ -1,0 +1,370 @@
+<html lang="zh-TW" dir="ltr">
+<link rel="alternate" hreflang="en" href="https://qredential.js.org/accessibility/">
+<link rel="alternate" hreflang="pt" href="https://qredential.js.org/pt/accessibility/">
+<link rel="alternate" hreflang="es" href="https://qredential.js.org/es/accessibility/">
+<link rel="alternate" hreflang="fr" href="https://qredential.js.org/fr/accessibility/">
+<link rel="alternate" hreflang="de" href="https://qredential.js.org/de/accessibility/">
+<link rel="alternate" hreflang="ja" href="https://qredential.js.org/ja/accessibility/">
+<link rel="alternate" hreflang="ko" href="https://qredential.js.org/ko/accessibility/">
+<link rel="alternate" hreflang="zh-Hans" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-CN" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-SG" href="https://qredential.js.org/zh-Hans/accessibility/">
+<link rel="alternate" hreflang="zh-Hant" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="zh-TW" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="zh-HK" href="https://qredential.js.org/zh-Hant/accessibility/">
+<link rel="alternate" hreflang="x-default" href="https://qredential.js.org/accessibility/">
+<link rel="canonical" href="https://qredential.js.org/zh-Hant/accessibility/">
+<meta name="description" content="本站如何對照 WCAG 2.2 AA 級進行評估：測了什麼、怎麼測的、沒測什麼，以及在哪裡回報問題。">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>@font-face{font-family:'Archivo';font-style:normal;font-weight:500;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:700;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-700.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'Archivo';font-style:normal;font-weight:800;font-stretch:100%;font-display:swap;src:url(https://qredential.js.org/fonts/archivo-800.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-mono-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-400.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-500.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url(https://qredential.js.org/fonts/ibm-plex-sans-600.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}</style>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://qredential.js.org/fonts/ibm-plex-sans-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://qredential.js.org/fonts/archivo-700.woff2">
+<link rel="icon" href="https://qredential.js.org/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="qredential">
+<meta property="og:title" content="Qredential 無障礙聲明">
+<meta property="og:description" content="本站如何對照 WCAG 2.2 AA 級進行評估：測了什麼、怎麼測的、沒測什麼，以及在哪裡回報問題。">
+<meta property="og:url" content="https://qredential.js.org/zh-Hant/accessibility/">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://qredential.js.org/og/zh-Hant.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Qredential 無障礙聲明">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qredential 無障礙聲明">
+<meta name="twitter:description" content="本站如何對照 WCAG 2.2 AA 級進行評估：測了什麼、怎麼測的、沒測什麼，以及在哪裡回報問題。">
+<meta name="twitter:image" content="https://qredential.js.org/og/zh-Hant.png">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta name="google-site-verification" content="baClIecCTfjrq6zjhwCaHnlzue2O2xQBCxWGB9MQEuQ">
+<meta name="msvalidate.01" content="9023E565BA2902195A4DF09FBAD0EE59">
+<meta name="keywords" content="離線憑證驗證,SD-JWT,選擇性揭露,QR Code 憑證,數位身分,可驗證憑證,RFC 9901,金鑰綁定,撤銷狀態清單,TypeScript">
+<meta name="applicable-device" content="pc,mobile">
+<link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
+<style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
+<script>(function(){var O={"en":["https://qredential.js.org/accessibility/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/accessibility/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/accessibility/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/accessibility/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/accessibility/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/accessibility/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/accessibility/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/accessibility/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/accessibility/","以繁體中文閱讀本頁","關閉"]},cur="zh-Hant";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/zh-Hant/","inLanguage":"zh-Hant","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","sameAs":["https://github.com/george-veras"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"按自我宣告符合 WCAG 2.2 AA 級。以自動檢查、鍵盤操作與人工逐條評估，未使用輔助科技驗證，也沒有第三方稽核。","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"斷網也能從 QR Code 驗證數位憑證。SD-JWT 選擇性揭露、金鑰綁定、離線撤銷檢查，零執行期相依。","inLanguage":"zh-Hant","url":"https://qredential.js.org/zh-Hant/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-17"},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"按自我宣告符合 WCAG 2.2 AA 級。以自動檢查、鍵盤操作與人工逐條評估，未使用輔助科技驗證，也沒有第三方稽核。","@type":"TechArticle","@id":"https://qredential.js.org/zh-Hant/accessibility/#article","headline":"Qredential 無障礙聲明","description":"本站如何對照 WCAG 2.2 AA 級進行評估：測了什麼、怎麼測的、沒測什麼，以及在哪裡回報問題。","inLanguage":"zh-Hant","url":"https://qredential.js.org/zh-Hant/accessibility/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-17","dateModified":"2026-09-17"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/zh-Hant/accessibility/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://qredential.js.org/zh-Hant/"}]}]}</script>
+<title>Qredential 無障礙聲明</title>
+<style>
+  :root {
+    --ground: #E8ECE8;
+    --panel: #F4F6F3;
+    --ink: #111A1D;
+    --body: #24312F;
+    --slate: #596968;
+    --line: #C7D0CA;
+    --line-soft: #DBE2DC;
+    --viridian: #0E6B54;
+    --viridian-wash: #D9E7E0;
+    --oxblood: #8F2E26;
+    --guilloche: #2C6675;
+    --amber: #8A5A12;
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --data: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+      --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+      --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+      --guilloche: #63AABC; --amber: #D6A45A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1214; --panel: #141D20; --ink: #E4EAE5; --body: #C4CFCA;
+    --slate: #8A9A97; --line: #263336; --line-soft: #1C272A;
+    --viridian: #4FBB98; --viridian-wash: #10322A; --oxblood: #DF8074;
+    --guilloche: #63AABC; --amber: #D6A45A;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--body);
+    font-family: var(--text); font-size: 15.5px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--guilloche); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--guilloche); outline-offset: 2px; }
+
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--ground);
+  }
+  .masthead-inner {
+    max-width: 1140px; margin: 0 auto; padding: 14px 22px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px;
+  }
+  .mark {
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: -0.02em; color: var(--ink); text-decoration: none;
+  }
+  .mark span { color: var(--viridian); }
+  .masthead nav { display: flex; flex-wrap: wrap; gap: 18px; margin-left: auto; font-size: 14px; }
+
+  /* WCAG 2.2 sets 24 by 24 CSS pixels as the smallest thing anyone should have to hit. These are
+     links in rows, not links inside a sentence, so the criterion's inline exception does not cover
+     them. The height comes from padding rather than from font size, so the type scale is untouched. */
+  .masthead nav a { color: var(--slate); text-decoration: none;
+                    display: inline-flex; align-items: center; min-height: 24px; }
+  .masthead nav a:hover, .masthead nav a[aria-current="page"] { color: var(--ink); }
+
+  .shell {
+    max-width: 1140px; margin: 0 auto; padding: 36px 22px 90px;
+    display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 46px; align-items: start;
+  }
+  @media (max-width: 900px) { .shell { grid-template-columns: minmax(0, 1fr); gap: 26px; } }
+
+  .toc { position: sticky; top: 74px; font-size: 13.5px; }
+  @media (max-width: 900px) {
+    .toc { position: static; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  }
+  .toc h2 {
+    font-family: var(--display); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate);
+    margin: 0 0 10px;
+  }
+  .toc ol { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .toc a { color: var(--slate); text-decoration: none;
+           display: flex; align-items: center; min-height: 24px; }
+  .toc a:hover { color: var(--ink); }
+
+  article { min-width: 0; max-width: 72ch; }
+  article > section { margin-bottom: 52px; scroll-margin-top: 78px; }
+
+  h1 {
+    font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.08;
+    letter-spacing: -0.028em; color: var(--ink); margin: 0 0 14px; text-wrap: balance;
+  }
+  .lede { font-size: 18px; line-height: 1.55; color: var(--body); margin: 0 0 8px; text-wrap: balance; }
+  h2 {
+    font-family: var(--display); font-weight: 600; font-size: 22px;
+    letter-spacing: -0.012em; color: var(--ink); margin: 0 0 12px; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--display); font-weight: 600; font-size: 15px;
+    letter-spacing: 0.01em; color: var(--ink); margin: 26px 0 8px;
+  }
+  .eyebrow {
+    font-family: var(--data); font-size: 10.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--slate); margin: 0 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 600; }
+  em { color: var(--ink); }
+
+  code {
+    font-family: var(--data); font-size: 0.88em; color: var(--guilloche);
+    word-break: break-word;
+  }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--viridian);
+    padding: 14px 16px; overflow-x: auto; margin: 0 0 16px;
+  }
+  pre code { color: var(--ink); font-size: 13px; line-height: 1.7; word-break: normal; }
+  .tok-c { color: var(--slate); font-style: italic; }
+  .tok-s { color: var(--viridian); }
+  .tok-k { color: var(--oxblood); }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th {
+    font-family: var(--display); font-weight: 600; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate); text-align: left;
+    padding: 0 14px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  td:first-child { white-space: nowrap; }
+  td code { white-space: nowrap; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .signature {
+    font-family: var(--data); font-size: 13.5px; color: var(--ink);
+    background: var(--viridian-wash); border-left: 3px solid var(--viridian);
+    padding: 11px 14px; margin: 0 0 14px; overflow-x: auto; white-space: pre;
+  }
+  .aside {
+    border-left: 3px solid var(--amber); padding: 2px 0 2px 15px;
+    margin: 0 0 18px; color: var(--slate); font-size: 14.5px;
+  }
+  .aside strong { color: var(--ink); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 6px; }
+  .cta {
+    font-family: var(--text); font-weight: 500; font-size: 14.5px;
+    padding: 10px 20px; text-decoration: none; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--ground);
+  }
+  .cta:hover { background: var(--viridian); border-color: var(--viridian); color: #FDFDFB; }
+  .cta.ghost { background: transparent; color: var(--ink); }
+  .cta.ghost:hover { background: transparent; border-color: var(--viridian); color: var(--viridian); }
+
+  .reason { font-family: var(--data); font-size: 12.5px; color: var(--oxblood); white-space: nowrap; }
+
+  footer {
+    border-top: 1px solid var(--line); margin-top: 20px; padding-top: 18px;
+    font-size: 13px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 6px 24px;
+  }
+
+  .toc ol.langs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+  .toc ol.langs .behind { color: var(--amber); font-size: 11px; display: block; }
+
+  .provenance {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    background: var(--panel);
+    padding: 14px 16px;
+    margin: 0 0 40px;
+    font-size: 13.5px;
+    color: var(--slate);
+    line-height: 1.55;
+  }
+  .provenance strong { color: var(--ink); }
+  .provenance a { color: var(--guilloche); }
+  .provenance .fix {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: var(--text);
+    font-weight: 500;
+    font-size: 13.5px;
+    padding: 7px 14px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+  }
+  .provenance .fix:hover { border-color: var(--viridian); color: var(--viridian); }
+  /* WCAG 2.4.1: every page repeats the masthead, so a keyboard user needs one jump past it.
+     Off screen until focused, which is the only way it stays useful without being in the way. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 200;
+          display: inline-flex; align-items: center; min-height: 24px; }
+  .skip:focus {
+    left: 10px; top: 10px; padding: 10px 14px;
+    background: var(--panel); color: var(--ink); min-height: 24px;
+    border: 2px solid var(--viridian); text-decoration: none;
+  }
+  article footer a { display: inline-flex; align-items: center; min-height: 24px; }
+  article img { max-width: 100%; height: auto; }
+  article img[src$="wcag2.2AA.svg"] { width: 88px; height: 31px; }
+</style>
+
+<a class="skip" href="#content">跳至主要內容</a>
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="../../">q<span>redential</span></a>
+    <nav>
+      <a href="../../">首頁</a>
+      <a href="../guide/">文件</a>
+      <a href="../../playground/">試用場</a>
+      <a href="https://github.com/george-veras/qredential">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc">
+    <h2>本頁內容</h2>
+    <ol><li><a href="#scope">這個說法涵蓋什麼</a></li>
+      <li><a href="#method">是怎麼評估的</a></li>
+      <li><a href="#limits">這個說法不涵蓋什麼</a></li>
+      <li><a href="#known">已知的限制</a></li>
+      <li><a href="#report">如果你發現了問題</a></li></ol>
+    <h2 style="margin-top:22px">語言</h2>
+    <ol class="langs"><li><a href="../../accessibility/" hreflang="en" lang="en">English</a></li>
+      <li><a href="../../pt/accessibility/" hreflang="pt" lang="pt">Português</a></li>
+      <li><a href="../../es/accessibility/" hreflang="es" lang="es">Español</a></li>
+      <li><a href="../../fr/accessibility/" hreflang="fr" lang="fr">Français</a></li>
+      <li><a href="../../de/accessibility/" hreflang="de" lang="de">Deutsch</a></li>
+      <li><a href="../../ja/accessibility/" hreflang="ja" lang="ja">日本語</a></li>
+      <li><a href="../../ko/accessibility/" hreflang="ko" lang="ko">한국어</a></li>
+      <li><a href="../../zh-Hans/accessibility/" hreflang="zh-Hans" lang="zh-CN">简体中文</a></li>
+      <li><a href="../../zh-Hant/accessibility/" hreflang="zh-Hant" lang="zh-TW" aria-current="page">繁體中文</a></li></ol>
+  </aside>
+
+  <main id="content" tabindex="-1">
+  <article>
+<section id="statement">
+<p class="eyebrow">無障礙</p>
+<h1>用 WCAG 2.2 AA 量這個網站</h1>
+<p class="lede">本站每一頁都以符合 <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> AA 級為目標。這一頁說明這個說法依據
+什麼，以及不依據什麼。</p>
+
+</section>
+<section id="scope">
+<h2>這個說法涵蓋什麼</h2>
+<p>本站三十六個頁面的全部，九種語言的全部：首頁、文件、試用場與這份聲明。淺色與深色兩套佈景。最近一次評估在
+2026 年 9 月 17 日，針對當天發佈的版本。</p>
+<p><a href="https://www.w3.org/WAI/standards-guidelines/wcag/conformance-logos/"><img src="https://qredential.js.org/wcag2.2AA.svg" alt="AA 級符合性，W3C WAI 網頁內容無障礙指引 2.2"></a></p>
+<p>上面的標章是自我宣告。W3C 只是公開它供任何人使用，並不審核或驗證任何據此做出的說法，這正是本頁其餘
+部分存在的原因。</p>
+
+</section>
+<section id="method">
+<h2>是怎麼評估的</h2>
+<p>四種方式，都可以重複，而且每次變更都會由持續整合再跑一次：</p>
+<ul>
+<li><strong>規則引擎。</strong> 用 <code>axe-core</code> 跑了三十九次頁面載入，涵蓋九種語言的三十六個頁面，外加每種形態各一頁的
+深色佈景，檢查對應 WCAG 2.2 A 級與 AA 級的標記。</li>
+<li><strong>規則引擎看不見的準則。</strong> 用刻意操控的瀏覽器驗證：把頁面重排到 320 CSS 像素、把文字放大到
+200%、套用標準規定的文字間距覆寫、比較取得焦點前後的焦點指示、確認取得焦點的控制項沒有被其他東西
+蓋住、把每個指標目標與 24 乘 24 的最小值對照、確認每個控制項都有可存取的名稱。</li>
+<li><strong>鍵盤。</strong> 確認跳至內容的連結是每一頁上鍵盤最先到達的元素，而且使用它會把焦點真正移入內文，而不只是
+捲動頁面。</li>
+<li><strong>人工逐條。</strong> WCAG 2.2 A 級與 AA 級的五十五條成功準則全部，每一條都記下判定與依據，寫在
+<a href="https://github.com/george-veras/qredential/blob/main/ACCESSIBILITY.md">ACCESSIBILITY.md</a> 裡。</li>
+</ul>
+
+</section>
+<section id="limits">
+<h2>這個說法不涵蓋什麼</h2>
+<p>直說，因為一份合規聲明的價值，正好等於它的邊界的價值：</p>
+<ul>
+<li><strong>沒有用輔助科技測試過。</strong> 沒有使用螢幕閱讀器，也沒有身心障礙者試用過本站。結構是透過檢視無障礙樹
+確認的，那和真正聽一遍不是同一回事。</li>
+<li><strong>沒有第三方稽核。</strong> 沒有任何獨立的人核對過這些，就像沒有任何獨立的人稽核過這個函式庫的密碼學實作
+一樣。</li>
+<li>自動化測試大約涵蓋 WCAG 要求的三分之一。上面另外三種方式正是因此存在，但它們仍然取代不了一個真正
+依賴它的人。</li>
+</ul>
+
+</section>
+<section id="known">
+<h2>已知的限制</h2>
+<ul>
+<li><strong>QR Code 是資料的影像。</strong> 沒有輔助科技能讀懂它，也不該需要讀懂：旁邊的說明給出了版本與字元數，它
+編碼的每一個值都在同一頁上以文字印出。</li>
+<li><strong>試用場需要 JavaScript</strong>，因為它要在讀者自己的瀏覽器裡跑這個函式庫，這正是它存在的意義。文件與
+首頁不需要：它們的內容就在 HTML 裡。</li>
+</ul>
+
+</section>
+<section id="report">
+<h2>如果你發現了問題</h2>
+<p>有人告訴我們，是這件事變好的唯一途徑。到
+<a href="https://github.com/george-veras/qredential/issues">github.com/george-veras/qredential/issues</a> 開一個 issue，或者用任何你覺得方便的
+方式說一聲。描述發生了什麼就夠了；能指出是哪一條成功準則當然很好，但從來不是必須的。</p>
+<div class="cta-row"><a class="cta" href="https://github.com/george-veras/qredential/issues/new">回報無障礙問題</a><a class="cta ghost" href="https://github.com/george-veras/qredential/blob/main/ACCESSIBILITY.md">閱讀完整評估</a></div>
+</section>
+    <div class="provenance">
+      這份翻譯尚未經過以繁體中文為母語的人校閱。它是在 AI 協助下，依英文原文翻譯的，以英文版為準。若有翻譯錯誤、讀起來不順，或使用了沒有人會用的術語，那就是缺陷，歡迎回報。
+      <a class="fix" href="https://github.com/george-veras/qredential/blob/main/content/guide/zh-Hant.md">修正本頁</a>
+    </div>
+
+    <footer>
+      <span>qredential &middot; MIT</span>
+      <span>SD-JWT &middot; SD-JWT VC &middot; Token Status List &middot; base45</span>
+      <span><a href="https://github.com/george-veras/qredential">原始碼與問題回報</a></span>
+      <span><a href="../accessibility/">無障礙</a></span>
+    </footer>
+  </article>
+  </main>
+</div>
