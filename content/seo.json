@@ -12,7 +12,13 @@
     "",
     "The IndexNow key is not a token from anybody. The protocol says the key is whatever you",
     "generate, and hosting it at keyLocation is itself the proof of ownership, so this one works",
-    "today with no account anywhere."
+    "today with no account anywhere.",
+    "",
+    "A chave anterior foi queimada em 2026-09-17 e trocada. Ela chegou a ser submetida enquanto o",
+    "dominio ainda entregava a pagina de \"nao registrado\" do js.org, entao o validador buscou o",
+    "keyLocation, nao achou a chave, e marcou o host como nao autorizado. Depois disso o host passou",
+    "a responder 403 mesmo com o arquivo correto no ar. A licao: so submeter depois que a URL do",
+    "keyLocation responder a propria chave."
   ],
   "verification": {
     "google-site-verification": "baClIecCTfjrq6zjhwCaHnlzue2O2xQBCxWGB9MQEuQ",
@@ -21,5 +27,5 @@
     "baidu-site-verification": "",
     "yandex-verification": ""
   },
-  "indexnow": "69efd40e06aa9e052be05fafefe989de"
+  "indexnow": "a6f4621c85d87d55d7ef536e17021c26"
 }
