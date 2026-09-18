@@ -12,6 +12,7 @@ import {
   joinCombined,
   disclosureLocations,
   reconstructClaims,
+  resolveSdAlg,
 } from './sdjwt.js'
 import { QredentialError } from './errors.js'
 import type {
@@ -528,7 +529,7 @@ async function checkHolderProof(input: {
     }
   }
 
-  const expected = await sdHash(jwt, disclosures)
+  const expected = await sdHash(jwt, disclosures, resolveSdAlg(payload))
   if (kbPayload['sd_hash'] !== expected) {
     return {
       rejected: reject('holder_proof_invalid', 'the holder proof commits to a different set of disclosures than the one presented'),

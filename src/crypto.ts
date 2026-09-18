@@ -2,6 +2,8 @@ import { unb64url, utf8 } from './bytes.js'
 import { QredentialError, asCryptoFailure } from './errors.js'
 import type { Alg, Jwk } from './types.js'
 
+export type HashAlg = 'sha-256' | 'sha-384' | 'sha-512'
+
 function params(alg: Alg): { import: EcKeyImportParams | Algorithm; sign: EcdsaParams | Algorithm } {
   switch (alg) {
     case 'ES256':
@@ -80,7 +82,16 @@ export function algForJwk(jwk: Jwk): Alg {
   )
 }
 
-export async function sha256(data: Uint8Array): Promise<Uint8Array> {
-  const buf = await crypto.subtle.digest('SHA-256', data as BufferSource)
+export async function hash(data: Uint8Array, alg: HashAlg = 'sha-256'): Promise<Uint8Array> {
+  const names: Record<HashAlg, string> = {
+    'sha-256': 'SHA-256',
+    'sha-384': 'SHA-384',
+    'sha-512': 'SHA-512',
+  }
+  const buf = await crypto.subtle.digest(names[alg], data as BufferSource)
   return new Uint8Array(buf)
+}
+
+export async function sha256(data: Uint8Array): Promise<Uint8Array> {
+  return hash(data)
 }

@@ -116,9 +116,9 @@ describe('every documented error code is reachable', () => {
     expect(await codeOf(() => decodeBase45('abc'))).toBe('invalid_encoding')
   })
 
-  it('unsupported_alg: a digest algorithm this version does not implement', async () => {
+  it('unsupported_alg: a digest algorithm outside the named information hash registry', async () => {
     expect(
-      await codeOf(() => reconstructClaims({ _sd: [], _sd_alg: 'sha-512' }, []))
+      await codeOf(() => reconstructClaims({ _sd: [], _sd_alg: 'md5' }, []))
     ).toBe('unsupported_alg')
   })
 

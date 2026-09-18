@@ -1,5 +1,5 @@
 import { b64url, b64urlJson, unb64urlJson, randomBytes, utf8 } from './bytes.js'
-import { sha256 } from './crypto.js'
+import { hash, type HashAlg } from './crypto.js'
 import { QredentialError } from './errors.js'
 
 export const SEPARATOR = '~'
@@ -76,13 +76,13 @@ export function parseDisclosure(raw: string): Disclosure {
  * signature covers exactly this set of disclosures. Without it a relay could strip or add
  * disclosures after the holder signed, and the proof would still check out.
  */
-export async function sdHash(jwt: string, disclosures: string[]): Promise<string> {
-  return b64url(await sha256(utf8(joinCombined(jwt, disclosures))))
+export async function sdHash(jwt: string, disclosures: string[], alg: HashAlg = 'sha-256'): Promise<string> {
+  return b64url(await hash(utf8(joinCombined(jwt, disclosures)), alg))
 }
 
 /** Digest of a disclosure exactly as transmitted. Hashing a re-serialised copy would not match. */
-export async function digest(raw: string): Promise<string> {
-  return b64url(await sha256(utf8(raw)))
+export async function digest(raw: string, alg: HashAlg = 'sha-256'): Promise<string> {
+  return b64url(await hash(utf8(raw), alg))
 }
 
 export function splitCombined(combined: string): { jwt: string; disclosures: string[]; keyBinding?: string } {
@@ -150,16 +150,23 @@ export function joinCombined(jwt: string, disclosures: string[], keyBinding?: st
  * used twice, one naming a reserved or already-present claim, or one left over at the end. A
  * verifier that silently ignores any of those is the bug that makes the format pointless.
  */
+export function resolveSdAlg(payload: Record<string, unknown>): HashAlg {
+  const alg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
+  if (alg !== 'sha-256' && alg !== 'sha-384' && alg !== 'sha-512') {
+    throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${alg}`)
+  }
+  return alg
+}
+
 export async function reconstructClaims(
   payload: Record<string, unknown>,
   disclosures: string[]
 ): Promise<{ claims: Record<string, unknown>; disclosed: string[]; withheld: number }> {
-  const sdAlg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
-  if (sdAlg !== 'sha-256') throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
+  const sdAlg = resolveSdAlg(payload)
 
   const byDigest = new Map<string, Disclosure>()
   for (const raw of disclosures) {
-    const dig = await digest(raw)
+    const dig = await digest(raw, sdAlg)
     // Keying by digest would quietly swallow a repeat, and a presentation that sends the same
     // disclosure twice is malformed however harmless it looks.
     if (byDigest.has(dig)) {
