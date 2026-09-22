@@ -2,14 +2,23 @@
 
 ## Reporting a vulnerability
 
-Report privately through GitHub's private vulnerability reporting on this repository: the Security
-tab, then "Report a vulnerability". That opens a channel only the maintainers can read.
+Report privately through GitHub's private vulnerability reporting on this repository, which opens
+a channel only the maintainers can read:
+
+**https://github.com/george-veras/qredential/security/advisories/new**
+
+That link is the whole process. There is no separate mailbox to find, and a private advisory keeps
+the report out of the public issue tracker while it is still exploitable.
 
 Please do not open a public issue for anything that lets an attacker forge, alter or replay a
 credential.
 
 I will acknowledge a report within 5 days and tell you what I think it is. If I disagree that it is
 a vulnerability I will say why rather than letting the thread go quiet.
+
+On disclosure: I will ask you to hold for up to 90 days from the acknowledgement, and less than
+that whenever a fix ships sooner. If I go quiet on you, publish. A maintainer who stops answering
+has forfeited the right to ask you to keep waiting.
 
 ## What counts
 
@@ -39,5 +48,5 @@ returns a typed rejection rather than throwing. Tests prove the presence of defe
 completeness.
 
 If you are deciding whether to put this between a person and a right they hold, read the source
-first. It is about 700 lines and has no runtime dependencies precisely so that reading it is
-realistic.
+first. It is about 1,300 lines and has no runtime dependencies precisely so that reading it
+is realistic.
