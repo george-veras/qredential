@@ -423,7 +423,10 @@ function head(code, { path, title, description, type }) {
     '@type': 'Person',
     '@id': `${SITE}/#author`,
     name: 'George Veras Valentim',
-    sameAs: ['https://github.com/george-veras'],
+    // Two sites that point at each other say, in a form a search engine reads, that they are one
+    // person's work rather than two unrelated things.
+    url: 'https://george-veras.github.io/',
+    sameAs: ['https://github.com/george-veras', 'https://george-veras.github.io/'],
   }
 
   const software = {
