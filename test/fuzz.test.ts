@@ -46,7 +46,7 @@ describe('verify never throws', () => {
   })
 
   it('survives strings shaped like a credential without being one', async () => {
-    const segment = fc.stringOf(fc.constantFrom(...'ABCabc012-_'.split('')), { maxLength: 60 })
+    const segment = fc.string({ unit: fc.constantFrom(...'ABCabc012-_'.split('')), maxLength: 60 })
     const jwtish = fc
       .tuple(segment, segment, segment, fc.array(segment, { maxLength: 4 }))
       .map(([h, p, s, ds]) => [h, p, s].join('.') + '~' + ds.join('~') + '~')
@@ -63,7 +63,7 @@ describe('verify never throws', () => {
   it('survives a corrupted envelope, which is what a bad scan produces', async () => {
     await fc.assert(
       fc.asyncProperty(
-        fc.stringOf(fc.constantFrom(...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'.split('')), { maxLength: 400 }),
+        fc.string({ unit: fc.constantFrom(...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'.split('')), maxLength: 400 }),
         async (body) => {
           const result = await verify('QC1:' + body, { acceptWithoutHolderProof: true, trust })
           expect(result.ok).toBe(false)
@@ -181,7 +181,7 @@ describe('fits never lies about capacity', () => {
   it('reports a version whose published capacity actually holds the payload', () => {
     fc.assert(
       fc.property(
-        fc.stringOf(fc.constantFrom(...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')), { maxLength: 4400 }),
+        fc.string({ unit: fc.constantFrom(...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')), maxLength: 4400 }),
         fc.constantFrom('L' as const, 'M' as const, 'Q' as const, 'H' as const),
         (payload, level) => {
           const fit = fits(payload, level)
