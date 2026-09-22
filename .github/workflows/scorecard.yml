@@ -20,16 +20,16 @@ jobs:
       security-events: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
       # v2.4.0 and earlier pull the action image from gcr.io, which currently answers with a
       # billing error on OpenSSF's side. v2.4.4 moved to ghcr.io.
-      - uses: ossf/scorecard-action@v2.4.4
+      - uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc # v2.4.4
         with:
           results_file: results.sarif
           results_format: sarif
           publish_results: true
-      - uses: github/codeql-action/upload-sarif@v4
+      - uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd # v4
         with:
           sarif_file: results.sarif
