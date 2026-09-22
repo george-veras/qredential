@@ -92,7 +92,7 @@ If you are implementing something the specification defines, quote the section i
 ## If your change touches the site, or adds a language
 
 Nothing on the site is written by hand twice. The pages are generated from `content/`, so a fix to a
-sentence is one edit, and `npm run build:site` rewrites all twenty seven pages.
+sentence is one edit, and `npm run build:site` rewrites all thirty six pages.
 
 To fix a translation, edit `content/guide/<locale>.md` for the guide, or the key in
 `content/landing/<locale>.json` or `content/playground/<locale>.json` for the other two. You do not
@@ -132,6 +132,13 @@ read the same day; one that changes six things waits for an afternoon I do not a
   library and CI fails when the committed page disagrees with the source
 - Commit messages in plain sentences, explaining why rather than what
 - No need to update `CHANGELOG.md`; that happens at release
+
+`main` is protected, so everything lands through a pull request and ten checks have to be green
+before the merge button works: the test suite on Node 20, 22 and 24, on Linux, macOS and Windows,
+the same suite in Chromium, Firefox and WebKit, the playground consistency check, and CodeQL. They
+all run automatically when you open the pull request. If one fails for a reason that looks like it
+has nothing to do with your change, say so in the thread rather than assuming it is your fault,
+because sometimes it is not.
 
 You do not need to ask before opening one. For something large, an issue first saves you the risk of
 building something I would ask you to change.
