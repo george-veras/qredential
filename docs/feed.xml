@@ -8,10 +8,12 @@
   <atom:link href="https://qredential.js.org/feed.xml" rel="self" type="application/rss+xml"/>
   <item>
     <title>qredential 0.2.0</title>
-    <link>https://github.com/george-veras/qredential/blob/main/CHANGELOG.md</link>
+    <link>https://qredential.js.org/</link>
     <guid isPermaLink="false">qredential-0.2.0</guid>
     <pubDate>Tue, 15 Sep 2026 00:00:00 GMT</pubDate>
-    <description><![CDATA[First release intended for publication. 0.1.0 was tagged in development and never published, so nothing here breaks anybody. Added Key binding, per RFC 9901 section 4.3. The issuer binds the holder's public key, the wallet signs the verifier's challenge at scan time, and the proof commits to the nonce, the audience, the bound key and the exact disclosure set. Nested, array element and recursive selective disclosure, resolved at any depth following the processing model in RFC 9901 section 7.1. createStatusList(), so an issuer can publish revocation rather than hand rolling a bitstring. assertVerified() for callers who prefer try/catch over branching on the result. QredentialError with stable code values, and isQredentialError(). holderVerified and revocationChecked on a successful result, so a caller always knows which checks actually ran. Changed Key binding is required by default. A pre]]></description>
+    <description><![CDATA[First release intended for publication. 0.1.0 was tagged in development and never published, so nothing here breaks anybody. Added Key binding, per RFC 9901 section 4.3. The issuer binds the holder's public key, the wallet signs the verifier's challenge at scan time, and the proof commits to the nonce, the audience, the bound key and the exact disclosure set. Nested, array element and recursive selective disclosure, resolved at any depth following the processing model in RFC 9901 section 7.1. createStatusList(), so an issuer can publish revocation rather than hand rolling a bitstring. assertVerified() for callers who prefer try/catch over branching on the result. QredentialError with stable code values, and isQredentialError(). holderVerified and revocationChecked on a successful result, so a caller always knows which checks actually ran. Changed Key binding is required by default. A pre
+
+Full changelog: https://github.com/george-veras/qredential/blob/main/CHANGELOG.md]]></description>
   </item>
 </channel>
 </rss>

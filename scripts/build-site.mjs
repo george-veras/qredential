@@ -966,10 +966,13 @@ for (const section of changelog.split(/^## /m).slice(1)) {
     [
       '  <item>',
       `    <title>qredential ${version}</title>`,
-      `    <link>${REPO}/blob/main/CHANGELOG.md</link>`,
+      // On domain on purpose. Naver's Search Advisor refuses a feed whose item URLs point somewhere
+      // other than the verified site, and it is right to: a feed that links away is a feed that can
+      // be used to vouch for anybody. The changelog itself is named in the description instead.
+      `    <link>${SITE}/</link>`,
       `    <guid isPermaLink="false">qredential-${version}</guid>`,
       ...(when ? [`    <pubDate>${new Date(`${when}T00:00:00Z`).toUTCString()}</pubDate>`] : []),
-      `    <description><![CDATA[${body.slice(0, 900)}]]></description>`,
+      `    <description><![CDATA[${body.slice(0, 900)}\n\nFull changelog: ${REPO}/blob/main/CHANGELOG.md]]></description>`,
       '  </item>',
     ].join('\n')
   )
