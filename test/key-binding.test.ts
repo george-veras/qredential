@@ -2,7 +2,6 @@ import { describe, it, expect, beforeAll } from 'vitest'
 import { issue, present, verify, unpack, pack } from '../src/index.js'
 import { splitCombined, joinCombined } from '../src/sdjwt.js'
 import { b64urlJson, unb64urlJson } from '../src/bytes.js'
-import { importPrivateKey, sign } from '../src/crypto.js'
 import { makeIssuer } from './helpers.js'
 import type { Jwk, TrustList } from '../src/types.js'
 

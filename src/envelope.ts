@@ -1,7 +1,7 @@
 import { encodeBase45, decodeBase45 } from './base45.js'
 import { utf8, fromUtf8, concat } from './bytes.js'
 import { deflate, inflate, hasCompression } from './compress.js'
-import { QredentialError, isQredentialError } from './errors.js'
+import { QredentialError } from './errors.js'
 
 export const PREFIX = 'QC1:'
 

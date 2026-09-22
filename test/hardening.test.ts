@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { issue, present, verify, createStatusList, unpack } from '../src/index.js'
+import { issue, verify, createStatusList } from '../src/index.js'
 import { unb64url, b64urlJson } from '../src/bytes.js'
 import {
   digest,
@@ -10,7 +10,6 @@ import {
   joinCombined,
 } from '../src/sdjwt.js'
 import { makeIssuer } from './helpers.js'
-import type { QredentialError } from '../src/errors.js'
 
 const CLAIMS = { given_name: 'Ana', birth_date: '1991-04-02', over_18: true }
 const POINTER = { idx: 42, uri: 'https://detran.example/status/1' }

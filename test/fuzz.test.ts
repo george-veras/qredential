@@ -14,7 +14,6 @@ import type { TrustList } from '../src/types.js'
 
 let trust: TrustList
 let credential: string
-let envelope: string
 
 beforeAll(async () => {
   const issuer = await makeIssuer('https://detran.example')
@@ -28,7 +27,6 @@ beforeAll(async () => {
     expiresIn: '365d',
   })
   credential = issued.credential
-  envelope = issued.qr
 })
 
 describe('verify never throws', () => {

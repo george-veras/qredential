@@ -11,7 +11,6 @@ import {
   isEnvelope,
   encodeBase45,
   decodeBase45,
-  assertVerified,
   isQredentialError,
   QredentialError,
 } from '../src/index.js'

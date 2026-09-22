@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { issue, present, verify, fits } from '../src/index.js'
-import { unpack, pack } from '../src/envelope.js'
+import { unpack } from '../src/envelope.js'
 import { splitCombined, joinCombined, makeDisclosure } from '../src/sdjwt.js'
 import { b64urlJson, unb64urlJson } from '../src/bytes.js'
 import { makeIssuer, makeStatusList } from './helpers.js'

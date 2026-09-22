@@ -147,7 +147,7 @@ for (const loc of layoutLocales) {
     // 1.4.4 Resize text, at the 200% the criterion asks for, and 1.4.12 Text Spacing, with the
     // exact overrides the criterion specifies. Both fail the same way: text that clips or vanishes.
     await page.setViewportSize({ width: 1280, height: 900 })
-    for (const [id, name, css] of [
+    for (const [, name, css] of [
       ['zoom', '1.4.4 resize text to 200%', 'html{font-size:200%!important}'],
       [
         'spacing',
