@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **还不是 ISO 18013-5 mDL。** 那边是 CBOR 和 COSE，不是 JWT。它在计划里，而声称做了半个合规标准，比什么都不声称更糟。
 - **没有做过审计。** 这个库实现的是已发布的标准，并针对演练场里的那些攻击做了测试，但测试能证明的是防御存在，永远不是防御完备。
 
-源码大约 700 行，没有任何运行时依赖，正是为了让「在信任它之前先读一遍」这件事切实可行。漏洞请走 GitHub 的 Security 标签页，范围和响应时限写在 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) 里。
+源码大约 1,300 行，没有任何运行时依赖，正是为了让「在信任它之前先读一遍」这件事切实可行。漏洞请走 GitHub 的 Security 标签页，范围和响应时限写在 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) 里。

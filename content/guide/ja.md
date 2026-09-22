@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **まだ ISO 18013-5 mDL ではありません。** あちらは JWT ではなく CBOR と COSE です。予定には入っていますが、適合規格を半分だけ満たしたと称するのは、何も称さないより悪いことです。
 - **監査は受けていません。** 公開された規格を実装し、プレイグラウンドの攻撃に対して試験していますが、テストが示せるのは防御の存在であって、その網羅性ではありません。
 
-ソースは実行時依存ゼロでおよそ 700 行です。信頼する前に読むことが現実的であるように、あえてそうしてあります。脆弱性は GitHub の Security タブを通してください。範囲と応答期限は [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) にあります。
+ソースは実行時依存ゼロでおよそ 1,300 行です。信頼する前に読むことが現実的であるように、あえてそうしてあります。脆弱性は GitHub の Security タブを通してください。範囲と応答期限は [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) にあります。

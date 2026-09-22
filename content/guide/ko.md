@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **아직 ISO 18013-5 mDL이 아닙니다.** 그쪽은 JWT가 아니라 CBOR과 COSE입니다. 예정에는 있으며, 적합성 표준의 절반을 했다고 주장하는 것은 아무것도 주장하지 않는 것보다 나쁩니다.
 - **감사받지 않았습니다.** 공개된 표준을 구현하고 플레이그라운드의 공격들에 대해 시험하지만, 테스트가 보일 수 있는 것은 방어의 존재이지 그 완전성이 아닙니다.
 
-소스는 런타임 의존성 없이 약 700줄입니다. 믿기 전에 읽는 일이 현실적이도록 일부러 그렇게 두었습니다. 취약점은 GitHub의 Security 탭을 통해 알려 주시고, 범위와 응답 기한은 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md)에 있습니다.
+소스는 런타임 의존성 없이 약 1,300줄입니다. 믿기 전에 읽는 일이 현실적이도록 일부러 그렇게 두었습니다. 취약점은 GitHub의 Security 탭을 통해 알려 주시고, 범위와 응답 기한은 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md)에 있습니다.

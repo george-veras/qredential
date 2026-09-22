@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **Noch kein ISO 18013-5 mDL.** Das ist CBOR und COSE statt JWT. Es steht auf der Liste, und die Hälfte eines Konformitätsstandards zu behaupten ist schlimmer, als ihn gar nicht zu behaupten.
 - **Nicht auditiert.** Die Bibliothek setzt veröffentlichte Standards um und wird gegen die Angriffe im Playground getestet, aber Tests belegen das Vorhandensein von Abwehr, nie deren Vollständigkeit.
 
-Der Quellcode umfasst etwa 700 Zeilen ohne jede Laufzeitabhängigkeit, genau damit es realistisch ist, ihn zu lesen, bevor Sie ihm vertrauen. Schwachstellen laufen über den Security-Reiter auf GitHub, und [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) legt Umfang und Antwortzeiten fest.
+Der Quellcode umfasst etwa 1.300 Zeilen ohne jede Laufzeitabhängigkeit, genau damit es realistisch ist, ihn zu lesen, bevor Sie ihm vertrauen. Schwachstellen laufen über den Security-Reiter auf GitHub, und [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) legt Umfang und Antwortzeiten fest.

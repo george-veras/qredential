@@ -2,94 +2,94 @@
   "_readme": "When each page last changed, keyed by a hash of its source. Seeded once from git history and maintained by the build: a file whose hash moved gets today, a file whose hash did not keeps its date. Git cannot do this job directly, because a date read from git history changes the moment the file is committed, so a sitemap built before the commit would never match the one rebuilt after it.",
   "files": {
     "content/guide/de.md": {
-      "sha": "3d400d9564a4a863",
+      "sha": "53d50eca8e8ed938",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/en.md": {
-      "sha": "d6f6153e6fb350ac",
+      "sha": "32922c91b9d4b531",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/es.md": {
-      "sha": "d4e354bc3c799211",
+      "sha": "82d64fef8aaad5ef",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/fr.md": {
-      "sha": "b3165106174fb1f1",
+      "sha": "6c96197f7ed1c393",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/ja.md": {
-      "sha": "eeb4f0ea3027baea",
+      "sha": "bf4c469201053636",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/ko.md": {
-      "sha": "76c5168f08bfbd18",
+      "sha": "6c9834c54bf2726a",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/pt.md": {
-      "sha": "994359b293ae85f4",
+      "sha": "c121c11f7dd8a3c3",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/zh-Hans.md": {
-      "sha": "87d1fb1f301b1e57",
+      "sha": "4b545c27dd7622ce",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/guide/zh-Hant.md": {
-      "sha": "270388db1404c416",
+      "sha": "591ea5f8d468512e",
       "created": "2026-09-15",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/de.json": {
-      "sha": "6a9a108f4c0603c7",
+      "sha": "470b1863ecb20ec1",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/en.json": {
-      "sha": "beb4bad0add88066",
+      "sha": "184626f5b85a811c",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/es.json": {
-      "sha": "8d405f83353ca88e",
+      "sha": "7bc172f81e53e3a2",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/fr.json": {
-      "sha": "c9e91eb70711dfbd",
+      "sha": "c672198256c96542",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/ja.json": {
-      "sha": "f544e7dc8777f676",
+      "sha": "d3b801991a866ccb",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/ko.json": {
-      "sha": "cebfd27f0b9bc190",
+      "sha": "8e7f481ffd228530",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/pt.json": {
-      "sha": "02d62fab1d274b3f",
+      "sha": "9660caf96a3e3fbb",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/zh-Hans.json": {
-      "sha": "a5b8013154488ee8",
+      "sha": "e3e61a1e24c00c4a",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/landing/zh-Hant.json": {
-      "sha": "39a7eae96a7042a4",
+      "sha": "95a6f00b79e255ff",
       "created": "2026-09-16",
-      "modified": "2026-09-16"
+      "modified": "2026-09-22"
     },
     "content/playground/de.json": {
       "sha": "d96c185ab580be6e",
@@ -142,7 +142,7 @@
       "modified": "2026-09-22"
     },
     "docs/index.template.html": {
-      "sha": "67a86a0686c962d5",
+      "sha": "f6e5aecc3370608a",
       "created": "2026-09-15",
       "modified": "2026-09-22"
     },

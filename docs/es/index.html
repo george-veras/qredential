@@ -52,7 +52,7 @@
 <link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
 <style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
 <script>(function(){var O={"en":["https://qredential.js.org/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/","以繁體中文閱讀本頁","關閉"]},cur="es";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/es/","inLanguage":"es","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","url":"https://george-veras.github.io/","sameAs":["https://github.com/george-veras","https://george-veras.github.io/"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"Cumple WCAG 2.2 nivel AA por autodeclaración. Evaluado con comprobaciones automáticas, de teclado y manuales, no con tecnología de apoyo y sin auditoría externa.","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"Verifica una credencial digital desde un código QR sin conexión de red. Divulgación selectiva SD-JWT, key binding, revocación offline, cero dependencias.","inLanguage":"es","url":"https://qredential.js.org/es/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-16"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/es/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://qredential.js.org/es/"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/es/","inLanguage":"es","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","url":"https://george-veras.github.io/","sameAs":["https://github.com/george-veras","https://george-veras.github.io/"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"Cumple WCAG 2.2 nivel AA por autodeclaración. Evaluado con comprobaciones automáticas, de teclado y manuales, no con tecnología de apoyo y sin auditoría externa.","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"Verifica una credencial digital desde un código QR sin conexión de red. Divulgación selectiva SD-JWT, key binding, revocación offline, cero dependencias.","inLanguage":"es","url":"https://qredential.js.org/es/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-22"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/es/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://qredential.js.org/es/"}]}]}</script>
 <title>Qredential, verificación de credenciales sin conexión</title>
 <style>
   :root {
@@ -332,6 +332,27 @@
 
 <section class="band">
   <div class="wrap measure">
+    <h2>Qué hace esto en la práctica</h2>
+    <p>
+      Una credencial es una afirmación que alguien firmó. “Esta persona es mayor de 18 años.” “Esta persona puede conducir.” La firma es lo que le da valor: dice que una autoridad responde por esa frase y que nadie la modificó después.
+    </p>
+    <p>
+      En papel, y en un PDF, una firma cubre el documento entero. Para probar una sola línea hay que entregarlo todo. Muestra el permiso de conducir solo para probar tu edad y la otra persona se entera además de tu dirección, tu número de documento y tu fecha exacta de nacimiento. Nunca pidió nada de eso. Ahora lo tiene igual.
+    </p>
+    <p>
+      La divulgación selectiva rompe ese intercambio. El emisor firma cada dato por separado, y la credencial lleva solo una huella de cada uno. Tú eliges qué revelar, y el resto sigue siendo una huella que no dice nada sobre su contenido. La firma sigue siendo válida, porque nunca fue una firma sobre un bloque indivisible.
+    </p>
+    <p>
+      Todo eso cabe dentro del código que lee el verificador: la firma, las huellas y los datos que elegiste mostrar. No se descarga nada durante la verificación, así que una puerta, un autobús, un consultorio rural o un avión en vuelo pueden comprobar la credencial sin red alguna.
+    </p>
+    <p>
+      Queda una pieza, y es justo la que se olvida. Todo lo que se puede escanear se puede fotografiar. Por eso quien presenta también tiene que firmar un desafío nuevo con una clave privada que nunca sale de su dispositivo. Sin ese paso, la captura de pantalla de la credencial de otra persona pasaría. Esta biblioteca rechaza cualquier presentación que no lo traiga.
+    </p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap measure">
     <h2>Hecha para el momento en que no hay cobertura</h2>
     <p>
       Construí el eCNH, el permiso de conducir digital de Brasil, usado por más de 40 millones de personas. La parte que más me enseñó no fue la aplicación. Fue la carretera: un agente leyendo un permiso con una barra de cobertura, o ninguna, necesitando un sí o un no en menos de un segundo.
@@ -471,12 +492,36 @@ result.withheld           <span class="tok-c">// 4, y no puede decirte cuáles c
 </section>
 
 <section class="band">
+  <div class="wrap measure">
+    <h2>Por qué esta, y cuándo no</h2>
+    <p>
+      Cinco razones para elegirla, y después la parte honesta.
+    </p>
+    <ul class="std">
+      <li><b>Unas 1.300 líneas que se pueden leer</b>Lo bastante pequeña para que una sola persona la lea entera en una tarde y sepa qué hace. La seguridad que no puedes leer es seguridad que aceptas por fe.</li>
+      <li><b>Cero dependencias</b>Nada de npm en tiempo de ejecución. No hay más cadena de suministro que auditar que esta, y nada que pueda cambiar bajo tus pies la semana que viene.</li>
+      <li><b>Rechaza lo que no puede comprobar por completo</b>Sin aprobaciones parciales, sin avisos que puedas ignorar. Cada fallo vuelve como un motivo con nombre, que puedes registrar y tratar, nunca como un falso a secas.</li>
+      <li><b>Corre donde ocurre la verificación</b>Node, Deno, Bun, navegadores, React Native y edge workers. El mismo código en todos, sobre la criptografía estándar que ya trae la plataforma.</li>
+      <li><b>Probada de tres maneras</b>Pruebas unitarias, los vectores oficiales publicados con el RFC 9901, y pruebas de propiedades que le lanzan entradas aleatorias y malformadas buscando un caso que se cuele.</li>
+    </ul>
+    <p>
+      Y cuándo esta es la herramienta equivocada.
+    </p>
+    <ul class="std">
+      <li><b>Necesitas permisos de conducir ISO 18013-5</b>Es otra codificación, CBOR y COSE, y otro estándar. Esta biblioteca habla SD-JWT, el formato que usan las carteras europeas y las especificaciones OpenID. Problema parecido, trabajo distinto.</li>
+      <li><b>Quieres una cartera completa</b>Esto verifica y presenta. No guarda credenciales, no gestiona dispositivos ni se ocupa del alta de usuarios. Es una pieza, pensada para vivir dentro de tu producto.</li>
+      <li><b>Necesitas una auditoría externa antes de un despliegue regulado</b>Todavía no existe. Las pruebas y los vectores del RFC son públicos, y cada línea también, pero para un despliegue regulado conviene reservar presupuesto para tu propia revisión.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="band">
   <div class="wrap install">
     <div>
       <h2>Instalar</h2>
       <pre><code>npm i qredential</code></pre>
       <p style="margin-top:16px;color:var(--slate);font-size:14.5px">
-        Node 20 o posterior, cualquier navegador actual, React Native. Unas 700 líneas de código sin dependencias en tiempo de ejecución, precisamente para que leerlo antes de confiar en él sea realista.
+        Node 20 o posterior, cualquier navegador actual, React Native. Unas 1.300 líneas de código sin dependencias en tiempo de ejecución, precisamente para que leerlo antes de confiar en él sea realista.
       </p>
       <div class="cta-row">
         <a class="cta ghost" href="./guide/">Documentación</a>

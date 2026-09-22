@@ -8,6 +8,9 @@
 
 Verify a digital credential from a QR code with **no network connection**.
 
+Someone shows you a code. You need to know one thing about them, and you need to know it is true.
+This library reads the code, checks the signature, and answers, without asking anybody.
+
 ```ts
 import { verify } from 'qredential'
 
@@ -18,6 +21,38 @@ const result = await verify(scannedText, { trust })
 No server call. No lookup. No account. The proof travels inside the QR code itself.
 
 ---
+
+## What this actually does
+
+If you have not worked with digital credentials before, this section is for you. Nothing here
+assumes you have.
+
+A credential is a statement somebody signed. "This person is over 18." "This person may drive a
+car." The signature is what makes it worth anything: it says an authority stands behind the
+statement, and that nobody edited it afterwards.
+
+On paper, and in a PDF, one signature covers the whole document. To prove a single line of it you
+hand over all of it. Show a driving licence to prove your age and the other person also learns your
+address, your licence number and your exact date of birth. They never asked for any of that. They
+have it now anyway.
+
+Selective disclosure breaks that trade. The issuer signs each fact separately, and the credential
+carries only a fingerprint of each one. You choose which facts to reveal, and the rest stay
+fingerprints that say nothing about their contents. The signature still checks out, because it was
+never a signature over one indivisible blob.
+
+All of it fits inside the code the verifier scans: the signature, the fingerprints, and the facts
+you chose to share. Nothing is fetched while verifying, so a door, a bus, a rural clinic or an
+aeroplane at cruising altitude can check a credential with no network at all.
+
+There is one last piece, and it is the one people forget. Anything you can scan, you can photograph.
+So the person presenting also has to sign a fresh challenge with a private key that never leaves
+their device. Without that step, a screenshot of somebody else's credential would pass. This library
+refuses any presentation that lacks it, and the section on [proving the
+holder](#proving-the-holder-not-just-the-credential) explains how.
+
+The format is SD-JWT, standardised as [RFC 9901](https://www.rfc-editor.org/rfc/rfc9901.html) in
+November 2025. It is what the European digital identity wallets and the OpenID specifications use.
 
 ## Why this exists
 

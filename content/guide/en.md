@@ -443,4 +443,4 @@ try {
 - **Not ISO 18013-5 mDL yet.** That is CBOR and COSE rather than JWT. It is on the roadmap, and claiming half of a compliance standard is worse than not claiming it.
 - **Not audited.** It implements published standards and is tested against the attacks in the playground, but tests prove the presence of defences, never their completeness.
 
-The source is about 700 lines with no runtime dependencies, specifically so that reading it before you trust it is realistic. Vulnerabilities go through the Security tab on GitHub, and [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) sets out scope and response times.
+The source is about 1,300 lines with no runtime dependencies, specifically so that reading it before you trust it is realistic. Vulnerabilities go through the Security tab on GitHub, and [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) sets out scope and response times.

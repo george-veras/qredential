@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **Ainda não é mDL ISO 18013-5.** Aquilo é CBOR e COSE, não JWT. Está no roteiro, e afirmar metade de um padrão de conformidade é pior que não afirmar nada.
 - **Não foi auditado.** Implementa padrões publicados e é testado contra os ataques do playground, mas teste prova a presença de defesas, nunca que elas são completas.
 
-O código tem cerca de 700 linhas sem dependência de runtime nenhuma, exatamente para que ler antes de confiar seja realista. Vulnerabilidades passam pela aba Security no GitHub, e o [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) define escopo e prazos de resposta.
+O código tem cerca de 1.300 linhas sem dependência de runtime nenhuma, exatamente para que ler antes de confiar seja realista. Vulnerabilidades passam pela aba Security no GitHub, e o [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) define escopo e prazos de resposta.

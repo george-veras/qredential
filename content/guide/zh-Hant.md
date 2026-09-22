@@ -1,4 +1,4 @@
-<!-- translated-from: d6f6153e6fb350ac -->
+<!-- translated-from: 32922c91b9d4b531 -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -444,4 +444,4 @@ try {
 - **還不是 ISO 18013-5 mDL。** 那邊是 CBOR 與 COSE，不是 JWT。它在規劃中，而宣稱做了半套合規標準，比什麼都不宣稱更糟。
 - **沒有做過稽核。** 這個函式庫實作的是已發布的標準，並針對試用場裡的那些攻擊做過測試，但測試能證明的是防禦存在，永遠不是防禦完備。
 
-原始碼大約 700 行，沒有任何執行期相依套件，正是為了讓「在信任它之前先讀過一遍」這件事切實可行。漏洞請走 GitHub 的 Security 頁籤，範圍與回應時限寫在 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) 裡。
+原始碼大約 1,300 行，沒有任何執行期相依套件，正是為了讓「在信任它之前先讀過一遍」這件事切實可行。漏洞請走 GitHub 的 Security 頁籤，範圍與回應時限寫在 [SECURITY.md](https://github.com/george-veras/qredential/blob/main/SECURITY.md) 裡。
