@@ -839,6 +839,12 @@ await writeFile(
   [
     'User-agent: *',
     'Allow: /',
+    // The two build templates live in docs/ so the build can read them in place, which means Pages
+    // serves them too. They render as a wall of unsubstituted placeholders, so keep them out of
+    // every index. A more specific path beats the blanket Allow above, for every crawler that
+    // implements the spec properly.
+    'Disallow: /index.template.html',
+    'Disallow: /guide/_shell.html',
     '',
     '# Search engines that do not share an index with Google, one market each.',
     '# Yeti is Naver, and Korea is the market that most depends on being let in by name.',

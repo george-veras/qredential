@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /index.template.html
+Disallow: /guide/_shell.html
 
 # Search engines that do not share an index with Google, one market each.
 # Yeti is Naver, and Korea is the market that most depends on being let in by name.
