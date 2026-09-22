@@ -3,7 +3,7 @@ import { SDJwtInstance } from '@sd-jwt/core'
 import { issue, present, verify } from '../src/index.js'
 import { digest } from '../src/sdjwt.js'
 import { b64url, unb64url, utf8 } from '../src/bytes.js'
-import { sha256 } from '../src/crypto.js'
+import { digestHash, sha256 } from '../src/crypto.js'
 import type { Jwk, TrustList } from '../src/types.js'
 
 /**
@@ -277,6 +277,99 @@ describe('nested and array selective disclosure, across implementations', () => 
       street_address: 'Rua das Flores 10',
       locality: 'Sao Paulo',
       country: 'BR',
+    })
+  })
+
+  describe.each(['sha-384', 'sha-512'] as const)('algorithm %s', (alg) => {
+    it(`verifies a credential issued by @sd-jwt/core with ${alg}`, async () => {
+      const pair = (await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, [
+        'sign',
+        'verify',
+      ])) as CryptoKeyPair
+      const pubJwk = (await crypto.subtle.exportKey('jwk', pair.publicKey)) as Jwk
+      const testTrust: TrustList = {
+        issuers: { [ISSUER]: { keys: [{ kid: 'k-' + alg, alg: 'ES256', jwk: pubJwk }] } },
+      }
+
+      const instance = new SDJwtInstance({
+        signer: async (data: string) =>
+          b64url(
+            new Uint8Array(
+              await crypto.subtle.sign(
+                { name: 'ECDSA', hash: 'SHA-256' },
+                pair.privateKey,
+                utf8(data) as BufferSource
+              )
+            )
+          ),
+        verifier: async (data: string, sig: string) =>
+          crypto.subtle.verify(
+            { name: 'ECDSA', hash: 'SHA-256' },
+            pair.publicKey,
+            unb64url(sig) as BufferSource,
+            utf8(data) as BufferSource
+          ),
+        signAlg: 'ES256',
+        hasher: async (data: string | ArrayBuffer) =>
+          digestHash(typeof data === 'string' ? utf8(data) : new Uint8Array(data), alg),
+        saltGenerator: () => b64url(crypto.getRandomValues(new Uint8Array(16))),
+        hashAlg: alg,
+      })
+
+      const credential = await instance.issue(
+        { ...CLAIMS, iss: ISSUER },
+        { _sd: ['birth_date', 'over_18'] }
+      )
+      const presentation = await instance.present(credential, { over_18: true })
+
+      const result = await verify(presentation, { trust: testTrust, acceptWithoutHolderProof: true })
+      expect(result.ok).toBe(true)
+      if (!result.ok) return
+      expect(result.claims['given_name']).toBe('Ana')
+      expect(result.claims['over_18']).toBe(true)
+      expect(result.claims['birth_date']).toBeUndefined()
+      expect(result.disclosed).toEqual(['over_18'])
+      expect(result.withheld).toBe(1)
+    })
+
+    it(`issues and verifies our credential with sdAlg: ${alg} including key binding`, async () => {
+      const holderPair = (await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, [
+        'sign',
+        'verify',
+      ])) as CryptoKeyPair
+      const holderPub = (await crypto.subtle.exportKey('jwk', holderPair.publicKey)) as Jwk
+      const holderPriv = (await crypto.subtle.exportKey('jwk', holderPair.privateKey)) as Jwk
+
+      const { credential } = await issue({
+        issuer: ISSUER,
+        kid: KID,
+        key: privateJwk,
+        claims: { name: 'Bob', age: 30 },
+        disclose: ['age'],
+        sdAlg: alg,
+        holderKey: holderPub,
+      })
+
+      const presented = await present(credential, {
+        disclose: ['age'],
+        keyBinding: {
+          key: holderPriv,
+          audience: 'https://verifier.example',
+          nonce: 'challenge-123',
+        },
+      })
+
+      const result = await verify(presented, {
+        trust,
+        audience: 'https://verifier.example',
+        nonce: 'challenge-123',
+      })
+
+      expect(result.ok).toBe(true)
+      if (!result.ok) return
+      expect(result.claims['name']).toBe('Bob')
+      expect(result.claims['age']).toBe(30)
+      expect(result.holderVerified).toBe(true)
     })
   })
 })

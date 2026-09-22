@@ -118,7 +118,7 @@ describe('every documented error code is reachable', () => {
 
   it('unsupported_alg: a digest algorithm this version does not implement', async () => {
     expect(
-      await codeOf(() => reconstructClaims({ _sd: [], _sd_alg: 'sha-512' }, []))
+      await codeOf(() => reconstructClaims({ _sd: [], _sd_alg: 'sha-1' }, []))
     ).toBe('unsupported_alg')
   })
 

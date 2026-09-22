@@ -70,4 +70,76 @@ describe('RFC 9901 Section 5 vectors', () => {
       expect(v.disclosure.length).toBeGreaterThan(40)
     }
   })
+
+  describe('RFC 9901 Section 4.1.1 hash algorithms (sha-384 and sha-512)', () => {
+    it('computes sha-384 and sha-512 digests of disclosures with correct lengths', async () => {
+      const sample = vectors[0]!.disclosure
+      const d384 = await digest(sample, 'sha-384')
+      const d512 = await digest(sample, 'sha-512')
+
+      // SHA-384: 48 bytes -> 64 chars in base64url
+      expect(d384).toMatch(/^[A-Za-z0-9_-]{64}$/)
+      // SHA-512: 64 bytes -> 86 chars in base64url
+      expect(d512).toMatch(/^[A-Za-z0-9_-]{86}$/)
+
+      // Verify against WebCrypto directly
+      const { b64url, utf8 } = await import('../src/bytes.js')
+      const expected384 = b64url(
+        new Uint8Array(await crypto.subtle.digest('SHA-384', utf8(sample) as BufferSource))
+      )
+      const expected512 = b64url(
+        new Uint8Array(await crypto.subtle.digest('SHA-512', utf8(sample) as BufferSource))
+      )
+      expect(d384).toBe(expected384)
+      expect(d512).toBe(expected512)
+    })
+
+    it('computes sd_hash for key binding using sha-384 and sha-512', async () => {
+      const jwt = 'eyJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIn0.sig'
+      const chosen = [vectors[0]!.disclosure, vectors[1]!.disclosure]
+
+      const { b64url, utf8 } = await import('../src/bytes.js')
+      const data = utf8(`${jwt}~${chosen[0]}~${chosen[1]}~`)
+      const expected384 = b64url(
+        new Uint8Array(await crypto.subtle.digest('SHA-384', data as BufferSource))
+      )
+      const expected512 = b64url(
+        new Uint8Array(await crypto.subtle.digest('SHA-512', data as BufferSource))
+      )
+
+      expect(await sdHash(jwt, chosen, 'sha-384')).toBe(expected384)
+      expect(await sdHash(jwt, chosen, 'sha-512')).toBe(expected512)
+    })
+
+    it('reconstructs claims using sha-384 and sha-512', async () => {
+      const { reconstructClaims, makeDisclosure } = await import('../src/sdjwt.js')
+
+      for (const alg of ['sha-384', 'sha-512'] as const) {
+        const d1 = makeDisclosure('given_name', 'Alice')
+        const d2 = makeDisclosure('family_name', 'Smith')
+        const dig1 = await digest(d1.raw, alg)
+        const dig2 = await digest(d2.raw, alg)
+
+        const payload = {
+          iss: 'https://issuer.example',
+          _sd: [dig1, dig2],
+          _sd_alg: alg,
+        }
+
+        const rebuilt = await reconstructClaims(payload, [d1.raw, d2.raw])
+        expect(rebuilt.claims['given_name']).toBe('Alice')
+        expect(rebuilt.claims['family_name']).toBe('Smith')
+        expect(rebuilt.disclosed).toEqual(['given_name', 'family_name'])
+        expect(rebuilt.withheld).toBe(0)
+      }
+    })
+
+    it('refuses an unknown algorithm not in the registry allowed set', async () => {
+      const { reconstructClaims } = await import('../src/sdjwt.js')
+      await expect(
+        reconstructClaims({ _sd: [], _sd_alg: 'md5' }, [])
+      ).rejects.toThrow('unsupported _sd_alg: md5')
+    })
+  })
 })
+

@@ -13,7 +13,8 @@ import {
   disclosureLocations,
   reconstructClaims,
 } from './sdjwt.js'
-import { QredentialError } from './errors.js'
+import { isSupportedSdAlg } from './crypto.js'
+import { isQredentialError, QredentialError } from './errors.js'
 import type {
   Alg,
   Jwk,
@@ -21,6 +22,7 @@ import type {
   IssueOptions,
   IssueResult,
   RejectedCredential,
+  SdAlg,
   VerifiedCredential,
   VerifyOptions,
   VerifyResult,
@@ -110,8 +112,13 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
     )
   }
 
+  const sdAlg: SdAlg = options.sdAlg ?? 'sha-256'
+  if (!isSupportedSdAlg(sdAlg)) {
+    throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
+  }
+
   const disclosures = disclosable.map((name) => makeDisclosure(name, options.claims[name]))
-  const digests = shuffle(await Promise.all(disclosures.map((d) => digest(d.raw))))
+  const digests = shuffle(await Promise.all(disclosures.map((d) => digest(d.raw, sdAlg))))
 
   const payload: Record<string, unknown> = { iss: options.issuer, iat }
   for (const [key, value] of Object.entries(options.claims)) {
@@ -139,7 +146,7 @@ export async function issue(options: IssueOptions): Promise<IssueResult> {
   }
   if (digests.length > 0) {
     payload['_sd'] = digests
-    payload['_sd_alg'] = 'sha-256'
+    payload['_sd_alg'] = sdAlg
   }
 
   const header = { alg, typ: 'dc+sd-jwt', kid: options.kid }
@@ -213,13 +220,14 @@ export async function present(
     )
   }
 
+  const sdAlg = readSdAlg(jwt)
   const alg = options.keyBinding.alg ?? algForJwk(options.keyBinding.key)
   const kbPayload = {
     iat: nowSeconds(),
     aud: options.keyBinding.audience,
     nonce: options.keyBinding.nonce,
     // Commits to exactly this set of disclosures, so a relay cannot add or strip one afterwards.
-    sd_hash: await sdHash(jwt, kept),
+    sd_hash: await sdHash(jwt, kept, sdAlg),
   }
   const kbInput = `${b64urlJson({ alg, typ: 'kb+jwt' })}.${b64urlJson(kbPayload)}`
   const holderKey = await importPrivateKey(options.keyBinding.key, alg)
@@ -238,6 +246,18 @@ function readHolderKey(jwt: string): Jwk | null {
     return cnf?.jwk ?? null
   } catch {
     return null
+  }
+}
+
+/** Pull _sd_alg out of a credential's payload, defaulting to sha-256 per RFC 9901. */
+function readSdAlg(jwt: string): string {
+  const segments = jwt.split('.')
+  if (segments.length !== 3) return 'sha-256'
+  try {
+    const payload = unb64urlJson<Record<string, unknown>>(segments[1]!)
+    return (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
+  } catch {
+    return 'sha-256'
   }
 }
 
@@ -328,6 +348,9 @@ export async function verify(input: string, options: VerifyOptions): Promise<Ver
     disclosed = rebuilt.disclosed
     withheld = rebuilt.withheld
   } catch (error) {
+    if (isQredentialError(error) && error.code === 'unsupported_alg') {
+      return reject('unsupported_alg', error.message)
+    }
     return reject('digest_mismatch', (error as Error).message)
   }
 
@@ -528,7 +551,19 @@ async function checkHolderProof(input: {
     }
   }
 
-  const expected = await sdHash(jwt, disclosures)
+  const sdAlg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
+  let expected: string
+  try {
+    expected = await sdHash(jwt, disclosures, sdAlg)
+  } catch (error) {
+    if (isQredentialError(error) && error.code === 'unsupported_alg') {
+      return {
+        rejected: reject('unsupported_alg', error.message),
+        holderVerified: false,
+      }
+    }
+    throw error
+  }
   if (kbPayload['sd_hash'] !== expected) {
     return {
       rejected: reject('holder_proof_invalid', 'the holder proof commits to a different set of disclosures than the one presented'),

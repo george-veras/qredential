@@ -9,6 +9,26 @@ not: branch on the code, print the message.
 
 ## [Unreleased]
 
+### Added
+
+- `sha-384` and `sha-512` as `_sd_alg` values, per RFC 9901 section 4.1.1 and the IANA Named
+  Information Hash Algorithm Registry. `issue()` takes an `sdAlg` option; the verifier reads the
+  algorithm the credential declares and uses the same one for the key binding `sd_hash`. Anything
+  outside those three is still refused by name.
+
+  Contributed by [@DYNOSuprovo](https://github.com/DYNOSuprovo) in #19 and
+  [@vjymisal0](https://github.com/vjymisal0) in #18, who reached the same issue on the same day.
+  The public option, the WebCrypto cross checks and the interoperability tests against
+  `@sd-jwt/core` are #19. The `resolveSdAlg()` helper, which is what keeps the digest map, the claim
+  reconstruction and the path resolver from disagreeing about a credential's hash, is #18.
+
+### Fixed
+
+- `present()` could not narrow a credential whose `_sd_alg` was not `sha-256`: the path resolver
+  hashed with sha-256 regardless, matched nothing, and reported every claim as not disclosable.
+  Found by the interoperability tests in #19 when they were run against current main.
+
+
 ## [0.2.0]
 
 First release intended for publication. 0.1.0 was tagged in development and never published, so

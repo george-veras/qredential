@@ -1,6 +1,7 @@
 import { b64url, b64urlJson, unb64urlJson, randomBytes, utf8 } from './bytes.js'
-import { sha256 } from './crypto.js'
+import { digestHash, isSupportedSdAlg } from './crypto.js'
 import { QredentialError } from './errors.js'
+import type { SdAlg } from './types.js'
 
 export const SEPARATOR = '~'
 
@@ -76,13 +77,13 @@ export function parseDisclosure(raw: string): Disclosure {
  * signature covers exactly this set of disclosures. Without it a relay could strip or add
  * disclosures after the holder signed, and the proof would still check out.
  */
-export async function sdHash(jwt: string, disclosures: string[]): Promise<string> {
-  return b64url(await sha256(utf8(joinCombined(jwt, disclosures))))
+export async function sdHash(jwt: string, disclosures: string[], alg: string = 'sha-256'): Promise<string> {
+  return b64url(await digestHash(utf8(joinCombined(jwt, disclosures)), alg))
 }
 
 /** Digest of a disclosure exactly as transmitted. Hashing a re-serialised copy would not match. */
-export async function digest(raw: string): Promise<string> {
-  return b64url(await sha256(utf8(raw)))
+export async function digest(raw: string, alg: string = 'sha-256'): Promise<string> {
+  return b64url(await digestHash(utf8(raw), alg))
 }
 
 export function splitCombined(combined: string): { jwt: string; disclosures: string[]; keyBinding?: string } {
@@ -138,6 +139,23 @@ export function joinCombined(jwt: string, disclosures: string[], keyBinding?: st
  * pointless.
  */
 /**
+ * The hash a credential says its digests were made with, validated.
+ *
+ * RFC 9901 section 4.1.1 requires sha-256 and allows any name from the IANA Named Information Hash
+ * Algorithm Registry. These three are the ones WebCrypto computes in every runtime this targets;
+ * anything else is refused by name rather than guessed at. Reading it in one place is what keeps
+ * the digest map, the claim reconstruction and the path resolver from disagreeing about which hash
+ * a credential uses, which is the kind of disagreement that makes a claim silently unreachable.
+ */
+export function resolveSdAlg(payload: Record<string, unknown>): SdAlg {
+  const alg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
+  if (!isSupportedSdAlg(alg)) {
+    throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${alg}`)
+  }
+  return alg
+}
+
+/**
  * Rebuild the claim set, following the processing model in RFC 9901 section 7.1.
  *
  * Two shapes of embedded digest exist and both are resolved here, at any depth:
@@ -154,12 +172,11 @@ export async function reconstructClaims(
   payload: Record<string, unknown>,
   disclosures: string[]
 ): Promise<{ claims: Record<string, unknown>; disclosed: string[]; withheld: number }> {
-  const sdAlg = (payload['_sd_alg'] as string | undefined) ?? 'sha-256'
-  if (sdAlg !== 'sha-256') throw new QredentialError('unsupported_alg', `unsupported _sd_alg: ${sdAlg}`)
+  const sdAlg = resolveSdAlg(payload)
 
   const byDigest = new Map<string, Disclosure>()
   for (const raw of disclosures) {
-    const dig = await digest(raw)
+    const dig = await digest(raw, sdAlg)
     // Keying by digest would quietly swallow a repeat, and a presentation that sends the same
     // disclosure twice is malformed however harmless it looks.
     if (byDigest.has(dig)) {
@@ -348,9 +365,11 @@ export async function disclosureLocations(
   payload: Record<string, unknown>,
   disclosures: string[]
 ): Promise<Map<string, DisclosureLocation>> {
+  const sdAlg = resolveSdAlg(payload)
+
   const byDigest = new Map<string, { raw: string; parsed: Disclosure }>()
   for (const raw of disclosures) {
-    byDigest.set(await digest(raw), { raw, parsed: parseDisclosure(raw) })
+    byDigest.set(await digest(raw, sdAlg), { raw, parsed: parseDisclosure(raw) })
   }
 
   const found = new Map<string, DisclosureLocation>()
