@@ -7,6 +7,15 @@
   <language>en</language>
   <atom:link href="https://qredential.js.org/feed.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>qredential 0.3.0</title>
+    <link>https://qredential.js.org/</link>
+    <guid isPermaLink="false">qredential-0.3.0</guid>
+    <pubDate>Tue, 22 Sep 2026 00:00:00 GMT</pubDate>
+    <description><![CDATA[Added sha-384 and sha-512 as _sd_alg values, per RFC 9901 section 4.1.1 and the IANA Named Information Hash Algorithm Registry. issue() takes an sdAlg option; the verifier reads the algorithm the credential declares and uses the same one for the key binding sd_hash. Anything outside those three is still refused by name. Contributed by @DYNOSuprovo in #19 and @vjymisal0 in #18, who reached the same issue on the same day. The public option, the WebCrypto cross checks and the interoperability tests against @sd-jwt/core are #19. The resolveSdAlg() helper, which is what keeps the digest map, the claim reconstruction and the path resolver from disagreeing about a credential's hash, is #18. Fixed present() could not narrow a credential whose _sd_alg was not sha-256: the path resolver hashed with sha-256 regardless, matched nothing, and reported every claim as not disclosable. Found by the inter
+
+Full changelog: https://github.com/george-veras/qredential/blob/main/CHANGELOG.md]]></description>
+  </item>
+  <item>
     <title>qredential 0.2.0</title>
     <link>https://qredential.js.org/</link>
     <guid isPermaLink="false">qredential-0.2.0</guid>

@@ -1,6 +1,6 @@
 {
   "name": "qredential",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Verify a digital credential from a QR code with no network connection. SD-JWT selective disclosure, offline revocation, zero dependencies.",
   "homepage": "https://qredential.js.org/",
   "bugs": {

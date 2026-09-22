@@ -9,6 +9,8 @@ not: branch on the code, print the message.
 
 ## [Unreleased]
 
+## [0.3.0]
+
 ### Added
 
 - `sha-384` and `sha-512` as `_sd_alg` values, per RFC 9901 section 4.1.1 and the IANA Named
@@ -57,6 +59,12 @@ nothing here breaks anybody.
 - The cached status list must be bound to the credential: same issuer, same `uri`. An index outside
   the list is refused rather than reported as checked.
 - Disclosed claim names come back as paths, such as `address.locality`.
+- `present({ disclose })` selects by path: `address.locality` for a claim nested in an object,
+  `nationalities[0]` for an array element. Ancestors travel automatically, since RFC 9901 section
+  4.2.6 makes a nested disclosure meaningless without the one containing it, and array indices are
+  positions in the credential as issued, so a selector does not shift when the holder withholds
+  something else. Plain claim names behave as before. (Documented after the fact: it shipped in
+  this version and the entry was missing.)
 - The combined form is parsed strictly: no empty segments, and the trailing separator is required.
 
 ### Fixed
