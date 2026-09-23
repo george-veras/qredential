@@ -38,6 +38,8 @@ jobs:
       - run: npm run coverage
         if: matrix.os == 'ubuntu-latest' && matrix.node == '22'
       - run: npm run build
+      # The documentation samples and the examples, run for real. They are the code people paste.
+      - run: npm run check:docs
 
   runtimes:
     name: ${{ matrix.runtime }}

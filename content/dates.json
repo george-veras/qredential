@@ -2,49 +2,49 @@
   "_readme": "When each page last changed, keyed by a hash of its source. Seeded once from git history and maintained by the build: a file whose hash moved gets today, a file whose hash did not keeps its date. Git cannot do this job directly, because a date read from git history changes the moment the file is committed, so a sitemap built before the commit would never match the one rebuilt after it.",
   "files": {
     "content/guide/de.md": {
-      "sha": "53d50eca8e8ed938",
+      "sha": "a10df1493658a346",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/en.md": {
-      "sha": "32922c91b9d4b531",
+      "sha": "d8c988938e4cbe4d",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/es.md": {
-      "sha": "82d64fef8aaad5ef",
+      "sha": "8f445efb28e7a86e",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/fr.md": {
-      "sha": "6c96197f7ed1c393",
+      "sha": "725f59356aa3d575",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/ja.md": {
-      "sha": "bf4c469201053636",
+      "sha": "590cfc53de5d7a02",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/ko.md": {
-      "sha": "6c9834c54bf2726a",
+      "sha": "16a518532e40971b",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/pt.md": {
-      "sha": "c121c11f7dd8a3c3",
+      "sha": "335dd648237f15d5",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/zh-Hans.md": {
-      "sha": "4b545c27dd7622ce",
+      "sha": "caed840e1d601e55",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/guide/zh-Hant.md": {
-      "sha": "591ea5f8d468512e",
+      "sha": "441ccac78ffb42a0",
       "created": "2026-09-15",
-      "modified": "2026-09-22"
+      "modified": "2026-09-23"
     },
     "content/landing/de.json": {
       "sha": "470b1863ecb20ec1",

@@ -52,7 +52,7 @@
 <link rel="alternate" type="application/rss+xml" title="qredential releases" href="https://qredential.js.org/feed.xml">
 <style>#qr-lang{display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;padding:.65rem 1rem;font:500 .875rem/1.35 ui-sans-serif,system-ui,sans-serif;background:var(--panel,#EDF1EE);color:var(--ink,#111A1D);border-bottom:1px solid var(--line,#D4DCD7)}#qr-lang a{color:var(--viridian,#0E6B54);display:inline-flex;align-items:center;min-height:24px}#qr-lang button{background:none;border:0;color:inherit;opacity:.55;cursor:pointer;font-size:1.1rem;line-height:1;min-width:24px;min-height:24px;display:grid;place-items:center}#qr-lang button:hover{opacity:1}</style>
 <script>(function(){var O={"en":["https://qredential.js.org/guide/","Read this page in English","Dismiss"],"pt":["https://qredential.js.org/pt/guide/","Leia esta página em português","Fechar"],"es":["https://qredential.js.org/es/guide/","Lee esta página en español","Cerrar"],"fr":["https://qredential.js.org/fr/guide/","Lire cette page en français","Fermer"],"de":["https://qredential.js.org/de/guide/","Diese Seite auf Deutsch lesen","Schließen"],"ja":["https://qredential.js.org/ja/guide/","このページを日本語で読む","閉じる"],"ko":["https://qredential.js.org/ko/guide/","이 페이지를 한국어로 읽기","닫기"],"zh-Hans":["https://qredential.js.org/zh-Hans/guide/","用简体中文阅读本页","关闭"],"zh-Hant":["https://qredential.js.org/zh-Hant/guide/","以繁體中文閱讀本頁","關閉"]},cur="ja";try{if(localStorage.getItem('qr-lang-off'))return}catch(e){}var want=(navigator.languages||[navigator.language||'']).map(function(t){t=String(t);var l=t.toLowerCase();if(l.indexOf('zh')===0)return /hant|tw|hk|mo/.test(l)?'zh-Hant':'zh-Hans';return t.split('-')[0]});var pick=null;for(var i=0;i<want.length;i++){if(!O[want[i]])continue;if(want[i]===cur)return;pick=want[i];break}if(!pick)return;document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.id='qr-lang';d.lang=pick;d.dir='ltr';var a=document.createElement('a');a.href=O[pick][0];a.hreflang=pick;a.textContent=O[pick][1];var b=document.createElement('button');b.type='button';b.textContent='\u00D7';b.setAttribute('aria-label',O[pick][2]);b.onclick=function(){d.remove();try{localStorage.setItem('qr-lang-off','1')}catch(e){}};d.appendChild(a);d.appendChild(b);document.body.insertBefore(d,document.body.firstChild)})})()</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/ja/","inLanguage":"ja","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","url":"https://george-veras.github.io/","sameAs":["https://github.com/george-veras","https://george-veras.github.io/"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"自己宣言により WCAG 2.2 レベル AA に適合。自動チェック、キーボード操作、手作業による検証で評価しており、支援技術による検証と第三者監査は行っていません。","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"ネットワーク接続なしで QR コードから資格情報を検証します。SD-JWT の選択的開示、鍵バインディング、オフライン失効確認、依存関係ゼロ。","inLanguage":"ja","url":"https://qredential.js.org/ja/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-22"},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"自己宣言により WCAG 2.2 レベル AA に適合。自動チェック、キーボード操作、手作業による検証で評価しており、支援技術による検証と第三者監査は行っていません。","@type":"TechArticle","@id":"https://qredential.js.org/ja/guide/#article","headline":"Qredential ドキュメント","description":"SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。","inLanguage":"ja","url":"https://qredential.js.org/ja/guide/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-15","dateModified":"2026-09-22"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/ja/guide/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://qredential.js.org/ja/"},{"@type":"ListItem","position":2,"name":"ドキュメント","item":"https://qredential.js.org/ja/guide/"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://qredential.js.org/#website","name":"qredential","url":"https://qredential.js.org/ja/","inLanguage":"ja","publisher":{"@id":"https://qredential.js.org/#author"}},{"@type":"Person","@id":"https://qredential.js.org/#author","name":"George Veras Valentim","url":"https://george-veras.github.io/","sameAs":["https://github.com/george-veras","https://george-veras.github.io/"]},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"自己宣言により WCAG 2.2 レベル AA に適合。自動チェック、キーボード操作、手作業による検証で評価しており、支援技術による検証と第三者監査は行っていません。","@type":"SoftwareSourceCode","@id":"https://qredential.js.org/#software","name":"qredential","description":"ネットワーク接続なしで QR コードから資格情報を検証します。SD-JWT の選択的開示、鍵バインディング、オフライン失効確認、依存関係ゼロ。","inLanguage":"ja","url":"https://qredential.js.org/ja/","codeRepository":"https://github.com/george-veras/qredential","programmingLanguage":"TypeScript","runtimePlatform":["Node.js","Browser","React Native"],"license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"sameAs":["https://www.npmjs.com/package/qredential","https://github.com/george-veras/qredential"],"author":{"@id":"https://qredential.js.org/#author"},"dateModified":"2026-09-23"},{"accessMode":["textual","visual"],"accessModeSufficient":[{"@type":"ItemList","itemListElement":["textual"]}],"accessibilityFeature":["structuralNavigation","readingOrder","tableOfContents","alternativeText","displayTransformability"],"accessibilityControl":["fullKeyboardControl","fullMouseControl","fullTouchControl"],"accessibilityHazard":["noFlashingHazard","noSoundHazard","noMotionSimulationHazard"],"accessibilitySummary":"自己宣言により WCAG 2.2 レベル AA に適合。自動チェック、キーボード操作、手作業による検証で評価しており、支援技術による検証と第三者監査は行っていません。","@type":"TechArticle","@id":"https://qredential.js.org/ja/guide/#article","headline":"Qredential ドキュメント","description":"SD-JWT 資格情報をオフラインで発行、提示、検証する方法。選択的開示、鍵バインディング、QR のサイズ予算、失効確認、そしてエラーモデル。","inLanguage":"ja","url":"https://qredential.js.org/ja/guide/","about":{"@id":"https://qredential.js.org/#software"},"author":{"@id":"https://qredential.js.org/#author"},"license":"https://opensource.org/licenses/MIT","datePublished":"2026-09-15","dateModified":"2026-09-23"},{"@type":"BreadcrumbList","@id":"https://qredential.js.org/ja/guide/#trail","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://qredential.js.org/ja/"},{"@type":"ListItem","position":2,"name":"ドキュメント","item":"https://qredential.js.org/ja/guide/"}]}]}</script>
 <title>Qredential ドキュメント</title>
 <style>
   :root {
@@ -325,30 +325,39 @@
   console.log(result.reason)               <span class="tok-s">1</span> 
 }</code></pre><h3>一巡の流れ</h3>
 <p>三者、三つの呼び出し。発行者が一度署名し、保持者が渡るものを絞り、検証者が判断します。</p>
-<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">6</span> 
+<pre><code><span class="tok-k">import</span> { issue, present, verify } <span class="tok-k">from</span>  <span class="tok-s">9</span> 
 
  <span class="tok-s">0</span> 
 <span class="tok-k">const</span> { credential, qr } = <span class="tok-k">await</span> issue({
   issuer: 'https: <span class="tok-s">1</span> 
-  kid:  <span class="tok-s">7</span> ,
+  kid:  <span class="tok-s">10</span> ,
   key: issuerPrivateJwk,
   claims: {
-    given_name:  <span class="tok-s">8</span> ,
-    family_name:  <span class="tok-s">9</span> ,
-    birth_date:  <span class="tok-s">10</span> ,
+    given_name:  <span class="tok-s">11</span> ,
+    family_name:  <span class="tok-s">12</span> ,
+    birth_date:  <span class="tok-s">13</span> ,
     over_18: <span class="tok-k">true</span>,
   },
-  disclose: [ <span class="tok-s">11</span> ,  <span class="tok-s">12</span> ],
-  expiresIn:  <span class="tok-s">13</span> ,
+  disclose: [ <span class="tok-s">14</span> ,  <span class="tok-s">15</span> ],
+  holderKey: holderPublicJwk,
+  expiresIn:  <span class="tok-s">16</span> ,
 })
 
  <span class="tok-s">2</span> 
-<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, { disclose: [ <span class="tok-s">14</span> ] })
-
  <span class="tok-s">3</span> 
-<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, { trust })
-result.claims        <span class="tok-s">4</span> 
-result.claims.birth_date   <span class="tok-s">5</span> </code></pre>
+<span class="tok-k">const</span> presentation = <span class="tok-k">await</span> present(credential, {
+  disclose: [ <span class="tok-s">17</span> ],
+  keyBinding: { key: holderPrivateJwk, audience: 'https: <span class="tok-s">4</span> 
+})
+
+ <span class="tok-s">5</span> 
+<span class="tok-k">const</span> result = <span class="tok-k">await</span> verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https: <span class="tok-s">6</span> 
+})
+result.claims        <span class="tok-s">7</span> 
+result.claims.birth_date   <span class="tok-s">8</span> </code></pre>
 </section>
 <section id="disclosure">
 <h2>選択的開示</h2>

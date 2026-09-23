@@ -34,6 +34,7 @@ bug in the project and worth an issue on its own.
 | `npm run typecheck` | types, without emitting |
 | `npm run build` | compiles `src` to `dist` |
 | `npm run build:site` | regenerates `docs/` from its templates |
+| `npm run check:docs` | runs the documentation samples and every example, for real |
 | `node examples/sizes.mjs` | prints the real QR size budget |
 
 ## How the code is laid out

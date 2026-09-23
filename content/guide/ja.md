@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ if (result.ok) {
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. 発行者が、免許交付時に一度だけ。
+// 1. 発行者が、免許交付時に一度だけ。holderKey でウォレットに結び付けます。
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. 保持者のウォレットが、読み取りの場で。年齢だけ見せ、生年月日は手元に残す。
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. 保持者のウォレットが、読み取りの場で。年齢だけ見せ、生年月日は手元に残し、扉が出した
+//    その場のチャレンジに署名します。これでこのコードの写真は無意味になります。
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. 検証者が、オフラインで。
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined。ウォレットから出ていない
 ```

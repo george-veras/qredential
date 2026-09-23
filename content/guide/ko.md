@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ if (result.ok) {
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. 발급자가, 면허를 내줄 때 한 번.
+// 1. 발급자가, 면허를 내줄 때 한 번. holderKey 로 지갑에 묶습니다.
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. 소지자의 지갑이, 스캔하는 자리에서. 성년 여부만 보이고 생년월일은 남겨 둡니다.
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. 소지자의 지갑이, 스캔하는 자리에서. 성년 여부만 보이고 생년월일은 남겨 두며, 출입문이 낸
+//    그 자리의 챌린지에 서명합니다. 그래서 이 코드의 사진은 아무 소용이 없습니다.
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. 검증자가, 오프라인으로.
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined, 지갑을 떠난 적이 없습니다
 ```

@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ Drei Beteiligte, drei Aufrufe. Der Aussteller signiert einmal, der Inhaber veren
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. Der Aussteller, einmalig, bei Erteilung der Fahrerlaubnis.
+// 1. Der Aussteller, einmalig, bei Erteilung der Fahrerlaubnis. holderKey bindet sie an die Wallet.
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. Die Wallet des Inhabers, beim Scannen. Zeigt die Volljährigkeit, behält das Datum.
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. Die Wallet des Inhabers, beim Scannen. Zeigt die Volljährigkeit, behält das Datum und signiert
+//    die frische Challenge der Tür, womit ein Foto dieses Codes nichts wert ist.
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. Der Prüfer, offline.
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined, und es hat die Wallet nie verlassen
 ```

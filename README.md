@@ -127,9 +127,16 @@ ones to reveal, and the signature still checks out on what is left:
 ```ts
 // The credential contains name, address, birth date, document number.
 // The bar only gets to see one thing.
-const presentation = await present(credential, { disclose: ['over_18'] })
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims          // { over_18: true }
 result.claims.address  // undefined, and it was never transmitted
 ```
@@ -206,6 +213,18 @@ const result = await verify(scanned, {
 If the cached list is too old, you get `result.ok === false` with
 `result.reason === 'status_list_stale'` rather than a false yes. Deciding what to do when you cannot
 be sure is your call, and the library refuses to make it quietly for you.
+
+## Examples
+
+Runnable scenarios, each a single file with no setup beyond `npm run build`:
+[a door checking somebody is over 18](examples/age-check-at-the-door.mjs), [issuing a
+credential](examples/issue-a-credential.mjs), [revoking one that is already in somebody's
+pocket](examples/revoke-a-credential.mjs), and [what a credential costs in QR
+characters](examples/sizes.mjs). CI runs all of them, so they cannot quietly stop working.
+
+[examples/README.md](examples/README.md) has the index and two findings the prose does not make:
+a presentation with key binding is larger than the credential it came from, and a revocation list
+covering a million credentials is about 600 characters.
 
 ## API
 

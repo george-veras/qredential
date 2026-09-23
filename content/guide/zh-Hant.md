@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ if (result.ok) {
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. 簽發方，在核發駕照時只做一次。
+// 1. 簽發方，在核發駕照時只做一次。holderKey 把它綁定到錢包。
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. 持有方的錢包，在掃碼現場。露出是否成年，留下出生日期。
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. 持有方的錢包，在掃碼現場。露出是否成年，留下出生日期，並對門禁當場給出的挑戰值簽名，
+//    這樣這段碼的照片就一文不值。
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. 驗證方，離線。
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined，它從未離開錢包
 ```

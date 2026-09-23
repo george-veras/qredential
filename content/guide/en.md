@@ -47,7 +47,7 @@ Three parties, three calls. The issuer signs once, the holder narrows what trave
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. The issuer, once, when the licence is granted.
+// 1. The issuer, once, when the licence is granted. holderKey binds it to the wallet.
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -59,14 +59,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. The holder's wallet, at scan time. Reveals age, keeps the birth date.
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. The holder's wallet, at scan time. Reveals age, keeps the birth date, and signs the
+//    door's fresh challenge, so a photograph of this code is worth nothing.
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. The verifier, offline.
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined, and it never left the wallet
 ```

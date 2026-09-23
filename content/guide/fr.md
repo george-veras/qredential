@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ Trois parties, trois appels. L'émetteur signe une fois, le porteur restreint ce
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. L'émetteur, une seule fois, à la délivrance du permis.
+// 1. L'émetteur, une seule fois, à la délivrance du permis. holderKey le lie au portefeuille.
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. Le portefeuille du porteur, au moment du scan. Révèle la majorité, garde la date.
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. Le portefeuille du porteur, au moment du scan. Révèle la majorité, garde la date, et signe le
+//    défi frais de la porte, si bien qu'une photo de ce code ne vaut rien.
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. Le vérificateur, hors ligne.
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined, et elle n'a jamais quitté le portefeuille
 ```

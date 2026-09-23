@@ -1,4 +1,4 @@
-<!-- translated-from: 32922c91b9d4b531 -->
+<!-- translated-from: d8c988938e4cbe4d -->
 <!-- section: top -->
 
 <!-- eyebrow -->
@@ -48,7 +48,7 @@ Tres partes, tres llamadas. El emisor firma una vez, el titular reduce lo que vi
 ```ts
 import { issue, present, verify } from 'qredential'
 
-// 1. El emisor, una vez, cuando se concede el permiso.
+// 1. El emisor, una vez, cuando se concede el permiso. holderKey lo ata a la cartera.
 const { credential, qr } = await issue({
   issuer: 'https://id.example.gov',
   kid: '2026-a',
@@ -60,14 +60,23 @@ const { credential, qr } = await issue({
     over_18: true,
   },
   disclose: ['birth_date', 'over_18'],
+  holderKey: holderPublicJwk,
   expiresIn: '1825d',
 })
 
-// 2. La cartera del titular, al escanear. Revela la mayoría de edad, guarda la fecha.
-const presentation = await present(credential, { disclose: ['over_18'] })
+// 2. La cartera del titular, al escanear. Revela la mayoría de edad, guarda la fecha, y firma el
+//    desafío nuevo de la puerta, así que una foto de este código no vale nada.
+const presentation = await present(credential, {
+  disclose: ['over_18'],
+  keyBinding: { key: holderPrivateJwk, audience: 'https://bar.example/door', nonce: challenge },
+})
 
 // 3. El verificador, sin conexión.
-const result = await verify(presentation, { trust })
+const result = await verify(presentation, {
+  trust,
+  nonce: challenge,
+  audience: 'https://bar.example/door',
+})
 result.claims       // { given_name: 'Ana', family_name: 'Goncalves', over_18: true }
 result.claims.birth_date  // undefined, y nunca salió de la cartera
 ```
