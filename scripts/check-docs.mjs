@@ -20,9 +20,12 @@ import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { pathToFileURL } from 'node:url'
+import { pathToFileURL, fileURLToPath } from 'node:url'
 
-const DIST = pathToFileURL(new URL('../dist/index.js', import.meta.url).pathname).href
+// An import specifier, so it stays a URL and never becomes a path. On Windows the .pathname
+// of a file URL is /C:/… , which is a valid URL component and not a valid path, and that is
+// the difference this whole file tripped over the first time it ran there.
+const DIST = new URL('../dist/index.js', import.meta.url).href
 
 /** Everything the samples refer to without defining. Mirrors what a real integration would hold. */
 const PREAMBLE = `
@@ -99,7 +102,7 @@ const run = promisify(execFile)
 const examplesDir = new URL('../examples/', import.meta.url)
 for (const name of (await readdir(examplesDir)).filter((f) => f.endsWith('.mjs')).sort()) {
   try {
-    await run(process.execPath, [new URL(name, examplesDir).pathname], { timeout: 60_000 })
+    await run(process.execPath, [fileURLToPath(new URL(name, examplesDir))], { timeout: 60_000 })
     console.log(`  ok   examples/${name}`)
   } catch (error) {
     failures++
