@@ -34,6 +34,9 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      # Once, not five times: the numbers do not differ by platform and the run is not free.
+      - run: npm run coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.node == '22'
       - run: npm run build
 
   browsers:

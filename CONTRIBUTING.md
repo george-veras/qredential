@@ -29,6 +29,8 @@ bug in the project and worth an issue on its own.
 |---|---|
 | `npm test` | the suite, in Node |
 | `npm run test:browser` | the same suite in a real browser (`BROWSER=chromium\|firefox\|webkit`) |
+| `npm run coverage` | the suite with coverage, and the thresholds CI enforces |
+| `npm run lint` | oxlint over `src`, `test` and `scripts` |
 | `npm run typecheck` | types, without emitting |
 | `npm run build` | compiles `src` to `dist` |
 | `npm run build:site` | regenerates `docs/` from its templates |
