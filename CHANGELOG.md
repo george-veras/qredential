@@ -9,6 +9,12 @@ not: branch on the code, print the message.
 
 ## [Unreleased]
 
+### Changed
+
+- Every GitHub release now carries the tarball exactly as npm serves it, its SLSA provenance
+  (`.intoto.jsonl`) and the Sigstore bundle (`.sigstore.json`), attached by the publish workflow.
+  0.3.1 was filled in by hand with the same script, `scripts/release-assets.mjs`.
+
 ## [0.3.1]
 
 0.3.0 was tagged and released on GitHub but never reached npm: the publish workflow had no

@@ -32,3 +32,22 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm publish --provenance --access public
+
+  release-assets:
+    # A separate job on purpose. The one above holds the OIDC token npm trusts to publish; this one
+    # holds write access to the repository to attach files to the release. Neither needs the other.
+    needs: npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      # The tag goes through the environment, never straight into the script, so nothing in a tag
+      # name can become shell.
+      - run: node scripts/release-assets.mjs "$TAG"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          GH_TOKEN: ${{ github.token }}
