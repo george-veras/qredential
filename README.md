@@ -57,9 +57,10 @@ November 2025. It is what the European digital identity wallets and the OpenID s
 
 ## Why this exists
 
-I built the eCNH, Brazil's digital driver's licence, used by more than 40 million people. The part
-that taught me the most was not the app. It was the roadside: a police officer scanning a licence on
-a highway with one bar of signal, or none, and needing a yes or no in under a second.
+I built the first working version of the eCNH, Brazil's digital driver's licence, which more than
+40 million people now use. The part that taught me the most was not the app. It was the roadside: a
+police officer scanning a licence on a highway with one bar of signal, or none, and needing a yes or
+no in under a second.
 
 Everything you actually need for that answer can fit in the QR code. The signature proves the
 issuer. The claims are right there. The only thing you need from the outside world is the issuer's
