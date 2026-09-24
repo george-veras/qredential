@@ -16,7 +16,8 @@
 // The publish workflow runs this after every release. Run it by hand to fill in an older one.
 
 import { execFile } from 'node:child_process'
-import { mkdtemp, writeFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { promisify } from 'node:util'
@@ -45,11 +46,29 @@ async function provenance() {
   throw new Error(`the registry has no SLSA provenance for qredential@${version} after five minutes`)
 }
 
+/**
+ * Refuses to attach a provenance that is not about this exact tarball. The registry is trusted to
+ * serve the file, not to be right about it: the statement has to be SLSA provenance for this
+ * package and version, and its subject digest has to match the bytes that were downloaded.
+ */
+function checkProvenance(bundle, tarball) {
+  const envelope = bundle?.dsseEnvelope
+  if (envelope?.payloadType !== 'application/vnd.in-toto+json' || !envelope.signatures?.length)
+    throw new Error('the provenance is not a signed in-toto envelope')
+  const statement = JSON.parse(Buffer.from(envelope.payload, 'base64').toString('utf8'))
+  if (statement.predicateType !== SLSA) throw new Error(`unexpected predicate ${statement.predicateType}`)
+  const digest = createHash('sha512').update(tarball).digest('hex')
+  const subject = statement.subject?.find((s) => s.name === `pkg:npm/qredential@${version}`)
+  if (subject?.digest?.sha512 !== digest)
+    throw new Error(`the provenance does not describe the tarball npm serves for qredential@${version}`)
+}
+
 const bundle = await provenance()
 const dir = await mkdtemp(join(tmpdir(), 'qredential-release-'))
 
 // Given a registry spec rather than a directory, npm pack downloads the published tarball.
 await run('npm', ['pack', `qredential@${version}`, '--pack-destination', dir])
+checkProvenance(bundle, await readFile(join(dir, `${name}.tgz`)))
 await writeFile(join(dir, `${name}.intoto.jsonl`), JSON.stringify(bundle.dsseEnvelope) + '\n')
 await writeFile(join(dir, `${name}.sigstore.json`), JSON.stringify(bundle, null, 2) + '\n')
 
