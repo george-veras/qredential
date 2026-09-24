@@ -3,6 +3,7 @@
 [![ci](https://github.com/george-veras/qredential/actions/workflows/ci.yml/badge.svg)](https://github.com/george-veras/qredential/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/qredential)](https://www.npmjs.com/package/qredential)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/george-veras/qredential/badge)](https://scorecard.dev/viewer/?uri=github.com/george-veras/qredential)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/14785/badge)](https://www.bestpractices.dev/projects/14785)
 
 [English](https://qredential.js.org/) · [Português](https://qredential.js.org/pt/) · [Español](https://qredential.js.org/es/) · [Français](https://qredential.js.org/fr/) · [Deutsch](https://qredential.js.org/de/) · [日本語](https://qredential.js.org/ja/) · [한국어](https://qredential.js.org/ko/) · [简体中文](https://qredential.js.org/zh-Hans/) · [繁體中文](https://qredential.js.org/zh-Hant/)
 
