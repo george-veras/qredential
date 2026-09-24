@@ -296,6 +296,11 @@ message. The full tables are in the
 Report vulnerabilities privately through the Security tab. Scope, response times and an honest
 account of what this library has not had are in [SECURITY.md](SECURITY.md).
 
+Since 0.3.1, releases are published from GitHub Actions with a provenance attestation that ties
+the package to the commit and workflow that built it. `npm audit signatures`, run in a project that
+depends on qredential, verifies it. Each [GitHub release](https://github.com/george-veras/qredential/releases)
+also carries the same tarball with its provenance and Sigstore bundle, for checking without npm.
+
 ## Translations
 
 The whole site is in nine languages: the landing page, the guide and the playground, including the
