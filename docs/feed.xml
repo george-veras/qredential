@@ -7,6 +7,15 @@
   <language>en</language>
   <atom:link href="https://qredential.js.org/feed.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>qredential 0.3.1</title>
+    <link>https://qredential.js.org/</link>
+    <guid isPermaLink="false">qredential-0.3.1</guid>
+    <pubDate>Thu, 24 Sep 2026 00:00:00 GMT</pubDate>
+    <description><![CDATA[0.3.0 was tagged and released on GitHub but never reached npm: the publish workflow had no credential. 0.3.1 is the first of the 0.3 line on the registry, so everything under 0.3.0 below arrives with it. No API changes since 0.3.0. Changed The package declares "sideEffects": false, so bundlers can drop the parts an app does not import. Published from GitHub Actions through npm trusted publishing, with a provenance attestation tying the tarball to the commit and workflow that built it. No long lived npm token exists. Documentation The README explains in plain language what a digital credential is and what verifying one offline means. npm renders the README from the published tarball, so this is the first version where the package page carries it. The README's age verification example presented without key binding, so pasted as written it returned holder_proof_missing. It now shows the ful
+
+Full changelog: https://github.com/george-veras/qredential/blob/main/CHANGELOG.md]]></description>
+  </item>
+  <item>
     <title>qredential 0.3.0</title>
     <link>https://qredential.js.org/</link>
     <guid isPermaLink="false">qredential-0.3.0</guid>

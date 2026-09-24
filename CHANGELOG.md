@@ -9,6 +9,27 @@ not: branch on the code, print the message.
 
 ## [Unreleased]
 
+## [0.3.1]
+
+0.3.0 was tagged and released on GitHub but never reached npm: the publish workflow had no
+credential. 0.3.1 is the first of the 0.3 line on the registry, so everything under 0.3.0 below
+arrives with it. No API changes since 0.3.0.
+
+### Changed
+
+- The package declares `"sideEffects": false`, so bundlers can drop the parts an app does not import.
+- Published from GitHub Actions through npm trusted publishing, with a provenance attestation tying
+  the tarball to the commit and workflow that built it. No long lived npm token exists.
+
+### Documentation
+
+- The README explains in plain language what a digital credential is and what verifying one
+  offline means. npm renders the README from the published tarball, so this is the first version
+  where the package page carries it.
+- The README's age verification example presented without key binding, so pasted as written it
+  returned `holder_proof_missing`. It now shows the full ceremony: holder key at issuance, key
+  binding at presentation, nonce and audience at verification.
+
 ## [0.3.0]
 
 ### Added
@@ -78,5 +99,7 @@ nothing here breaks anybody.
 - `unb64url` silently stripped characters outside the alphabet instead of rejecting them.
 - An empty payload packed to an envelope that `unpack` then called truncated.
 
-[Unreleased]: https://github.com/george-veras/qredential/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/george-veras/qredential/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/george-veras/qredential/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/george-veras/qredential/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/george-veras/qredential/releases/tag/v0.2.0

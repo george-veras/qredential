@@ -23,11 +23,11 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
           cache: npm
+      # Trusted publishing: npm trusts this workflow's OIDC identity, configured on npmjs.com for
+      # this repository and publish.yml, so no token exists anywhere. It needs npm 11.5.1 or newer,
+      # and Node 22 ships npm 10.
+      - run: npm install -g npm@11
       - run: npm ci
       - run: npm test
       - run: npm run build
       - run: npm publish --provenance --access public
-        env:
-          # Alternative: configure trusted publishing on npmjs.com for this repo and workflow, and
-          # the token can be dropped entirely.
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
