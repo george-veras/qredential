@@ -3,10 +3,30 @@ import { deflate } from '../src/compress.js'
 import { importPrivateKey, sign } from '../src/crypto.js'
 import type { Alg, Jwk, TrustList } from '../src/types.js'
 
+/**
+ * WebKit on Linux failed an Ed25519 `generateKey` with an OperationError in CI on 2026-09-23,
+ * seconds after the same browser had generated an Ed25519 key without complaint, and the rerun
+ * passed. Generating keys is fixture setup here, not the thing under test, so a spurious failure in
+ * it should not fail the suite. A failure that repeats still does, and any other error is thrown at
+ * once: an engine without Ed25519 answers NotSupportedError and is not retried.
+ */
+export async function generateKeyPair(params: EcKeyGenParams | Algorithm): Promise<CryptoKeyPair> {
+  let lastError: unknown
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return (await crypto.subtle.generateKey(params, true, ['sign', 'verify'])) as CryptoKeyPair
+    } catch (error) {
+      if ((error as Error).name !== 'OperationError') throw error
+      lastError = error
+    }
+  }
+  throw lastError
+}
+
 export async function makeIssuer(iss: string, kid = 'k1', alg: Alg = 'ES256') {
   const params: EcKeyGenParams | Algorithm =
     alg === 'ES256' ? { name: 'ECDSA', namedCurve: 'P-256' } : { name: 'Ed25519' }
-  const pair = (await crypto.subtle.generateKey(params, true, ['sign', 'verify'])) as CryptoKeyPair
+  const pair = await generateKeyPair(params)
 
   const privateJwk = (await crypto.subtle.exportKey('jwk', pair.privateKey)) as Jwk
   const publicJwk = (await crypto.subtle.exportKey('jwk', pair.publicKey)) as Jwk

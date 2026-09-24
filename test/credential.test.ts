@@ -3,14 +3,15 @@ import { issue, present, verify, fits } from '../src/index.js'
 import { unpack } from '../src/envelope.js'
 import { splitCombined, joinCombined, makeDisclosure } from '../src/sdjwt.js'
 import { b64urlJson, unb64urlJson } from '../src/bytes.js'
-import { makeIssuer, makeStatusList } from './helpers.js'
+import { generateKeyPair, makeIssuer, makeStatusList } from './helpers.js'
 
 /**
  * WebCrypto Ed25519 arrived at different times in each engine, so detect rather than assume.
  * it.skipIf needs the answer at collection time, which is what the top level await is for.
+ * The detection goes through the retrying generator, so a spurious failure cannot quietly skip
+ * the Ed25519 test on an engine that supports it.
  */
-const HAS_ED25519 = await crypto.subtle
-  .generateKey({ name: 'Ed25519' }, true, ['sign', 'verify'])
+const HAS_ED25519 = await generateKeyPair({ name: 'Ed25519' })
   .then(() => true)
   .catch(() => false)
 
