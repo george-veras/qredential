@@ -130,6 +130,8 @@ Small and focused beats large and complete. A pull request that fixes one thing 
 read the same day; one that changes six things waits for an afternoon I do not always have.
 
 - Branch from `main`
+- New functionality arrives with tests in the automated suite, and a bug fix with a test that fails
+  without it
 - `npm test` and `npm run typecheck` pass
 - If you changed `src/`, run `npm run build:site` too, because the playground embeds a copy of the
   library and CI fails when the committed page disagrees with the source

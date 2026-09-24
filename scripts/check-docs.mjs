@@ -15,7 +15,7 @@
 // Adding a sample to this file is cheap and worth doing whenever a sample is something a reader
 // would paste.
 
-import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdtemp, rm, readdir } from 'node:fs/promises'
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 import { join } from 'node:path'
@@ -68,8 +68,10 @@ function extract(markdown, startsWith, file) {
   return markdown.slice(at, end)
 }
 
-const dir = join(tmpdir(), `qredential-docs-${process.pid}`)
-await mkdir(dir, { recursive: true })
+// mkdtemp picks an unpredictable name and creates the directory in the same step. A name built
+// from the pid can be guessed, and something else on the machine could put a file where a sample
+// is about to be written and then imported.
+const dir = await mkdtemp(join(tmpdir(), 'qredential-docs-'))
 let failures = 0
 
 for (const sample of SAMPLES) {

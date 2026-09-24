@@ -20,13 +20,14 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '22'
+          # 24 rather than 22 because trusted publishing needs npm 11.5.1 or newer, and Node 22
+          # ships npm 10. Installing a newer npm on top would be an unpinned download inside the
+          # one job that is allowed to publish.
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: npm
       # Trusted publishing: npm trusts this workflow's OIDC identity, configured on npmjs.com for
-      # this repository and publish.yml, so no token exists anywhere. It needs npm 11.5.1 or newer,
-      # and Node 22 ships npm 10.
-      - run: npm install -g npm@11
+      # this repository and publish.yml, so no token exists anywhere.
       - run: npm ci
       - run: npm test
       - run: npm run build
