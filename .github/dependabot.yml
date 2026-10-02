@@ -13,3 +13,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # init, analyze and upload-sarif must run the same version: init writes a config that analyze
+    # refuses to load from any other release. Bumped one at a time, each pull request fails CI.
+    groups:
+      codeql-action:
+        patterns: ['github/codeql-action*']
