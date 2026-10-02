@@ -25,7 +25,9 @@ jobs:
           # one job that is allowed to publish.
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
-          cache: npm
+          # No cache here, unlike the CI jobs. A cache restored into the job that holds the publish
+          # token is something another workflow wrote, and setup-node's own guidance is to keep
+          # caching out of release workflows. npm ci downloads fresh instead; it costs a minute.
       # Trusted publishing: npm trusts this workflow's OIDC identity, configured on npmjs.com for
       # this repository and publish.yml, so no token exists anywhere.
       - run: npm ci
