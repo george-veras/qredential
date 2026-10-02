@@ -9,11 +9,25 @@ not: branch on the code, print the message.
 
 ## [Unreleased]
 
+## [0.3.2]
+
+No code changes: nothing under `src/` differs from 0.3.1. This release exists because npm renders
+the README from the published tarball, so a README fix does not reach the package page until a
+version carries it.
+
 ### Changed
 
 - Every GitHub release now carries the tarball exactly as npm serves it, its SLSA provenance
   (`.intoto.jsonl`) and the Sigstore bundle (`.sigstore.json`), attached by the publish workflow.
   0.3.1 was filled in by hand with the same script, `scripts/release-assets.mjs`.
+- The publish job no longer restores an npm cache. It holds the token npm trusts, and the cache is
+  written by other workflow runs.
+
+### Documentation
+
+- The README now says I built the first working version of the eCNH, which is the accurate claim.
+  0.3.1 shipped the older line, "I built the eCNH", and that is what its npm page still shows.
+- The README shows the OpenSSF Best Practices badge.
 
 ## [0.3.1]
 
@@ -105,7 +119,8 @@ nothing here breaks anybody.
 - `unb64url` silently stripped characters outside the alphabet instead of rejecting them.
 - An empty payload packed to an envelope that `unpack` then called truncated.
 
-[Unreleased]: https://github.com/george-veras/qredential/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/george-veras/qredential/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/george-veras/qredential/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/george-veras/qredential/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/george-veras/qredential/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/george-veras/qredential/releases/tag/v0.2.0

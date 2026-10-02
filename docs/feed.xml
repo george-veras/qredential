@@ -7,6 +7,15 @@
   <language>en</language>
   <atom:link href="https://qredential.js.org/feed.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>qredential 0.3.2</title>
+    <link>https://qredential.js.org/</link>
+    <guid isPermaLink="false">qredential-0.3.2</guid>
+    <pubDate>Fri, 02 Oct 2026 00:00:00 GMT</pubDate>
+    <description><![CDATA[No code changes: nothing under src/ differs from 0.3.1. This release exists because npm renders the README from the published tarball, so a README fix does not reach the package page until a version carries it. Changed Every GitHub release now carries the tarball exactly as npm serves it, its SLSA provenance (.intoto.jsonl) and the Sigstore bundle (.sigstore.json), attached by the publish workflow. 0.3.1 was filled in by hand with the same script, scripts/release-assets.mjs. The publish job no longer restores an npm cache. It holds the token npm trusts, and the cache is written by other workflow runs. Documentation The README now says I built the first working version of the eCNH, which is the accurate claim. 0.3.1 shipped the older line, "I built the eCNH", and that is what its npm page still shows. The README shows the OpenSSF Best Practices badge.
+
+Full changelog: https://github.com/george-veras/qredential/blob/main/CHANGELOG.md]]></description>
+  </item>
+  <item>
     <title>qredential 0.3.1</title>
     <link>https://qredential.js.org/</link>
     <guid isPermaLink="false">qredential-0.3.1</guid>
