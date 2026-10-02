@@ -48,5 +48,5 @@ returns a typed rejection rather than throwing. Tests prove the presence of defe
 completeness.
 
 If you are deciding whether to put this between a person and a right they hold, read the source
-first. It is about 1,300 lines and has no runtime dependencies precisely so that reading it
+first. It is about 1,400 lines and has no runtime dependencies precisely so that reading it
 is realistic.
