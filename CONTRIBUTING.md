@@ -39,7 +39,7 @@ bug in the project and worth an issue on its own.
 
 ## How the code is laid out
 
-About 1,300 lines, no dependencies, deliberately readable end to end.
+About 1,400 lines, no dependencies, deliberately readable end to end.
 
 | file | what lives there |
 |---|---|
